@@ -1,7 +1,17 @@
-# Funding Projekt Modul
-Projekt Erfassen / löschen / Updaten.
+# Crowdfunding Detail Modul
+Owner: Projekt erstellen / löschen / updaten.
+Investor: In ein Projekt investieren
+
+# Crowdfunding Grid Modul
+Übersicht über alle Projekte
+Filterfunktion nach Bereich/Branche/Produkt
+
 # Kommentar Modul
-Projekt kommentieren
+Auf der Crowdfunding Page
+Kommentare erstellen / löschen / updaten
+
+# Updates Modul
+Updates zum Projekt erstellen
 
 # User Modul
 Rollen: Admin/Investor
@@ -12,7 +22,3 @@ Geschüzte Routes/Funktionen
 Login / Logout
 Kommentare erstellen/löschen falls erlaubt.
 Updaten von eigenen Projekten
-
-
-
-
