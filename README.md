@@ -1,3 +1,21 @@
+# Funding Projekt Modul
+Projekt Erfassen / löschen / Updaten.
+# Kommentar Modul
+Projekt kommentieren
+
+# User Modul
+Rollen: Admin/Investor
+User erfassen und verwalten
+
+# Security Modul
+Geschüzte Routes/Funktionen
+Login / Logout
+Kommentare erstellen/löschen falls erlaubt.
+Updaten von eigenen Projekten
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -44,3 +62,5 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
