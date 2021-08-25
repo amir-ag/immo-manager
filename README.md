@@ -2,7 +2,7 @@
 Owner: Projekt erstellen / löschen / updaten.
 Investor: In ein Projekt investieren
 
-# Crowdfunding Grid Modul
+# Crowdfunding Grid Modul
 Übersicht über alle Projekte
 Filterfunktion nach Bereich/Branche/Produkt
 
@@ -10,7 +10,7 @@ Filterfunktion nach Bereich/Branche/Produkt
 Auf der Crowdfunding Page
 Kommentare erstellen / löschen / updaten
 
-# Updates Modul
+# Updates Modul
 Updates zum Projekt erstellen
 
 # User Modul
