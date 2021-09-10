@@ -4,11 +4,15 @@ import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
+import theme from "./theme/theme";
+import {ThemeProvider} from '@material-ui/core/styles';
 
 ReactDOM.render(
     <React.StrictMode>
         <ErrorBoundary>
-            <App/>
+            <ThemeProvider theme={theme}>
+                <App/>
+            </ThemeProvider>
         </ErrorBoundary>
     </React.StrictMode>,
     document.getElementById('root')

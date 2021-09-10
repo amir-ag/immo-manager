@@ -1,11 +1,25 @@
 // import { connect } from "react-redux";
 import Home from "../components/Home/Home";
+import {useHistory} from "react-router";
+
 // import functions from selectors
 
-// function mapStateToProps(): {isLoggedIn: boolean} {
+const HomeContainer = () => {
+
+    let history = useHistory();
+
+    const handleSubmit = () => {
+        history.push("/dashboard");
+    }
+
+    return <Home handleSubmit={handleSubmit}/>
+}
+
+// const mapStateToProps = (state: {}): {isLoggedIn: boolean} => {
 //     return {
 //         isLoggedIn: false
 //     };
 // }
 
-export const HomeContainer = Home;
+// export default connect(mapStateToProps)(HomeContainer);
+export default HomeContainer;
