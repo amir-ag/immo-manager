@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { ReactComponent as UrbanDesign} from "../../assets/svg/undraw_urban_design_kpu8.svg";
-import {Props} from "./types";
+import {HomeProps} from "./types";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,9 +42,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Home = ({handleSubmit}: Props) => {
+const Home = ({handleSubmit, state, onChange}: HomeProps) => {
 
     const classes = useStyles();
+    const {email, password} = state;
 
     return (
         <Grid container component="main" className={classes.root}>
@@ -61,8 +62,10 @@ const Home = ({handleSubmit}: Props) => {
                     <Typography component={"h1"} variant={"h5"}>
                         Sign in
                     </Typography>
-                    <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                    <form className={classes.form} noValidate autoComplete={"off"} onSubmit={handleSubmit}>
                         <TextField
+                            value={email}
+                            onChange={(e) => onChange(e)}
                             variant={"outlined"}
                             margin={"normal"}
                             fullWidth
@@ -71,8 +74,11 @@ const Home = ({handleSubmit}: Props) => {
                             name={"email"}
                             autoComplete={"email"}
                             autoFocus
+                            // required
                         />
                         <TextField
+                            value={password}
+                            onChange={(e) => onChange(e)}
                             variant={"outlined"}
                             margin={"normal"}
                             fullWidth
@@ -80,6 +86,7 @@ const Home = ({handleSubmit}: Props) => {
                             label={"Password"}
                             name={"password"}
                             autoComplete={"current-password"}
+                            // required
                         />
                         <FormControlLabel control={<Checkbox value={"remember"} color={"primary"} />} label={"Remember me"}
                         />
