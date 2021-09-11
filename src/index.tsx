@@ -9,11 +9,11 @@ import {ThemeProvider} from '@material-ui/core/styles';
 
 ReactDOM.render(
     <React.StrictMode>
-        <ErrorBoundary>
-            <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+            <ErrorBoundary>
                 <App/>
-            </ThemeProvider>
-        </ErrorBoundary>
+            </ErrorBoundary>
+        </ThemeProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );
