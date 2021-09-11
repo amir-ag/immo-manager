@@ -11,6 +11,7 @@ import {
     Typography
 } from "@material-ui/core";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { ReactComponent as UrbanDesign} from "../../assets/svg/undraw_urban_design_kpu8.svg";
 import {Props} from "./types";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +19,9 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
     },
     left: {
-        backgroundColor: 'grey',
+        backgroundColor: theme.palette.primary.light,
+        display: 'flex',
+        alignItems: "flex-end",
     },
     paper: {
         margin: theme.spacing(8, 4),
@@ -45,7 +48,9 @@ const Home = ({handleSubmit}: Props) => {
 
     return (
         <Grid container component="main" className={classes.root}>
-            <Grid item xs={false} sm={4} md={7} className={classes.left}/>
+            <Grid item xs={false} sm={4} md={7} className={classes.left}>
+                <UrbanDesign/>
+            </Grid>
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
