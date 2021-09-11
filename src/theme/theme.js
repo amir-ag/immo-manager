@@ -1,5 +1,6 @@
 import { red } from '@material-ui/core/colors';
 import { createTheme } from '@material-ui/core/styles';
+import "@fontsource/quicksand";
 
 const theme = createTheme({
     palette: {
