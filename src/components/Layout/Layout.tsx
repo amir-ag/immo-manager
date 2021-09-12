@@ -1,28 +1,53 @@
 import React from 'react';
 import {LayoutProps} from "./types";
-import {Drawer, List, ListItem, ListItemIcon, ListItemText, makeStyles, Typography} from "@material-ui/core";
+import {
+    AppBar,
+    Drawer,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    makeStyles,
+    Toolbar,
+    Typography
+} from "@material-ui/core";
 import HomeWorkOutlinedIcon from '@material-ui/icons/HomeWorkOutlined';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import {useHistory, useLocation} from "react-router";
+import {format} from 'date-fns'
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles({
-    page: {
-        background: '#f9f9f9',
-        width: '100%',
-    },
-    drawer: {
-        width: drawerWidth,
-    },
-    drawPaper: {
-        width: drawerWidth,
-    },
-    root: {
-        display: 'flex',
-    },
-    active: {
-        background: '#f4f4f4',
+const useStyles = makeStyles((theme) => {
+    return {
+        page: {
+            background: '#f9f9f9',
+            width: '100%',
+            padding: theme.spacing(3)
+        },
+        drawer: {
+            width: drawerWidth,
+        },
+        drawPaper: {
+            width: drawerWidth,
+        },
+        root: {
+            display: 'flex',
+        },
+        active: {
+            background: '#f4f4f4',
+        },
+        title: {
+            padding: theme.spacing(2)
+        },
+        appbar: {
+            width: `calc(100% - ${drawerWidth}px)`,
+            background: '#FFFFFF'
+        },
+        toolbar: theme.mixins.toolbar,
+        date: {
+            flexGrow: 1,
+        }
     }
 })
 
@@ -47,13 +72,26 @@ const Layout = ({children}: LayoutProps) => {
 
     return (
         <div className={classes.root}>
+            <AppBar
+                className={classes.appbar}
+                elevation={0}
+            >
+                <Toolbar>
+                    <Typography color={"secondary"} variant={"h5"} className={classes.date}>
+                        Today is the {format(new Date(), 'do MMMM Y')}
+                    </Typography>
+                    <Typography color={"secondary"} variant={"h6"}>
+                        Username
+                    </Typography>
+                </Toolbar>
+            </AppBar>
             <Drawer
                 className={classes.drawer}
                 variant={"permanent"}
                 anchor={"left"}
                 classes={{paper: classes.drawPaper}}
             >
-                <Typography variant={"h5"}>
+                <Typography variant={"h5"} className={classes.title}>
                     Immo Manager v1
                 </Typography>
 
@@ -73,6 +111,7 @@ const Layout = ({children}: LayoutProps) => {
             </Drawer>
 
             <div className={classes.page}>
+                <div className={classes.toolbar}/>
                 {children}
             </div>
         </div>
