@@ -1,7 +1,8 @@
 import React from "react";
 
 export type PropertyData = {
-    id: string
+    id: string,
+    owner: string,
     street: string,
     city: string,
     details: string,

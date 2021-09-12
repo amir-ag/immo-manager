@@ -2,6 +2,7 @@ import React from 'react';
 import {LayoutProps} from "./types";
 import {
     AppBar,
+    Avatar,
     Drawer,
     List,
     ListItem,
@@ -47,6 +48,9 @@ const useStyles = makeStyles((theme) => {
         toolbar: theme.mixins.toolbar,
         date: {
             flexGrow: 1,
+        },
+        avatar: {
+            marginLeft: theme.spacing(2),
         }
     }
 })
@@ -83,6 +87,7 @@ const Layout = ({children}: LayoutProps) => {
                     <Typography color={"secondary"} variant={"h6"}>
                         Username
                     </Typography>
+                    <Avatar className={classes.avatar}>A</Avatar>
                 </Toolbar>
             </AppBar>
             <Drawer
