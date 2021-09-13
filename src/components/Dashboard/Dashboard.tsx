@@ -5,6 +5,7 @@ import {properties} from './dummyData'
 import {DashboardProps} from "./types";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Layout from "../Layout/Layout";
+import PeopleContainer from "../../containers/people-container";
 
 
 const Dashboard = ({handleEdit}: DashboardProps) => {
@@ -13,7 +14,7 @@ const Dashboard = ({handleEdit}: DashboardProps) => {
         <Router>
             <Layout>
                 <Switch>
-                    <Route path={'/dashboard'}>
+                    <Route exact path={'/dashboard'}>
                         <Container>
                             <Grid container spacing={3}>
                                 {properties.map((property) => (
@@ -24,6 +25,9 @@ const Dashboard = ({handleEdit}: DashboardProps) => {
                                 }
                             </Grid>
                         </Container>
+                    </Route>
+                    <Route path={'/dashboard/people'}>
+                        <PeopleContainer />
                     </Route>
                 </Switch>
             </Layout>
