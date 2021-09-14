@@ -67,7 +67,7 @@ const Layout = ({children}: LayoutProps) => {
         {
             text: 'Properties',
             icon: <HomeWorkOutlinedIcon color={"secondary"}/>,
-            path: '/dashboard/property'
+            path: '/dashboard/'
         },
         {
             text: 'People',

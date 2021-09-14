@@ -8,13 +8,13 @@ import theme from "./theme/theme";
 import {ThemeProvider} from '@material-ui/core/styles';
 
 ReactDOM.render(
-    <React.StrictMode>
+    <React.Fragment>
         <ThemeProvider theme={theme}>
             <ErrorBoundary>
                 <App/>
             </ErrorBoundary>
         </ThemeProvider>
-    </React.StrictMode>,
+    </React.Fragment>,
     document.getElementById('root')
 );
 
