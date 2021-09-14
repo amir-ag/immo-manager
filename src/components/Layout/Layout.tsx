@@ -12,10 +12,6 @@ import {
     Toolbar,
     Typography
 } from "@material-ui/core";
-import HomeWorkOutlinedIcon from '@material-ui/icons/HomeWorkOutlined';
-import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
-import NoteOutlinedIcon from '@material-ui/icons/NoteOutlined';
-import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import {useHistory, useLocation} from "react-router";
 import {format} from 'date-fns'
 
@@ -57,34 +53,11 @@ const useStyles = makeStyles((theme) => {
     }
 })
 
-const Layout = ({children}: LayoutProps) => {
+const Layout = ({children, menuItems}: LayoutProps) => {
 
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
-
-    const menuItems = [
-        {
-            text: 'Properties',
-            icon: <HomeWorkOutlinedIcon color={"secondary"}/>,
-            path: '/dashboard/property'
-        },
-        {
-            text: 'People',
-            icon: <PersonAddOutlinedIcon color={"secondary"}/>,
-            path: '/dashboard/people'
-        },
-        {
-            text: 'Contracts',
-            icon: <NoteOutlinedIcon color={"secondary"}/>,
-            path: '/dashboard/contracts'
-        },
-        {
-            text: 'Tenant Overview',
-            icon: <GroupOutlinedIcon color={"secondary"}/>,
-            path: '/dashboard/tenants'
-        },
-    ];
 
     return (
         <div className={classes.root}>
