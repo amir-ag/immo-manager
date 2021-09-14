@@ -1,5 +1,9 @@
-import React from "react";
-
 export type DashboardProps = {
-    handleEdit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+        menuItems: MenuItems[]
+}
+
+type MenuItems = {
+        text: string,
+        icon: JSX.Element,
+        path: string
 }

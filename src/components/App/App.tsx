@@ -10,8 +10,12 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-            <Route exact path={routes.HOME}><HomeRoute/></Route>
-            <Route path={routes.DASHBOARD}><DashboardRoute/></Route>
+            <Route exact path={routes.HOME}>
+                <HomeRoute/>
+            </Route>
+            <Route path={routes.DASHBOARD}>
+                <DashboardRoute/>
+            </Route>
         </Switch>
       </Router>
     </div>
