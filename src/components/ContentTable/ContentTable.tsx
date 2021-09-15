@@ -1,5 +1,15 @@
 import React from 'react';
-import {makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
+import {
+    makeStyles,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow
+} from "@material-ui/core";
 
 const useStyles = makeStyles({
     table: {
@@ -17,12 +27,29 @@ const rows = [
     createData('Kris', 'Hofer', 'Seefeldstrasse 120, 8008 Zürich', '079256585', 'Tenant'),
     createData('Jason', 'Wright', 'Quai 444, 8002 Zürich', '079265485', 'Tenant'),
     createData('Recep', 'Erdogan', 'Bellevue 1, 8001 Zürich', '079246585', 'Tenant'),
+    createData('Laurent', 'Meyer', 'Rigiweg 4, 8008 Zürich', '079265485', 'Tenant'),
+    createData('Ismael', 'Peters', 'Kappelle 10, 8008 Zürich', '079426585', 'Owner'),
+    createData('Stefano', 'Hofer', 'Seefeldstrasse 120, 8008 Zürich', '079256585', 'Tenant'),
+    createData('Xixhuan', 'Wright', 'Quai 444, 8002 Zürich', '079265485', 'Tenant'),
+    createData('Tomi', 'Erdogan', 'Bellevue 1, 8001 Zürich', '079246585', 'Tenant'),
 ];
 
 
 const ContentTable = () => {
 
     const classes = useStyles();
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [page, setPage] = React.useState(0);
+
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
 
     return (
         <TableContainer component={Paper}>
@@ -37,7 +64,9 @@ const ContentTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {rows
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((row) => (
                         <TableRow key={row.firstName}>
                             <TableCell component={"th"} scope={"row"}>
                                 {row.firstName}
@@ -50,6 +79,15 @@ const ContentTable = () => {
                     ))}
                 </TableBody>
             </Table>
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
         </TableContainer>
     );
 };
