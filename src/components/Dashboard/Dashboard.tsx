@@ -6,7 +6,6 @@ import routes from "../../routes/constant";
 import PropertyContainer from "../../containers/property-container";
 import {DashboardProps} from "./types";
 
-
 const Dashboard = ({menuItems}: DashboardProps) => {
 
     return (

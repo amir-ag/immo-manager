@@ -1,5 +1,15 @@
 import React from 'react';
-import {makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
+import {
+    makeStyles,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow
+} from "@material-ui/core";
 
 const useStyles = makeStyles({
     table: {
@@ -16,13 +26,30 @@ const rows = [
     createData('Lara', 'Peters', 'Kappelle 10, 8008 Zürich', '079426585', 'Owner'),
     createData('Kris', 'Hofer', 'Seefeldstrasse 120, 8008 Zürich', '079256585', 'Tenant'),
     createData('Jason', 'Wright', 'Quai 444, 8002 Zürich', '079265485', 'Tenant'),
-    createData('Recep', 'Erdogan', 'Bellevue 1, 8001 Zürich', '079246585', 'Tenant'),
+    createData('Recep', 'Erdogan', 'Platz 1, 8001 Visp', '079246585', 'Tenant'),
+    createData('Laurent', 'Meyer', 'Sonne 4, 8008 Erlenbach', '079265485', 'Tenant'),
+    createData('Ismael', 'Peters', 'Hofbach 10, 8008 Entlisau', '079426585', 'Owner'),
+    createData('Stefano', 'Hofer', 'Seebach 120, 8008 Dübendorf', '079256585', 'Tenant'),
+    createData('Xixhuan', 'Wright', 'Römerhof 444, 8002 Zürich', '079265485', 'Tenant'),
+    createData('Tomi', 'Erdogan', 'Rieterstrasse 1, 8001 Uster', '079246585', 'Tenant'),
+    createData('Peterli', 'Sohn', 'Stettbacherweg 444, 8002 Zürich', '079265485', 'Tenant'),
+    createData('Saanvika', 'Lakshmi', 'Rieterstrasse 1, 8001 Uster', '079246585', 'Tenant'),
 ];
-
 
 const ContentTable = () => {
 
     const classes = useStyles();
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [page, setPage] = React.useState(0);
+
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
 
     return (
         <TableContainer component={Paper}>
@@ -37,8 +64,10 @@ const ContentTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.firstName}>
+                    {rows
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((row, index) => (
+                        <TableRow key={index}>
                             <TableCell component={"th"} scope={"row"}>
                                 {row.firstName}
                             </TableCell>
@@ -50,6 +79,15 @@ const ContentTable = () => {
                     ))}
                 </TableBody>
             </Table>
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
         </TableContainer>
     );
 };

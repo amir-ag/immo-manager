@@ -35,11 +35,4 @@ const DashboardContainer = () => {
     );
 };
 
-// const mapStateToProps = (state: {}): {isLoggedIn: boolean} => {
-//     return {
-//         isLoggedIn: false
-//     };
-// }
-
-// export default connect(mapStateToProps)(HomeContainer);
 export default DashboardContainer;
