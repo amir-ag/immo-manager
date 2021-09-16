@@ -36,7 +36,6 @@ const rows = [
     createData('Saanvika', 'Lakshmi', 'Rieterstrasse 1, 8001 Uster', '079246585', 'Tenant'),
 ];
 
-
 const ContentTable = () => {
 
     const classes = useStyles();
@@ -51,7 +50,6 @@ const ContentTable = () => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-
 
     return (
         <TableContainer component={Paper}>

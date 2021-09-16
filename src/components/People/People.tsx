@@ -1,4 +1,4 @@
-import React, {FormEvent, useState} from 'react';
+import React from 'react';
 import {
     Button,
     Container,
@@ -8,25 +8,7 @@ import {
 } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import {grey} from "@material-ui/core/colors";
-import PeopleModal from "../PeopleModal/PeopleModal";
-
-
-const roles = [
-    {
-        value: 'Owner',
-    },
-    {
-        value: 'Tenant',
-    },
-    {
-        value: 'Service Provider',
-    },
-    {
-        value: 'Wait list',
-    },
-];
-
-
+import {Peopleprops} from "./types";
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -42,40 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const People = () => {
-
-    const [openModal, setOpenModal] = useState(false);
-    const [state, setState] = useState({
-            firstName: '',
-            lastName: '',
-            street: '',
-            houseNumber: '',
-            city: '',
-            phone: '',
-            role: ''
-        }
-    )
-
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setState((prevState) => ({
-            ...prevState,
-            [e.target.id]: e.target.value
-        }))
-    }
-
-    const onChangeRole = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setState((prevState) => ({
-            ...prevState,
-            "role": e.target.value
-        }))
-    }
-
-    const handleSubmit = (e: FormEvent<HTMLElement>) => {
-        e.preventDefault()
-        console.log('submitting..')
-        setOpenModal(false)
-    }
-
+const People = ({setOpenModal}: Peopleprops) => {
 
     const classes = useStyles();
 
@@ -95,16 +44,6 @@ const People = () => {
                     New
                 </Button>
             </Container>
-            {openModal && <PeopleModal
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-                handleSubmit={handleSubmit}
-                state={state}
-                onChange={onChange}
-                onChangeRole={onChangeRole}
-                roles={roles}
-                />
-            }
         </Paper>
     );
 };
