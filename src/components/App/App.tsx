@@ -13,6 +13,9 @@ function App() {
             <Route exact path={routes.HOME}>
                 <HomeRoute/>
             </Route>
+            <Route exact path={routes.SIGNUP}>
+                <HomeRoute/>
+            </Route>
             <Route path={routes.DASHBOARD}>
                 <DashboardRoute/>
             </Route>

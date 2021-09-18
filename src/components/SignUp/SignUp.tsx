@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Avatar, Box, Button, Grid, Link, makeStyles, Paper, TextField, Typography} from "@material-ui/core";
+import {Avatar, Button, Grid, Link, makeStyles, Paper, TextField, Typography} from "@material-ui/core";
 import {Link as RouterLink} from 'react-router-dom';
 import {SignUpProps} from "./types";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -42,6 +42,11 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
         }))
     }
 
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        handleSignUp(state)
+    }
+
     return (
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
             <div className={classes.paper}>
@@ -51,8 +56,7 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                 <Typography component={"h1"} variant={"h5"}>
                     Sign up
                 </Typography>
-                <Box component={"form"} className={classes.form} onSubmit={() => handleSignUp(state)}
-                     sx={{mt: 3}}>
+                <form className={classes.form} noValidate autoComplete={"off"} onSubmit={(e) => onSubmit(e)}>
                     <Grid container>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -113,6 +117,7 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                         </Grid>
                     </Grid>
                     <Button
+                        // onClick={(e) => e.preventDefault()}
                         className={classes.submit}
                         color={"primary"}
                         type="submit"
@@ -128,7 +133,7 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                             </Link>
                         </Grid>
                     </Grid>
-                </Box>
+                </form>
             </div>
         </Grid>
     );

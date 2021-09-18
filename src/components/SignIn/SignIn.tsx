@@ -50,6 +50,11 @@ const SignIn = ({handleSignIn}: SignInProps) => {
         }))
     }
 
+    const onSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        handleSignIn(state)
+    }
+
     return (
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
             <div className={classes.paper}>
@@ -59,7 +64,7 @@ const SignIn = ({handleSignIn}: SignInProps) => {
                 <Typography component={"h1"} variant={"h5"}>
                     Sign in
                 </Typography>
-                <form className={classes.form} noValidate autoComplete={"off"} onSubmit={() => handleSignIn(state)}>
+                <form className={classes.form} noValidate autoComplete={"off"} onSubmit={(e) => onSubmit(e)}>
                     <TextField
                         value={state.email}
                         onChange={(e) => onChange(e)}
