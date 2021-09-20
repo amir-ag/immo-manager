@@ -85,6 +85,7 @@ const SignIn = ({handleSignIn}: SignInProps) => {
                         margin={"normal"}
                         fullWidth
                         id={"password"}
+                        type={"password"}
                         label={"Password"}
                         name={"password"}
                         autoComplete={"current-password"}

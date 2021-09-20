@@ -2,7 +2,7 @@ import React from 'react';
 import {LayoutProps} from "./types";
 import {
     AppBar,
-    Avatar,
+    Avatar, Button,
     Drawer,
     List,
     ListItem,
@@ -14,6 +14,8 @@ import {
 } from "@material-ui/core";
 import {useHistory, useLocation} from "react-router";
 import {format} from 'date-fns'
+import {useAppDispatch, useAppSelector} from "../../store/hooks";
+import {logout, selectUser} from "../../slices/userSlice";
 
 const drawerWidth = 240;
 
@@ -49,7 +51,7 @@ const useStyles = makeStyles((theme) => {
         },
         avatar: {
             marginLeft: theme.spacing(2),
-        }
+        },
     }
 })
 
@@ -58,6 +60,9 @@ const Layout = ({children, menuItems}: LayoutProps) => {
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
+    const dispatch = useAppDispatch();
+    const {displayName} = useAppSelector(selectUser);
+
 
     return (
         <div className={classes.root}>
@@ -70,7 +75,7 @@ const Layout = ({children, menuItems}: LayoutProps) => {
                         Today is the {format(new Date(), 'do MMMM Y')}
                     </Typography>
                     <Typography color={"secondary"} variant={"h6"}>
-                        Username
+                        {displayName && displayName}
                     </Typography>
                     <Avatar className={classes.avatar}>A</Avatar>
                 </Toolbar>
@@ -98,6 +103,13 @@ const Layout = ({children, menuItems}: LayoutProps) => {
                         </ListItem>
                     ))}
                 </List>
+                <Button
+                    variant={"outlined"}
+                    color={"primary"}
+                    onClick={() => dispatch(logout())}
+                >
+                    Logout
+                </Button>
             </Drawer>
 
             <div className={classes.page}>

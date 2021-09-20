@@ -109,6 +109,7 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                                 margin={"normal"}
                                 fullWidth
                                 id={"password"}
+                                type={"password"}
                                 label={"Password"}
                                 name={"password"}
                                 autoComplete={"password"}
