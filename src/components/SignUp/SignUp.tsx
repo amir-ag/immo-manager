@@ -70,7 +70,7 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                                 name={"firstname"}
                                 autoComplete={"firstname"}
                                 autoFocus
-                                // required
+                                required
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -84,7 +84,7 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                                 label={"Lastname"}
                                 name={"lastname"}
                                 autoComplete={"lastname"}
-                                // required
+                                required
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -98,7 +98,7 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                                 label={"Email"}
                                 name={"email"}
                                 autoComplete={"email"}
-                                // required
+                                required
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -112,12 +112,11 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                                 label={"Password"}
                                 name={"password"}
                                 autoComplete={"password"}
-                                // required
+                                required
                             />
                         </Grid>
                     </Grid>
                     <Button
-                        // onClick={(e) => e.preventDefault()}
                         className={classes.submit}
                         color={"primary"}
                         type="submit"

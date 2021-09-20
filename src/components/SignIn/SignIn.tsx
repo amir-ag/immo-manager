@@ -11,7 +11,7 @@ import {
     TextField,
     Typography
 } from "@material-ui/core";
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {SignInProps} from "./types";
 
@@ -76,7 +76,7 @@ const SignIn = ({handleSignIn}: SignInProps) => {
                         name={"email"}
                         autoComplete={"email"}
                         autoFocus
-                        // required
+                        required
                     />
                     <TextField
                         value={state.password}
@@ -88,9 +88,9 @@ const SignIn = ({handleSignIn}: SignInProps) => {
                         label={"Password"}
                         name={"password"}
                         autoComplete={"current-password"}
-                        // required
+                        required
                     />
-                    <FormControlLabel control={<Checkbox value={"remember"} color={"primary"} />} label={"Remember me"}
+                    <FormControlLabel control={<Checkbox value={"remember"} color={"primary"}/>} label={"Remember me"}
                     />
                     <Button
                         type={"submit"}
