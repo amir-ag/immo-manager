@@ -60,6 +60,7 @@ export const signup = createAsyncThunk(
         await createUserWithEmailAndPassword(auth, email, password)
         const user = auth.currentUser
         user && await updateProfile(user, {displayName: firstName})
+        // implement another firebase call to add a user profile to firestore tied to the uid
         return user
     }
 );
@@ -69,9 +70,6 @@ export const userSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(login.pending, (state) => {
-            state.status = 'loading'
-        })
         builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
             state.status = 'success';
             state.email = action.payload.user.email
@@ -80,9 +78,6 @@ export const userSlice = createSlice({
         })
         builder.addCase(login.rejected, (state) => {
             state.status = 'failed';
-        })
-        builder.addCase(signup.pending, (state) => {
-            state.status = 'loading'
         })
         builder.addCase(signup.fulfilled, (state, action: PayloadAction<any>) => {
             state.status = 'success';
