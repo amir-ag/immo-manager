@@ -1,31 +1,66 @@
 import {createSlice, createAsyncThunk, PayloadAction} from '@reduxjs/toolkit'
 import type {RootState} from '../store/store'
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signOut,
+    updateProfile
+} from "firebase/auth";
 
 interface UserState {
     email: string | null,
     accessToken: string | null,
     uid: string | null,
-    status: string
+    status: string,
+    displayName: string | null,
+
 }
 
 const initialState: UserState = {
     email: null,
     accessToken: null,
     uid: null,
-    status: ''
+    status: '',
+    displayName: null
 }
 
-type PayloadProps = {
+type LoginProps = {
     email: string,
     password: string,
 }
 
+type SignupProps = {
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+}
+
+export const logout = createAsyncThunk(
+    "user/logout",
+    async () => {
+        const auth = getAuth();
+        return await signOut(auth)
+    }
+);
+
 export const login = createAsyncThunk(
     "user/login",
-    async ({email, password}: PayloadProps, thunkAPI) => {
+    async ({email, password}: LoginProps, thunkAPI) => {
         const auth = getAuth();
         return await signInWithEmailAndPassword(auth, email, password)
+    }
+);
+
+export const signup = createAsyncThunk(
+    "user/signup",
+    async ({email, password, firstName, lastName}: SignupProps, thunkAPI) => {
+        const auth = getAuth();
+        await createUserWithEmailAndPassword(auth, email, password)
+        const user = auth.currentUser
+        user && await updateProfile(user, {displayName: firstName})
+        return user
     }
 );
 
@@ -45,6 +80,25 @@ export const userSlice = createSlice({
         })
         builder.addCase(login.rejected, (state) => {
             state.status = 'failed';
+        })
+        builder.addCase(signup.pending, (state) => {
+            state.status = 'loading'
+        })
+        builder.addCase(signup.fulfilled, (state, action: PayloadAction<any>) => {
+            state.status = 'success';
+            state.email = action.payload.email;
+            state.accessToken = action.payload.accessToken;
+            state.uid = action.payload.uid;
+            state.displayName = action.payload.displayName;
+        })
+        builder.addCase(signup.rejected, (state) => {
+            state.status = 'failed';
+        })
+        builder.addCase(logout.fulfilled, (state) => {
+            state.email = null
+            state.accessToken = null
+            state.uid = null
+            state.status = ''
         })
     },
 })

@@ -3,7 +3,7 @@ import {useHistory} from "react-router";
 import React, {useEffect} from "react";
 import {SignInState, SignUpState} from "../components/Home/types";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
-import {login, selectUser} from "../slices/userSlice";
+import {login, selectUser, signup} from "../slices/userSlice";
 
 const HomeContainer = () => {
     let history = useHistory();
@@ -21,17 +21,7 @@ const HomeContainer = () => {
     }
 
     const handleSignUp = (state: SignUpState) => {
-        // console.log('state: ', state)
-        // history.push("/dashboard");
-        // const auth = getAuth();
-        // const user = auth.currentUser;
-        // console.log(auth)
-        // createUserWithEmailAndPassword(auth, state.email, state.password)
-        //     .then(() => {
-        //         updateProfile(user, {displayName: state.firstName})
-        //             .then(() => history.push('/dashboard'))
-        //             .catch((e) => alert(e.message))
-        //     }).catch((e) => alert(e.message))
+        dispatch(signup(state))
     }
 
     return <Home handleSignIn={handleSignIn} handleSignUp={handleSignUp}/>
