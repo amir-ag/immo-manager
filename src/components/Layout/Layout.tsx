@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => {
         active: {
             background: '#f4f4f4',
         },
+        listItem: {
+            padding: theme.spacing(2)
+        },
         title: {
             padding: theme.spacing(2)
         },
@@ -52,6 +55,13 @@ const useStyles = makeStyles((theme) => {
         avatar: {
             marginLeft: theme.spacing(2),
         },
+        list: {
+            flexGrow: 1,
+        },
+        logout: {
+            margin: theme.spacing(10, 1),
+            padding: theme.spacing(2)
+        }
     }
 })
 
@@ -90,13 +100,13 @@ const Layout = ({children, menuItems}: LayoutProps) => {
                     Immo Manager v1
                 </Typography>
 
-                <List>
+                <List className={classes.list}>
                     {menuItems.map(item => (
                         <ListItem
                             key={item.text}
                             button
                             onClick={() => history.push(item.path)}
-                            className={location.pathname === item.path ? classes.active : undefined}
+                            className={`${location.pathname === item.path ? classes.active : undefined} ${classes.listItem}`}
                         >
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={item.text}/>
@@ -104,6 +114,7 @@ const Layout = ({children, menuItems}: LayoutProps) => {
                     ))}
                 </List>
                 <Button
+                    className={classes.logout}
                     variant={"outlined"}
                     color={"primary"}
                     onClick={() => dispatch(logout())}
