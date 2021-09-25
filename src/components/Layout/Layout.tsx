@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => {
         },
         logout: {
             margin: theme.spacing(10, 1),
-            padding: theme.spacing(2)
+            padding: theme.spacing(2),
         }
     }
 })
@@ -72,7 +72,6 @@ const Layout = ({children, menuItems}: LayoutProps) => {
     const location = useLocation();
     const dispatch = useAppDispatch();
     const {displayName} = useAppSelector(selectUser);
-
 
     return (
         <div className={classes.root}>
@@ -116,7 +115,7 @@ const Layout = ({children, menuItems}: LayoutProps) => {
                 <Button
                     className={classes.logout}
                     variant={"outlined"}
-                    color={"primary"}
+                    color={"secondary"}
                     onClick={() => dispatch(logout())}
                 >
                     Logout
