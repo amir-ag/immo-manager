@@ -8,13 +8,18 @@ const PeopleContainer = () => {
 
     const [openModal, setOpenModal] = useState(false);
     const [state, setState] = useState({
-            firstName: '',
-            lastName: '',
-            street: '',
-            houseNumber: '',
-            city: '',
-            phone: '',
-            role: ''
+        firstName: "",
+        lastName: "",
+        birthday: new Date(),
+        street: "",
+        houseNumber: "",
+        zip: null,
+        city: "",
+        email: "",
+        mobilePhone: null,
+        landline: null,
+        role: "",
+        type: ""
         }
     )
 
@@ -25,16 +30,33 @@ const PeopleContainer = () => {
         }))
     }
 
+    // find a way to include 'onChangeRole' and 'onChangeType' in 'onChange', problem: e.target.id is undefined
+
     const onChangeRole = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setState((prevState) => ({
             ...prevState,
-            "role": e.target.value
+            role: e.target.value
+        }))
+    }
+
+    const onChangeType = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        setState((prevState) => ({
+            ...prevState,
+            type: e.target.value
+        }))
+    }
+
+    const onChangeDate = (date: Date) => {
+        setState((prevState) => ({
+            ...prevState,
+            birthday: date
         }))
     }
 
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault()
         console.log('submitting..')
+        console.log('state: ', state)
         setOpenModal(false)
     }
 
@@ -44,13 +66,16 @@ const PeopleContainer = () => {
                 setOpenModal={setOpenModal}
             />
             <Table/>
-            {openModal && <PeopleModal
+            {openModal &&
+            <PeopleModal
                 openModal={openModal}
                 setOpenModal={setOpenModal}
                 handleSubmit={handleSubmit}
                 state={state}
                 onChange={onChange}
                 onChangeRole={onChangeRole}
+                onChangeType={onChangeType}
+                onChangeDate={onChangeDate}
                 roles={roles}
             />
             }
