@@ -1,4 +1,3 @@
-import { red } from '@material-ui/core/colors';
 import { createTheme } from '@material-ui/core/styles';
 import "@fontsource/quicksand";
 
@@ -10,12 +9,13 @@ const theme = createTheme({
         secondary: {
             main: '#19857b',
         },
-        error: {
-            main: red.A400,
-        },
         background: {
             default: '#fff',
         },
+    },
+    error: {
+        main: '#ef5350'
+
     },
     typography: {
         fontFamily: 'Quicksand',

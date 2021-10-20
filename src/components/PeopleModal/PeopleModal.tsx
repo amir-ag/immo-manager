@@ -26,9 +26,22 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 4, 3),
         maxWidth: 600,
     },
+    date: {
+        width: '100%',
+    }
 }))
 
-const PeopleModal = ({openModal, setOpenModal, handleSubmit, state, onChange, onChangeRole, roles}: PeopleModalProps) => {
+const PeopleModal = ({
+                         openModal,
+                         setOpenModal,
+                         handleSubmit,
+                         state,
+                         onChange,
+                         onChangeRole,
+                         onChangeType,
+                         onChangeDate,
+                         roles
+                     }: PeopleModalProps) => {
 
     const classes = useStyles();
 
@@ -53,6 +66,41 @@ const PeopleModal = ({openModal, setOpenModal, handleSubmit, state, onChange, on
                     <Box component={"form"} onSubmit={(e) => handleSubmit(e)}
                          sx={{mt: 3}}>
                         <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    id={"type"}
+                                    select
+                                    label="Select"
+                                    value={state.type}
+                                    onChange={(e) => onChangeType(e)}
+                                    helperText="Type of person"
+                                    variant="outlined"
+                                >
+                                    <MenuItem value="Unternehmen">
+                                        {"Unternehmen"}
+                                    </MenuItem>
+                                    <MenuItem value="Privatperson">
+                                        {"Privatperson"}
+                                    </MenuItem>
+                                </TextField>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    id={"role"}
+                                    select
+                                    label="Select"
+                                    value={state.role}
+                                    onChange={(e) => onChangeRole(e)}
+                                    helperText="Please select your clients role"
+                                    variant="outlined"
+                                >
+                                    {roles.map((role: { value: string }) => (
+                                        <MenuItem key={role.value} value={role.value}>
+                                            {role.value}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     value={state.firstName}
@@ -80,6 +128,18 @@ const PeopleModal = ({openModal, setOpenModal, handleSubmit, state, onChange, on
                                     name={"lastname"}
                                     autoComplete={"lastname"}
                                     // required
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    id="date"
+                                    label="Birthday"
+                                    type="date"
+                                    defaultValue="2000-06-15"
+                                    className={classes.date}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={9}>
@@ -110,7 +170,21 @@ const PeopleModal = ({openModal, setOpenModal, handleSubmit, state, onChange, on
                                     // required
                                 />
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={12} sm={3}>
+                                <TextField
+                                    value={state.zip}
+                                    onChange={(e) => onChange(e)}
+                                    variant={"outlined"}
+                                    margin={"normal"}
+                                    fullWidth
+                                    id={"zip"}
+                                    label={"PLZ"}
+                                    name={"zip"}
+                                    autoComplete={"zip"}
+                                    // required
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={9}>
                                 <TextField
                                     value={state.city}
                                     onChange={(e) => onChange(e)}
@@ -126,37 +200,48 @@ const PeopleModal = ({openModal, setOpenModal, handleSubmit, state, onChange, on
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    value={state.phone}
+                                    value={state.email}
                                     onChange={(e) => onChange(e)}
                                     variant={"outlined"}
                                     margin={"normal"}
                                     fullWidth
-                                    id={"phone"}
-                                    label={"Phone"}
-                                    name={"phone"}
-                                    autoComplete={"phone"}
+                                    id={"email"}
+                                    label={"Email"}
+                                    name={"email"}
+                                    autoComplete={"email"}
                                     // required
                                 />
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={12} sm={6}>
                                 <TextField
-                                    id={"role"}
-                                    select
-                                    label="Select"
-                                    value={state.role}
-                                    onChange={(e) => onChangeRole(e)}
-                                    helperText="Please select your clients role"
-                                    variant="outlined"
-                                >
-                                    {roles.map((role: {value: string}) => (
-                                        <MenuItem key={role.value} value={role.value}>
-                                            {role.value}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                                    value={state.mobilePhone}
+                                    onChange={(e) => onChange(e)}
+                                    variant={"outlined"}
+                                    margin={"normal"}
+                                    fullWidth
+                                    id={"mobilePhone"}
+                                    label={"Mobile Phone"}
+                                    name={"mobilephone"}
+                                    autoComplete={"mobilephone"}
+                                    // required
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    value={state.landline}
+                                    onChange={(e) => onChange(e)}
+                                    variant={"outlined"}
+                                    margin={"normal"}
+                                    fullWidth
+                                    id={"landline"}
+                                    label={"Landline"}
+                                    name={"landline"}
+                                    autoComplete={"landline"}
+                                    // required
+                                />
                             </Grid>
                         </Grid>
-                        <Button color={"primary"} type="submit" fullWidth variant="contained" >
+                        <Button color={"primary"} type="submit" fullWidth variant="contained">
                             Submit
                         </Button>
                     </Box>

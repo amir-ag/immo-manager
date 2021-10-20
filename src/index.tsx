@@ -8,7 +8,7 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import {Provider} from "react-redux";
 import {store} from './store/store'
 import {firebaseConfig} from "./firebase";
-import { initializeApp } from "firebase/app";
+import {initializeApp} from "firebase/app";
 
 initializeApp(firebaseConfig);
 
