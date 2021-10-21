@@ -4,22 +4,26 @@ import Table from "../components/ContentTable/ContentTable";
 import PeopleModal from "../components/PeopleModal/PeopleModal";
 import {roles} from "../appConfig";
 
+const emptyForm = {
+    firstName: "",
+    lastName: "",
+    birthday: "",
+    street: "",
+    houseNumber: "",
+    zip: null,
+    city: "",
+    email: "",
+    mobilePhone: null,
+    landline: null,
+    role: "",
+    type: ""
+}
+
 const PeopleContainer = () => {
 
     const [openModal, setOpenModal] = useState(false);
     const [state, setState] = useState({
-        firstName: "",
-        lastName: "",
-        birthday: "",
-        street: "",
-        houseNumber: "",
-        zip: null,
-        city: "",
-        email: "",
-        mobilePhone: null,
-        landline: null,
-        role: "",
-        type: ""
+            ...emptyForm
         }
     )
 
@@ -57,6 +61,7 @@ const PeopleContainer = () => {
         e.preventDefault()
         console.log('submitting..')
         console.log('state: ', state)
+        setState(emptyForm)
         setOpenModal(false)
     }
 
