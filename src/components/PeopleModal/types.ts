@@ -3,7 +3,7 @@ import React, {Dispatch, FormEvent, SetStateAction} from "react";
 type ModalState = {
     firstName: string,
     lastName: string,
-    birthday?: Date | null,
+    birthday?: string | null,
     street: string,
     houseNumber: string,
     zip: number | null,
@@ -23,6 +23,6 @@ export type PeopleModalProps = {
     onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
     onChangeRole: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
     onChangeType: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
-    onChangeDate: (date: Date) => void,
+    onChangeDate: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
     roles: { value: string }[]
 }

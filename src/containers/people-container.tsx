@@ -10,7 +10,7 @@ const PeopleContainer = () => {
     const [state, setState] = useState({
         firstName: "",
         lastName: "",
-        birthday: new Date(),
+        birthday: "",
         street: "",
         houseNumber: "",
         zip: null,
@@ -46,10 +46,10 @@ const PeopleContainer = () => {
         }))
     }
 
-    const onChangeDate = (date: Date) => {
+    const onChangeDate = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setState((prevState) => ({
             ...prevState,
-            birthday: date
+            birthday: e.target.value
         }))
     }
 

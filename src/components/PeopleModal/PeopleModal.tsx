@@ -136,6 +136,7 @@ const PeopleModal = ({
                                     label="Birthday"
                                     type="date"
                                     defaultValue="2000-06-15"
+                                    onChange={(e) => onChangeDate(e)}
                                     className={classes.date}
                                     InputLabelProps={{
                                         shrink: true,
