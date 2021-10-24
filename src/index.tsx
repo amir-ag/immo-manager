@@ -9,8 +9,11 @@ import {Provider} from "react-redux";
 import {store} from './store/store'
 import {firebaseConfig} from "./firebase";
 import {initializeApp} from "firebase/app";
+import { getFirestore } from "firebase/firestore"
+
 
 initializeApp(firebaseConfig);
+export const db = getFirestore();
 
 ReactDOM.render(
     <React.Fragment>

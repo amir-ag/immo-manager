@@ -9,20 +9,19 @@ import {
 } from "firebase/auth";
 
 interface UserState {
-    email: string | null,
-    accessToken: string | null,
-    uid: string | null,
+    email: string,
+    accessToken: string,
+    uid: string,
     status: string,
-    displayName: string | null,
-
+    displayName: string,
 }
 
 const initialState: UserState = {
-    email: null,
-    accessToken: null,
-    uid: null,
-    status: '',
-    displayName: null
+    email: "",
+    accessToken: "",
+    uid: "",
+    status: "",
+    displayName: ""
 }
 
 type LoginProps = {
@@ -47,7 +46,7 @@ export const logout = createAsyncThunk(
 
 export const login = createAsyncThunk(
     "user/login",
-    async ({email, password}: LoginProps, thunkAPI) => {
+    async ({email, password}: LoginProps) => {
         const auth = getAuth();
         return await signInWithEmailAndPassword(auth, email, password)
     }
@@ -55,7 +54,7 @@ export const login = createAsyncThunk(
 
 export const signup = createAsyncThunk(
     "user/signup",
-    async ({email, password, firstName, lastName}: SignupProps, thunkAPI) => {
+    async ({email, password, firstName, lastName}: SignupProps) => {
         const auth = getAuth();
         await createUserWithEmailAndPassword(auth, email, password)
         const user = auth.currentUser
@@ -90,9 +89,9 @@ export const userSlice = createSlice({
             state.status = 'failed';
         })
         builder.addCase(logout.fulfilled, (state) => {
-            state.email = null
-            state.accessToken = null
-            state.uid = null
+            state.email = ""
+            state.accessToken = ""
+            state.uid = ""
             state.status = ''
         })
     },

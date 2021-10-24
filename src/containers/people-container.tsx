@@ -3,23 +3,30 @@ import People from "../components/People/People";
 import Table from "../components/ContentTable/ContentTable";
 import PeopleModal from "../components/PeopleModal/PeopleModal";
 import {roles} from "../appConfig";
+import {useAppDispatch} from "../store/hooks";
+import {createPerson} from "../slices/peopleSlice";
+
+const emptyForm = {
+    firstName: "",
+    lastName: "",
+    birthday: "",
+    street: "",
+    houseNumber: "",
+    zip: null,
+    city: "",
+    email: "",
+    mobilePhone: null,
+    landline: null,
+    role: "",
+    type: ""
+}
 
 const PeopleContainer = () => {
 
+    const dispatch = useAppDispatch();
     const [openModal, setOpenModal] = useState(false);
     const [state, setState] = useState({
-        firstName: "",
-        lastName: "",
-        birthday: new Date(),
-        street: "",
-        houseNumber: "",
-        zip: null,
-        city: "",
-        email: "",
-        mobilePhone: null,
-        landline: null,
-        role: "",
-        type: ""
+            ...emptyForm
         }
     )
 
@@ -46,17 +53,18 @@ const PeopleContainer = () => {
         }))
     }
 
-    const onChangeDate = (date: Date) => {
+    const onChangeDate = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setState((prevState) => ({
             ...prevState,
-            birthday: date
+            birthday: e.target.value
         }))
     }
 
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault()
-        console.log('submitting..')
         console.log('state: ', state)
+        dispatch(createPerson(state))
+        setState(emptyForm)
         setOpenModal(false)
     }
 
