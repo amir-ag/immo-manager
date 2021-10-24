@@ -3,6 +3,8 @@ import People from "../components/People/People";
 import Table from "../components/ContentTable/ContentTable";
 import PeopleModal from "../components/PeopleModal/PeopleModal";
 import {roles} from "../appConfig";
+import {useAppDispatch} from "../store/hooks";
+import {createPerson} from "../slices/peopleSlice";
 
 const emptyForm = {
     firstName: "",
@@ -21,6 +23,7 @@ const emptyForm = {
 
 const PeopleContainer = () => {
 
+    const dispatch = useAppDispatch();
     const [openModal, setOpenModal] = useState(false);
     const [state, setState] = useState({
             ...emptyForm
@@ -59,8 +62,8 @@ const PeopleContainer = () => {
 
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault()
-        console.log('submitting..')
         console.log('state: ', state)
+        dispatch(createPerson(state))
         setState(emptyForm)
         setOpenModal(false)
     }
