@@ -1,5 +1,5 @@
 import { createTheme } from '@material-ui/core/styles';
-import "@fontsource/quicksand";
+import '@fontsource/quicksand';
 
 const theme = createTheme({
     palette: {
@@ -14,8 +14,7 @@ const theme = createTheme({
         },
     },
     error: {
-        main: '#ef5350'
-
+        main: '#ef5350',
     },
     typography: {
         fontFamily: 'Quicksand',
@@ -23,7 +22,7 @@ const theme = createTheme({
         fontWeightRegular: 500,
         fontWeightMedium: 600,
         fontWeightBold: 700,
-    }
+    },
 });
 
 export default theme;

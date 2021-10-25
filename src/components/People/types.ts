@@ -1,5 +1,5 @@
-import {Dispatch, SetStateAction} from "react";
+import { Dispatch, SetStateAction } from 'react';
 
 export type Peopleprops = {
-    setOpenModal: Dispatch<SetStateAction<boolean>>,
-}
+    setOpenModal: Dispatch<SetStateAction<boolean>>;
+};

@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export type PropertyProps = {
-    handleEdit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-}
+    handleEdit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+};

@@ -1,11 +1,10 @@
 export type SignUpProps = {
-    handleSignUp: (state: State) => void,
-}
+    handleSignUp: (state: State) => void;
+};
 
 type State = {
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string
-}
-
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+};

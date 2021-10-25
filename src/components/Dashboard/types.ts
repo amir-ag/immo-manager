@@ -1,9 +1,9 @@
 export type DashboardProps = {
-        menuItems: MenuItems[]
-}
+    menuItems: MenuItems[];
+};
 
 type MenuItems = {
-        text: string,
-        icon: JSX.Element,
-        path: string
-}
+    text: string;
+    icon: JSX.Element;
+    path: string;
+};

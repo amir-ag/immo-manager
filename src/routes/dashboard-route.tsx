@@ -1,5 +1,5 @@
-import DashboardContainer from "../containers/dashboard-container";
+import DashboardContainer from '../containers/dashboard-container';
 
 export const DashboardRoute = () => {
-    return <DashboardContainer/>
-}
+    return <DashboardContainer />;
+};
