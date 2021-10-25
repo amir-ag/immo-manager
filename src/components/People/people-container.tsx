@@ -1,10 +1,10 @@
 import React, { FormEvent, useState } from 'react';
-import People from '../components/People/People';
-import Table from '../components/ContentTable/ContentTable';
-import PeopleModal from '../components/PeopleModal/PeopleModal';
-import { roles } from '../appConfig';
-import { useAppDispatch } from '../store/hooks';
-import { createPerson } from '../slices/peopleSlice';
+import People from './People';
+import Table from '../ContentTable/ContentTable';
+import PeopleModal from '../PeopleModal/PeopleModal';
+import { roles } from '../../appConfig';
+import { useAppDispatch } from '../../store/hooks';
+import { createPerson } from '../../slices/peopleSlice';
 
 const emptyForm = {
     firstName: '',

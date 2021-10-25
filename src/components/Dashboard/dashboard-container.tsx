@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from '../components/Dashboard/Dashboard';
+import Dashboard from './Dashboard';
 import HomeWorkOutlinedIcon from '@material-ui/icons/HomeWorkOutlined';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import NoteOutlinedIcon from '@material-ui/icons/NoteOutlined';

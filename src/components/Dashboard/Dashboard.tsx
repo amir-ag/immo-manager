@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Layout from '../Layout/Layout';
-import PeopleContainer from '../../containers/people-container';
+import PeopleContainer from '../People/people-container';
 import routes from '../../routes/constant';
-import PropertyContainer from '../../containers/property-container';
+import PropertyContainer from '../Property/property-container';
 import { DashboardProps } from './types';
 
 const Dashboard = ({ menuItems }: DashboardProps) => {

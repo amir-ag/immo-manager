@@ -1,5 +1,5 @@
 import React from 'react';
-import Property from '../components/Property/Property';
+import Property from './Property';
 
 const PropertyContainer = () => {
     const handleEdit = () => {
