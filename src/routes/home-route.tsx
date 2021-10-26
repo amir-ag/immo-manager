@@ -1,5 +1,5 @@
-import HomeContainer from "../containers/home-container";
+import HomeContainer from '../components/Home/home-container';
 
 export const HomeRoute = () => {
-    return <HomeContainer/>
-}
+    return <HomeContainer />;
+};

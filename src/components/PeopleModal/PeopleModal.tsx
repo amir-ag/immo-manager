@@ -10,9 +10,9 @@ import {
     Modal,
     Paper,
     TextField,
-    Typography
-} from "@material-ui/core";
-import {PeopleModalProps} from "./types";
+    Typography,
+} from '@material-ui/core';
+import { PeopleModalProps } from './types';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -28,21 +28,20 @@ const useStyles = makeStyles((theme) => ({
     },
     date: {
         width: '100%',
-    }
-}))
+    },
+}));
 
 const PeopleModal = ({
-                         openModal,
-                         setOpenModal,
-                         handleSubmit,
-                         state,
-                         onChange,
-                         onChangeRole,
-                         onChangeType,
-                         onChangeDate,
-                         roles
-                     }: PeopleModalProps) => {
-
+    openModal,
+    setOpenModal,
+    handleSubmit,
+    state,
+    onChange,
+    onChangeRole,
+    onChangeType,
+    onChangeDate,
+    roles,
+}: PeopleModalProps) => {
     const classes = useStyles();
 
     return (
@@ -63,12 +62,11 @@ const PeopleModal = ({
                     <Typography component="h1" variant="h5">
                         Create a new Person
                     </Typography>
-                    <Box component={"form"} onSubmit={(e) => handleSubmit(e)}
-                         sx={{mt: 3}}>
+                    <Box component={'form'} onSubmit={(e) => handleSubmit(e)} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    id={"type"}
+                                    id={'type'}
                                     select
                                     label="Select"
                                     value={state.type}
@@ -76,17 +74,13 @@ const PeopleModal = ({
                                     helperText="Type of person"
                                     variant="outlined"
                                 >
-                                    <MenuItem value="Unternehmen">
-                                        {"Unternehmen"}
-                                    </MenuItem>
-                                    <MenuItem value="Privatperson">
-                                        {"Privatperson"}
-                                    </MenuItem>
+                                    <MenuItem value="Unternehmen">{'Unternehmen'}</MenuItem>
+                                    <MenuItem value="Privatperson">{'Privatperson'}</MenuItem>
                                 </TextField>
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    id={"role"}
+                                    id={'role'}
                                     select
                                     label="Select"
                                     value={state.role}
@@ -105,13 +99,13 @@ const PeopleModal = ({
                                 <TextField
                                     value={state.firstName}
                                     onChange={(e) => onChange(e)}
-                                    variant={"outlined"}
-                                    margin={"normal"}
+                                    variant={'outlined'}
+                                    margin={'normal'}
                                     fullWidth
-                                    id={"firstName"}
-                                    label={"Firstname"}
-                                    name={"firstname"}
-                                    autoComplete={"firstname"}
+                                    id={'firstName'}
+                                    label={'Firstname'}
+                                    name={'firstname'}
+                                    autoComplete={'firstname'}
                                     autoFocus
                                     // required
                                 />
@@ -120,13 +114,13 @@ const PeopleModal = ({
                                 <TextField
                                     value={state.lastName}
                                     onChange={(e) => onChange(e)}
-                                    variant={"outlined"}
-                                    margin={"normal"}
+                                    variant={'outlined'}
+                                    margin={'normal'}
                                     fullWidth
-                                    id={"lastName"}
-                                    label={"Lastname"}
-                                    name={"lastname"}
-                                    autoComplete={"lastname"}
+                                    id={'lastName'}
+                                    label={'Lastname'}
+                                    name={'lastname'}
+                                    autoComplete={'lastname'}
                                     // required
                                 />
                             </Grid>
@@ -147,13 +141,13 @@ const PeopleModal = ({
                                 <TextField
                                     value={state.street}
                                     onChange={(e) => onChange(e)}
-                                    variant={"outlined"}
-                                    margin={"normal"}
+                                    variant={'outlined'}
+                                    margin={'normal'}
                                     fullWidth
-                                    id={"street"}
-                                    label={"Street"}
-                                    name={"street"}
-                                    autoComplete={"street"}
+                                    id={'street'}
+                                    label={'Street'}
+                                    name={'street'}
+                                    autoComplete={'street'}
                                     // required
                                 />
                             </Grid>
@@ -161,13 +155,13 @@ const PeopleModal = ({
                                 <TextField
                                     value={state.houseNumber}
                                     onChange={(e) => onChange(e)}
-                                    variant={"outlined"}
-                                    margin={"normal"}
+                                    variant={'outlined'}
+                                    margin={'normal'}
                                     fullWidth
-                                    id={"houseNumber"}
-                                    label={"House No"}
-                                    name={"houseNumber"}
-                                    autoComplete={"houseNumber"}
+                                    id={'houseNumber'}
+                                    label={'House No'}
+                                    name={'houseNumber'}
+                                    autoComplete={'houseNumber'}
                                     // required
                                 />
                             </Grid>
@@ -175,13 +169,13 @@ const PeopleModal = ({
                                 <TextField
                                     value={state.zip}
                                     onChange={(e) => onChange(e)}
-                                    variant={"outlined"}
-                                    margin={"normal"}
+                                    variant={'outlined'}
+                                    margin={'normal'}
                                     fullWidth
-                                    id={"zip"}
-                                    label={"PLZ"}
-                                    name={"zip"}
-                                    autoComplete={"zip"}
+                                    id={'zip'}
+                                    label={'PLZ'}
+                                    name={'zip'}
+                                    autoComplete={'zip'}
                                     // required
                                 />
                             </Grid>
@@ -189,13 +183,13 @@ const PeopleModal = ({
                                 <TextField
                                     value={state.city}
                                     onChange={(e) => onChange(e)}
-                                    variant={"outlined"}
-                                    margin={"normal"}
+                                    variant={'outlined'}
+                                    margin={'normal'}
                                     fullWidth
-                                    id={"city"}
-                                    label={"City"}
-                                    name={"city"}
-                                    autoComplete={"city"}
+                                    id={'city'}
+                                    label={'City'}
+                                    name={'city'}
+                                    autoComplete={'city'}
                                     // required
                                 />
                             </Grid>
@@ -203,13 +197,13 @@ const PeopleModal = ({
                                 <TextField
                                     value={state.email}
                                     onChange={(e) => onChange(e)}
-                                    variant={"outlined"}
-                                    margin={"normal"}
+                                    variant={'outlined'}
+                                    margin={'normal'}
                                     fullWidth
-                                    id={"email"}
-                                    label={"Email"}
-                                    name={"email"}
-                                    autoComplete={"email"}
+                                    id={'email'}
+                                    label={'Email'}
+                                    name={'email'}
+                                    autoComplete={'email'}
                                     // required
                                 />
                             </Grid>
@@ -217,13 +211,13 @@ const PeopleModal = ({
                                 <TextField
                                     value={state.mobilePhone}
                                     onChange={(e) => onChange(e)}
-                                    variant={"outlined"}
-                                    margin={"normal"}
+                                    variant={'outlined'}
+                                    margin={'normal'}
                                     fullWidth
-                                    id={"mobilePhone"}
-                                    label={"Mobile Phone"}
-                                    name={"mobilephone"}
-                                    autoComplete={"mobilephone"}
+                                    id={'mobilePhone'}
+                                    label={'Mobile Phone'}
+                                    name={'mobilephone'}
+                                    autoComplete={'mobilephone'}
                                     // required
                                 />
                             </Grid>
@@ -231,18 +225,18 @@ const PeopleModal = ({
                                 <TextField
                                     value={state.landline}
                                     onChange={(e) => onChange(e)}
-                                    variant={"outlined"}
-                                    margin={"normal"}
+                                    variant={'outlined'}
+                                    margin={'normal'}
                                     fullWidth
-                                    id={"landline"}
-                                    label={"Landline"}
-                                    name={"landline"}
-                                    autoComplete={"landline"}
+                                    id={'landline'}
+                                    label={'Landline'}
+                                    name={'landline'}
+                                    autoComplete={'landline'}
                                     // required
                                 />
                             </Grid>
                         </Grid>
-                        <Button color={"primary"} type="submit" fullWidth variant="contained">
+                        <Button color={'primary'} type="submit" fullWidth variant="contained">
                             Submit
                         </Button>
                     </Box>

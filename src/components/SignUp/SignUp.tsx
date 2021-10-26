@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {Avatar, Button, Grid, Link, makeStyles, Paper, TextField, Typography} from "@material-ui/core";
-import {Link as RouterLink} from 'react-router-dom';
-import {SignUpProps} from "./types";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import React, { useState } from 'react';
+import { Avatar, Button, Grid, Link, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+import { SignUpProps } from './types';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -20,55 +20,53 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
-    }
+    },
 }));
 
-
-const SignUp = ({handleSignUp}: SignUpProps) => {
-
+const SignUp = ({ handleSignUp }: SignUpProps) => {
     const classes = useStyles();
 
     const [state, setState] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: ""
-    })
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+    });
 
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setState((prevState) => ({
             ...prevState,
-            [e.target.id]: e.target.value
-        }))
-    }
+            [e.target.id]: e.target.value,
+        }));
+    };
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        handleSignUp(state)
-    }
+        handleSignUp(state);
+    };
 
     return (
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon/>
+                    <LockOutlinedIcon />
                 </Avatar>
-                <Typography component={"h1"} variant={"h5"}>
+                <Typography component={'h1'} variant={'h5'}>
                     Sign up
                 </Typography>
-                <form className={classes.form} noValidate autoComplete={"off"} onSubmit={(e) => onSubmit(e)}>
+                <form className={classes.form} noValidate autoComplete={'off'} onSubmit={(e) => onSubmit(e)}>
                     <Grid container>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 value={state.firstName}
                                 onChange={(e) => onChange(e)}
-                                variant={"outlined"}
-                                margin={"normal"}
+                                variant={'outlined'}
+                                margin={'normal'}
                                 fullWidth
-                                id={"firstName"}
-                                label={"Firstname"}
-                                name={"firstname"}
-                                autoComplete={"firstname"}
+                                id={'firstName'}
+                                label={'Firstname'}
+                                name={'firstname'}
+                                autoComplete={'firstname'}
                                 autoFocus
                                 required
                             />
@@ -77,13 +75,13 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                             <TextField
                                 value={state.lastName}
                                 onChange={(e) => onChange(e)}
-                                variant={"outlined"}
-                                margin={"normal"}
+                                variant={'outlined'}
+                                margin={'normal'}
                                 fullWidth
-                                id={"lastName"}
-                                label={"Lastname"}
-                                name={"lastname"}
-                                autoComplete={"lastname"}
+                                id={'lastName'}
+                                label={'Lastname'}
+                                name={'lastname'}
+                                autoComplete={'lastname'}
                                 required
                             />
                         </Grid>
@@ -91,13 +89,13 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                             <TextField
                                 value={state.email}
                                 onChange={(e) => onChange(e)}
-                                variant={"outlined"}
-                                margin={"normal"}
+                                variant={'outlined'}
+                                margin={'normal'}
                                 fullWidth
-                                id={"email"}
-                                label={"Email"}
-                                name={"email"}
-                                autoComplete={"email"}
+                                id={'email'}
+                                label={'Email'}
+                                name={'email'}
+                                autoComplete={'email'}
                                 required
                             />
                         </Grid>
@@ -105,21 +103,21 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                             <TextField
                                 value={state.password}
                                 onChange={(e) => onChange(e)}
-                                variant={"outlined"}
-                                margin={"normal"}
+                                variant={'outlined'}
+                                margin={'normal'}
                                 fullWidth
-                                id={"password"}
-                                type={"password"}
-                                label={"Password"}
-                                name={"password"}
-                                autoComplete={"password"}
+                                id={'password'}
+                                type={'password'}
+                                label={'Password'}
+                                name={'password'}
+                                autoComplete={'password'}
                                 required
                             />
                         </Grid>
                     </Grid>
                     <Button
                         className={classes.submit}
-                        color={"primary"}
+                        color={'primary'}
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -128,7 +126,7 @@ const SignUp = ({handleSignUp}: SignUpProps) => {
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link component={RouterLink} to={"/"} variant="body2">
+                            <Link component={RouterLink} to={'/'} variant="body2">
                                 Already have an account? Sign in
                             </Link>
                         </Grid>

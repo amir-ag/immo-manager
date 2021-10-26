@@ -1,8 +1,9 @@
 import React from 'react';
-import {LayoutProps} from "./types";
+import { LayoutProps } from './types';
 import {
     AppBar,
-    Avatar, Button,
+    Avatar,
+    Button,
     Drawer,
     List,
     ListItem,
@@ -10,12 +11,12 @@ import {
     ListItemText,
     makeStyles,
     Toolbar,
-    Typography
-} from "@material-ui/core";
-import {useHistory, useLocation} from "react-router";
-import {format} from 'date-fns'
-import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {logout, selectUser} from "../../slices/userSlice";
+    Typography,
+} from '@material-ui/core';
+import { useHistory, useLocation } from 'react-router';
+import { format } from 'date-fns';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { logout, selectUser } from '../../slices/userSlice';
 
 const drawerWidth = 240;
 
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => {
         page: {
             background: '#f9f9f9',
             width: '100%',
-            padding: theme.spacing(3)
+            padding: theme.spacing(3),
         },
         drawer: {
             width: drawerWidth,
@@ -39,14 +40,14 @@ const useStyles = makeStyles((theme) => {
             background: '#f4f4f4',
         },
         listItem: {
-            padding: theme.spacing(2)
+            padding: theme.spacing(2),
         },
         title: {
-            padding: theme.spacing(2)
+            padding: theme.spacing(2),
         },
         appbar: {
             width: `calc(100% - ${drawerWidth}px)`,
-            background: '#FFFFFF'
+            background: '#FFFFFF',
         },
         toolbar: theme.mixins.toolbar,
         date: {
@@ -61,29 +62,25 @@ const useStyles = makeStyles((theme) => {
         logout: {
             margin: theme.spacing(10, 1),
             padding: theme.spacing(2),
-        }
-    }
-})
+        },
+    };
+});
 
-const Layout = ({children, menuItems}: LayoutProps) => {
-
+const Layout = ({ children, menuItems }: LayoutProps) => {
     const classes = useStyles();
     const history = useHistory();
     const location = useLocation();
     const dispatch = useAppDispatch();
-    const {displayName} = useAppSelector(selectUser);
+    const { displayName } = useAppSelector(selectUser);
 
     return (
         <div className={classes.root}>
-            <AppBar
-                className={classes.appbar}
-                elevation={0}
-            >
+            <AppBar className={classes.appbar} elevation={0}>
                 <Toolbar>
-                    <Typography color={"secondary"} variant={"h5"} className={classes.date}>
+                    <Typography color={'secondary'} variant={'h5'} className={classes.date}>
                         Today is the {format(new Date(), 'do MMMM Y')}
                     </Typography>
-                    <Typography color={"secondary"} variant={"h6"}>
+                    <Typography color={'secondary'} variant={'h6'}>
                         {displayName && displayName}
                     </Typography>
                     <Avatar className={classes.avatar}>A</Avatar>
@@ -91,31 +88,33 @@ const Layout = ({children, menuItems}: LayoutProps) => {
             </AppBar>
             <Drawer
                 className={classes.drawer}
-                variant={"permanent"}
-                anchor={"left"}
-                classes={{paper: classes.drawPaper}}
+                variant={'permanent'}
+                anchor={'left'}
+                classes={{ paper: classes.drawPaper }}
             >
-                <Typography variant={"h5"} className={classes.title}>
+                <Typography variant={'h5'} className={classes.title}>
                     Immo Manager v1
                 </Typography>
 
                 <List className={classes.list}>
-                    {menuItems.map(item => (
+                    {menuItems.map((item) => (
                         <ListItem
                             key={item.text}
                             button
                             onClick={() => history.push(item.path)}
-                            className={`${location.pathname === item.path ? classes.active : undefined} ${classes.listItem}`}
+                            className={`${location.pathname === item.path ? classes.active : undefined} ${
+                                classes.listItem
+                            }`}
                         >
                             <ListItemIcon>{item.icon}</ListItemIcon>
-                            <ListItemText primary={item.text}/>
+                            <ListItemText primary={item.text} />
                         </ListItem>
                     ))}
                 </List>
                 <Button
                     className={classes.logout}
-                    variant={"outlined"}
-                    color={"secondary"}
+                    variant={'outlined'}
+                    color={'secondary'}
                     onClick={() => dispatch(logout())}
                 >
                     Logout
@@ -123,7 +122,7 @@ const Layout = ({children, menuItems}: LayoutProps) => {
             </Drawer>
 
             <div className={classes.page}>
-                <div className={classes.toolbar}/>
+                <div className={classes.toolbar} />
                 {children}
             </div>
         </div>

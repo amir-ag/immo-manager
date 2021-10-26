@@ -1,10 +1,9 @@
-import {Component} from "react";
+import { Component } from 'react';
 
 interface ErrorBoundaryProps {}
 interface ErrorBoundaryState {
     hasError: boolean;
 }
-
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     constructor(props: ErrorBoundaryProps) {

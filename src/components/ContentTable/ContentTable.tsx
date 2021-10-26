@@ -8,8 +8,8 @@ import {
     TableContainer,
     TableHead,
     TablePagination,
-    TableRow
-} from "@material-ui/core";
+    TableRow,
+} from '@material-ui/core';
 
 const useStyles = makeStyles({
     table: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 });
 
 function createData(firstName: string, lastName: string, address: string, phone: string, role: string) {
-    return {firstName, lastName, address, phone, role};
+    return { firstName, lastName, address, phone, role };
 }
 
 const rows = [
@@ -37,7 +37,6 @@ const rows = [
 ];
 
 const ContentTable = () => {
-
     const classes = useStyles();
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [page, setPage] = React.useState(0);
@@ -53,28 +52,26 @@ const ContentTable = () => {
 
     return (
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label={"people table"}>
+            <Table className={classes.table} aria-label={'people table'}>
                 <TableHead>
                     <TableRow>
                         <TableCell>First Name</TableCell>
-                        <TableCell align={"right"}>Last Name</TableCell>
-                        <TableCell align={"right"}>Address</TableCell>
-                        <TableCell align={"right"}>Phone</TableCell>
-                        <TableCell align={"right"}>Role</TableCell>
+                        <TableCell align={'right'}>Last Name</TableCell>
+                        <TableCell align={'right'}>Address</TableCell>
+                        <TableCell align={'right'}>Phone</TableCell>
+                        <TableCell align={'right'}>Role</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows
-                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                        .map((row, index) => (
+                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
                         <TableRow key={index}>
-                            <TableCell component={"th"} scope={"row"}>
+                            <TableCell component={'th'} scope={'row'}>
                                 {row.firstName}
                             </TableCell>
-                            <TableCell align={"right"}>{row.lastName}</TableCell>
-                            <TableCell align={"right"}>{row.address}</TableCell>
-                            <TableCell align={"right"}>{row.phone}</TableCell>
-                            <TableCell align={"right"}>{row.role}</TableCell>
+                            <TableCell align={'right'}>{row.lastName}</TableCell>
+                            <TableCell align={'right'}>{row.address}</TableCell>
+                            <TableCell align={'right'}>{row.phone}</TableCell>
+                            <TableCell align={'right'}>{row.role}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

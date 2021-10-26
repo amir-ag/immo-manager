@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-    Button,
-    Container,
-    makeStyles,
-    Paper,
-    Typography
-} from "@material-ui/core";
+import { Button, Container, makeStyles, Paper, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import {grey} from "@material-ui/core/colors";
-import {Peopleprops} from "./types";
+import { grey } from '@material-ui/core/colors';
+import { Peopleprops } from './types';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -20,18 +14,17 @@ const useStyles = makeStyles((theme) => ({
     headerContainer: {
         display: 'flex',
         borderBottom: `1px solid ${grey[300]}`,
-        padding: theme.spacing(2)
+        padding: theme.spacing(2),
     },
-}))
+}));
 
-const People = ({setOpenModal}: Peopleprops) => {
-
+const People = ({ setOpenModal }: Peopleprops) => {
     const classes = useStyles();
 
     return (
         <Paper elevation={0}>
             <Container className={classes.headerContainer} maxWidth="xl">
-                <Typography variant={"h6"} className={classes.header}>
+                <Typography variant={'h6'} className={classes.header}>
                     Create new People
                 </Typography>
                 <Button
@@ -39,7 +32,7 @@ const People = ({setOpenModal}: Peopleprops) => {
                     variant="contained"
                     color="primary"
                     className={classes.button}
-                    endIcon={<AddIcon/>}
+                    endIcon={<AddIcon />}
                 >
                     New
                 </Button>

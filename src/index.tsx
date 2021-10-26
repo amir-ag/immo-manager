@@ -2,15 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App/App';
-import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
-import theme from "./theme/theme";
-import {ThemeProvider} from '@material-ui/core/styles';
-import {Provider} from "react-redux";
-import {store} from './store/store'
-import {firebaseConfig} from "./firebase";
-import {initializeApp} from "firebase/app";
-import { getFirestore } from "firebase/firestore"
-
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import theme from './theme/theme';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import { firebaseConfig } from './firebase';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 
 initializeApp(firebaseConfig);
 export const db = getFirestore();
@@ -20,7 +19,7 @@ ReactDOM.render(
         <ThemeProvider theme={theme}>
             <ErrorBoundary>
                 <Provider store={store}>
-                    <App/>
+                    <App />
                 </Provider>
             </ErrorBoundary>
         </ThemeProvider>
