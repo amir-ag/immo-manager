@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Layout from '../Layout/Layout';
-import PeopleContainer from '../People/people-container';
+import PersonsContainer from '../../containers/persons-container';
 import routes from '../../routes/constant';
-import PropertyContainer from '../Property/property-container';
+import PropertyContainer from '../../containers/property-container';
 import { DashboardProps } from './types';
 
 const Dashboard = ({ menuItems }: DashboardProps) => {
@@ -15,7 +15,7 @@ const Dashboard = ({ menuItems }: DashboardProps) => {
                         <PropertyContainer />
                     </Route>
                     <Route path={routes.PEOPLE}>
-                        <PeopleContainer />
+                        <PersonsContainer />
                     </Route>
                 </Switch>
             </Layout>
