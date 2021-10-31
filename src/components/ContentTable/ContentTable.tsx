@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    IconButton,
     makeStyles,
     Paper,
     Table,
@@ -10,14 +11,20 @@ import {
     TablePagination,
     TableRow,
 } from '@material-ui/core';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
     },
+    buttonIcons: {
+        display: 'flex',
+    },
 });
 
 export type PersonType = {
+    id: string;
     firstName: string;
     lastName: string;
     birthday?: string | null;
@@ -34,9 +41,10 @@ export type PersonType = {
 
 type ContentTableProps = {
     personsData: PersonType[];
+    handleDelete: (id: string) => void;
 };
 
-const ContentTable = ({ personsData }: ContentTableProps) => {
+const ContentTable = ({ personsData, handleDelete }: ContentTableProps) => {
     const classes = useStyles();
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [page, setPage] = React.useState(0);
@@ -55,7 +63,8 @@ const ContentTable = ({ personsData }: ContentTableProps) => {
             <Table className={classes.table} aria-label={'people table'}>
                 <TableHead>
                     <TableRow>
-                        <TableCell>First Name</TableCell>
+                        <TableCell>Actions</TableCell>
+                        <TableCell align={'right'}>First Name</TableCell>
                         <TableCell align={'right'}>Last Name</TableCell>
                         <TableCell align={'right'}>Address</TableCell>
                         <TableCell align={'right'}>Email</TableCell>
@@ -71,9 +80,15 @@ const ContentTable = ({ personsData }: ContentTableProps) => {
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row, index) => (
                             <TableRow key={index}>
-                                <TableCell component={'th'} scope={'row'}>
-                                    {row.firstName}
+                                <TableCell className={classes.buttonIcons}>
+                                    <IconButton aria-label={'edit'}>
+                                        <EditOutlinedIcon />
+                                    </IconButton>
+                                    <IconButton aria-label={'delete'} onClick={() => handleDelete(row.id)}>
+                                        <DeleteOutlineIcon />
+                                    </IconButton>
                                 </TableCell>
+                                <TableCell scope={'row'}>{row.firstName}</TableCell>
                                 <TableCell align={'right'}>{row.lastName}</TableCell>
                                 <TableCell
                                     align={'right'}

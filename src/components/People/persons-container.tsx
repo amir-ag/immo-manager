@@ -3,7 +3,7 @@ import Persons from './Persons';
 import PeopleModal from '../PeopleModal/PeopleModal';
 import { roles } from '../../appConfig';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { createPerson, getPersons, selectPersons } from '../../slices/personsSlice';
+import { createPerson, deletePerson, getPersons, selectPersons } from '../../slices/personsSlice';
 import ContentTable from '../ContentTable/ContentTable';
 
 const emptyForm = {
@@ -65,16 +65,19 @@ const PersonsContainer = () => {
 
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
-        console.log('state: ', state);
         dispatch(createPerson(state));
         setState(emptyForm);
         setOpenModal(false);
     };
 
+    const handleDelete = (id: string) => {
+        dispatch(deletePerson(id));
+    };
+
     return (
         <>
             <Persons setOpenModal={setOpenModal} />
-            {personsData && <ContentTable personsData={personsData} />}
+            {personsData && <ContentTable personsData={personsData} handleDelete={handleDelete} />}
             {openModal && (
                 <PeopleModal
                     openModal={openModal}
