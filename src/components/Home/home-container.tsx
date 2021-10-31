@@ -14,7 +14,7 @@ const HomeContainer = () => {
         if (uid && uid?.length > 0) {
             history.push('/dashboard');
         }
-    }, [uid]);
+    }, [uid, history]);
 
     const handleSignIn = (state: SignInState) => {
         dispatch(login(state));

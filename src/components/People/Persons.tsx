@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const People = ({ setOpenModal }: Peopleprops) => {
+const Persons = ({ setOpenModal }: Peopleprops) => {
     const classes = useStyles();
 
     return (
@@ -41,4 +41,4 @@ const People = ({ setOpenModal }: Peopleprops) => {
     );
 };
 
-export default People;
+export default Persons;

@@ -1,10 +1,10 @@
-import React, { FormEvent, useState } from 'react';
-import People from './People';
-import Table from '../ContentTable/ContentTable';
+import React, { FormEvent, useEffect, useState } from 'react';
+import Persons from './Persons';
 import PeopleModal from '../PeopleModal/PeopleModal';
 import { roles } from '../../appConfig';
-import { useAppDispatch } from '../../store/hooks';
-import { createPerson } from '../../slices/peopleSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { createPerson, getPersons, selectPersons } from '../../slices/personsSlice';
+import ContentTable from '../ContentTable/ContentTable';
 
 const emptyForm = {
     firstName: '',
@@ -21,12 +21,17 @@ const emptyForm = {
     type: '',
 };
 
-const PeopleContainer = () => {
+const PersonsContainer = () => {
     const dispatch = useAppDispatch();
     const [openModal, setOpenModal] = useState(false);
     const [state, setState] = useState({
         ...emptyForm,
     });
+    const personsData = useAppSelector(selectPersons);
+
+    useEffect(() => {
+        dispatch(getPersons());
+    }, [dispatch]);
 
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setState((prevState) => ({
@@ -68,8 +73,8 @@ const PeopleContainer = () => {
 
     return (
         <>
-            <People setOpenModal={setOpenModal} />
-            <Table />
+            <Persons setOpenModal={setOpenModal} />
+            {personsData && <ContentTable personsData={personsData} />}
             {openModal && (
                 <PeopleModal
                     openModal={openModal}
@@ -87,4 +92,4 @@ const PeopleContainer = () => {
     );
 };
 
-export default PeopleContainer;
+export default PersonsContainer;
