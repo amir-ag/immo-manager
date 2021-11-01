@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    IconButton,
     makeStyles,
     Paper,
     Table,
@@ -10,33 +11,40 @@ import {
     TablePagination,
     TableRow,
 } from '@material-ui/core';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
     },
+    buttonIcons: {
+        display: 'flex',
+    },
 });
 
-function createData(firstName: string, lastName: string, address: string, phone: string, role: string) {
-    return { firstName, lastName, address, phone, role };
-}
+export type PersonType = {
+    id: string;
+    firstName: string;
+    lastName: string;
+    birthday?: string | null;
+    street: string;
+    houseNumber: string;
+    zip: number | null;
+    city: string;
+    email: string;
+    mobilePhone: number | null;
+    landline?: number | null;
+    role: string;
+    type: string;
+};
 
-const rows = [
-    createData('Peter', 'Meyer', 'Rigiweg 4, 8008 Zürich', '079265485', 'Tenant'),
-    createData('Lara', 'Peters', 'Kappelle 10, 8008 Zürich', '079426585', 'Owner'),
-    createData('Kris', 'Hofer', 'Seefeldstrasse 120, 8008 Zürich', '079256585', 'Tenant'),
-    createData('Jason', 'Wright', 'Quai 444, 8002 Zürich', '079265485', 'Tenant'),
-    createData('Recep', 'Erdogan', 'Platz 1, 8001 Visp', '079246585', 'Tenant'),
-    createData('Laurent', 'Meyer', 'Sonne 4, 8008 Erlenbach', '079265485', 'Tenant'),
-    createData('Ismael', 'Peters', 'Hofbach 10, 8008 Entlisau', '079426585', 'Owner'),
-    createData('Stefano', 'Hofer', 'Seebach 120, 8008 Dübendorf', '079256585', 'Tenant'),
-    createData('Xixhuan', 'Wright', 'Römerhof 444, 8002 Zürich', '079265485', 'Tenant'),
-    createData('Tomi', 'Erdogan', 'Rieterstrasse 1, 8001 Uster', '079246585', 'Tenant'),
-    createData('Peterli', 'Sohn', 'Stettbacherweg 444, 8002 Zürich', '079265485', 'Tenant'),
-    createData('Saanvika', 'Lakshmi', 'Rieterstrasse 1, 8001 Uster', '079246585', 'Tenant'),
-];
+type ContentTableProps = {
+    personsData: PersonType[];
+    handleDelete: (id: string) => void;
+};
 
-const ContentTable = () => {
+const ContentTable = ({ personsData, handleDelete }: ContentTableProps) => {
     const classes = useStyles();
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [page, setPage] = React.useState(0);
@@ -55,31 +63,50 @@ const ContentTable = () => {
             <Table className={classes.table} aria-label={'people table'}>
                 <TableHead>
                     <TableRow>
-                        <TableCell>First Name</TableCell>
+                        <TableCell>Actions</TableCell>
+                        <TableCell align={'right'}>First Name</TableCell>
                         <TableCell align={'right'}>Last Name</TableCell>
                         <TableCell align={'right'}>Address</TableCell>
+                        <TableCell align={'right'}>Email</TableCell>
+                        <TableCell align={'right'}>Mobile Phone</TableCell>
                         <TableCell align={'right'}>Phone</TableCell>
+                        <TableCell align={'right'}>Birthday</TableCell>
                         <TableCell align={'right'}>Role</TableCell>
+                        <TableCell align={'right'}>Type</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
-                        <TableRow key={index}>
-                            <TableCell component={'th'} scope={'row'}>
-                                {row.firstName}
-                            </TableCell>
-                            <TableCell align={'right'}>{row.lastName}</TableCell>
-                            <TableCell align={'right'}>{row.address}</TableCell>
-                            <TableCell align={'right'}>{row.phone}</TableCell>
-                            <TableCell align={'right'}>{row.role}</TableCell>
-                        </TableRow>
-                    ))}
+                    {personsData
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                        .map((row, index) => (
+                            <TableRow key={index}>
+                                <TableCell className={classes.buttonIcons}>
+                                    <IconButton aria-label={'edit'}>
+                                        <EditOutlinedIcon />
+                                    </IconButton>
+                                    <IconButton aria-label={'delete'} onClick={() => handleDelete(row.id)}>
+                                        <DeleteOutlineIcon />
+                                    </IconButton>
+                                </TableCell>
+                                <TableCell scope={'row'}>{row.firstName}</TableCell>
+                                <TableCell align={'right'}>{row.lastName}</TableCell>
+                                <TableCell
+                                    align={'right'}
+                                >{`${row.street} ${row.houseNumber}, ${row.zip}, ${row.city}`}</TableCell>
+                                <TableCell align={'right'}>{row.email}</TableCell>
+                                <TableCell align={'right'}>{row.mobilePhone}</TableCell>
+                                <TableCell align={'right'}>{row.landline ? row.landline : 'n/a'}</TableCell>
+                                <TableCell align={'right'}>{row.birthday ? row.birthday : 'n/a'}</TableCell>
+                                <TableCell align={'right'}>{row.role}</TableCell>
+                                <TableCell align={'right'}>{row.type}</TableCell>
+                            </TableRow>
+                        ))}
                 </TableBody>
             </Table>
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={rows.length}
+                count={personsData.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
