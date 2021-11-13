@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Layout from '../Layout/Layout';
 import PersonsContainer from '../People/persons-container';
-import routes from '../../routes/constant';
+import routes from '../../routes/route-constants';
 import { DashboardProps } from './types';
 import PropertyContainer from '../Property/property-container';
 
