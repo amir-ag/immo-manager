@@ -13,6 +13,9 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { useHistory, useLocation } from 'react-router';
 import { format } from 'date-fns';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout, selectUser } from '../../store/slices/user.slice';
