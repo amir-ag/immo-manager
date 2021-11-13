@@ -92,6 +92,15 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
     const { displayName } = useAppSelector(selectUser);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        history.push('profile');
+        setAnchorEl(null);
+    };
 
     return (
         <div className={classes.root}>
@@ -103,7 +112,19 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                     <Typography color={'secondary'} variant={'h6'}>
                         {displayName && displayName}
                     </Typography>
-                    <Avatar className={classes.avatar}>A</Avatar>
+                    <div onClick={handleClick} aria-controls="user-menu" aria-haspopup="true">
+                        <Avatar className={classes.avatar}>A</Avatar>
+                    </div>
+                    <Menu
+                        id="user-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                    >
+                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    </Menu>
                 </Toolbar>
             </AppBar>
             <Drawer
