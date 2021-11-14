@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store/store';
-import { collection, addDoc, query, where, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../index';
-import { PersonType } from '../components/ContentTable/ContentTable';
+import { RootState } from '../store';
+import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../index';
+import { PersonModel } from '../../components/persons/person.model';
 
 interface PersonData {
     firstName: string;
@@ -20,11 +20,13 @@ interface PersonData {
     id?: string;
 }
 
+const dbName = 'persons';
+
 export const createPerson = createAsyncThunk('persons/create', async (personData: PersonData, thunkAPI) => {
     try {
         const state = thunkAPI.getState() as RootState;
         const uid = state?.user?.uid;
-        const docRef = await addDoc(collection(db, 'people'), {
+        const docRef = await addDoc(collection(db, dbName), {
             ...personData,
             createdBy: uid,
         });
@@ -39,7 +41,7 @@ export const getPersons = createAsyncThunk('persons/getPersons', async (_, thunk
     try {
         const state = thunkAPI.getState() as RootState;
         const uid = state?.user?.uid;
-        const q = query(collection(db, 'people'), where('createdBy', '==', uid));
+        const q = query(collection(db, dbName), where('createdBy', '==', uid));
         const querySnapshot = await getDocs(q);
         const data: any[] = [];
         querySnapshot.forEach((doc) => {
@@ -54,7 +56,7 @@ export const getPersons = createAsyncThunk('persons/getPersons', async (_, thunk
 
 export const deletePerson = createAsyncThunk('persons/deletePerson', async (id: string, thunkAPI) => {
     try {
-        await deleteDoc(doc(db, 'people', `${id}`));
+        await deleteDoc(doc(db, dbName, `${id}`));
         return thunkAPI.getState();
     } catch (e) {
         console.error('Error deleting document: ', e);
@@ -63,7 +65,7 @@ export const deletePerson = createAsyncThunk('persons/deletePerson', async (id: 
 
 export const personsSlice = createSlice({
     name: 'persons',
-    initialState: [] as PersonType[],
+    initialState: [] as PersonModel[],
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getPersons.fulfilled, (state, action: PayloadAction<any>) => {

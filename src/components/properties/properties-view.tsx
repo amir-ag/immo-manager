@@ -9,7 +9,7 @@ import {
     Typography,
 } from '@material-ui/core';
 import { properties } from './dummy-properties';
-import PropertyCard from './property-card/property-card';
+import PropertyCard from './card/property-card';
 import AddIcon from '@material-ui/icons/Add';
 import { Search } from '@material-ui/icons';
 

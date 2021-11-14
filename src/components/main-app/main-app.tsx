@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Layout from '../Layout/Layout';
-import PersonsContainer from '../People/persons-container';
+import Layout from '../layout/layout';
+import PersonsContainer from '../persons/persons.container';
 import routes from '../../routes/route-constants';
-import { PropertiesContainer } from '../properties/properties-container';
-import { DashboardContainer } from '../dashboard/dashboard-container';
-import { RentScheduleContainer } from '../rent-schedule/rent-schedule-container';
+import { PropertiesContainer } from '../properties/properties.container';
+import { DashboardContainer } from '../dashboard/dashboard.container';
+import { RentScheduleContainer } from '../rent-schedule/rent-schedule.container';
 
 // Props
 type MainAppProps = {

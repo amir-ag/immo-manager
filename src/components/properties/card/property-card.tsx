@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@material-ui/core';
-import { PropertyModel } from '../property-model';
+import { PropertyModel } from '../property.model';
 import { Edit } from '@material-ui/icons';
 
 const PropertyCard = ({ egid, name, address }: PropertyModel) => {

@@ -1,10 +1,11 @@
-import Home from './Home';
+import Home from './home';
 import { useHistory } from 'react-router';
 import React, { useEffect } from 'react';
-import { SignInState, SignUpState } from './types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { login, selectUser, signup } from '../../slices/userSlice';
+import { login, selectUser, signup } from '../../store/slices/user.slice';
 import routes from '../../routes/route-constants';
+import { SignInState } from '../sign-in/sign-in';
+import { SignUpState } from '../sign-up/sign-up';
 
 const HomeContainer = () => {
     let history = useHistory();

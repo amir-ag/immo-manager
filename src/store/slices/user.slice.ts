@@ -1,9 +1,9 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../store/store';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '../store';
 import {
+    createUserWithEmailAndPassword,
     getAuth,
     signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
     signOut,
     updateProfile,
 } from 'firebase/auth';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 import {
     Backdrop,
     Box,
@@ -12,7 +12,33 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-import { PeopleModalProps } from './types';
+
+type ModalState = {
+    firstName: string;
+    lastName: string;
+    birthday?: string | null;
+    street: string;
+    houseNumber: string;
+    zip: number | null;
+    city: string;
+    email: string;
+    mobilePhone: number | null;
+    landline?: number | null;
+    role: string;
+    type: string;
+};
+
+export type PeopleModalProps = {
+    openModal: boolean;
+    setOpenModal: Dispatch<SetStateAction<boolean>>;
+    handleSubmit: (e: FormEvent<HTMLElement>) => void;
+    state: ModalState;
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+    onChangeRole: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+    onChangeType: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+    onChangeDate: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+    roles: { value: string }[];
+};
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -31,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const PeopleModal = ({
+const PersonModal = ({
     openModal,
     setOpenModal,
     handleSubmit,
@@ -246,4 +272,4 @@ const PeopleModal = ({
     );
 };
 
-export default PeopleModal;
+export default PersonModal;

@@ -1,10 +1,10 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import Persons from './Persons';
-import PeopleModal from '../PeopleModal/PeopleModal';
-import { roles } from './person-roles-model';
+import PersonsView from './persons-view';
+import PersonModal from './modal/person-modal';
+import { roles } from './person-roles.model';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { createPerson, deletePerson, getPersons, selectPersons } from '../../slices/personsSlice';
-import ContentTable from '../ContentTable/ContentTable';
+import { createPerson, deletePerson, getPersons, selectPersons } from '../../store/slices/persons.slice';
+import PersonsTable from './table/persons-table';
 
 const emptyForm = {
     firstName: '',
@@ -76,10 +76,10 @@ const PersonsContainer = () => {
 
     return (
         <>
-            <Persons setOpenModal={setOpenModal} />
-            {personsData && <ContentTable personsData={personsData} handleDelete={handleDelete} />}
+            <PersonsView setOpenModal={setOpenModal} />
+            {personsData && <PersonsTable personsData={personsData} handleDelete={handleDelete} />}
             {openModal && (
-                <PeopleModal
+                <PersonModal
                     openModal={openModal}
                     setOpenModal={setOpenModal}
                     handleSubmit={handleSubmit}

@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import { PersonModel } from '../person.model';
 
 const useStyles = makeStyles({
     table: {
@@ -23,28 +24,12 @@ const useStyles = makeStyles({
     },
 });
 
-export type PersonType = {
-    id: string;
-    firstName: string;
-    lastName: string;
-    birthday?: string | null;
-    street: string;
-    houseNumber: string;
-    zip: number | null;
-    city: string;
-    email: string;
-    mobilePhone: number | null;
-    landline?: number | null;
-    role: string;
-    type: string;
-};
-
 type ContentTableProps = {
-    personsData: PersonType[];
+    personsData: PersonModel[];
     handleDelete: (id: string) => void;
 };
 
-const ContentTable = ({ personsData, handleDelete }: ContentTableProps) => {
+const PersonsTable = ({ personsData, handleDelete }: ContentTableProps) => {
     const classes = useStyles();
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [page, setPage] = React.useState(0);
@@ -116,4 +101,4 @@ const ContentTable = ({ personsData, handleDelete }: ContentTableProps) => {
     );
 };
 
-export default ContentTable;
+export default PersonsTable;

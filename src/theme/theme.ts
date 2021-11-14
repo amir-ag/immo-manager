@@ -13,9 +13,6 @@ const theme = createTheme({
             default: '#fff',
         },
     },
-    error: {
-        main: '#ef5350',
-    },
     typography: {
         fontFamily: 'Quicksand',
         fontWeightLight: 400,

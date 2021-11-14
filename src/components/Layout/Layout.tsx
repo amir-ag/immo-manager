@@ -1,5 +1,4 @@
 import React from 'react';
-import { LayoutProps } from './types';
 import { ReactComponent as ImmoLogo } from '../../assets/svg/logo.svg';
 import {
     AppBar,
@@ -16,9 +15,20 @@ import {
 } from '@material-ui/core';
 import { format } from 'date-fns';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { logout, selectUser } from '../../slices/userSlice';
+import { logout, selectUser } from '../../store/slices/user.slice';
 import { NavLink } from 'react-router-dom';
 import routes from '../../routes/route-constants';
+
+export type LayoutProps = {
+    children: React.ReactNode;
+    menuItems: MenuItems[];
+};
+
+type MenuItems = {
+    text: string;
+    icon: JSX.Element;
+    path: string;
+};
 
 const drawerWidth = 240;
 

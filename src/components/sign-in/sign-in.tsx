@@ -13,8 +13,16 @@ import {
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { SignInProps } from './types';
 import routes from '../../routes/route-constants';
+
+export type SignInProps = {
+    handleSignIn: (state: SignInState) => void;
+};
+
+export type SignInState = {
+    email: string;
+    password: string;
+};
 
 const useStyles = makeStyles((theme) => ({
     paper: {

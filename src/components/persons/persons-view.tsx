@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Button, Container, makeStyles, Paper, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { grey } from '@material-ui/core/colors';
-import { Peopleprops } from './types';
+
+export type PeopleProps = {
+    setOpenModal: Dispatch<SetStateAction<boolean>>;
+};
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -18,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Persons = ({ setOpenModal }: Peopleprops) => {
+const PersonsView = ({ setOpenModal }: PeopleProps) => {
     const classes = useStyles();
 
     return (
@@ -41,4 +44,4 @@ const Persons = ({ setOpenModal }: Peopleprops) => {
     );
 };
 
-export default Persons;
+export default PersonsView;

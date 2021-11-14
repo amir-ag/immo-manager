@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/App/App';
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import App from './components/app/app';
+import ErrorBoundary from './components/error/error-boundary';
 import theme from './theme/theme';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
