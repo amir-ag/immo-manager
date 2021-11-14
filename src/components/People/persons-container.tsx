@@ -1,7 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import Persons from './Persons';
 import PeopleModal from '../PeopleModal/PeopleModal';
-import { roles } from '../../appConfig';
+import { roles } from './person-roles-model';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { createPerson, deletePerson, getPersons, selectPersons } from '../../slices/personsSlice';
 import ContentTable from '../ContentTable/ContentTable';

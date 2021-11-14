@@ -3,6 +3,7 @@ import { Avatar, Button, Grid, Link, makeStyles, Paper, TextField, Typography } 
 import { Link as RouterLink } from 'react-router-dom';
 import { SignUpProps } from './types';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import routes from '../../routes/route-constants';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -126,7 +127,7 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link component={RouterLink} to={'/'} variant="body2">
+                            <Link component={RouterLink} to={routes.HOME} variant="body2">
                                 Already have an account? Sign in
                             </Link>
                         </Grid>

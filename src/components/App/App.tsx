@@ -17,7 +17,7 @@ function App() {
                     <Route exact path={routes.SIGNUP}>
                         <HomeRoute />
                     </Route>
-                    <PrivateRoute exact={true} component={DashboardRoute} path={routes.DASHBOARD} />
+                    <PrivateRoute exact={false} component={DashboardRoute} path={routes.AUTHENTICATED_AREA} />
                 </Switch>
             </Router>
         </div>

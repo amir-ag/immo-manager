@@ -1,11 +1,12 @@
 const routes = {
     HOME: '/',
     SIGNUP: '/signup',
-    DASHBOARD: '/dashboard',
-    PEOPLE: '/dashboard/people',
-    PROFILE: '/profile',
-    PROPERTIES: '/properties',
-    RENT_SCHEDULE: '/rent-schedule',
+    AUTHENTICATED_AREA: '/app',
+    DASHBOARD: '/app/dashboard',
+    PERSONS: '/app/persons',
+    PROFILE: '/app/profile',
+    PROPERTIES: '/app/properties',
+    RENT_SCHEDULE: '/app/rent-schedule',
 };
 
 export default routes;

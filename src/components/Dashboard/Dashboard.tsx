@@ -14,7 +14,7 @@ const Dashboard = ({ menuItems }: DashboardProps) => {
                     <Route exact path={routes.DASHBOARD}>
                         <PropertiesContainer />
                     </Route>
-                    <Route path={routes.PEOPLE}>
+                    <Route path={routes.PERSONS}>
                         <PersonsContainer />
                     </Route>
                 </Switch>

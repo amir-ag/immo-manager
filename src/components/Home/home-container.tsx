@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { SignInState, SignUpState } from './types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { login, selectUser, signup } from '../../slices/userSlice';
+import routes from '../../routes/route-constants';
 
 const HomeContainer = () => {
     let history = useHistory();
@@ -12,7 +13,7 @@ const HomeContainer = () => {
 
     useEffect(() => {
         if (uid && uid?.length > 0) {
-            history.push('/dashboard');
+            history.push(routes.DASHBOARD);
         }
     }, [uid, history]);
 
