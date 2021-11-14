@@ -5,17 +5,18 @@ import { Edit } from '@material-ui/icons';
 
 const PropertyCard = ({ egid, name, address }: PropertyModel) => {
     return (
-        <Card>
+        <Card elevation={3}>
             <CardHeader
                 action={
                     <IconButton aria-label="settings">
                         <Edit />
                     </IconButton>
                 }
-                title={name}
+                title={<Typography variant={'h6'}>{name}</Typography>}
                 subheader={`EGID: ${egid}`}
             />
             <CardMedia
+                // TODO: Use native browser lazy loading for image
                 component="img"
                 alt="Property Placeholder Image"
                 height="150"
