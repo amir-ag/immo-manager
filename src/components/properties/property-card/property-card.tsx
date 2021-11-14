@@ -31,7 +31,7 @@ const PropertyCard = ({ egid, name, address }: PropertyModel) => {
                     {`${address.postCode} ${address.city}`}
                 </Typography>
 
-                <Typography variant="body1">
+                <Typography variant="body1" component={'div'}>
                     <ul>
                         <li>5 Rental Unit</li>
                         <li>5 Running Tenancies</li>

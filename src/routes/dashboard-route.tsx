@@ -1,5 +1,5 @@
-import DashboardContainer from '../components/Dashboard/dashboard-container';
+import MainAppContainer from '../components/main-app/main-app-container';
 
 export const DashboardRoute = () => {
-    return <DashboardContainer />;
+    return <MainAppContainer />;
 };

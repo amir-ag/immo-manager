@@ -20,16 +20,11 @@ export const mainMenuEntries = [
     {
         text: 'Properties',
         icon: <HomeWorkIcon fontSize={'large'} color={'secondary'} />,
-        path: 'app/properties',
+        path: routes.PROPERTIES,
     },
-    //{
-    //    text: 'Tenancies',
-    //    icon: <CompareArrowsIcon fontSize={'large'} color={'secondary'} />,
-    //    path: '/tenancies',
-    //},
     {
         text: 'Rent Schedule',
         icon: <AssignmentIcon fontSize={'large'} color={'secondary'} />,
-        path: 'app/rent-schedule',
+        path: routes.RENT_SCHEDULE,
     },
 ];

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Hidden, makeStyles } from '@material-ui/core';
-import { ReactComponent as UrbanDesign } from '../../assets/svg/undraw_urban_design_kpu8.svg';
+import { ReactComponent as UrbanDesign } from '../../assets/svg/home.svg';
 import { HomeProps } from './types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import routes from '../../routes/route-constants';

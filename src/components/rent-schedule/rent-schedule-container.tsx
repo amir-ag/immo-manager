@@ -1,6 +1,6 @@
 import React from 'react';
-import PropertiesView from '../properties/properties-view';
 import { makeStyles, Typography } from '@material-ui/core';
+import { RentSchedule } from './rent-schedule';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -8,15 +8,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const DashboardContainer = () => {
+export const RentScheduleContainer = () => {
     const cssClasses = useStyles();
 
     return (
         <>
             <Typography variant={'h5'} className={cssClasses.title}>
-                Dashboard
+                Rent Schedule
             </Typography>
-            <PropertiesView showHeader={false} />;
+            <RentSchedule />
         </>
     );
 };

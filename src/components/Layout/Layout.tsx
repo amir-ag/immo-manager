@@ -1,5 +1,6 @@
 import React from 'react';
 import { LayoutProps } from './types';
+import { ReactComponent as ImmoLogo } from '../../assets/svg/logo.svg';
 import {
     AppBar,
     Avatar,
@@ -13,10 +14,11 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core';
-import { useHistory, useLocation } from 'react-router';
 import { format } from 'date-fns';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout, selectUser } from '../../slices/userSlice';
+import { NavLink } from 'react-router-dom';
+import routes from '../../routes/route-constants';
 
 const drawerWidth = 240;
 
@@ -36,14 +38,21 @@ const useStyles = makeStyles((theme) => {
         root: {
             display: 'flex',
         },
-        active: {
-            background: '#f4f4f4',
-        },
         listItem: {
+            '&.active': {
+                background: '#8c8c8c',
+            },
+            '&:hover': {
+                background: '#c4c4c4',
+            },
             padding: theme.spacing(2),
         },
-        title: {
+        // TODO: Do proper svg positioning and styling and not this hack
+        logo: {
             padding: theme.spacing(2),
+            width: drawerWidth - 2 * theme.spacing(2),
+            marginBottom: theme.spacing(2),
+            height: '50px',
         },
         appbar: {
             width: `calc(100% - ${drawerWidth}px)`,
@@ -68,8 +77,6 @@ const useStyles = makeStyles((theme) => {
 
 const Layout = ({ children, menuItems }: LayoutProps) => {
     const classes = useStyles();
-    const history = useHistory();
-    const location = useLocation();
     const dispatch = useAppDispatch();
     const { displayName } = useAppSelector(selectUser);
 
@@ -92,19 +99,17 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                 anchor={'left'}
                 classes={{ paper: classes.drawPaper }}
             >
-                <Typography variant={'h5'} className={classes.title}>
-                    Immo Manager v1
-                </Typography>
-
+                <NavLink to={routes.DASHBOARD}>
+                    <ImmoLogo className={classes.logo} />
+                </NavLink>
                 <List className={classes.list}>
                     {menuItems.map((item) => (
                         <ListItem
                             key={item.text}
                             button
-                            onClick={() => history.push(item.path)}
-                            className={`${location.pathname === item.path ? classes.active : undefined} ${
-                                classes.listItem
-                            }`}
+                            component={NavLink}
+                            to={item.path}
+                            className={classes.listItem}
                         >
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={item.text} />
