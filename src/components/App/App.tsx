@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { HomeRoute } from '../../routes/home-route';
-import { DashboardRoute } from '../../routes/dashboard-route';
-import './App.css';
-import routes from '../../routes/constant';
-import PrivateRoute from '../../helpers/PrivateRoute';
+import { HomeRoute } from '../../routes/home.route';
+import { DashboardRoute } from '../../routes/dashboard.route';
+import './app.css';
+import routes from '../../routes/route-constants';
+import PrivateRoute from '../../helpers/private.route';
 
 function App() {
     return (
@@ -17,7 +17,7 @@ function App() {
                     <Route exact path={routes.SIGNUP}>
                         <HomeRoute />
                     </Route>
-                    <PrivateRoute exact={true} component={DashboardRoute} path={routes.DASHBOARD} />
+                    <PrivateRoute exact={false} component={DashboardRoute} path={routes.AUTHENTICATED_AREA} />
                 </Switch>
             </Router>
         </div>

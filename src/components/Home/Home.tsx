@@ -1,11 +1,17 @@
 import React from 'react';
 import { Grid, Hidden, makeStyles } from '@material-ui/core';
-import { ReactComponent as UrbanDesign } from '../../assets/svg/undraw_urban_design_kpu8.svg';
-import { HomeProps } from './types';
+import { ReactComponent as UrbanDesign } from '../../assets/svg/home.svg';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import routes from '../../routes/constant';
-import SignIn from '../SignIn/SignIn';
-import SignUp from '../SignUp/SignUp';
+import routes from '../../routes/route-constants';
+import SignIn, { SignInState } from '../sign-in/sign-in';
+import SignUp, { SignUpState } from '../sign-up/sign-up';
+
+export interface HomeProps {
+    handleSignIn: (state: SignInState) => void;
+    handleSignUp: (state: SignUpState) => void;
+    // state: LoginCredentials,
+    // onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
+}
 
 const useStyles = makeStyles((theme) => ({
     root: {

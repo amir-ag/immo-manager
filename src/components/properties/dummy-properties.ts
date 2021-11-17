@@ -1,0 +1,95 @@
+import { PropertyModel } from './property.model';
+
+export const properties: PropertyModel[] = [
+    {
+        id: '1',
+        owner: 'Petra Zumbühl',
+        type: 'apartment building',
+        egid: '1234',
+        name: 'Mehrfamilienhaus in Genf',
+        yearOfConstruction: 1957,
+        address: {
+            addressLine1: 'Rue de la Croix-Rouge 4',
+            postCode: 1201,
+            city: 'Genf',
+        },
+    },
+    {
+        id: '2',
+        owner: 'Franzi Zürcher',
+        type: 'apartment building',
+        egid: '1235',
+        name: 'Mehrfamilienhaus in Zermatt',
+        yearOfConstruction: 1980,
+        address: {
+            addressLine1: 'Bahnhofstrasse 12a',
+            postCode: 3920,
+            city: 'Zermatt',
+        },
+    },
+    {
+        id: '3',
+        owner: 'Michel Meister',
+        type: 'apartment building',
+        egid: '1236',
+        name: 'Mehrfamilienhaus in Brig',
+        yearOfConstruction: 1975,
+        address: {
+            addressLine1: 'Toblacherweg 12',
+            postCode: 3900,
+            city: 'Brig',
+        },
+    },
+    {
+        id: '4',
+        owner: 'Petra Zumbühl',
+        type: 'apartment building',
+        egid: '1237',
+        name: 'Mehrfamilienhaus in Lugano',
+        yearOfConstruction: 1987,
+        address: {
+            addressLine1: 'Piazza della Riforma 1',
+            postCode: 6900,
+            city: 'Lugano',
+        },
+    },
+    {
+        id: '5',
+        owner: 'Petra Zumbühl',
+        type: 'apartment building',
+        egid: '1238',
+        name: 'Mehrfamilienhaus in Zumikon',
+        yearOfConstruction: 1930,
+        address: {
+            addressLine1: 'Bahnhofstrasse 6',
+            postCode: 8126,
+            city: 'Zumikon',
+        },
+    },
+    {
+        id: '6',
+        owner: 'Petra Zumbühl',
+        type: 'apartment building',
+        egid: '1239',
+        name: 'Mehrfamilienhaus in Zürich',
+        yearOfConstruction: 1957,
+        address: {
+            addressLine1: 'Paradeplatz 3',
+            postCode: 8001,
+            city: 'Zürich',
+        },
+    },
+    {
+        id: '7',
+        owner: 'Hans Meier',
+        type: 'apartment building',
+        egid: '1240',
+        name: 'Mehrfamilienhaus in Luzern',
+        yearOfConstruction: 1957,
+        address: {
+            addressLine1: 'Bahnhofstrasse 13',
+            postCode: 6003,
+            city: 'Luzern',
+        },
+    },
+];
