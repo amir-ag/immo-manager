@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import { format } from 'date-fns';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout, selectUser } from '../../store/slices/user.slice';
@@ -93,6 +93,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
     const dispatch = useAppDispatch();
     const { displayName } = useAppSelector(selectUser);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const history = useHistory();
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
