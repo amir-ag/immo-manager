@@ -1,19 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import {
-    createUserWithEmailAndPassword,
-    getAuth,
-    signInWithEmailAndPassword,
-    signOut,
-    updateProfile,
-} from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../index';
 
 interface UserState {
     email: string;
     accessToken: string;
     uid: string;
     status: string;
-    displayName: string;
+    firstName: string;
+    lastName: string;
 }
 
 const initialState: UserState = {
@@ -21,7 +18,8 @@ const initialState: UserState = {
     accessToken: '',
     uid: '',
     status: '',
-    displayName: '',
+    firstName: '',
+    lastName: '',
 };
 
 type LoginProps = {
@@ -35,6 +33,8 @@ type SignupProps = {
     firstName: string;
     lastName: string;
 };
+
+const dbName = 'users';
 
 export const logout = createAsyncThunk('user/logout', async () => {
     const auth = getAuth();
@@ -52,9 +52,18 @@ export const signup = createAsyncThunk(
         const auth = getAuth();
         await createUserWithEmailAndPassword(auth, email, password);
         const user = auth.currentUser;
-        user && (await updateProfile(user, { displayName: firstName }));
+        user &&
+            (await addDoc(collection(db, dbName), {
+                uid: user.uid,
+                firstName,
+                lastName,
+            }));
         // implement another firebase call to add a user profile to firestore tied to the uid
-        return user;
+        return {
+            ...user,
+            firstName,
+            lastName,
+        };
     }
 );
 
@@ -73,11 +82,13 @@ export const userSlice = createSlice({
             state.status = 'failed';
         });
         builder.addCase(signup.fulfilled, (state, action: PayloadAction<any>) => {
+            console.log('payload: ', action.payload);
             state.status = 'success';
             state.email = action.payload.email;
             state.accessToken = action.payload.accessToken;
             state.uid = action.payload.uid;
-            state.displayName = action.payload.displayName;
+            state.firstName = action.payload.firstName;
+            state.lastName = action.payload.lastName;
         });
         builder.addCase(signup.rejected, (state) => {
             state.status = 'failed';

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Container, makeStyles, Paper, Typography } from '@material-ui/core';
+import { useAppSelector } from '../../store/hooks';
+import { selectUser } from '../../store/slices/user.slice';
 
 const useStyles = makeStyles(() => ({
     profile: {
@@ -24,6 +26,8 @@ const useStyles = makeStyles(() => ({
 
 const Profile = () => {
     const classes = useStyles();
+
+    console.log('user: ', useAppSelector(selectUser));
 
     return (
         <div className={classes.profile}>

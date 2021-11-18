@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => {
 const Layout = ({ children, menuItems }: LayoutProps) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
-    const { displayName } = useAppSelector(selectUser);
+    const { firstName } = useAppSelector(selectUser);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const history = useHistory();
 
@@ -111,7 +111,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                         Today is the {format(new Date(), 'do MMMM Y')}
                     </Typography>
                     <Typography color={'secondary'} variant={'h6'}>
-                        {displayName && displayName}
+                        {firstName && firstName}
                     </Typography>
                     <div onClick={handleClick} aria-controls="user-menu" aria-haspopup="true">
                         <Avatar className={classes.avatar}>A</Avatar>
