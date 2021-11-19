@@ -8,8 +8,8 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-import { properties } from './dummy-properties';
-import PropertyCard from './card/property-card';
+import { dummyProperties } from './dummy-properties';
+import PropertyCard from './property/property-card';
 import AddIcon from '@material-ui/icons/Add';
 import { Search } from '@material-ui/icons';
 
@@ -74,7 +74,7 @@ const PropertiesView = ({ showHeader = true }: PropertiesViewProps) => {
                 </>
             )}
             <Grid container spacing={gridSpacing}>
-                {properties.map((property) => (
+                {dummyProperties.map((property) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={property.id}>
                         <PropertyCard {...property} />
                     </Grid>

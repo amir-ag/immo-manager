@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@material-ui/core';
-import { PropertyModel } from '../property.model';
+import { PropertyModel } from './model/property.model';
 import { Edit } from '@material-ui/icons';
 
 const PropertyCard = ({ egid, name, address }: PropertyModel) => {
@@ -16,10 +16,10 @@ const PropertyCard = ({ egid, name, address }: PropertyModel) => {
                 subheader={`EGID: ${egid}`}
             />
             <CardMedia
-                // TODO: Use native browser lazy loading for image
                 component="img"
                 alt="Property Placeholder Image"
                 height="150"
+                loading="lazy"
                 // TODO: Use local placeholder image
                 image="https://cdn.pixabay.com/photo/2016/11/21/15/09/apartments-1845884_640.jpg"
                 title="Property Placeholder Image"
