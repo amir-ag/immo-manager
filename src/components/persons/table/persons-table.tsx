@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import { PersonModel } from '../person.model';
+import { PersonModel } from '../models/person.model';
 
 const useStyles = makeStyles({
     table: {
