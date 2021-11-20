@@ -24,8 +24,8 @@ import { Edit, Search } from '@material-ui/icons';
 import { dummyOwners } from './dummy-owners';
 import { dummyJanitors } from './dummy-janitors';
 import AddIcon from '@material-ui/icons/Add';
-import { dummyRentalUnits } from '../../rental-units/dummy-rental-units';
-import { RentalUnitModel } from '../../rental-units/model/rental-unit.model';
+import { dummyRentalUnits } from '../../rental-unit/dummy-rental-units';
+import { getNameOfRentalUnit } from '../../rental-unit/rental-unit-detail';
 
 const useStyles = makeStyles((theme) => ({
     thumbnail: {
@@ -41,22 +41,6 @@ const gridSpacing = 4;
 
 export const Property = ({ propertyProps }: { propertyProps: PropertyModel }) => {
     const cssClasses = useStyles();
-
-    const getNameOfRentalUnit = (ru: RentalUnitModel) => {
-        let resultString = '';
-
-        if (ru.type === 'Apartment' || ru.type === 'Hobby Room') {
-            resultString += `${ru.numberOfRooms} Room `;
-        }
-
-        resultString += ru.type;
-
-        if (ru.floorLevel && ru.floorLevel !== 'Undefined') {
-            resultString += `, ${ru.floorLevel}`;
-        }
-
-        return resultString;
-    };
 
     return (
         <>
@@ -104,7 +88,7 @@ export const Property = ({ propertyProps }: { propertyProps: PropertyModel }) =>
                                 required
                             />
                             <Autocomplete
-                                id="combo-box-demo"
+                                id="owner"
                                 // TODO: Use real data from firebase
                                 options={dummyOwners}
                                 getOptionLabel={(owner) =>
@@ -125,7 +109,7 @@ export const Property = ({ propertyProps }: { propertyProps: PropertyModel }) =>
                                 type="number"
                             />
                             <Autocomplete
-                                id="combo-box-demo"
+                                id="janitor"
                                 // TODO: Use real data from firebase
                                 options={dummyJanitors}
                                 getOptionLabel={(owner) =>
@@ -184,7 +168,7 @@ export const Property = ({ propertyProps }: { propertyProps: PropertyModel }) =>
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={7}>
-                    <Typography variant={'h6'}>Rental Objects</Typography>
+                    <Typography variant={'h6'}>Rental Units</Typography>
                     <Grid container spacing={gridSpacing} alignItems={'center'}>
                         <Grid item xs={12} sm={8}>
                             <TextField

@@ -8,6 +8,8 @@ import { DashboardContainer } from '../dashboard/dashboard.container';
 import { RentScheduleContainer } from '../rent-schedule/rent-schedule.container';
 import { Property } from '../properties/property/property';
 import { dummyProperties } from '../properties/dummy-properties';
+import { RentalUnitDetail } from '../rental-unit/rental-unit-detail';
+import { dummyRentalUnits } from '../rental-unit/dummy-rental-units';
 
 // Props
 type MainAppProps = {
@@ -39,6 +41,9 @@ const MainApp = ({ menuItems }: MainAppProps) => {
                     </Route>
                     <Route path={routes.TEMP_PROPERTY}>
                         <Property propertyProps={dummyProperties[0]} />
+                    </Route>
+                    <Route path={routes.TEMP_RENTAL_UNIT}>
+                        <RentalUnitDetail rentalUnitProps={dummyRentalUnits[0]} />
                     </Route>
                 </Switch>
             </Layout>
