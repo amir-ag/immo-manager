@@ -6,7 +6,7 @@ import routes from '../../routes/route-constants';
 import { PropertiesContainer } from '../properties/properties.container';
 import { DashboardContainer } from '../dashboard/dashboard.container';
 import { RentScheduleContainer } from '../rent-schedule/rent-schedule.container';
-import ProfileContainer from '../Profile/Profile-Container';
+import ProfileContainer from '../profile/profile.container';
 
 // Props
 type MainAppProps = {

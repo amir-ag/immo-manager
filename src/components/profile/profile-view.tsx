@@ -22,7 +22,6 @@ const useStyles = makeStyles(() => ({
 
 const Profile = () => {
     const classes = useStyles();
-
     console.log('user: ', useAppSelector(selectUser));
     const { firstName, lastName, email } = useAppSelector(selectUser);
 
@@ -79,7 +78,6 @@ const Profile = () => {
                     </div>
                 </Grid>
             </Grid>
-            {/*</Container>*/}
         </Container>
     );
 };
