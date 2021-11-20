@@ -1,15 +1,11 @@
 import React from 'react';
-import { Container, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Container, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
 import { useAppSelector } from '../../store/hooks';
 import { selectUser } from '../../store/slices/user.slice';
 
 const useStyles = makeStyles(() => ({
     profile: {
         height: '50vh',
-    },
-    mainContainer: {
-        display: 'flex',
-        height: '95%',
     },
     rightContainer: {
         display: 'flex',
@@ -28,24 +24,63 @@ const Profile = () => {
     const classes = useStyles();
 
     console.log('user: ', useAppSelector(selectUser));
+    const { firstName, lastName, email } = useAppSelector(selectUser);
 
     return (
-        <div className={classes.profile}>
+        <Container className={classes.profile} component={Paper} elevation={0}>
             <Typography variant={'h4'}>Profile</Typography>
-            <Container className={classes.mainContainer} component={Paper} elevation={0}>
-                <Container>
+            <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
                     <Typography variant={'body2'}>General Info</Typography>
-                </Container>
-                <Container className={classes.rightContainer}>
+                    <TextField
+                        value={firstName}
+                        // onChange={(e) => onChange(e)}
+                        variant={'outlined'}
+                        margin={'normal'}
+                        fullWidth
+                        id={'firstName'}
+                        label={'Firstname'}
+                        name={'firstname'}
+                        autoComplete={'firstname'}
+                        autoFocus
+                        // required
+                    />
+                    <TextField
+                        value={lastName}
+                        // onChange={(e) => onChange(e)}
+                        variant={'outlined'}
+                        margin={'normal'}
+                        fullWidth
+                        id={'lastName'}
+                        label={'Lastname'}
+                        name={'lastname'}
+                        autoComplete={'lastname'}
+                        // required
+                    />
+                    <TextField
+                        value={email}
+                        // onChange={(e) => onChange(e)}
+                        variant={'outlined'}
+                        margin={'normal'}
+                        fullWidth
+                        id={'email'}
+                        label={'Email'}
+                        name={'email'}
+                        autoComplete={'email'}
+                        // required
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6} className={classes.rightContainer}>
                     <div className={classes.rightTop}>
                         <Typography variant={'body2'}>Address</Typography>
                     </div>
                     <div className={classes.rightBottom}>
                         <Typography variant={'body2'}>Password</Typography>
                     </div>
-                </Container>
-            </Container>
-        </div>
+                </Grid>
+            </Grid>
+            {/*</Container>*/}
+        </Container>
     );
 };
 
