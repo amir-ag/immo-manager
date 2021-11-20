@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../index';
-import { PersonModel } from '../../components/persons/person.model';
+import { PersonModel } from '../../components/persons/models/person.model';
 
 interface PersonData {
     firstName: string;
