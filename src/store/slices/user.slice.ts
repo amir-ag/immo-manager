@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { addDoc, collection } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
 
 interface UserState {
@@ -43,7 +43,20 @@ export const logout = createAsyncThunk('user/logout', async () => {
 
 export const login = createAsyncThunk('user/login', async ({ email, password }: LoginProps) => {
     const auth = getAuth();
-    return await signInWithEmailAndPassword(auth, email, password);
+    const login = await signInWithEmailAndPassword(auth, email, password);
+    const user = login && auth.currentUser;
+    const docRef = user && doc(db, dbName, user.uid);
+    const docSnap = docRef && (await getDoc(docRef));
+
+    if (docSnap && docSnap.exists()) {
+        return {
+            ...login,
+            ...docSnap.data(),
+        };
+    } else {
+        console.log('error, no data available');
+    }
+    return login;
 });
 
 export const signup = createAsyncThunk(
@@ -53,12 +66,12 @@ export const signup = createAsyncThunk(
         await createUserWithEmailAndPassword(auth, email, password);
         const user = auth.currentUser;
         user &&
-            (await addDoc(collection(db, dbName), {
+            (await setDoc(doc(db, dbName, user.uid), {
                 uid: user.uid,
                 firstName,
                 lastName,
+                email: user.email,
             }));
-        // implement another firebase call to add a user profile to firestore tied to the uid
         return {
             ...user,
             firstName,
@@ -74,15 +87,16 @@ export const userSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
             state.status = 'success';
-            state.email = action.payload.user.email;
-            state.accessToken = action.payload.user.stsTokenManager.accessToken;
-            state.uid = action.payload.user.uid;
+            state.email = action.payload.email;
+            state.accessToken = action.payload.user.accessToken;
+            state.uid = action.payload.uid;
+            state.firstName = action.payload.firstName;
+            state.lastName = action.payload.lastName;
         });
         builder.addCase(login.rejected, (state) => {
             state.status = 'failed';
         });
         builder.addCase(signup.fulfilled, (state, action: PayloadAction<any>) => {
-            console.log('payload: ', action.payload);
             state.status = 'success';
             state.email = action.payload.email;
             state.accessToken = action.payload.accessToken;
