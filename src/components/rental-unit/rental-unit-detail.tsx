@@ -19,6 +19,7 @@ import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import { rentalUnitfloorLevel, RentalUnitModel, rentalUnitType } from './model/rental-unit.model';
 import { dummyTenancies } from '../tenancy/dummy-tenancies';
+import { format } from 'date-fns';
 
 export const getNameOfRentalUnit = (ru: RentalUnitModel) => {
     let resultString = '';
@@ -165,9 +166,13 @@ export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalU
                                         <TableCell>{t.tenant}</TableCell>
                                         {/* TODO: Use data from firestore */}
                                         <TableCell align="right">
-                                            {t.beginOfContract.toTimeString()}
+                                            {t.beginOfContract
+                                                ? format(t.beginOfContract, 'dd.MM.yyyy')
+                                                : '-'}
                                         </TableCell>
-                                        <TableCell align="right">{t.endOfContract?.toString()}</TableCell>
+                                        <TableCell align="right">
+                                            {t.endOfContract ? format(t.endOfContract, 'dd.MM.yyyy') : '-'}
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
