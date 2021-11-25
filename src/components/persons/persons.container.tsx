@@ -7,18 +7,18 @@ import { createPerson, deletePerson, getPersons, selectPersons } from '../../sto
 import PersonsTable from './table/persons-table';
 
 const emptyForm = {
+    company: '',
     firstName: '',
     lastName: '',
     birthday: '',
     street: '',
-    houseNumber: '',
+    houseNumber: null,
     zip: null,
     city: '',
     email: '',
     mobilePhone: null,
     landline: null,
     role: '',
-    type: '',
 };
 
 const PersonsContainer = () => {
@@ -40,19 +40,12 @@ const PersonsContainer = () => {
         }));
     };
 
-    // find a way to include 'onChangeRole' and 'onChangeType' in 'onChange', problem: e.target.id is undefined
+    // find a way to include 'onChangeRole' in 'onChange', problem: e.target.id is undefined
 
     const onChangeRole = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setState((prevState) => ({
             ...prevState,
             role: e.target.value,
-        }));
-    };
-
-    const onChangeType = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setState((prevState) => ({
-            ...prevState,
-            type: e.target.value,
         }));
     };
 
@@ -86,7 +79,6 @@ const PersonsContainer = () => {
                     state={state}
                     onChange={onChange}
                     onChangeRole={onChangeRole}
-                    onChangeType={onChangeType}
                     onChangeDate={onChangeDate}
                     roles={roles}
                 />

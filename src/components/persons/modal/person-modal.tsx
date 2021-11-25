@@ -14,18 +14,18 @@ import {
 } from '@material-ui/core';
 
 type ModalState = {
+    company: string;
     firstName: string;
     lastName: string;
     birthday?: string | null;
     street: string;
-    houseNumber: string;
+    houseNumber: number | null;
     zip: number | null;
     city: string;
     email: string;
     mobilePhone: number | null;
     landline?: number | null;
     role: string;
-    type: string;
 };
 
 export type PeopleModalProps = {
@@ -35,7 +35,6 @@ export type PeopleModalProps = {
     state: ModalState;
     onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
     onChangeRole: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-    onChangeType: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
     onChangeDate: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
     roles: { value: string }[];
 };
@@ -55,6 +54,15 @@ const useStyles = makeStyles((theme) => ({
     date: {
         width: '100%',
     },
+    company: {
+        margin: 0,
+    },
+    submit: {
+        marginTop: '5%',
+    },
+    selectRole: {
+        width: '100%',
+    },
 }));
 
 const PersonModal = ({
@@ -64,7 +72,6 @@ const PersonModal = ({
     state,
     onChange,
     onChangeRole,
-    onChangeType,
     onChangeDate,
     roles,
 }: PeopleModalProps) => {
@@ -86,26 +93,29 @@ const PersonModal = ({
             <Fade in={openModal}>
                 <Paper className={classes.paper}>
                     <Typography component="h1" variant="h5">
-                        Create a new Person
+                        Add a new person
                     </Typography>
                     <Box component={'form'} onSubmit={(e) => handleSubmit(e)} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    id={'type'}
-                                    select
-                                    label="Select"
-                                    value={state.type}
-                                    onChange={(e) => onChangeType(e)}
-                                    helperText="Type of person"
-                                    variant="outlined"
-                                >
-                                    <MenuItem value="Unternehmen">{'Unternehmen'}</MenuItem>
-                                    <MenuItem value="Privatperson">{'Privatperson'}</MenuItem>
-                                </TextField>
+                                    className={classes.company}
+                                    value={state.company}
+                                    onChange={(e) => onChange(e)}
+                                    variant={'outlined'}
+                                    margin={'normal'}
+                                    fullWidth
+                                    id={'company'}
+                                    label={'Company (optional)'}
+                                    name={'company'}
+                                    autoComplete={'company'}
+                                    autoFocus
+                                    type={'string'}
+                                />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    className={classes.selectRole}
                                     id={'role'}
                                     select
                                     label="Select"
@@ -113,6 +123,7 @@ const PersonModal = ({
                                     onChange={(e) => onChangeRole(e)}
                                     helperText="Please select your clients role"
                                     variant="outlined"
+                                    required
                                 >
                                     {roles.map((role: { value: string }) => (
                                         <MenuItem key={role.value} value={role.value}>
@@ -133,7 +144,8 @@ const PersonModal = ({
                                     name={'firstname'}
                                     autoComplete={'firstname'}
                                     autoFocus
-                                    // required
+                                    type={'string'}
+                                    required
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -147,15 +159,15 @@ const PersonModal = ({
                                     label={'Lastname'}
                                     name={'lastname'}
                                     autoComplete={'lastname'}
-                                    // required
+                                    type={'string'}
+                                    required
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid item xs={12} sm={12}>
                                 <TextField
                                     id="date"
                                     label="Birthday"
                                     type="date"
-                                    defaultValue="2000-06-15"
                                     onChange={(e) => onChangeDate(e)}
                                     className={classes.date}
                                     InputLabelProps={{
@@ -174,7 +186,8 @@ const PersonModal = ({
                                     label={'Street'}
                                     name={'street'}
                                     autoComplete={'street'}
-                                    // required
+                                    type={'string'}
+                                    required
                                 />
                             </Grid>
                             <Grid item xs={12} sm={3}>
@@ -188,7 +201,8 @@ const PersonModal = ({
                                     label={'House No'}
                                     name={'houseNumber'}
                                     autoComplete={'houseNumber'}
-                                    // required
+                                    type={'number'}
+                                    required
                                 />
                             </Grid>
                             <Grid item xs={12} sm={3}>
@@ -202,7 +216,8 @@ const PersonModal = ({
                                     label={'PLZ'}
                                     name={'zip'}
                                     autoComplete={'zip'}
-                                    // required
+                                    type={'number'}
+                                    required
                                 />
                             </Grid>
                             <Grid item xs={12} sm={9}>
@@ -216,7 +231,8 @@ const PersonModal = ({
                                     label={'City'}
                                     name={'city'}
                                     autoComplete={'city'}
-                                    // required
+                                    type={'string'}
+                                    required
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -230,7 +246,8 @@ const PersonModal = ({
                                     label={'Email'}
                                     name={'email'}
                                     autoComplete={'email'}
-                                    // required
+                                    type={'email'}
+                                    required
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -244,7 +261,8 @@ const PersonModal = ({
                                     label={'Mobile Phone'}
                                     name={'mobilephone'}
                                     autoComplete={'mobilephone'}
-                                    // required
+                                    type={'number'}
+                                    required
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -258,11 +276,17 @@ const PersonModal = ({
                                     label={'Landline'}
                                     name={'landline'}
                                     autoComplete={'landline'}
-                                    // required
+                                    type={'number'}
                                 />
                             </Grid>
                         </Grid>
-                        <Button color={'primary'} type="submit" fullWidth variant="contained">
+                        <Button
+                            className={classes.submit}
+                            color={'primary'}
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                        >
                             Submit
                         </Button>
                     </Box>

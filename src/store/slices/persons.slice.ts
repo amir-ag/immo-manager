@@ -5,18 +5,18 @@ import { db } from '../../index';
 import { PersonModel } from '../../components/persons/models/person.model';
 
 interface PersonData {
+    company: string;
     firstName: string;
     lastName: string;
     birthday: string | null;
     street: string;
-    houseNumber: string;
+    houseNumber: number | null;
     zip: number | null;
     city: string;
     email: string;
     mobilePhone: number | null;
     landline: number | null;
     role: string;
-    type: string;
     id?: string;
 }
 
