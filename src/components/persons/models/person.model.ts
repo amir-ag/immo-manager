@@ -11,4 +11,5 @@ export type PersonModel = {
     mobilePhone: number | null;
     landline?: number | null;
     role: string;
+    createdBy?: string;
 };

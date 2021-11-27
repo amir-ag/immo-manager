@@ -22,6 +22,7 @@ const emptyForm: PersonModel = {
     mobilePhone: null,
     landline: null,
     role: '',
+    createdBy: '',
 };
 
 const PersonsContainer = () => {
@@ -44,8 +45,6 @@ const PersonsContainer = () => {
     };
 
     const onChangeAddress = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        console.log('e.target.id: ', e.target.id);
-        console.log('e.target.value: ', e.target.value);
         setState((prevState) => ({
             ...prevState,
             address: {
@@ -81,13 +80,10 @@ const PersonsContainer = () => {
     };
 
     const handleEdit = (id: string) => {
-        console.log('edit id: ', id);
-        console.log('personData: ', personsData);
         const selectedPerson = personsData.filter((person) => person.id === id);
-        console.log('selectedPerson', selectedPerson);
-        const editPerson = { ...selectedPerson };
-        console.log('editPerson: ', editPerson);
-        // setState(editPerson);
+        const editPerson = selectedPerson[0];
+        setState(editPerson);
+        setOpenModal(true);
     };
 
     return (
