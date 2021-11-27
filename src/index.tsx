@@ -9,7 +9,7 @@ import { store } from './store/store';
 import { firebaseConfig } from './firebase';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import App from './components/App/App';
+import App from './components/app/app';
 
 initializeApp(firebaseConfig);
 export const db = getFirestore();
