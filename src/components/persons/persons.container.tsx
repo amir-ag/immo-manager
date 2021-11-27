@@ -67,10 +67,22 @@ const PersonsContainer = () => {
         dispatch(deletePerson(id));
     };
 
+    const handleEdit = (id: string) => {
+        console.log('edit id: ', id);
+        console.log('personData: ', personsData);
+        const selectedPerson = personsData.filter((person) => person.id === id);
+        console.log('selectedPerson', selectedPerson);
+        const editPerson = { ...selectedPerson };
+        console.log('editPerson: ', editPerson);
+        // setState(editPerson);
+    };
+
     return (
         <>
             <PersonsView setOpenModal={setOpenModal} />
-            {personsData && <PersonsTable personsData={personsData} handleDelete={handleDelete} />}
+            {personsData && (
+                <PersonsTable personsData={personsData} handleDelete={handleDelete} handleEdit={handleEdit} />
+            )}
             {openModal && (
                 <PersonModal
                     openModal={openModal}

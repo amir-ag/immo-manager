@@ -27,9 +27,10 @@ const useStyles = makeStyles({
 type ContentTableProps = {
     personsData: PersonModel[];
     handleDelete: (id: string) => void;
+    handleEdit: (id: string) => void;
 };
 
-const PersonsTable = ({ personsData, handleDelete }: ContentTableProps) => {
+const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTableProps) => {
     const classes = useStyles();
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [page, setPage] = React.useState(0);
@@ -66,7 +67,7 @@ const PersonsTable = ({ personsData, handleDelete }: ContentTableProps) => {
                         .map((row, index) => (
                             <TableRow key={index}>
                                 <TableCell className={classes.buttonIcons}>
-                                    <IconButton aria-label={'edit'}>
+                                    <IconButton aria-label={'edit'} onClick={() => handleEdit(row.id)}>
                                         <EditOutlinedIcon />
                                     </IconButton>
                                     <IconButton aria-label={'delete'} onClick={() => handleDelete(row.id)}>
