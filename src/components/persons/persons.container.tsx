@@ -69,6 +69,7 @@ const PersonsContainer = () => {
     };
 
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
+        console.log('state: ', state);
         e.preventDefault();
         dispatch(createPerson(state));
         setState(emptyForm);
@@ -79,7 +80,13 @@ const PersonsContainer = () => {
         dispatch(deletePerson(id));
     };
 
+    const handleCreate = () => {
+        setState(emptyForm);
+        setOpenModal(true);
+    };
+
     const handleEdit = (id: string) => {
+        console.log('personsData: ', personsData);
         const selectedPerson = personsData.filter((person) => person.id === id);
         const editPerson = selectedPerson[0];
         setState(editPerson);
@@ -88,7 +95,7 @@ const PersonsContainer = () => {
 
     return (
         <>
-            <PersonsView setOpenModal={setOpenModal} />
+            <PersonsView handleCreate={handleCreate} />
             {personsData && (
                 <PersonsTable personsData={personsData} handleDelete={handleDelete} handleEdit={handleEdit} />
             )}

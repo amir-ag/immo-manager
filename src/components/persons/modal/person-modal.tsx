@@ -81,7 +81,7 @@ const PersonModal = ({
             <Fade in={openModal}>
                 <Paper className={classes.paper}>
                     <Typography component="h1" variant="h5">
-                        Add a new person
+                        {state.id ? `Edit existing person` : 'Add a new person'}
                     </Typography>
                     <Box component={'form'} onSubmit={(e) => handleSubmit(e)} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
 import { PersonModel } from '../../components/persons/models/person.model';
 
@@ -8,15 +8,26 @@ const dbName = 'persons';
 
 export const createPerson = createAsyncThunk('persons/create', async (personData: PersonModel, thunkAPI) => {
     try {
-        console.log('personData: ', personData);
         const state = thunkAPI.getState() as RootState;
         const uid = state?.user?.uid;
-        const docRef = await addDoc(collection(db, dbName), {
-            ...personData,
-            createdBy: uid,
-        });
-        console.log('Document written with ID: ', docRef.id);
-        return docRef;
+
+        if (!personData.id) {
+            const docRef = await addDoc(collection(db, dbName), {
+                ...personData,
+                createdBy: uid,
+            });
+            console.log('Document written with ID: ', docRef.id);
+            return docRef;
+        }
+
+        await setDoc(
+            doc(db, dbName, personData.id),
+            {
+                ...personData,
+                createdBy: uid,
+            },
+            { merge: true }
+        );
     } catch (e) {
         console.error('Error adding document: ', e);
     }
