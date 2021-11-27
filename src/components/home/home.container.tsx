@@ -5,7 +5,7 @@ import { login, selectUser, signup } from '../../store/slices/user.slice';
 import routes from '../../routes/route-constants';
 import { SignInState } from '../sign-in/sign-in';
 import { SignUpState } from '../sign-up/sign-up';
-import Home from './Home';
+import Home from './home';
 
 const HomeContainer = () => {
     let history = useHistory();
