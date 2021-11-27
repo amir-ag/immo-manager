@@ -1,4 +1,4 @@
-import { AddressModel } from '../../models/address.model';
+import { AddressModel } from '../../../../models/address.model';
 
 export type PropertyModel = {
     id: string;

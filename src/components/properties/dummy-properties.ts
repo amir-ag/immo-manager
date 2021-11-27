@@ -1,6 +1,6 @@
-import { PropertyModel } from './property.model';
+import { PropertyModel } from './property/model/property.model';
 
-export const properties: PropertyModel[] = [
+export const dummyProperties: PropertyModel[] = [
     {
         id: '1',
         owner: 'Petra Zumbühl',
