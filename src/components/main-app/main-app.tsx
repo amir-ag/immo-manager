@@ -6,6 +6,7 @@ import routes from '../../routes/route-constants';
 import { PropertiesContainer } from '../properties/properties.container';
 import { DashboardContainer } from '../dashboard/dashboard.container';
 import { RentScheduleContainer } from '../rent-schedule/rent-schedule.container';
+import ProfileContainer from '../profile/profile.container';
 import { Property } from '../properties/property/property';
 import { dummyProperties } from '../properties/dummy-properties';
 import { RentalUnitDetail } from '../rental-unit/rental-unit-detail';
@@ -39,7 +40,10 @@ const MainApp = ({ menuItems }: MainAppProps) => {
                     <Route path={routes.RENT_SCHEDULE}>
                         <RentScheduleContainer />
                     </Route>
-                    <Route path={routes.TEMP_PROPERTY}>
+                    <Route path={routes.PROFILE}>
+                        <ProfileContainer />
+                    </Route>
+		    <Route path={routes.TEMP_PROPERTY}>
                         <Property propertyProps={dummyProperties[0]} />
                     </Route>
                     <Route path={routes.TEMP_RENTAL_UNIT}>

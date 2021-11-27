@@ -1,10 +1,10 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { Button, Container, makeStyles, Paper, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { grey } from '@material-ui/core/colors';
 
 export type PeopleProps = {
-    setOpenModal: Dispatch<SetStateAction<boolean>>;
+    handleCreate: () => void;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const PersonsView = ({ setOpenModal }: PeopleProps) => {
+const PersonsView = ({ handleCreate }: PeopleProps) => {
     const classes = useStyles();
 
     return (
@@ -31,7 +31,7 @@ const PersonsView = ({ setOpenModal }: PeopleProps) => {
                     Create new People
                 </Typography>
                 <Button
-                    onClick={() => setOpenModal(true)}
+                    onClick={() => handleCreate()}
                     variant="contained"
                     color="primary"
                     className={classes.button}

@@ -3,22 +3,31 @@ import PersonsView from './persons-view';
 import PersonModal from './modal/person-modal';
 import { roles } from './models/person-roles.model';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { createPerson, deletePerson, getPersons, selectPersons } from '../../store/slices/persons.slice';
+import {
+    createUpdatePerson,
+    deletePerson,
+    getPersons,
+    selectPersons,
+} from '../../store/slices/persons.slice';
 import PersonsTable from './table/persons-table';
+import { PersonModel } from './models/person.model';
 
-const emptyForm = {
+const emptyForm: PersonModel = {
+    id: '',
+    company: '',
     firstName: '',
     lastName: '',
     birthday: '',
-    street: '',
-    houseNumber: '',
-    zip: null,
-    city: '',
+    address: {
+        addressLine1: '',
+        postCode: null,
+        city: '',
+    },
     email: '',
     mobilePhone: null,
     landline: null,
     role: '',
-    type: '',
+    createdBy: '',
 };
 
 const PersonsContainer = () => {
@@ -40,19 +49,20 @@ const PersonsContainer = () => {
         }));
     };
 
-    // find a way to include 'onChangeRole' and 'onChangeType' in 'onChange', problem: e.target.id is undefined
+    const onChangeAddress = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        setState((prevState) => ({
+            ...prevState,
+            address: {
+                ...prevState.address,
+                [e.target.id]: e.target.value,
+            },
+        }));
+    };
 
     const onChangeRole = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setState((prevState) => ({
             ...prevState,
             role: e.target.value,
-        }));
-    };
-
-    const onChangeType = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setState((prevState) => ({
-            ...prevState,
-            type: e.target.value,
         }));
     };
 
@@ -65,7 +75,7 @@ const PersonsContainer = () => {
 
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
-        dispatch(createPerson(state));
+        dispatch(createUpdatePerson(state));
         setState(emptyForm);
         setOpenModal(false);
     };
@@ -74,10 +84,24 @@ const PersonsContainer = () => {
         dispatch(deletePerson(id));
     };
 
+    const handleCreate = () => {
+        setState(emptyForm);
+        setOpenModal(true);
+    };
+
+    const handleEdit = (id: string) => {
+        const selectedPerson = personsData.filter((person) => person.id === id);
+        const editPerson = selectedPerson[0];
+        setState(editPerson);
+        setOpenModal(true);
+    };
+
     return (
         <>
-            <PersonsView setOpenModal={setOpenModal} />
-            {personsData && <PersonsTable personsData={personsData} handleDelete={handleDelete} />}
+            <PersonsView handleCreate={handleCreate} />
+            {personsData && (
+                <PersonsTable personsData={personsData} handleDelete={handleDelete} handleEdit={handleEdit} />
+            )}
             {openModal && (
                 <PersonModal
                     openModal={openModal}
@@ -85,8 +109,8 @@ const PersonsContainer = () => {
                     handleSubmit={handleSubmit}
                     state={state}
                     onChange={onChange}
+                    onChangeAddress={onChangeAddress}
                     onChangeRole={onChangeRole}
-                    onChangeType={onChangeType}
                     onChangeDate={onChangeDate}
                     roles={roles}
                 />
