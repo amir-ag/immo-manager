@@ -13,6 +13,9 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { useHistory } from 'react-router';
 import { format } from 'date-fns';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout, selectUser } from '../../store/slices/user.slice';
@@ -88,7 +91,17 @@ const useStyles = makeStyles((theme) => {
 const Layout = ({ children, menuItems }: LayoutProps) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
-    const { displayName } = useAppSelector(selectUser);
+    const { firstName } = useAppSelector(selectUser);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const history = useHistory();
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        history.push('profile');
+        setAnchorEl(null);
+    };
 
     return (
         <div className={classes.root}>
@@ -98,9 +111,21 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                         Today is the {format(new Date(), 'do MMMM Y')}
                     </Typography>
                     <Typography color={'secondary'} variant={'h6'}>
-                        {displayName && displayName}
+                        {firstName && firstName}
                     </Typography>
-                    <Avatar className={classes.avatar}>A</Avatar>
+                    <div onClick={handleClick} aria-controls="user-menu" aria-haspopup="true">
+                        <Avatar className={classes.avatar}>A</Avatar>
+                    </div>
+                    <Menu
+                        id="user-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                    >
+                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={() => dispatch(logout())}>Logout</MenuItem>
+                    </Menu>
                 </Toolbar>
             </AppBar>
             <Drawer
