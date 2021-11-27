@@ -12,28 +12,15 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-
-type ModalState = {
-    company: string;
-    firstName: string;
-    lastName: string;
-    birthday?: string | null;
-    street: string;
-    houseNumber: number | null;
-    zip: number | null;
-    city: string;
-    email: string;
-    mobilePhone: number | null;
-    landline?: number | null;
-    role: string;
-};
+import { PersonModel } from '../models/person.model';
 
 export type PeopleModalProps = {
     openModal: boolean;
     setOpenModal: Dispatch<SetStateAction<boolean>>;
     handleSubmit: (e: FormEvent<HTMLElement>) => void;
-    state: ModalState;
+    state: PersonModel;
     onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+    onChangeAddress: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
     onChangeRole: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
     onChangeDate: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
     roles: { value: string }[];
@@ -71,6 +58,7 @@ const PersonModal = ({
     handleSubmit,
     state,
     onChange,
+    onChangeAddress,
     onChangeRole,
     onChangeDate,
     roles,
@@ -175,16 +163,16 @@ const PersonModal = ({
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={9}>
+                            <Grid item xs={12} sm={12}>
                                 <TextField
-                                    value={state.street}
-                                    onChange={(e) => onChange(e)}
+                                    value={state.address.addressLine1}
+                                    onChange={(e) => onChangeAddress(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
                                     fullWidth
-                                    id={'street'}
-                                    label={'Street'}
-                                    name={'street'}
+                                    id={'addressLine1'}
+                                    label={'Street, Number'}
+                                    name={'addressLine1'}
                                     autoComplete={'street'}
                                     type={'string'}
                                     required
@@ -192,38 +180,23 @@ const PersonModal = ({
                             </Grid>
                             <Grid item xs={12} sm={3}>
                                 <TextField
-                                    value={state.houseNumber}
-                                    onChange={(e) => onChange(e)}
+                                    value={state.address.postCode}
+                                    onChange={(e) => onChangeAddress(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
                                     fullWidth
-                                    id={'houseNumber'}
-                                    label={'House No'}
-                                    name={'houseNumber'}
-                                    autoComplete={'houseNumber'}
-                                    type={'number'}
-                                    required
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={3}>
-                                <TextField
-                                    value={state.zip}
-                                    onChange={(e) => onChange(e)}
-                                    variant={'outlined'}
-                                    margin={'normal'}
-                                    fullWidth
-                                    id={'zip'}
+                                    id={'postCode'}
                                     label={'PLZ'}
-                                    name={'zip'}
-                                    autoComplete={'zip'}
+                                    name={'postCode'}
+                                    autoComplete={'postCode'}
                                     type={'number'}
                                     required
                                 />
                             </Grid>
                             <Grid item xs={12} sm={9}>
                                 <TextField
-                                    value={state.city}
-                                    onChange={(e) => onChange(e)}
+                                    value={state.address.city}
+                                    onChange={(e) => onChangeAddress(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
                                     fullWidth

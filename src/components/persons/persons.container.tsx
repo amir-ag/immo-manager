@@ -5,16 +5,19 @@ import { roles } from './models/person-roles.model';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { createPerson, deletePerson, getPersons, selectPersons } from '../../store/slices/persons.slice';
 import PersonsTable from './table/persons-table';
+import { PersonModel } from './models/person.model';
 
-const emptyForm = {
+const emptyForm: PersonModel = {
+    id: '',
     company: '',
     firstName: '',
     lastName: '',
     birthday: '',
-    street: '',
-    houseNumber: null,
-    zip: null,
-    city: '',
+    address: {
+        addressLine1: '',
+        postCode: null,
+        city: '',
+    },
     email: '',
     mobilePhone: null,
     landline: null,
@@ -40,7 +43,17 @@ const PersonsContainer = () => {
         }));
     };
 
-    // find a way to include 'onChangeRole' in 'onChange', problem: e.target.id is undefined
+    const onChangeAddress = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        console.log('e.target.id: ', e.target.id);
+        console.log('e.target.value: ', e.target.value);
+        setState((prevState) => ({
+            ...prevState,
+            address: {
+                ...prevState.address,
+                [e.target.id]: e.target.value,
+            },
+        }));
+    };
 
     const onChangeRole = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setState((prevState) => ({
@@ -90,6 +103,7 @@ const PersonsContainer = () => {
                     handleSubmit={handleSubmit}
                     state={state}
                     onChange={onChange}
+                    onChangeAddress={onChangeAddress}
                     onChangeRole={onChangeRole}
                     onChangeDate={onChangeDate}
                     roles={roles}
