@@ -1,12 +1,14 @@
 export type RentalUnitModel = {
     ewid: number;
-    type: 'Parking Lot' | 'Hobby Room' | 'Apartment';
+    type: typeof rentalUnitType[number];
     numberOfRooms?: number;
     surfaceInM2?: number;
-    floorLevel?: typeof floorLevel[number];
+    floorLevel?: typeof rentalUnitfloorLevel[number];
 };
 
-const floorLevel = [
+export const rentalUnitType = ['Parking Lot', 'Hobby Room', 'Apartment'] as const;
+
+export const rentalUnitfloorLevel = [
     'Undefined',
     '3. Basement Floor',
     '2. Basement Floor',
