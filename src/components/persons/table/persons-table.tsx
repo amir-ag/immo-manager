@@ -27,9 +27,10 @@ const useStyles = makeStyles({
 type ContentTableProps = {
     personsData: PersonModel[];
     handleDelete: (id: string) => void;
+    handleEdit: (id: string) => void;
 };
 
-const PersonsTable = ({ personsData, handleDelete }: ContentTableProps) => {
+const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTableProps) => {
     const classes = useStyles();
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [page, setPage] = React.useState(0);
@@ -57,7 +58,7 @@ const PersonsTable = ({ personsData, handleDelete }: ContentTableProps) => {
                         <TableCell align={'right'}>Phone</TableCell>
                         <TableCell align={'right'}>Birthday</TableCell>
                         <TableCell align={'right'}>Role</TableCell>
-                        <TableCell align={'right'}>Type</TableCell>
+                        {/*<TableCell align={'right'}>Type</TableCell>*/}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -66,7 +67,7 @@ const PersonsTable = ({ personsData, handleDelete }: ContentTableProps) => {
                         .map((row, index) => (
                             <TableRow key={index}>
                                 <TableCell className={classes.buttonIcons}>
-                                    <IconButton aria-label={'edit'}>
+                                    <IconButton aria-label={'edit'} onClick={() => handleEdit(row.id)}>
                                         <EditOutlinedIcon />
                                     </IconButton>
                                     <IconButton aria-label={'delete'} onClick={() => handleDelete(row.id)}>
@@ -77,13 +78,13 @@ const PersonsTable = ({ personsData, handleDelete }: ContentTableProps) => {
                                 <TableCell align={'right'}>{row.lastName}</TableCell>
                                 <TableCell
                                     align={'right'}
-                                >{`${row.street} ${row.houseNumber}, ${row.zip}, ${row.city}`}</TableCell>
+                                >{`${row.address.addressLine1}, ${row.address.postCode}, ${row.address.city}`}</TableCell>
                                 <TableCell align={'right'}>{row.email}</TableCell>
                                 <TableCell align={'right'}>{row.mobilePhone}</TableCell>
                                 <TableCell align={'right'}>{row.landline ? row.landline : 'n/a'}</TableCell>
                                 <TableCell align={'right'}>{row.birthday ? row.birthday : 'n/a'}</TableCell>
                                 <TableCell align={'right'}>{row.role}</TableCell>
-                                <TableCell align={'right'}>{row.type}</TableCell>
+                                {/*<TableCell align={'right'}>{row.type}</TableCell>*/}
                             </TableRow>
                         ))}
                 </TableBody>
