@@ -21,6 +21,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout, selectUser } from '../../store/slices/user.slice';
 import { NavLink } from 'react-router-dom';
 import routes from '../../routes/route-constants';
+import { getAuth } from 'firebase/auth';
 
 export type LayoutProps = {
     children: React.ReactNode;
@@ -94,6 +95,8 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
     const { firstName } = useAppSelector(selectUser);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const history = useHistory();
+    const auth = getAuth();
+    const user = auth.currentUser;
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -113,9 +116,11 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                     <Typography color={'secondary'} variant={'h6'}>
                         {firstName && firstName}
                     </Typography>
-                    <div onClick={handleClick} aria-controls="user-menu" aria-haspopup="true">
-                        <Avatar className={classes.avatar}>A</Avatar>
-                    </div>
+                    {user?.photoURL && (
+                        <div onClick={handleClick} aria-controls="user-menu" aria-haspopup="true">
+                            <Avatar className={classes.avatar} src={user.photoURL} />
+                        </div>
+                    )}
                     <Menu
                         id="user-menu"
                         anchorEl={anchorEl}
