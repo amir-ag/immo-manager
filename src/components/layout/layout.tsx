@@ -116,11 +116,13 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                     <Typography color={'secondary'} variant={'h6'}>
                         {firstName && firstName}
                     </Typography>
-                    {user?.photoURL && (
-                        <div onClick={handleClick} aria-controls="user-menu" aria-haspopup="true">
+                    <div onClick={handleClick} aria-controls="user-menu" aria-haspopup="true">
+                        {user?.photoURL ? (
                             <Avatar className={classes.avatar} src={user.photoURL} />
-                        </div>
-                    )}
+                        ) : (
+                            <Avatar className={classes.avatar} />
+                        )}
+                    </div>
                     <Menu
                         id="user-menu"
                         anchorEl={anchorEl}
