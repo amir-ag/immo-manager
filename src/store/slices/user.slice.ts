@@ -6,11 +6,13 @@ import {
     signInWithEmailAndPassword,
     signOut,
     updateProfile,
+    updatePassword,
 } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
 import { ProfileFormData } from '../../components/profile/profile.container';
+import { AddressModel } from '../../models/address.model';
 
 interface UserState {
     email: string;
@@ -19,6 +21,7 @@ interface UserState {
     status: string;
     firstName: string;
     lastName: string;
+    address: AddressModel;
 }
 
 const initialState: UserState = {
@@ -28,6 +31,11 @@ const initialState: UserState = {
     status: '',
     firstName: '',
     lastName: '',
+    address: {
+        addressLine1: '',
+        postCode: null,
+        city: '',
+    },
 };
 
 type LoginProps = {
@@ -105,6 +113,19 @@ export const update = createAsyncThunk('user/update', async (formData: ProfileFo
         });
     }
 
+    if (formData.newPassword) {
+        if (formData.newPassword === formData.newPasswordConfirm) {
+            user &&
+                updatePassword(user, formData.newPassword)
+                    .then(() => {
+                        console.log('password update successful');
+                    })
+                    .catch((error) => {
+                        console.log('an error ocurred: ', error);
+                    });
+        }
+    }
+
     user &&
         (await setDoc(
             doc(db, dbName, user.uid),
@@ -112,6 +133,7 @@ export const update = createAsyncThunk('user/update', async (formData: ProfileFo
                 firstName: formData.firstName,
                 lastName: formData.lastName,
                 email: user.email,
+                address: { ...formData.address },
             },
             { merge: true }
         ));
@@ -120,6 +142,7 @@ export const update = createAsyncThunk('user/update', async (formData: ProfileFo
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
+        address: { ...formData.address },
     };
 });
 
@@ -135,6 +158,7 @@ export const userSlice = createSlice({
             state.uid = action.payload.uid;
             state.firstName = action.payload.firstName;
             state.lastName = action.payload.lastName;
+            state.address = { ...action.payload.address };
         });
         builder.addCase(login.rejected, (state) => {
             state.status = 'failed';
