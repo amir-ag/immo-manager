@@ -17,37 +17,34 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
-import { rentalUnitfloorLevel, RentalUnitModel, rentalUnitType } from './model/rental-unit.model';
+import {
+    getDisplayNameOfRentalUnit,
+    rentalUnitfloorLevel,
+    RentalUnitModel,
+    rentalUnitType,
+} from './model/rental-unit.model';
 import { dummyTenancies } from '../tenancy/dummy-tenancies';
 import { format } from 'date-fns';
-
-export const getDisplayNameOfRentalUnit = (ru: RentalUnitModel) => {
-    let resultString = '';
-
-    if (ru.type === 'Apartment' || ru.type === 'Hobby Room') {
-        resultString += `${ru.numberOfRooms} Room `;
-    }
-
-    resultString += ru.type;
-
-    if (ru.floorLevel && ru.floorLevel !== 'Undefined') {
-        resultString += `, ${ru.floorLevel}`;
-    }
-
-    return resultString + ` (${ru.ewid})`;
-};
+import { stylingConstants } from '../../theme/styling-constants';
 
 const useStyles = makeStyles((theme) => ({
-    thumbnail: {
-        width: '75%',
-        margin: 'auto',
+    nested6ColGridItemLeft: {
+        [theme.breakpoints.up('md')]: {
+            paddingRight: theme.spacing(2),
+        },
+        [theme.breakpoints.down('md')]: {
+            marginBottom: theme.spacing(4),
+        },
+    },
+    nested6ColGridItemRight: {
+        [theme.breakpoints.up('md')]: {
+            paddingLeft: theme.spacing(2),
+        },
     },
     table: {
         width: '100%',
     },
 }));
-
-const gridSpacing = 4;
 
 export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalUnitModel }) => {
     const cssClasses = useStyles();
@@ -55,14 +52,23 @@ export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalU
     return (
         <>
             <Typography variant={'h5'}>{getDisplayNameOfRentalUnit(rentalUnitProps)}</Typography>
-            <Grid container spacing={gridSpacing}>
-                <Grid item xs={12} sm={5}>
-                    <Typography variant={'h6'}>General Info</Typography>
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={12} sm={6}>
+            <Grid container spacing={stylingConstants.gridSpacing}>
+                <Grid
+                    item
+                    container
+                    xs={12}
+                    sm={6}
+                    spacing={stylingConstants.gridSpacing}
+                    alignItems={'center'}
+                    alignContent={'flex-start'}
+                >
+                    <Grid item xs={12}>
+                        <Typography variant={'h6'}>General Info</Typography>
+                    </Grid>
+                    <Grid item container xs={12}>
+                        <Grid item xs={12} md={6} className={cssClasses.nested6ColGridItemLeft}>
                             <TextField
                                 variant={'outlined'}
-                                margin={'normal'}
                                 fullWidth
                                 id={'ewid'}
                                 label={'EWID'}
@@ -70,12 +76,11 @@ export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalU
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} md={6} className={cssClasses.nested6ColGridItemRight}>
                             <TextField
                                 id={'type'}
                                 select
                                 label="Select"
-                                margin={'normal'}
                                 helperText="Select a room type"
                                 variant="outlined"
                                 fullWidth
@@ -86,98 +91,104 @@ export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalU
                             </TextField>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={gridSpacing}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant={'outlined'}
-                                margin={'normal'}
-                                fullWidth
-                                id={'numberOfRooms'}
-                                label={'Number of Rooms'}
-                                type="number"
-                            />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant={'outlined'}
-                                margin={'normal'}
-                                fullWidth
-                                id={'surfaceInM2'}
-                                label={'Surface in m2'}
-                                type="number"
-                            />
-                        </Grid>
+                    <Grid item xs={12} md={6}>
+                        <TextField
+                            variant={'outlined'}
+                            fullWidth
+                            id={'numberOfRooms'}
+                            label={'Number of Rooms'}
+                            type="number"
+                        />
                     </Grid>
-
-                    {/* TODO: Check if it's possible to use an 'Autocomplete' component */}
-                    <TextField
-                        id={'floorLevel'}
-                        select
-                        label="Select"
-                        helperText="Select a floor level"
-                        variant="outlined"
-                        margin={'normal'}
-                        fullWidth
-                    >
-                        {rentalUnitfloorLevel.map((rufl, i) => (
-                            <MenuItem value={i}>{rufl}</MenuItem>
-                        ))}
-                    </TextField>
+                    <Grid item xs={12} md={6}>
+                        <TextField
+                            variant={'outlined'}
+                            fullWidth
+                            id={'surfaceInM2'}
+                            label={'Surface in m2'}
+                            type="number"
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        {/* TODO: Check if it's possible to use an 'Autocomplete' component */}
+                        <TextField
+                            id={'floorLevel'}
+                            select
+                            label="Select"
+                            helperText="Select a floor level"
+                            variant="outlined"
+                            fullWidth
+                        >
+                            {rentalUnitfloorLevel.map((rufl, i) => (
+                                <MenuItem value={i}>{rufl}</MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>
                 </Grid>
 
-                <Grid item xs={12} sm={7}>
-                    <Typography variant={'h6'}>Tenancies</Typography>
-                    <Grid container spacing={gridSpacing} alignItems={'center'}>
-                        <Grid item xs={12} sm={8}>
-                            <TextField
-                                id="textSearch"
-                                margin={'normal'}
-                                variant="outlined"
-                                fullWidth
-                                label="Search for Person"
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <Search />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Button fullWidth variant="contained" color="primary" endIcon={<AddIcon />}>
-                                New
-                            </Button>
-                        </Grid>
+                <Grid
+                    item
+                    container
+                    xs={12}
+                    sm={6}
+                    spacing={stylingConstants.gridSpacing}
+                    alignItems={'center'}
+                    alignContent={'flex-start'}
+                >
+                    <Grid item xs={12}>
+                        <Typography variant={'h6'}>Tenancies</Typography>
                     </Grid>
-                    <TableContainer component={Paper}>
-                        <Table className={cssClasses.table}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Tenant(s)</TableCell>
-                                    <TableCell align="right">From</TableCell>
-                                    <TableCell align="right">To</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {dummyTenancies.map((t) => (
-                                    <TableRow key={t.tenant}>
-                                        <TableCell>{t.tenant}</TableCell>
-                                        {/* TODO: Use data from firestore */}
-                                        <TableCell align="right">
-                                            {t.beginOfContract
-                                                ? format(t.beginOfContract, 'dd.MM.yyyy')
-                                                : '-'}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {t.endOfContract ? format(t.endOfContract, 'dd.MM.yyyy') : '-'}
-                                        </TableCell>
+                    <Grid item xs={12} md={8}>
+                        <TextField
+                            id="textSearch"
+                            variant="outlined"
+                            fullWidth
+                            label="Search for Person"
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <Search />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Button fullWidth variant="contained" color="primary" endIcon={<AddIcon />}>
+                            New
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TableContainer component={Paper}>
+                            <Table className={cssClasses.table}>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Tenant(s)</TableCell>
+                                        <TableCell align="right">From</TableCell>
+                                        <TableCell align="right">To</TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                </TableHead>
+                                <TableBody>
+                                    {dummyTenancies.map((t) => (
+                                        <TableRow key={t.tenant}>
+                                            <TableCell>{t.tenant}</TableCell>
+                                            {/* TODO: Use data from firestore */}
+                                            <TableCell align="right">
+                                                {t.beginOfContract
+                                                    ? format(t.beginOfContract, 'dd.MM.yyyy')
+                                                    : '-'}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {t.endOfContract
+                                                    ? format(t.endOfContract, 'dd.MM.yyyy')
+                                                    : '-'}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Grid>
                 </Grid>
             </Grid>
         </>

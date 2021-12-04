@@ -25,3 +25,20 @@ export const rentalUnitfloorLevel = [
     '9. Floor',
     '10. Floor',
 ] as const;
+
+// Helper functions
+export const getDisplayNameOfRentalUnit = (ru: RentalUnitModel) => {
+    let resultString = '';
+
+    if (ru.type === 'Apartment' || ru.type === 'Hobby Room') {
+        resultString += `${ru.numberOfRooms} Room `;
+    }
+
+    resultString += ru.type;
+
+    if (ru.floorLevel && ru.floorLevel !== 'Undefined') {
+        resultString += `, ${ru.floorLevel}`;
+    }
+
+    return resultString + ` (${ru.ewid})`;
+};
