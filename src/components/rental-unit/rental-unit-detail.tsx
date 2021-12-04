@@ -21,7 +21,7 @@ import { rentalUnitfloorLevel, RentalUnitModel, rentalUnitType } from './model/r
 import { dummyTenancies } from '../tenancy/dummy-tenancies';
 import { format } from 'date-fns';
 
-export const getNameOfRentalUnit = (ru: RentalUnitModel) => {
+export const getDisplayNameOfRentalUnit = (ru: RentalUnitModel) => {
     let resultString = '';
 
     if (ru.type === 'Apartment' || ru.type === 'Hobby Room') {
@@ -54,7 +54,7 @@ export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalU
 
     return (
         <>
-            <Typography variant={'h5'}>{getNameOfRentalUnit(rentalUnitProps)}</Typography>
+            <Typography variant={'h5'}>{getDisplayNameOfRentalUnit(rentalUnitProps)}</Typography>
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12} sm={5}>
                     <Typography variant={'h6'}>General Info</Typography>

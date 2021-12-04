@@ -25,7 +25,11 @@ import { dummyOwners } from './dummy-owners';
 import { dummyJanitors } from './dummy-janitors';
 import AddIcon from '@material-ui/icons/Add';
 import { dummyRentalUnits } from '../../rental-unit/dummy-rental-units';
-import { getNameOfRentalUnit } from '../../rental-unit/rental-unit-detail';
+import { getDisplayNameOfRentalUnit } from '../../rental-unit/rental-unit-detail';
+
+export const getDisplayNameOfProperty = (p: PropertyModel) => {
+    return `${p.name} (${p.egid})`;
+};
 
 const useStyles = makeStyles((theme) => ({
     thumbnail: {
@@ -44,7 +48,7 @@ export const Property = ({ propertyProps }: { propertyProps: PropertyModel }) =>
 
     return (
         <>
-            <Typography variant={'h5'}>{`${propertyProps.name} (${propertyProps.egid})`}</Typography>
+            <Typography variant={'h5'}>{getDisplayNameOfProperty(propertyProps)}</Typography>
             <Grid container spacing={gridSpacing}>
                 <Grid item xs={12} sm={5}>
                     <Typography variant={'h6'}>General Info</Typography>
@@ -54,6 +58,7 @@ export const Property = ({ propertyProps }: { propertyProps: PropertyModel }) =>
                         fullWidth
                         id={'name'}
                         label={'Name'}
+                        inputProps={{ maxLength: 30 }}
                         required
                     />
                     <Card elevation={3} className={cssClasses.thumbnail}>
@@ -204,7 +209,7 @@ export const Property = ({ propertyProps }: { propertyProps: PropertyModel }) =>
                             <TableBody>
                                 {dummyRentalUnits.map((ru) => (
                                     <TableRow key={ru.ewid}>
-                                        <TableCell>{getNameOfRentalUnit(ru)}</TableCell>
+                                        <TableCell>{getDisplayNameOfRentalUnit(ru)}</TableCell>
                                         {/* TODO: Use data from firestore */}
                                         <TableCell align="right">Hansli Müller</TableCell>
                                         <TableCell align="right">01.01.2022</TableCell>
