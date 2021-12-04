@@ -18,9 +18,10 @@ import { dummyRentalUnits } from '../rental-unit/dummy-rental-units';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { dummyTenants } from './dummy-tenants';
 import { months } from './constants';
-import { stylingConstants } from '../../theme/styling-constants';
+import { stylingConstants } from '../../theme/shared-styles';
 import { getDisplayNameOfProperty } from '../properties/property/model/property.model';
 import { getDisplayNameOfRentalUnit } from '../rental-unit/model/rental-unit.model';
+import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
 
 export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) => {
     return (
@@ -221,6 +222,26 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                             required
                         />
                     </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    xs={12}
+                    sm={6}
+                    spacing={stylingConstants.gridSpacing}
+                    alignItems={'center'}
+                    alignContent={'flex-start'}
+                />
+                <Grid
+                    item
+                    container
+                    xs={12}
+                    sm={6}
+                    spacing={stylingConstants.gridSpacing}
+                    alignItems={'center'}
+                    alignContent={'flex-start'}
+                >
+                    <DetailViewFormActions />
                 </Grid>
             </Grid>
         </>

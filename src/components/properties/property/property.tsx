@@ -25,8 +25,9 @@ import { dummyOwners } from './dummy-owners';
 import { dummyJanitors } from './dummy-janitors';
 import AddIcon from '@material-ui/icons/Add';
 import { dummyRentalUnits } from '../../rental-unit/dummy-rental-units';
-import { stylingConstants } from '../../../theme/styling-constants';
+import { stylingConstants } from '../../../theme/shared-styles';
 import { getDisplayNameOfRentalUnit } from '../../rental-unit/model/rental-unit.model';
+import DetailViewFormActions from '../../ui/detail-view-form-actions/detail-view-form-actions';
 
 const useStyles = makeStyles((theme) => ({
     thumbnail: {
@@ -171,6 +172,7 @@ export const Property = ({ propertyProps }: { propertyProps: PropertyModel }) =>
                             required
                         />
                     </Grid>
+                    <DetailViewFormActions />
                 </Grid>
                 <Grid
                     item
@@ -200,7 +202,7 @@ export const Property = ({ propertyProps }: { propertyProps: PropertyModel }) =>
                         />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Button fullWidth variant="contained" color="primary" endIcon={<AddIcon />}>
+                        <Button fullWidth variant="contained" color="secondary" startIcon={<AddIcon />}>
                             New
                         </Button>
                     </Grid>

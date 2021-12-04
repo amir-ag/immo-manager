@@ -25,22 +25,10 @@ import {
 } from './model/rental-unit.model';
 import { dummyTenancies } from '../tenancy/dummy-tenancies';
 import { format } from 'date-fns';
-import { stylingConstants } from '../../theme/styling-constants';
+import { stylingConstants, useSharedStyles } from '../../theme/shared-styles';
+import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
 
 const useStyles = makeStyles((theme) => ({
-    nested6ColGridItemLeft: {
-        [theme.breakpoints.up('md')]: {
-            paddingRight: theme.spacing(2),
-        },
-        [theme.breakpoints.down('md')]: {
-            marginBottom: theme.spacing(4),
-        },
-    },
-    nested6ColGridItemRight: {
-        [theme.breakpoints.up('md')]: {
-            paddingLeft: theme.spacing(2),
-        },
-    },
     table: {
         width: '100%',
     },
@@ -48,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalUnitModel }) => {
     const cssClasses = useStyles();
+    const sharedCssClasses = useSharedStyles();
 
     return (
         <>
@@ -66,24 +55,24 @@ export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalU
                         <Typography variant={'h6'}>General Info</Typography>
                     </Grid>
                     <Grid item container xs={12}>
-                        <Grid item xs={12} md={6} className={cssClasses.nested6ColGridItemLeft}>
+                        <Grid item xs={12} md={6}>
                             <TextField
+                                className={sharedCssClasses.nested6ColGridItemLeft}
                                 variant={'outlined'}
-                                fullWidth
                                 id={'ewid'}
                                 label={'EWID'}
                                 type="number"
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} md={6} className={cssClasses.nested6ColGridItemRight}>
+                        <Grid item xs={12} md={6}>
                             <TextField
+                                className={sharedCssClasses.nested6ColGridItemRight}
                                 id={'type'}
                                 select
                                 label="Select"
                                 helperText="Select a room type"
                                 variant="outlined"
-                                fullWidth
                             >
                                 {rentalUnitType.map((rut, i) => (
                                     <MenuItem value={i}>{rut}</MenuItem>
@@ -124,6 +113,7 @@ export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalU
                             ))}
                         </TextField>
                     </Grid>
+                    <DetailViewFormActions />
                 </Grid>
 
                 <Grid
