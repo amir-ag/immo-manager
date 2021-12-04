@@ -50,6 +50,8 @@ const Profile = ({ handleSubmit }: ProfileProps) => {
         lastName: lastName,
         email: email,
         address: address,
+        newPassword: '',
+        newPasswordConfirm: '',
     });
 
     const onImageChange = (images: File[]) => {
@@ -175,7 +177,31 @@ const Profile = ({ handleSubmit }: ProfileProps) => {
                         />
                     </div>
                     <div className={classes.rightBottom}>
-                        <Typography variant={'body2'}>Password</Typography>
+                        <Typography variant={'body2'}>Account & Security</Typography>
+                        <TextField
+                            value={formData.newPassword}
+                            onChange={(e) => onChange(e)}
+                            variant={'outlined'}
+                            margin={'normal'}
+                            fullWidth
+                            id={'newPassword'}
+                            label={'Enter new password'}
+                            name={'password'}
+                            autoComplete={'password'}
+                            type={'password'}
+                        />
+                        <TextField
+                            value={formData.newPasswordConfirm}
+                            onChange={(e) => onChange(e)}
+                            variant={'outlined'}
+                            margin={'normal'}
+                            fullWidth
+                            id={'newPasswordConfirm'}
+                            label={'Confirm Password'}
+                            name={'newPasswordConfirm'}
+                            autoComplete={'newPasswordConfirm'}
+                            type={'password'}
+                        />
                     </div>
                 </Grid>
             </Grid>

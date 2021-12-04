@@ -10,6 +10,8 @@ export type ProfileFormData = {
     lastName: string;
     email: string;
     address: AddressModel;
+    newPassword?: string;
+    newPasswordConfirm?: string;
 };
 
 const ProfileContainer = () => {

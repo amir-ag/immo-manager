@@ -6,6 +6,7 @@ import {
     signInWithEmailAndPassword,
     signOut,
     updateProfile,
+    updatePassword,
 } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -110,6 +111,19 @@ export const update = createAsyncThunk('user/update', async (formData: ProfileFo
                     });
             });
         });
+    }
+
+    if (formData.newPassword) {
+        if (formData.newPassword === formData.newPasswordConfirm) {
+            user &&
+                updatePassword(user, formData.newPassword)
+                    .then(() => {
+                        console.log('password update successful');
+                    })
+                    .catch((error) => {
+                        console.log('an error ocurred: ', error);
+                    });
+        }
     }
 
     user &&
