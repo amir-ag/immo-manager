@@ -1,8 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut,
+    updateProfile,
+    updatePassword,
+} from 'firebase/auth';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
+import { ProfileFormData } from '../../components/profile/profile.container';
+import { AddressModel } from '../../models/address.model';
 
 interface UserState {
     email: string;
@@ -11,6 +21,7 @@ interface UserState {
     status: string;
     firstName: string;
     lastName: string;
+    address: AddressModel;
 }
 
 const initialState: UserState = {
@@ -20,6 +31,11 @@ const initialState: UserState = {
     status: '',
     firstName: '',
     lastName: '',
+    address: {
+        addressLine1: '',
+        postCode: null,
+        city: '',
+    },
 };
 
 type LoginProps = {
@@ -80,6 +96,56 @@ export const signup = createAsyncThunk(
     }
 );
 
+export const update = createAsyncThunk('user/update', async (formData: ProfileFormData) => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (formData.image) {
+        const storage = getStorage();
+        const storageRef = ref(storage, `images/${formData.image.name}`);
+        await uploadBytes(storageRef, formData.image).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+                user &&
+                    updateProfile(user, {
+                        photoURL: url,
+                    });
+            });
+        });
+    }
+
+    if (formData.newPassword) {
+        if (formData.newPassword === formData.newPasswordConfirm) {
+            user &&
+                updatePassword(user, formData.newPassword)
+                    .then(() => {
+                        console.log('password update successful');
+                    })
+                    .catch((error) => {
+                        console.log('an error ocurred: ', error);
+                    });
+        }
+    }
+
+    user &&
+        (await setDoc(
+            doc(db, dbName, user.uid),
+            {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: user.email,
+                address: { ...formData.address },
+            },
+            { merge: true }
+        ));
+
+    return {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        address: { ...formData.address },
+    };
+});
+
 export const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -92,6 +158,7 @@ export const userSlice = createSlice({
             state.uid = action.payload.uid;
             state.firstName = action.payload.firstName;
             state.lastName = action.payload.lastName;
+            state.address = { ...action.payload.address };
         });
         builder.addCase(login.rejected, (state) => {
             state.status = 'failed';
@@ -113,8 +180,12 @@ export const userSlice = createSlice({
             state.uid = '';
             state.status = '';
         });
+        builder.addCase(update.fulfilled, (state, action: PayloadAction<any>) => {
+            state.email = action.payload.email;
+            state.firstName = action.payload.firstName;
+            state.lastName = action.payload.lastName;
+        });
     },
 });
 
 export const selectUser = (state: RootState) => state.user;
-// export default userSlice.reducer
