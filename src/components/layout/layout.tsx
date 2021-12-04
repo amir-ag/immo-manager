@@ -5,6 +5,7 @@ import {
     Avatar,
     Button,
     Drawer,
+    IconButton,
     List,
     ListItem,
     ListItemIcon,
@@ -12,6 +13,8 @@ import {
     makeStyles,
     Toolbar,
     Typography,
+    useMediaQuery,
+    useTheme,
 } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -22,6 +25,7 @@ import { logout, selectUser } from '../../store/slices/user.slice';
 import { NavLink } from 'react-router-dom';
 import routes from '../../routes/route-constants';
 import { getAuth } from 'firebase/auth';
+import MenuIcon from '@material-ui/icons/Menu';
 
 export type LayoutProps = {
     children: React.ReactNode;
@@ -72,6 +76,10 @@ const useStyles = makeStyles((theme) => {
             width: `calc(100% - ${drawerWidth}px)`,
             background: '#FFFFFF',
         },
+        appbarMobile: {
+            width: '100%',
+            background: '#FFFFFF',
+        },
         toolbar: theme.mixins.toolbar,
         date: {
             flexGrow: 1,
@@ -86,17 +94,35 @@ const useStyles = makeStyles((theme) => {
             margin: theme.spacing(10, 1),
             padding: theme.spacing(2),
         },
+        menuButton: {
+            marginRight: theme.spacing(2),
+            [theme.breakpoints.up('lg')]: {
+                display: 'none',
+            },
+        },
     };
 });
 
 const Layout = ({ children, menuItems }: LayoutProps) => {
     const classes = useStyles();
+    const theme = useTheme();
     const dispatch = useAppDispatch();
     const { firstName } = useAppSelector(selectUser);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [open, setOpen] = React.useState(false);
     const history = useHistory();
     const auth = getAuth();
     const user = auth.currentUser;
+
+    const isMdUp = useMediaQuery(theme.breakpoints.up('lg'));
+
+    // TODO figure out how to handle KeyboardEvent | MouseEvent
+    const toggleDrawer = (event: any) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setOpen(!open);
+    };
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -108,8 +134,17 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
 
     return (
         <div className={classes.root}>
-            <AppBar className={classes.appbar} elevation={0}>
+            <AppBar className={isMdUp ? classes.appbar : classes.appbarMobile} elevation={0}>
                 <Toolbar>
+                    <IconButton
+                        color={'secondary'}
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={toggleDrawer}
+                        className={classes.menuButton}
+                    >
+                        <MenuIcon />
+                    </IconButton>
                     <Typography color={'secondary'} variant={'h5'} className={classes.date}>
                         Today is the {format(new Date(), 'do MMMM Y')}
                     </Typography>
@@ -137,8 +172,10 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
             </AppBar>
             <Drawer
                 className={classes.drawer}
-                variant={'permanent'}
+                variant={isMdUp ? 'permanent' : 'temporary'}
                 anchor={'left'}
+                open={open}
+                onClose={toggleDrawer}
                 classes={{ paper: classes.drawPaper }}
             >
                 <NavLink to={routes.DASHBOARD}>
