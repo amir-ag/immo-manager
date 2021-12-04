@@ -11,6 +11,8 @@ import { Property } from '../properties/property/property';
 import { dummyProperties } from '../properties/dummy-properties';
 import { RentalUnitDetail } from '../rental-unit/rental-unit-detail';
 import { dummyRentalUnits } from '../rental-unit/dummy-rental-units';
+import { TenancyDetail } from '../tenancy/tenancy-detail';
+import { dummyTenancies } from '../tenancy/dummy-tenancies';
 
 // Props
 type MainAppProps = {
@@ -48,6 +50,9 @@ const MainApp = ({ menuItems }: MainAppProps) => {
                     </Route>
                     <Route path={routes.TEMP_RENTAL_UNIT}>
                         <RentalUnitDetail rentalUnitProps={dummyRentalUnits[0]} />
+                    </Route>
+                    <Route path={routes.TEMP_TENANCY}>
+                        <TenancyDetail tenancyProps={dummyTenancies[0]} />
                     </Route>
                 </Switch>
             </Layout>
