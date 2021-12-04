@@ -12,6 +12,8 @@ import {
     makeStyles,
     Toolbar,
     Typography,
+    useMediaQuery,
+    useTheme,
 } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -91,12 +93,24 @@ const useStyles = makeStyles((theme) => {
 
 const Layout = ({ children, menuItems }: LayoutProps) => {
     const classes = useStyles();
+    const theme = useTheme();
     const dispatch = useAppDispatch();
     const { firstName } = useAppSelector(selectUser);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const history = useHistory();
     const auth = getAuth();
     const user = auth.currentUser;
+
+    const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+    const [open, setOpen] = React.useState(false);
+
+    const toggleDrawer = (event: React.KeyboardEvent<HTMLElement>) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+
+        setOpen(!open);
+    };
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -137,8 +151,10 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
             </AppBar>
             <Drawer
                 className={classes.drawer}
-                variant={'permanent'}
+                variant={isMdUp ? 'permanent' : 'temporary'}
                 anchor={'left'}
+                open={open}
+                onClose={toggleDrawer}
                 classes={{ paper: classes.drawPaper }}
             >
                 <NavLink to={routes.DASHBOARD}>
