@@ -75,6 +75,20 @@ export const login = createAsyncThunk('user/login', async ({ email, password }: 
     return login;
 });
 
+export const restoreLogin = createAsyncThunk('user/restoreLogin', async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const docRef = user && doc(db, dbName, user.uid);
+    const docSnap = docRef && (await getDoc(docRef));
+
+    if (user && docSnap && docSnap.exists()) {
+        return {
+            ...user,
+            ...docSnap.data(),
+        };
+    }
+});
+
 export const signup = createAsyncThunk(
     'user/signup',
     async ({ email, password, firstName, lastName }: SignupProps) => {
@@ -162,6 +176,14 @@ export const userSlice = createSlice({
         });
         builder.addCase(login.rejected, (state) => {
             state.status = 'failed';
+        });
+        builder.addCase(restoreLogin.fulfilled, (state, action: PayloadAction<any>) => {
+            state.status = 'success';
+            state.email = action.payload.email;
+            state.uid = action.payload.uid;
+            state.firstName = action.payload.firstName;
+            state.lastName = action.payload.lastName;
+            state.address = { ...action.payload.address };
         });
         builder.addCase(signup.fulfilled, (state, action: PayloadAction<any>) => {
             state.status = 'success';
