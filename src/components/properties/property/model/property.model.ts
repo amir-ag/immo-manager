@@ -9,3 +9,8 @@ export type PropertyModel = {
     yearOfConstruction?: number;
     address: AddressModel;
 };
+
+// Helper functions
+export const getDisplayNameOfProperty = (p: PropertyModel) => {
+    return `${p.name} (${p.egid})`;
+};

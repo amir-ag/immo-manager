@@ -12,39 +12,35 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-import { TenancyModel } from './model/tenancy.model';
-import { getDisplayNameOfProperty } from '../properties/property/property';
+import { getDisplayNameOfTenancy, TenancyModel } from './model/tenancy.model';
 import { dummyProperties } from '../properties/dummy-properties';
-import { getDisplayNameOfRentalUnit } from '../rental-unit/rental-unit-detail';
 import { dummyRentalUnits } from '../rental-unit/dummy-rental-units';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { dummyTenants } from './dummy-tenants';
 import { months } from './constants';
-
-export const getDisplayNameOfTenancy = (t: TenancyModel) => {
-    return `Tenancy (${t.id})`;
-};
-
-const gridSpacing = 4;
+import { stylingConstants } from '../../theme/shared-styles';
+import { getDisplayNameOfProperty } from '../properties/property/model/property.model';
+import { getDisplayNameOfRentalUnit } from '../rental-unit/model/rental-unit.model';
+import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
 
 export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) => {
     return (
         <>
             <Typography variant={'h5'}>{getDisplayNameOfTenancy(tenancyProps)}</Typography>
-            <Grid container spacing={gridSpacing}>
+            <Grid container spacing={stylingConstants.gridSpacing}>
                 <Grid
                     item
                     container
                     xs={12}
                     sm={6}
-                    spacing={gridSpacing}
+                    spacing={stylingConstants.gridSpacing}
                     alignItems={'center'}
                     alignContent={'flex-start'}
                 >
-                    <Grid item xs={12} sm={12}>
+                    <Grid item xs={12}>
                         <Typography variant={'h6'}>General Info</Typography>
                     </Grid>
-                    <Grid item xs={12} sm={12}>
+                    <Grid item xs={12}>
                         <TextField
                             variant={'outlined'}
                             fullWidth
@@ -57,7 +53,7 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                             disabled
                         />
                     </Grid>
-                    <Grid item xs={12} sm={12}>
+                    <Grid item xs={12}>
                         <TextField
                             variant={'outlined'}
                             fullWidth
@@ -70,7 +66,7 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                             disabled
                         />
                     </Grid>
-                    <Grid item xs={12} sm={12}>
+                    <Grid item xs={12}>
                         {/* TODO: Input needs to be required an the second tenant must not be the same as the first one */}
                         <Autocomplete
                             // TODO: Check if this is the correct way (https://v4.mui.com/customization/components/)
@@ -87,7 +83,7 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                             )}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} md={6}>
                         <Autocomplete
                             // TODO: Check if this is the correct way (https://v4.mui.com/customization/components/)
                             className={'MuiFormControl-marginNormal'}
@@ -104,14 +100,14 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                         />
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} md={6}>
                         <FormControlLabel
                             control={<Checkbox name="isFamilyApartment" />}
                             label="Is Family Apartment?"
                         />
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} md={6}>
                         {/* TODO: Use date picker dialog (https://v4.mui.com/components/pickers/) */}
                         <TextField
                             id="beginOfContract"
@@ -123,7 +119,7 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                             }}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} md={6}>
                         {/* TODO: Use date picker dialog (https://v4.mui.com/components/pickers/) / min. Date should be higher than 'beginOfContract' */}
                         <TextField
                             id="endOfContract"
@@ -136,7 +132,7 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                         />
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} md={6}>
                         <TextField
                             variant={'outlined'}
                             margin={'normal'}
@@ -149,7 +145,7 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} md={6}>
                         <FormControl fullWidth>
                             <InputLabel id="cancellationMonthsLabel">Cancellation Months</InputLabel>
                             {/* TODO: Use local state for select state */}
@@ -176,14 +172,14 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                     container
                     xs={12}
                     sm={6}
-                    spacing={gridSpacing}
+                    spacing={stylingConstants.gridSpacing}
                     alignItems={'center'}
                     alignContent={'flex-start'}
                 >
-                    <Grid item xs={12} sm={12}>
+                    <Grid item xs={12}>
                         <Typography variant={'h6'}>Rent Info</Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} md={6}>
                         <TextField
                             variant={'outlined'}
                             fullWidth
@@ -194,7 +190,7 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} md={6}>
                         <TextField
                             variant={'outlined'}
                             fullWidth
@@ -205,7 +201,7 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} md={6}>
                         <TextField
                             variant={'outlined'}
                             fullWidth
@@ -216,7 +212,7 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                             required
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} md={6}>
                         <TextField
                             variant={'outlined'}
                             fullWidth
@@ -226,6 +222,26 @@ export const TenancyDetail = ({ tenancyProps }: { tenancyProps: TenancyModel }) 
                             required
                         />
                     </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    xs={12}
+                    sm={6}
+                    spacing={stylingConstants.gridSpacing}
+                    alignItems={'center'}
+                    alignContent={'flex-start'}
+                />
+                <Grid
+                    item
+                    container
+                    xs={12}
+                    sm={6}
+                    spacing={stylingConstants.gridSpacing}
+                    alignItems={'center'}
+                    alignContent={'flex-start'}
+                >
+                    <DetailViewFormActions />
                 </Grid>
             </Grid>
         </>

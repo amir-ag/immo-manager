@@ -4,3 +4,8 @@ export type TenancyModel = {
     beginOfContract: Date;
     endOfContract?: Date;
 };
+
+// Helper functions
+export const getDisplayNameOfTenancy = (t: TenancyModel) => {
+    return `Tenancy (${t.id})`;
+};
