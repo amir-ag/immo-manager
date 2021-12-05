@@ -35,6 +35,7 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
         <Container>
             {showHeader && (
                 <>
+                    {/* TODO: Check if it makes sense to extract search header (input + button) as component */}
                     <Typography className={cssClasses.headerElements} variant={'h5'}>
                         Properties Overview
                     </Typography>

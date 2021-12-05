@@ -30,7 +30,7 @@ export const TenanciesOverview = () => {
 
     return (
         <>
-            {/* TODO: Check if it makes sense to extract search header (input + button) */}
+            {/* TODO: Check if it makes sense to extract search header (input + button) as component */}
             <Grid item xs={12}>
                 <Typography variant={'h6'}>Tenancies</Typography>
             </Grid>
