@@ -1,4 +1,4 @@
-import { PropertyModel } from './property/model/property.model';
+import { PropertyModel } from './model/property.model';
 
 export const dummyProperties: PropertyModel[] = [
     {

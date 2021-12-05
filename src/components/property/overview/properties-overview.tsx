@@ -8,8 +8,8 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-import { dummyProperties } from './dummy-properties';
-import PropertyCard from './property/property-card';
+import { dummyProperties } from '../dummy-properties';
+import PropertyCard from './property-card';
 import AddIcon from '@material-ui/icons/Add';
 import { Search } from '@material-ui/icons';
 
@@ -28,7 +28,7 @@ type PropertiesViewProps = {
     showHeader?: boolean;
 };
 
-const PropertiesView = ({ showHeader = true }: PropertiesViewProps) => {
+const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
     const cssClasses = useStyles();
 
     return (
@@ -84,4 +84,4 @@ const PropertiesView = ({ showHeader = true }: PropertiesViewProps) => {
     );
 };
 
-export default PropertiesView;
+export default PropertiesOverview;
