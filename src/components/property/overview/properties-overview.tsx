@@ -8,8 +8,8 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-import { dummyProperties } from './dummy-properties';
-import PropertyCard from './property/property-card';
+import { dummyProperties } from '../dummy-properties';
+import PropertyCard from './property-card';
 import AddIcon from '@material-ui/icons/Add';
 import { Search } from '@material-ui/icons';
 
@@ -28,13 +28,14 @@ type PropertiesViewProps = {
     showHeader?: boolean;
 };
 
-const PropertiesView = ({ showHeader = true }: PropertiesViewProps) => {
+const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
     const cssClasses = useStyles();
 
     return (
         <Container>
             {showHeader && (
                 <>
+                    {/* TODO: Check if it makes sense to extract search header (input + button) as component */}
                     <Typography className={cssClasses.headerElements} variant={'h5'}>
                         Properties Overview
                     </Typography>
@@ -84,4 +85,4 @@ const PropertiesView = ({ showHeader = true }: PropertiesViewProps) => {
     );
 };
 
-export default PropertiesView;
+export default PropertiesOverview;

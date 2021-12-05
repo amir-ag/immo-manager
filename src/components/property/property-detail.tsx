@@ -1,14 +1,14 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
-import { getDisplayNameOfRentalUnit, RentalUnitModel } from './model/rental-unit.model';
+import { getDisplayNameOfProperty, PropertyModel } from './model/property.model';
 import { stylingConstants } from '../../theme/shared-styles';
-import { RentalUnitForm } from './rental-unit-form';
-import { TenanciesOverview } from '../tenancy/overview/tenancies-overview';
+import { PropertyForm } from './property-form';
+import { RentalUnitsOverview } from '../rental-unit/overview/rental-units-overview';
 
-export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalUnitModel }) => {
+export const PropertyDetail = ({ propertyProps }: { propertyProps: PropertyModel }) => {
     return (
         <>
-            <Typography variant={'h5'}>{getDisplayNameOfRentalUnit(rentalUnitProps)}</Typography>
+            <Typography variant={'h5'}>{getDisplayNameOfProperty(propertyProps)}</Typography>
             <Grid container spacing={stylingConstants.gridSpacing}>
                 <Grid
                     item
@@ -19,9 +19,8 @@ export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalU
                     alignItems={'center'}
                     alignContent={'flex-start'}
                 >
-                    <RentalUnitForm />
+                    <PropertyForm />
                 </Grid>
-
                 <Grid
                     item
                     container
@@ -31,7 +30,7 @@ export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalU
                     alignItems={'center'}
                     alignContent={'flex-start'}
                 >
-                    <TenanciesOverview />
+                    <RentalUnitsOverview />
                 </Grid>
             </Grid>
         </>

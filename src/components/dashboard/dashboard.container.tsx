@@ -1,5 +1,5 @@
 import React from 'react';
-import PropertiesView from '../properties/properties-view';
+import PropertiesOverview from '../property/overview/properties-overview';
 import { makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,7 +16,7 @@ export const DashboardContainer = () => {
             <Typography variant={'h5'} className={cssClasses.title}>
                 Dashboard
             </Typography>
-            <PropertiesView showHeader={false} />;
+            <PropertiesOverview showHeader={false} />;
         </>
     );
 };
