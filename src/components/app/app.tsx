@@ -5,8 +5,21 @@ import { DashboardRoute } from '../../routes/dashboard.route';
 import './app.css';
 import routes from '../../routes/route-constants';
 import PrivateRoute from '../../helpers/private.route';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { restoreLogin, selectUser } from '../../store/slices/user.slice';
 
 function App() {
+    const { uid } = useAppSelector(selectUser);
+    const auth = getAuth();
+    const dispatch = useAppDispatch();
+
+    onAuthStateChanged(auth, (user) => {
+        if (user && !uid) {
+            dispatch(restoreLogin());
+        }
+    });
+
     return (
         <div className="App">
             <Router>
