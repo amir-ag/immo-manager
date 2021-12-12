@@ -5,10 +5,12 @@ import { stylingConstants } from '../../theme/shared-styles';
 import { RentalUnitForm } from './rental-unit-form';
 import { TenanciesOverview } from '../tenancy/overview/tenancies-overview';
 
-export const RentalUnitDetail = ({ rentalUnitProps }: { rentalUnitProps: RentalUnitModel }) => {
+export const RentalUnitDetail = ({ rentalUnit }: { rentalUnit?: RentalUnitModel }) => {
     return (
         <>
-            <Typography variant={'h5'}>{getDisplayNameOfRentalUnit(rentalUnitProps)}</Typography>
+            <Typography variant={'h5'}>
+                {rentalUnit ? getDisplayNameOfRentalUnit(rentalUnit) : 'Create new rental unit'}
+            </Typography>
             <Grid container spacing={stylingConstants.gridSpacing}>
                 <Grid
                     item

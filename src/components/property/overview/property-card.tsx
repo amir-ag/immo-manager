@@ -2,13 +2,19 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@material-ui/core';
 import { PropertyModel } from '../model/property.model';
 import { Edit } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import routes from '../../../routes/route-constants';
 
 const PropertyCard = ({ egid, name, address }: PropertyModel) => {
     return (
         <Card elevation={3}>
             <CardHeader
                 action={
-                    <IconButton aria-label="settings">
+                    <IconButton
+                        component={Link}
+                        to={routes.PROPERTIES_DETAIL.replace(':id', egid)}
+                        aria-label="settings"
+                    >
                         <Edit />
                     </IconButton>
                 }

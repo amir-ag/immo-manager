@@ -6,11 +6,8 @@ import routes from '../../routes/route-constants';
 import { DashboardContainer } from '../dashboard/dashboard.container';
 import { RentScheduleContainer } from '../rent-schedule/rent-schedule.container';
 import ProfileContainer from '../profile/profile.container';
-import { dummyProperties } from '../property/dummy-properties';
 import { RentalUnitDetail } from '../rental-unit/rental-unit-detail';
-import { dummyRentalUnits } from '../rental-unit/dummy-rental-units';
 import { TenancyDetail } from '../tenancy/tenancy-detail';
-import { dummyTenancies } from '../tenancy/dummy-tenancies';
 import PropertiesOverview from '../property/overview/properties-overview';
 import { PropertyDetail } from '../property/property-detail';
 
@@ -30,29 +27,48 @@ const MainApp = ({ menuItems }: MainAppProps) => {
         <Router>
             <Layout menuItems={menuItems}>
                 <Switch>
-                    <Route path={routes.DASHBOARD}>
-                        <DashboardContainer />
-                    </Route>
-                    <Route path={routes.PERSONS}>
-                        <PersonsContainer />
-                    </Route>
-                    <Route path={routes.PROPERTIES}>
-                        <PropertiesOverview />
-                    </Route>
-                    <Route path={routes.RENT_SCHEDULE}>
-                        <RentScheduleContainer />
-                    </Route>
+                    {/* Profile */}
                     <Route path={routes.PROFILE}>
                         <ProfileContainer />
                     </Route>
-                    <Route path={routes.TEMP_PROPERTY}>
-                        <PropertyDetail propertyProps={dummyProperties[0]} />
+                    {/* Dashboard */}
+                    <Route path={routes.DASHBOARD}>
+                        <DashboardContainer />
                     </Route>
-                    <Route path={routes.TEMP_RENTAL_UNIT}>
-                        <RentalUnitDetail rentalUnitProps={dummyRentalUnits[0]} />
+                    {/* Persons */}
+                    <Route path={routes.PERSONS}>
+                        <PersonsContainer />
                     </Route>
-                    <Route path={routes.TEMP_TENANCY}>
-                        <TenancyDetail tenancyProps={dummyTenancies[0]} />
+                    {/* Properties */}
+                    <Route exact path={routes.PROPERTIES_OVERVIEW}>
+                        <PropertiesOverview />
+                    </Route>
+                    <Route path={routes.PROPERTIES_CREATE}>
+                        <PropertyDetail isNew={true} />
+                    </Route>
+                    <Route path={routes.PROPERTIES_CREATE}>
+                        <PropertyDetail />
+                    </Route>
+                    <Route path={routes.PROPERTIES_DETAIL}>
+                        <PropertyDetail />
+                    </Route>
+                    {/* Rental Units */}
+                    <Route path={routes.RENTAL_UNITS_CREATE}>
+                        <RentalUnitDetail />
+                    </Route>
+                    <Route path={routes.RENTAL_UNITS_DETAIL}>
+                        <RentalUnitDetail />
+                    </Route>
+                    {/* Tenancies */}
+                    <Route path={routes.TENANCIES_CREATE}>
+                        <TenancyDetail />
+                    </Route>
+                    <Route path={routes.TENANCIES_DETAIL}>
+                        <TenancyDetail />
+                    </Route>
+                    {/* Rent Schedule */}
+                    <Route path={routes.RENT_SCHEDULE}>
+                        <RentScheduleContainer />
                     </Route>
                 </Switch>
             </Layout>

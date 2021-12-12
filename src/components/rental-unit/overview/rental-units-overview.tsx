@@ -18,6 +18,8 @@ import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import { dummyRentalUnits } from '../dummy-rental-units';
 import { getDisplayNameOfRentalUnit } from '../model/rental-unit.model';
+import { Link } from 'react-router-dom';
+import routes from '../../../routes/route-constants';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -50,7 +52,14 @@ export const RentalUnitsOverview = () => {
                 />
             </Grid>
             <Grid item xs={12} md={4}>
-                <Button fullWidth variant="contained" color="secondary" startIcon={<AddIcon />}>
+                <Button
+                    component={Link}
+                    to={routes.TENANCIES_CREATE}
+                    fullWidth
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<AddIcon />}
+                >
                     New
                 </Button>
             </Grid>
