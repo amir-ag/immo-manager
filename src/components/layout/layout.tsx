@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as ImmoLogo } from '../../assets/svg/logo.svg';
 import {
     AppBar,
     Avatar,
     Button,
+    ClickAwayListener,
     Drawer,
+    Grow,
     IconButton,
     List,
     ListItem,
     ListItemIcon,
     ListItemText,
     makeStyles,
+    MenuList,
+    Paper,
+    Popper,
     Toolbar,
     Typography,
     useMediaQuery,
     useTheme,
 } from '@material-ui/core';
-import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useHistory } from 'react-router';
 import { format } from 'date-fns';
@@ -109,8 +113,9 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
     const theme = useTheme();
     const dispatch = useAppDispatch();
     const { firstName } = useAppSelector(selectUser);
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [open, setOpen] = React.useState(false);
+    const [openMenu, setOpenMenu] = useState(false);
+    const [openDrawer, setOpenDrawer] = React.useState(false);
+    const avatarRef = React.useRef<HTMLDivElement>(null);
     const history = useHistory();
     const auth = getAuth();
     const user = auth.currentUser;
@@ -122,15 +127,25 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-        setOpen(!open);
+        setOpenDrawer(!openDrawer);
     };
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
+    const handleMenuToggle = () => {
+        setOpenMenu((prevState) => !prevState);
     };
-    const handleClose = () => {
-        history.push('profile');
-        setAnchorEl(null);
+
+    const handleClose = (event: React.MouseEvent<EventTarget>) => {
+        if (avatarRef.current && avatarRef.current.contains(event.target as HTMLElement)) {
+            return;
+        }
+        setOpenMenu(false);
+    };
+
+    const handleListKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            setOpenMenu(false);
+        }
     };
 
     return (
@@ -152,30 +167,52 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                     <Typography color={'secondary'} variant={'h6'}>
                         {firstName && firstName}
                     </Typography>
-                    <div onClick={handleClick} aria-controls="user-menu" aria-haspopup="true">
+                    <div
+                        onClick={handleMenuToggle}
+                        aria-controls="user-menu"
+                        aria-haspopup="true"
+                        ref={avatarRef}
+                    >
                         {user?.photoURL ? (
                             <Avatar className={classes.avatar} src={user.photoURL} />
                         ) : (
                             <Avatar className={classes.avatar} />
                         )}
                     </div>
-                    <Menu
-                        id="user-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
+                    <Popper
+                        open={openMenu}
+                        anchorEl={avatarRef.current}
+                        role={undefined}
+                        transition
+                        disablePortal
                     >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={() => dispatch(logout())}>Logout</MenuItem>
-                    </Menu>
+                        {({ TransitionProps, placement }) => (
+                            <Grow
+                                {...TransitionProps}
+                                style={{
+                                    transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+                                }}
+                            >
+                                <Paper>
+                                    <ClickAwayListener onClickAway={handleClose}>
+                                        <MenuList id="user-menu" onKeyDown={handleListKeyDown}>
+                                            <MenuItem onClick={() => history.push('profile')}>
+                                                Profile
+                                            </MenuItem>
+                                            <MenuItem onClick={() => dispatch(logout())}>Logout</MenuItem>
+                                        </MenuList>
+                                    </ClickAwayListener>
+                                </Paper>
+                            </Grow>
+                        )}
+                    </Popper>
                 </Toolbar>
             </AppBar>
             <Drawer
                 className={classes.drawer}
                 variant={isMdUp ? 'permanent' : 'temporary'}
                 anchor={'left'}
-                open={open}
+                open={openDrawer}
                 onClose={toggleDrawer}
                 classes={{ paper: classes.drawPaper }}
             >
@@ -190,6 +227,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                             component={NavLink}
                             to={item.path}
                             className={classes.listItem}
+                            onClick={toggleDrawer}
                         >
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={item.text} />
