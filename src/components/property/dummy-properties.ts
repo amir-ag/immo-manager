@@ -4,7 +4,7 @@ export const dummyProperties: PropertyModel[] = [
     {
         id: '1',
         owner: 'Petra Zumbühl',
-        type: 'apartment building',
+        janitor: '',
         egid: '1234',
         name: 'Mehrfamilienhaus in Genf',
         yearOfConstruction: 1957,
@@ -17,7 +17,7 @@ export const dummyProperties: PropertyModel[] = [
     {
         id: '2',
         owner: 'Franzi Zürcher',
-        type: 'apartment building',
+        janitor: '',
         egid: '1235',
         name: 'Mehrfamilienhaus in Zermatt',
         yearOfConstruction: 1980,
@@ -30,7 +30,7 @@ export const dummyProperties: PropertyModel[] = [
     {
         id: '3',
         owner: 'Michel Meister',
-        type: 'apartment building',
+        janitor: '',
         egid: '1236',
         name: 'Mehrfamilienhaus in Brig',
         yearOfConstruction: 1975,
@@ -43,7 +43,7 @@ export const dummyProperties: PropertyModel[] = [
     {
         id: '4',
         owner: 'Petra Zumbühl',
-        type: 'apartment building',
+        janitor: '',
         egid: '1237',
         name: 'Mehrfamilienhaus in Lugano',
         yearOfConstruction: 1987,
@@ -56,7 +56,7 @@ export const dummyProperties: PropertyModel[] = [
     {
         id: '5',
         owner: 'Petra Zumbühl',
-        type: 'apartment building',
+        janitor: '',
         egid: '1238',
         name: 'Mehrfamilienhaus in Zumikon',
         yearOfConstruction: 1930,
@@ -69,7 +69,7 @@ export const dummyProperties: PropertyModel[] = [
     {
         id: '6',
         owner: 'Petra Zumbühl',
-        type: 'apartment building',
+        janitor: '',
         egid: '1239',
         name: 'Mehrfamilienhaus in Zürich',
         yearOfConstruction: 1957,
@@ -82,7 +82,7 @@ export const dummyProperties: PropertyModel[] = [
     {
         id: '7',
         owner: 'Hans Meier',
-        type: 'apartment building',
+        janitor: '',
         egid: '1240',
         name: 'Mehrfamilienhaus in Luzern',
         yearOfConstruction: 1957,

@@ -54,7 +54,7 @@ export const RentalUnitsOverview = () => {
             <Grid item xs={12} md={4}>
                 <Button
                     component={Link}
-                    to={routes.TENANCIES_CREATE}
+                    to={routes.RENTAL_UNITS_CREATE}
                     fullWidth
                     variant="contained"
                     color="secondary"

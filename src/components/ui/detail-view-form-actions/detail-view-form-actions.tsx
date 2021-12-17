@@ -10,7 +10,12 @@ export const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const DetailViewFormActions = () => {
+type DetailViewFormActionsProps = {
+    disableCancel?: boolean;
+    disableSave?: boolean;
+};
+
+const DetailViewFormActions = ({ disableCancel, disableSave }: DetailViewFormActionsProps) => {
     const sharedCssClasses = useSharedStyles();
     const cssClasses = useStyles();
 
@@ -21,6 +26,7 @@ const DetailViewFormActions = () => {
                     className={sharedCssClasses.nested6ColGridItemLeft}
                     variant="contained"
                     color="default"
+                    disabled={disableCancel}
                     startIcon={<CancelIcon />}
                 >
                     Cancel
@@ -30,7 +36,8 @@ const DetailViewFormActions = () => {
                 <Button
                     className={sharedCssClasses.nested6ColGridItemRight}
                     variant="contained"
-                    disabled
+                    disabled={disableSave}
+                    type="submit"
                     color="primary"
                     startIcon={<SaveIcon />}
                 >

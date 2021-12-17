@@ -1,14 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../store';
 import {
     createUserWithEmailAndPassword,
     getAuth,
     signInWithEmailAndPassword,
     signOut,
-    updateProfile,
     updatePassword,
+    updateProfile,
 } from 'firebase/auth';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
 import { ProfileFormData } from '../../components/profile/profile.container';
@@ -209,5 +208,3 @@ export const userSlice = createSlice({
         });
     },
 });
-
-export const selectUser = (state: RootState) => state.user;

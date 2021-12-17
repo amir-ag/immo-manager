@@ -14,11 +14,11 @@ import {
 } from '@material-ui/core';
 import { PersonModel } from '../models/person.model';
 
-export type PeopleModalProps = {
+export type PersonModalProps = {
     openModal: boolean;
     setOpenModal: Dispatch<SetStateAction<boolean>>;
     handleSubmit: (e: FormEvent<HTMLElement>) => void;
-    state: PersonModel;
+    currentPerson: PersonModel;
     onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
     onChangeAddress: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
     onChangeRole: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
@@ -56,13 +56,13 @@ const PersonModal = ({
     openModal,
     setOpenModal,
     handleSubmit,
-    state,
+    currentPerson,
     onChange,
     onChangeAddress,
     onChangeRole,
     onChangeDate,
     roles,
-}: PeopleModalProps) => {
+}: PersonModalProps) => {
     const classes = useStyles();
 
     return (
@@ -81,14 +81,14 @@ const PersonModal = ({
             <Fade in={openModal}>
                 <Paper className={classes.paper}>
                     <Typography component="h1" variant="h5">
-                        {state.id ? `Edit existing person` : 'Add a new person'}
+                        {currentPerson.id ? `Edit existing person` : 'Add a new person'}
                     </Typography>
                     <Box component={'form'} onSubmit={(e) => handleSubmit(e)} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     className={classes.company}
-                                    value={state.company}
+                                    value={currentPerson.company}
                                     onChange={(e) => onChange(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
@@ -102,12 +102,13 @@ const PersonModal = ({
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
+                                {/* TODO: Field needs to be multi-select because person can have multiple roles */}
                                 <TextField
                                     className={classes.selectRole}
                                     id={'role'}
                                     select
                                     label="Select"
-                                    value={state.role}
+                                    value={currentPerson.role}
                                     onChange={(e) => onChangeRole(e)}
                                     helperText="Please select your clients role"
                                     variant="outlined"
@@ -122,7 +123,7 @@ const PersonModal = ({
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    value={state.firstName}
+                                    value={currentPerson.firstName}
                                     onChange={(e) => onChange(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
@@ -138,7 +139,7 @@ const PersonModal = ({
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    value={state.lastName}
+                                    value={currentPerson.lastName}
                                     onChange={(e) => onChange(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
@@ -165,7 +166,7 @@ const PersonModal = ({
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <TextField
-                                    value={state.address.addressLine1}
+                                    value={currentPerson.address.addressLine1}
                                     onChange={(e) => onChangeAddress(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
@@ -180,7 +181,7 @@ const PersonModal = ({
                             </Grid>
                             <Grid item xs={12} sm={3}>
                                 <TextField
-                                    value={state.address.postCode}
+                                    value={currentPerson.address.postCode}
                                     onChange={(e) => onChangeAddress(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
@@ -195,7 +196,7 @@ const PersonModal = ({
                             </Grid>
                             <Grid item xs={12} sm={9}>
                                 <TextField
-                                    value={state.address.city}
+                                    value={currentPerson.address.city}
                                     onChange={(e) => onChangeAddress(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
@@ -210,7 +211,7 @@ const PersonModal = ({
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    value={state.email}
+                                    value={currentPerson.email}
                                     onChange={(e) => onChange(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
@@ -225,7 +226,7 @@ const PersonModal = ({
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    value={state.mobilePhone}
+                                    value={currentPerson.mobilePhone}
                                     onChange={(e) => onChange(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
@@ -240,7 +241,7 @@ const PersonModal = ({
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    value={state.landline}
+                                    value={currentPerson.landline}
                                     onChange={(e) => onChange(e)}
                                     variant={'outlined'}
                                     margin={'normal'}
