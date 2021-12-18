@@ -1,13 +1,12 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import PersonsView from './persons-view';
 import PersonModal from './modal/person-modal';
 import { roles } from './models/person-roles.model';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { createUpdatePerson, deletePerson, getPersons } from '../../store/slices/persons.slice';
 import PersonsTable from './table/persons-table';
 import { selectPersons } from '../../store/selectors';
-import SearchBar from '@snekcode/mui-search-bar';
 import { emptyPerson } from './models/person.model';
+import SearchHeader from '../ui/searc-header/search-header';
 
 const PersonsContainer = () => {
     const dispatch = useAppDispatch();
@@ -19,12 +18,11 @@ const PersonsContainer = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        setData(personsData);
+        setSearchResult(personsData);
     }, [personsData]);
 
     const [openModal, setOpenModal] = useState(false);
-    const [searchValue, setSearchValue] = useState('');
-    const [data, setData] = useState(personsData);
+    const [searchResult, setSearchResult] = useState(personsData);
     const [currentPerson, setCurrentPerson] = useState({
         ...emptyPerson,
     });
@@ -87,34 +85,20 @@ const PersonsContainer = () => {
         setOpenModal(true);
     };
 
-    const requestSearch = (searchValue: string) => {
-        const searchResult = personsData.filter(
-            (row) =>
-                row.firstName.toLowerCase().includes(searchValue.toLowerCase()) ||
-                row.lastName.toLowerCase().includes(searchValue.toLowerCase()) ||
-                row.address.addressLine1.toLowerCase().includes(searchValue.toLowerCase()) ||
-                row.address.city.includes(searchValue.toLowerCase()) ||
-                row.email.toLowerCase().includes(searchValue.toLowerCase())
-        );
-        setData(searchResult);
-    };
-
-    const cancelSearch = () => {
-        setSearchValue('');
-        requestSearch(searchValue);
-    };
-
     return (
         <>
-            <PersonsView handleCreate={handleCreate} />
-            <SearchBar
-                value={searchValue}
-                onChange={(searchValue) => requestSearch(searchValue)}
-                onCancelSearch={() => cancelSearch()}
-                style={{ justifyContent: 'normal', margin: '10px 0' }}
+            <SearchHeader
+                handleCreate={handleCreate}
+                title={'Create new Person'}
+                originalData={personsData}
+                setsearchResult={setSearchResult}
             />
             {personsData && (
-                <PersonsTable personsData={data} handleDelete={handleDelete} handleEdit={handleEdit} />
+                <PersonsTable
+                    personsData={searchResult}
+                    handleDelete={handleDelete}
+                    handleEdit={handleEdit}
+                />
             )}
             {openModal && (
                 <PersonModal
