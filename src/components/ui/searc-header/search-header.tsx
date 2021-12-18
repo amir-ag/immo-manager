@@ -3,13 +3,13 @@ import { Button, Container, makeStyles, Paper, Typography } from '@material-ui/c
 import AddIcon from '@material-ui/icons/Add';
 import { grey } from '@material-ui/core/colors';
 import SearchBar from '@snekcode/mui-search-bar';
-import { PersonModel } from '../../persons/models/person.model';
 
 export type SearchHeaderProps = {
     handleCreate: () => void;
     title?: string;
-    originalData: PersonModel[];
+    originalData: { [key: string]: any }[];
     setsearchResult: Dispatch<SetStateAction<any>>;
+    searchParams: string[];
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -30,24 +30,41 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+/*
+
+SearchHeader takes originalData and searchParams as props and outputs filtered data by using setSearchResult.
+You can then use searchResult in the parent component and pass it on to e.g. a table component
+
+The parent component has to provide the following to SearchHeader:
+
+- originalData: the raw initial data as an array of objects (currently not netsted objects)
+- setSearchResult: track searchResult in the parent component and pass setSearchResult to SearchHeader
+- searchParams: pass searchParams (keys of object) to SearchHeader in an array e.g. ['firstName', 'lastName']
+- handleCreate: function which is called on click on the button
+- title: title of this component
+
+ */
+
 const SearchHeader = ({
     handleCreate,
     title = 'Placeholder Title',
     originalData,
     setsearchResult,
+    searchParams,
 }: SearchHeaderProps) => {
     const classes = useStyles();
     const [searchValue, setSearchValue] = useState('');
 
     const requestSearch = (searchValue: string) => {
-        const searchResult = originalData.filter(
-            (row) =>
-                row.firstName.toLowerCase().includes(searchValue.toLowerCase()) ||
-                row.lastName.toLowerCase().includes(searchValue.toLowerCase()) ||
-                row.address.addressLine1.toLowerCase().includes(searchValue.toLowerCase()) ||
-                row.address.city.includes(searchValue.toLowerCase()) ||
-                row.email.toLowerCase().includes(searchValue.toLowerCase())
-        );
+        let searchResult: {}[] = [];
+        for (let row of originalData) {
+            for (let key of searchParams) {
+                if (row[key].toLowerCase().includes(searchValue.toLowerCase())) {
+                    searchResult.push(row);
+                    break;
+                }
+            }
+        }
         setsearchResult(searchResult);
     };
 

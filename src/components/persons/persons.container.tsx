@@ -92,6 +92,7 @@ const PersonsContainer = () => {
                 title={'Create new Person'}
                 originalData={personsData}
                 setsearchResult={setSearchResult}
+                searchParams={['firstName', 'lastName', 'email']}
             />
             {personsData && (
                 <PersonsTable
