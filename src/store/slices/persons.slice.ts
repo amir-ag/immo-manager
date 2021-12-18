@@ -10,6 +10,7 @@ export const createUpdatePerson = createAsyncThunk(
     'persons/createUpdate',
     async (personData: PersonModel, thunkAPI) => {
         try {
+            // TODO: Use method getUidFromStoreState()
             const state = thunkAPI.getState() as RootState;
             const uid = state?.user?.uid;
 
@@ -38,6 +39,7 @@ export const createUpdatePerson = createAsyncThunk(
 
 export const getPersons = createAsyncThunk('persons/getPersons', async (_, thunkAPI) => {
     try {
+        // TODO: Use method getUidFromStoreState()
         const state = thunkAPI.getState() as RootState;
         const uid = state?.user?.uid;
         const q = query(collection(db, dbName), where('createdBy', '==', uid));
@@ -77,5 +79,3 @@ export const personsSlice = createSlice({
         });
     },
 });
-
-export const selectPersons = (state: RootState) => state.persons;

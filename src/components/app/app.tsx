@@ -4,10 +4,11 @@ import { HomeRoute } from '../../routes/home.route';
 import { DashboardRoute } from '../../routes/dashboard.route';
 import './app.css';
 import routes from '../../routes/route-constants';
-import PrivateRoute from '../../helpers/private.route';
+import PrivateRoute from '../../routes/private.route';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { restoreLogin, selectUser } from '../../store/slices/user.slice';
+import { restoreLogin } from '../../store/slices/user.slice';
+import { selectUser } from '../../store/selectors';
 
 function App() {
     const { uid } = useAppSelector(selectUser);

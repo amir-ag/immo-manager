@@ -1,16 +1,26 @@
 const routes = {
+    // Base
     HOME: '/',
     SIGNUP: '/signup',
     AUTHENTICATED_AREA: '/app',
-    DASHBOARD: '/app/dashboard',
-    PERSONS: '/app/persons',
+    // Profile
     PROFILE: '/app/profile',
-    PROPERTIES: '/app/properties',
+    // Dashboard
+    DASHBOARD: '/app/dashboard',
+    // Persons
+    PERSONS: '/app/persons',
+    // Properties
+    PROPERTIES_OVERVIEW: '/app/properties',
+    PROPERTIES_CREATE: '/app/properties/create',
+    PROPERTIES_DETAIL: '/app/properties/:id',
+    // Rental Units
+    RENTAL_UNITS_CREATE: '/app/rental-units/create',
+    RENTAL_UNITS_DETAIL: '/app/rental-units/:id',
+    // Tenancies
+    TENANCIES_CREATE: '/app/tenancies/create',
+    TENANCIES_DETAIL: '/app/tenancies/:id',
+    // Rent Schedule
     RENT_SCHEDULE: '/app/rent-schedule',
-    // TODO: Remove after creating views
-    TEMP_PROPERTY: '/app/property',
-    TEMP_RENTAL_UNIT: '/app/rental-unit',
-    TEMP_TENANCY: '/app/tenancy',
 };
 
 export default routes;

@@ -12,6 +12,8 @@ import { dummyProperties } from '../dummy-properties';
 import PropertyCard from './property-card';
 import AddIcon from '@material-ui/icons/Add';
 import { Search } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import routes from '../../../routes/route-constants';
 
 const gridSpacing = 3;
 
@@ -63,10 +65,13 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                         </Grid>
                         <Grid item xs={12} sm={2}>
                             <Button
+                                component={Link}
+                                to={routes.PROPERTIES_CREATE}
                                 className={cssClasses.headerControls}
+                                fullWidth
                                 variant="contained"
-                                color="primary"
-                                endIcon={<AddIcon />}
+                                color="secondary"
+                                startIcon={<AddIcon />}
                             >
                                 New
                             </Button>

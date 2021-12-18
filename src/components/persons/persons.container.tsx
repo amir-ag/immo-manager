@@ -3,36 +3,15 @@ import PersonsView from './persons-view';
 import PersonModal from './modal/person-modal';
 import { roles } from './models/person-roles.model';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-    createUpdatePerson,
-    deletePerson,
-    getPersons,
-    selectPersons,
-} from '../../store/slices/persons.slice';
+import { createUpdatePerson, deletePerson, getPersons } from '../../store/slices/persons.slice';
 import PersonsTable from './table/persons-table';
-import { PersonModel } from './models/person.model';
+import { selectPersons } from '../../store/selectors';
 import SearchBar from '@snekcode/mui-search-bar';
-
-const emptyForm: PersonModel = {
-    id: '',
-    company: '',
-    firstName: '',
-    lastName: '',
-    birthday: '',
-    address: {
-        addressLine1: '',
-        postCode: null,
-        city: '',
-    },
-    email: '',
-    mobilePhone: null,
-    landline: null,
-    role: '',
-    createdBy: '',
-};
+import { emptyPerson } from './models/person.model';
 
 const PersonsContainer = () => {
     const dispatch = useAppDispatch();
+
     const personsData = useAppSelector(selectPersons);
 
     useEffect(() => {
@@ -46,19 +25,22 @@ const PersonsContainer = () => {
     const [openModal, setOpenModal] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [data, setData] = useState(personsData);
-    const [state, setState] = useState({
-        ...emptyForm,
+    const [currentPerson, setCurrentPerson] = useState({
+        ...emptyPerson,
     });
 
+
+    // TODO: Reuse
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setState((prevState) => ({
+        setCurrentPerson((prevState) => ({
             ...prevState,
             [e.target.id]: e.target.value,
         }));
     };
 
+    // TODO: Reuse
     const onChangeAddress = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setState((prevState) => ({
+        setCurrentPerson((prevState) => ({
             ...prevState,
             address: {
                 ...prevState.address,
@@ -68,14 +50,15 @@ const PersonsContainer = () => {
     };
 
     const onChangeRole = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setState((prevState) => ({
+        setCurrentPerson((prevState) => ({
             ...prevState,
             role: e.target.value,
         }));
     };
 
+    // TODO: Reuse
     const onChangeDate = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setState((prevState) => ({
+        setCurrentPerson((prevState) => ({
             ...prevState,
             birthday: e.target.value,
         }));
@@ -83,8 +66,8 @@ const PersonsContainer = () => {
 
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
-        dispatch(createUpdatePerson(state));
-        setState(emptyForm);
+        dispatch(createUpdatePerson(currentPerson));
+        setCurrentPerson(emptyPerson);
         setOpenModal(false);
     };
 
@@ -93,14 +76,14 @@ const PersonsContainer = () => {
     };
 
     const handleCreate = () => {
-        setState(emptyForm);
+        setCurrentPerson(emptyPerson);
         setOpenModal(true);
     };
 
     const handleEdit = (id: string) => {
         const selectedPerson = personsData.filter((person) => person.id === id);
         const editPerson = selectedPerson[0];
-        setState(editPerson);
+        setCurrentPerson(editPerson);
         setOpenModal(true);
     };
 
@@ -138,7 +121,7 @@ const PersonsContainer = () => {
                     openModal={openModal}
                     setOpenModal={setOpenModal}
                     handleSubmit={handleSubmit}
-                    state={state}
+                    currentPerson={currentPerson}
                     onChange={onChange}
                     onChangeAddress={onChangeAddress}
                     onChangeRole={onChangeRole}

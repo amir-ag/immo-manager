@@ -25,11 +25,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { useHistory } from 'react-router';
 import { format } from 'date-fns';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { logout, selectUser } from '../../store/slices/user.slice';
+import { logout } from '../../store/slices/user.slice';
 import { NavLink } from 'react-router-dom';
 import routes from '../../routes/route-constants';
 import { getAuth } from 'firebase/auth';
 import MenuIcon from '@material-ui/icons/Menu';
+import { selectUser } from '../../store/selectors';
 
 export type LayoutProps = {
     children: React.ReactNode;

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Avatar, Button, Container, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
 import { useAppSelector } from '../../store/hooks';
-import { selectUser } from '../../store/slices/user.slice';
 import { DropzoneArea } from 'material-ui-dropzone';
 import { ProfileFormData } from './profile.container';
 import { getAuth } from 'firebase/auth';
+import { selectUser } from '../../store/selectors';
 
 const useStyles = makeStyles((theme) => ({
     rightContainer: {
