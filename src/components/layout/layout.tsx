@@ -196,7 +196,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                                 <Paper>
                                     <ClickAwayListener onClickAway={handleClose}>
                                         <MenuList id="user-menu" onKeyDown={handleListKeyDown}>
-                                            <MenuItem onClick={() => history.push('profile')}>
+                                            <MenuItem onClick={() => history.push(routes.PROFILE)}>
                                                 Profile
                                             </MenuItem>
                                             <MenuItem onClick={() => dispatch(logout())}>Logout</MenuItem>

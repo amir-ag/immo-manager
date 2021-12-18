@@ -46,11 +46,8 @@ const MainApp = ({ menuItems }: MainAppProps) => {
                     <Route path={routes.PROPERTIES_CREATE}>
                         <PropertyDetail isNew={true} />
                     </Route>
-                    <Route path={routes.PROPERTIES_CREATE}>
-                        <PropertyDetail />
-                    </Route>
                     <Route path={routes.PROPERTIES_DETAIL}>
-                        <PropertyDetail />
+                        <PropertyDetail isNew={false} />
                     </Route>
                     {/* Rental Units */}
                     <Route path={routes.RENTAL_UNITS_CREATE}>

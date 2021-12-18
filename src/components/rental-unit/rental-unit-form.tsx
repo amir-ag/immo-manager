@@ -71,7 +71,7 @@ export const RentalUnitForm = () => {
                     ))}
                 </TextField>
             </Grid>
-            <DetailViewFormActions />
+            <DetailViewFormActions handleCancel={() => {}} />
         </>
     );
 };
