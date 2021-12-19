@@ -3,6 +3,8 @@ import { Grid, MenuItem, TextField, Typography } from '@material-ui/core';
 import { rentalUnitfloorLevel, rentalUnitType } from './model/rental-unit.model';
 import { useSharedStyles } from '../../theme/shared-styles';
 import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
+import { getDisplayNameOfProperty } from '../property/model/property.model';
+import { dummyProperties } from '../property/dummy-properties';
 
 export const RentalUnitForm = () => {
     const sharedCssClasses = useSharedStyles();
@@ -11,6 +13,19 @@ export const RentalUnitForm = () => {
         <>
             <Grid item xs={12}>
                 <Typography variant={'h6'}>General Info</Typography>
+            </Grid>
+            <Grid item xs={12}>
+                <TextField
+                    variant={'outlined'}
+                    fullWidth
+                    id={'property'}
+                    label={'Property'}
+                    type="text"
+                    // TODO: Get data via firestore
+                    defaultValue={getDisplayNameOfProperty(dummyProperties[0])}
+                    required
+                    disabled
+                />
             </Grid>
             <Grid item container xs={12}>
                 <Grid item xs={12} md={6}>

@@ -38,7 +38,10 @@ export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
                     alignItems={'center'}
                     alignContent={'flex-start'}
                 >
-                    <RentalUnitsOverview />
+                    <RentalUnitsOverview
+                        disableCreate={isNew || !propertyToEdit}
+                        propertyId={currentProperty.id}
+                    />
                 </Grid>
             </Grid>
         </>

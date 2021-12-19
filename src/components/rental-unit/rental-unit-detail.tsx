@@ -33,7 +33,7 @@ export const RentalUnitDetail = ({ rentalUnit }: { rentalUnit?: RentalUnitModel 
                     alignItems={'center'}
                     alignContent={'flex-start'}
                 >
-                    <TenanciesOverview />
+                    <TenanciesOverview disableCreate={false} />
                 </Grid>
             </Grid>
         </>
