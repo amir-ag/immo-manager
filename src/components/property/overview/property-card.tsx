@@ -12,7 +12,7 @@ const PropertyCard = ({ id, egid, name, address }: PropertyModel) => {
                 action={
                     <IconButton
                         component={Link}
-                        to={routes.PROPERTIES_DETAIL.replace(':id', id)}
+                        to={routes.getPropertyDetailRouteById(id)}
                         aria-label="settings"
                     >
                         <Edit />

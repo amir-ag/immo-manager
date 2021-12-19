@@ -1,16 +1,65 @@
-import React from 'react';
+import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 import { Grid, MenuItem, TextField, Typography } from '@material-ui/core';
-import { rentalUnitfloorLevel, rentalUnitType } from './model/rental-unit.model';
-import { useSharedStyles } from '../../theme/shared-styles';
+import { rentalUnitfloorLevel, RentalUnitModel, rentalUnitType } from './model/rental-unit.model';
+import { stylingConstants, useSharedStyles } from '../../theme/shared-styles';
 import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
 import { getDisplayNameOfProperty } from '../property/model/property.model';
 import { dummyProperties } from '../property/dummy-properties';
+import routes from '../../routes/route-constants';
+import { useAppDispatch } from '../../store/hooks';
+import { useHistory } from 'react-router';
+import { createOrUpdateRentalUnit } from '../../store/slices/rental-units.slice';
 
-export const RentalUnitForm = () => {
+export type RentalUnitFormProps = {
+    currentRentalUnit: RentalUnitModel;
+    setCurrentRentalUnit: Dispatch<SetStateAction<RentalUnitModel>>;
+    propertyId: string;
+    isNew: boolean;
+};
+
+export const RentalUnitForm = ({
+    currentRentalUnit,
+    setCurrentRentalUnit,
+    propertyId,
+    isNew,
+}: RentalUnitFormProps) => {
     const sharedCssClasses = useSharedStyles();
 
+    const dispatch = useAppDispatch();
+    const history = useHistory();
+
+    // TODO: Reuse
+    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        setCurrentRentalUnit((prevState) => ({
+            ...prevState,
+            [e.target.id]: e.target.value,
+        }));
+    };
+
+    const handleSubmit = (e: FormEvent<any>) => {
+        e.preventDefault();
+        dispatch(createOrUpdateRentalUnit(currentRentalUnit));
+        if (isNew) {
+            history.push(routes.getPropertyDetailRouteById(propertyId));
+        }
+    };
+
+    const handleCancel = () => {
+        history.push(routes.getPropertyDetailRouteById(propertyId));
+    };
+
     return (
-        <>
+        <Grid
+            item
+            container
+            xs={12}
+            sm={6}
+            spacing={stylingConstants.gridSpacing}
+            alignItems={'center'}
+            alignContent={'flex-start'}
+            component={'form'}
+            onSubmit={(e: React.FormEvent<any>) => handleSubmit(e)}
+        >
             <Grid item xs={12}>
                 <Typography variant={'h6'}>General Info</Typography>
             </Grid>
@@ -87,6 +136,6 @@ export const RentalUnitForm = () => {
                 </TextField>
             </Grid>
             <DetailViewFormActions handleCancel={() => {}} />
-        </>
+        </Grid>
     );
 };

@@ -1,3 +1,5 @@
+const propertiesDetailRoute = '/app/properties/:id';
+
 const routes = {
     // Base
     HOME: '/',
@@ -12,7 +14,8 @@ const routes = {
     // Properties
     PROPERTIES_OVERVIEW: '/app/properties',
     PROPERTIES_CREATE: '/app/properties/create',
-    PROPERTIES_DETAIL: '/app/properties/:id',
+    PROPERTIES_DETAIL: propertiesDetailRoute,
+    getPropertyDetailRouteById: (id: string) => propertiesDetailRoute.replace(':id', id),
     // Rental Units
     RENTAL_UNITS_CREATE: '/app/rental-units/create',
     RENTAL_UNITS_DETAIL: '/app/rental-units/:id',
