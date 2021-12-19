@@ -13,7 +13,8 @@ export const selectPersonsTenants = (state: RootState) =>
     state.persons.filter((p) => p.role.includes('Tenant'));
 
 // properties
-export const selectProperties = (state: RootState) => state.properties;
+export const selectProperties = (state: RootState) => state.properties.all;
+export const selectCurrentProperty = (state: RootState) => state.properties.current;
 
 // rental units
 export const selectRentalUnits = (state: RootState) => state.rentalUnits;

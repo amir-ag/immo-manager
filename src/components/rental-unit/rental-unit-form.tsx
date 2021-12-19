@@ -3,8 +3,7 @@ import { Grid, MenuItem, TextField, Typography } from '@material-ui/core';
 import { rentalUnitfloorLevel, RentalUnitModel, rentalUnitType } from './model/rental-unit.model';
 import { stylingConstants, useSharedStyles } from '../../theme/shared-styles';
 import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
-import { getDisplayNameOfProperty } from '../property/model/property.model';
-import { dummyProperties } from '../property/dummy-properties';
+import { getDisplayNameOfProperty, PropertyModel } from '../property/model/property.model';
 import routes from '../../routes/route-constants';
 import { useAppDispatch } from '../../store/hooks';
 import { useHistory } from 'react-router';
@@ -13,14 +12,14 @@ import { createOrUpdateRentalUnit } from '../../store/slices/rental-units.slice'
 export type RentalUnitFormProps = {
     currentRentalUnit: RentalUnitModel;
     setCurrentRentalUnit: Dispatch<SetStateAction<RentalUnitModel>>;
-    propertyId: string;
+    property: PropertyModel;
     isNew: boolean;
 };
 
 export const RentalUnitForm = ({
     currentRentalUnit,
     setCurrentRentalUnit,
-    propertyId,
+    property,
     isNew,
 }: RentalUnitFormProps) => {
     const sharedCssClasses = useSharedStyles();
@@ -36,16 +35,27 @@ export const RentalUnitForm = ({
         }));
     };
 
+    // TODO: Reuse
+    const onChangeSelect = (
+        e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+        fieldName: string
+    ) => {
+        setCurrentRentalUnit((prevState) => ({
+            ...prevState,
+            [fieldName]: e.target.value,
+        }));
+    };
+
     const handleSubmit = (e: FormEvent<any>) => {
         e.preventDefault();
         dispatch(createOrUpdateRentalUnit(currentRentalUnit));
         if (isNew) {
-            history.push(routes.getPropertyDetailRouteById(propertyId));
+            history.push(routes.getPropertyDetailRouteById(property.id));
         }
     };
 
     const handleCancel = () => {
-        history.push(routes.getPropertyDetailRouteById(propertyId));
+        history.push(routes.getPropertyDetailRouteById(property.id));
     };
 
     return (
@@ -70,8 +80,7 @@ export const RentalUnitForm = ({
                     id={'property'}
                     label={'Property'}
                     type="text"
-                    // TODO: Get data via firestore
-                    defaultValue={getDisplayNameOfProperty(dummyProperties[0])}
+                    defaultValue={getDisplayNameOfProperty(property)}
                     required
                     disabled
                 />
@@ -84,6 +93,8 @@ export const RentalUnitForm = ({
                         id={'ewid'}
                         label={'EWID'}
                         type="number"
+                        value={currentRentalUnit.ewid}
+                        onChange={(e) => onChange(e)}
                         required
                     />
                 </Grid>
@@ -95,9 +106,11 @@ export const RentalUnitForm = ({
                         label="Select"
                         helperText="Select a room type"
                         variant="outlined"
+                        value={currentRentalUnit.type}
+                        onChange={(e) => onChangeSelect(e, 'type')}
                     >
-                        {rentalUnitType.map((rut, i) => (
-                            <MenuItem value={i}>{rut}</MenuItem>
+                        {rentalUnitType.map((rut) => (
+                            <MenuItem value={rut}>{rut}</MenuItem>
                         ))}
                     </TextField>
                 </Grid>
@@ -109,6 +122,8 @@ export const RentalUnitForm = ({
                     id={'numberOfRooms'}
                     label={'Number of Rooms'}
                     type="number"
+                    value={currentRentalUnit.numberOfRooms}
+                    onChange={(e) => onChange(e)}
                 />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -118,6 +133,8 @@ export const RentalUnitForm = ({
                     id={'surfaceInM2'}
                     label={'Surface in m2'}
                     type="number"
+                    value={currentRentalUnit.surfaceInM2}
+                    onChange={(e) => onChange(e)}
                 />
             </Grid>
             <Grid item xs={12}>
@@ -129,13 +146,15 @@ export const RentalUnitForm = ({
                     helperText="Select a floor level"
                     variant="outlined"
                     fullWidth
+                    value={currentRentalUnit.floorLevel}
+                    onChange={(e) => onChangeSelect(e, 'floorLevel')}
                 >
                     {rentalUnitfloorLevel.map((rufl, i) => (
-                        <MenuItem value={i}>{rufl}</MenuItem>
+                        <MenuItem value={rufl}>{rufl}</MenuItem>
                     ))}
                 </TextField>
             </Grid>
-            <DetailViewFormActions handleCancel={() => {}} />
+            <DetailViewFormActions handleCancel={() => handleCancel()} />
         </Grid>
     );
 };

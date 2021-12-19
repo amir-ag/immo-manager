@@ -20,7 +20,7 @@ import { getDisplayNameOfRentalUnit } from '../model/rental-unit.model';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectRentalUnits } from '../../../store/selectors';
+import { selectCurrentProperty, selectRentalUnits } from '../../../store/selectors';
 import { getRentalUnits } from '../../../store/slices/rental-units.slice';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,17 +29,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const RentalUnitsOverview = ({
-    disableCreate,
-    propertyId,
-}: {
-    disableCreate: boolean;
-    propertyId: string;
-}) => {
+export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean }) => {
     const cssClasses = useStyles();
 
     const dispatch = useAppDispatch();
-    const rentalUnits = useAppSelector(selectRentalUnits)?.filter((ru) => ru.propertyId === propertyId);
+    const property = useAppSelector(selectCurrentProperty);
+    const rentalUnits = useAppSelector(selectRentalUnits)?.filter((ru) => ru.propertyId === property?.id);
 
     useEffect(() => {
         dispatch(getRentalUnits());
@@ -91,7 +86,7 @@ export const RentalUnitsOverview = ({
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rentalUnits.map((ru) => (
+                            {rentalUnits?.map((ru) => (
                                 <TableRow key={ru.id}>
                                     <TableCell>{getDisplayNameOfRentalUnit(ru)}</TableCell>
                                     {/* TODO: Use data from firestore */}

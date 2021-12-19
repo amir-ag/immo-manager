@@ -6,14 +6,17 @@ import { RentalUnitForm } from './rental-unit-form';
 import { TenanciesOverview } from '../tenancy/overview/tenancies-overview';
 import { useParams } from 'react-router';
 import { useAppSelector } from '../../store/hooks';
-import { selectRentalUnits } from '../../store/selectors';
+import { selectCurrentProperty, selectRentalUnits } from '../../store/selectors';
+import { emptyProperty } from '../property/model/property.model';
 
-export const RentalUnitDetail = ({ isNew, propertyId }: { isNew: boolean; propertyId: string }) => {
+export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
     const rentalUnitToEdit = useAppSelector(selectRentalUnits).find((ru) => ru.id === id);
+    // TODO: Better error handling!
+    const property = useAppSelector(selectCurrentProperty) ?? emptyProperty;
 
     const [currentRentalUnit, setCurrentRentalUnit] = useState(
-        !isNew && rentalUnitToEdit ? { ...rentalUnitToEdit } : { ...emptyRentalUnit, propertyId }
+        !isNew && rentalUnitToEdit ? { ...rentalUnitToEdit } : { ...emptyRentalUnit, propertyId: property.id }
     );
 
     return (
@@ -21,14 +24,16 @@ export const RentalUnitDetail = ({ isNew, propertyId }: { isNew: boolean; proper
             <Typography variant={'h5'}>
                 {rentalUnitToEdit
                     ? getDisplayNameOfRentalUnit(rentalUnitToEdit)
-                    : `Create new Property${!isNew ? ' (Property to edit has not been found!)' : ''}`}{' '}
+                    : `Create new Rental Unit${
+                          !isNew ? ' (Rental Unit to edit has not been found!)' : ''
+                      }`}{' '}
             </Typography>
             <Grid container spacing={stylingConstants.gridSpacing}>
                 <RentalUnitForm
                     currentRentalUnit={currentRentalUnit}
                     setCurrentRentalUnit={setCurrentRentalUnit}
                     isNew={isNew}
-                    propertyId={propertyId}
+                    property={property}
                 />
                 <Grid
                     item
