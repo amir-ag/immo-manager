@@ -1,4 +1,6 @@
 export type RentalUnitModel = {
+    id: string;
+    propertyId: string;
     ewid: number;
     type: typeof rentalUnitType[number];
     numberOfRooms?: number;

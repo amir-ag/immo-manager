@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Button,
     Grid,
@@ -16,10 +16,12 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
-import { dummyRentalUnits } from '../dummy-rental-units';
 import { getDisplayNameOfRentalUnit } from '../model/rental-unit.model';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectRentalUnits } from '../../../store/selectors';
+import { getRentalUnits } from '../../../store/slices/rental-units.slice';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -27,8 +29,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const RentalUnitsOverview = () => {
+export const RentalUnitsOverview = ({
+    disableCreate,
+    propertyId,
+}: {
+    disableCreate: boolean;
+    propertyId: string;
+}) => {
     const cssClasses = useStyles();
+
+    const dispatch = useAppDispatch();
+    const rentalUnits = useAppSelector(selectRentalUnits)?.filter((ru) => ru.propertyId === propertyId);
+
+    useEffect(() => {
+        dispatch(getRentalUnits());
+    }, [dispatch]);
 
     return (
         <>
@@ -59,6 +74,7 @@ export const RentalUnitsOverview = () => {
                     variant="contained"
                     color="secondary"
                     startIcon={<AddIcon />}
+                    disabled={disableCreate}
                 >
                     New
                 </Button>
@@ -75,8 +91,8 @@ export const RentalUnitsOverview = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {dummyRentalUnits.map((ru) => (
-                                <TableRow key={ru.ewid}>
+                            {rentalUnits.map((ru) => (
+                                <TableRow key={ru.id}>
                                     <TableCell>{getDisplayNameOfRentalUnit(ru)}</TableCell>
                                     {/* TODO: Use data from firestore */}
                                     <TableCell align="right">Hansli Müller</TableCell>
