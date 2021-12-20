@@ -1,4 +1,5 @@
 import { months } from '../../../constants';
+import { PersonModel } from '../../persons/models/person.model';
 
 export type TenancyModel = {
     id: string;
@@ -32,6 +33,17 @@ export const emptyTenancy: TenancyModel = {
 };
 
 // Helper functions
-export const getDisplayNameOfTenancy = (t: TenancyModel) => {
-    return `Tenancy (${t.id})`;
+export const getTenantsOfTenancy = (tenancy: TenancyModel, allTenants: PersonModel[]) => {
+    return allTenants.filter((t) => t.id === tenancy.tenant1Id || t.id === tenancy.tenant2Id);
+};
+
+export const getDisplayNameOfTenancy = (tenancy: TenancyModel, allTenants: PersonModel[]) => {
+    const tenants = getTenantsOfTenancy(tenancy, allTenants);
+    const desc = 'Tenancy';
+
+    if (tenants?.length) {
+        return desc;
+    }
+
+    return `${desc} (${tenants.map((t) => t.firstName + ' ' + t.lastName).join(' & ')})`;
 };
