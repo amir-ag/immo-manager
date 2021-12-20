@@ -32,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
         width: '75%',
         margin: 'auto',
     },
-    table: {
-        width: '100%',
-    },
 }));
 
 export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: PropertyFormProps) => {

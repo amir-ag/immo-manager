@@ -1,8 +1,10 @@
 import { RentalUnitModel } from './model/rental-unit.model';
 
 export const dummyRentalUnits: RentalUnitModel[] = [
-    { ewid: 1234, type: 'Parking Lot' },
+    { id: '', propertyId: '', ewid: 1234, type: 'Parking Lot' },
     {
+        id: '',
+        propertyId: '',
         ewid: 234556,
         floorLevel: 'Ground Floor',
         type: 'Apartment',
@@ -10,6 +12,8 @@ export const dummyRentalUnits: RentalUnitModel[] = [
         numberOfRooms: 3.5,
     },
     {
+        id: '',
+        propertyId: '',
         ewid: 45344,
         floorLevel: '1. Floor',
         type: 'Apartment',
@@ -17,6 +21,8 @@ export const dummyRentalUnits: RentalUnitModel[] = [
         numberOfRooms: 4.5,
     },
     {
+        id: '',
+        propertyId: '',
         ewid: 2323232,
         floorLevel: '2. Floor',
         type: 'Apartment',
@@ -24,6 +30,8 @@ export const dummyRentalUnits: RentalUnitModel[] = [
         numberOfRooms: 5,
     },
     {
+        id: '',
+        propertyId: '',
         ewid: 4443221,
         floorLevel: '3. Floor',
         type: 'Apartment',

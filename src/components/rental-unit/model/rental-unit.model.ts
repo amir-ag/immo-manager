@@ -1,9 +1,18 @@
 export type RentalUnitModel = {
+    id: string;
+    propertyId: string;
     ewid: number;
     type: typeof rentalUnitType[number];
     numberOfRooms?: number;
     surfaceInM2?: number;
     floorLevel?: typeof rentalUnitfloorLevel[number];
+};
+
+export const emptyRentalUnit: RentalUnitModel = {
+    id: '',
+    propertyId: '',
+    ewid: 0,
+    type: 'Apartment',
 };
 
 export const rentalUnitType = ['Parking Lot', 'Hobby Room', 'Apartment'] as const;

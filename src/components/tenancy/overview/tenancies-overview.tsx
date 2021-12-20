@@ -18,6 +18,8 @@ import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import { dummyTenancies } from '../dummy-tenancies';
 import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
+import routes from '../../../routes/route-constants';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const TenanciesOverview = () => {
+export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean }) => {
     const cssClasses = useStyles();
 
     return (
@@ -50,7 +52,15 @@ export const TenanciesOverview = () => {
                 />
             </Grid>
             <Grid item xs={12} md={4}>
-                <Button fullWidth variant="contained" color="primary" endIcon={<AddIcon />}>
+                <Button
+                    component={Link}
+                    to={routes.TENANCIES_CREATE}
+                    fullWidth
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<AddIcon />}
+                    disabled={disableCreate}
+                >
                     New
                 </Button>
             </Grid>

@@ -1,39 +1,39 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PropertyModel } from '../../components/property/model/property.model';
 import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
 import { getUidFromStoreState } from '../store-functions';
+import { RentalUnitModel } from '../../components/rental-unit/model/rental-unit.model';
 
-const dbName = 'properties';
+const dbName = 'rental-units';
 
-export const createOrUpdateProperty = createAsyncThunk(
-    'properties/createOrUpdateProperty',
-    async (property: PropertyModel, thunkAPI) => {
+export const createOrUpdateRentalUnit = createAsyncThunk(
+    'rental-units/createOrUpdateRentalUnit',
+    async (rentalUnit: RentalUnitModel, thunkAPI) => {
         try {
             const uid = getUidFromStoreState(thunkAPI);
 
-            if (!property.id) {
+            if (!rentalUnit.id) {
                 // TODO: Use typed method and create interface with 'createdBy' field
                 const docRef = await addDoc(collection(db, dbName), {
-                    ...property,
+                    ...rentalUnit,
                     createdBy: uid,
                 });
-                console.log(`A new property with id=${docRef.id} has been created!`);
+                console.log(`A new rental unit with id=${docRef.id} has been created!`);
                 return docRef;
             } else {
                 // TODO: Use typed method and create interface with 'createdBy' field
-                await setDoc(doc(db, dbName, property.id), {
-                    ...property,
+                await setDoc(doc(db, dbName, rentalUnit.id), {
+                    ...rentalUnit,
                     createdBy: uid,
                 });
             }
         } catch (e) {
-            console.error('Error when adding/updating property: ', e);
+            console.error('Error when adding/updating rental unit: ', e);
         }
     }
 );
 
-export const getProperties = createAsyncThunk('properties/getProperties', async (_, thunkAPI) => {
+export const getRentalUnits = createAsyncThunk('rental-units/getRentalUnits', async (_, thunkAPI) => {
     try {
         const uid = getUidFromStoreState(thunkAPI);
         const q = query(collection(db, dbName), where('createdBy', '==', uid));
@@ -46,27 +46,19 @@ export const getProperties = createAsyncThunk('properties/getProperties', async 
         });
         return data;
     } catch (e) {
-        console.error('Error getting properties: ', e);
+        console.error('Error getting rental units: ', e);
     }
 });
 
-interface PropertiesState {
-    current?: PropertyModel;
-    all: PropertyModel[];
-}
-
-export const propertiesSlice = createSlice({
-    name: 'properties',
-    initialState: { all: [] } as PropertiesState,
-    reducers: {
-        setCurrentProperty(state, action: PayloadAction<PropertyModel>) {
-            state.current = action.payload;
-        },
-    },
+export const rentalUnitsSlice = createSlice({
+    name: 'rental-units',
+    initialState: [] as RentalUnitModel[],
+    reducers: {},
     extraReducers: (builder) => {
         // TODO: Use strongly typed types
-        builder.addCase(getProperties.fulfilled, (state, action: PayloadAction<any>) => {
-            state.all = [...action.payload];
+        builder.addCase(getRentalUnits.fulfilled, (state, action: PayloadAction<any>) => {
+            // TODO: Use 'state.xxxx = action.payload'
+            return [...action.payload];
         });
     },
 });

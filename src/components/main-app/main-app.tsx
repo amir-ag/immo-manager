@@ -51,10 +51,10 @@ const MainApp = ({ menuItems }: MainAppProps) => {
                     </Route>
                     {/* Rental Units */}
                     <Route path={routes.RENTAL_UNITS_CREATE}>
-                        <RentalUnitDetail />
+                        <RentalUnitDetail isNew={true} />
                     </Route>
                     <Route path={routes.RENTAL_UNITS_DETAIL}>
-                        <RentalUnitDetail />
+                        <RentalUnitDetail isNew={false} />
                     </Route>
                     {/* Tenancies */}
                     <Route path={routes.TENANCIES_CREATE}>
