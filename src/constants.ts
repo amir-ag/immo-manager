@@ -1,4 +1,3 @@
-// TODO: Move file to a global location
 export const months = [
     'January',
     'February',
@@ -12,4 +11,4 @@ export const months = [
     'October',
     'November',
     'December',
-];
+] as const;

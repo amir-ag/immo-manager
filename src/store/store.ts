@@ -3,6 +3,7 @@ import { userSlice } from './slices/user.slice';
 import { personsSlice } from './slices/persons.slice';
 import { propertiesSlice } from './slices/properties.slice';
 import { rentalUnitsSlice } from './slices/rental-units.slice';
+import { tenanciesSlice } from './slices/tenancy.slice';
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
@@ -13,5 +14,6 @@ export const store = configureStore({
         persons: personsSlice.reducer,
         properties: propertiesSlice.reducer,
         rentalUnits: rentalUnitsSlice.reducer,
+        tenancies: tenanciesSlice.reducer,
     },
 });
