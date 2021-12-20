@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Button,
     Container,
@@ -8,12 +8,14 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-import { dummyProperties } from '../dummy-properties';
 import PropertyCard from './property-card';
 import AddIcon from '@material-ui/icons/Add';
 import { Search } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectProperties } from '../../../store/selectors';
+import { getProperties } from '../../../store/slices/properties.slice';
 
 const gridSpacing = 3;
 
@@ -32,6 +34,13 @@ type PropertiesViewProps = {
 
 const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
     const cssClasses = useStyles();
+
+    const dispatch = useAppDispatch();
+    const properties = useAppSelector(selectProperties);
+
+    useEffect(() => {
+        dispatch(getProperties());
+    }, [dispatch]);
 
     return (
         <Container>
@@ -80,7 +89,7 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                 </>
             )}
             <Grid container spacing={gridSpacing}>
-                {dummyProperties.map((property) => (
+                {properties.map((property) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={property.id}>
                         <PropertyCard {...property} />
                     </Grid>

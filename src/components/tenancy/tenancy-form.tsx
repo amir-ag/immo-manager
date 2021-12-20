@@ -234,7 +234,7 @@ export const TenancyForm = () => {
                 alignItems={'center'}
                 alignContent={'flex-start'}
             >
-                <DetailViewFormActions />
+                <DetailViewFormActions handleCancel={() => {}} />
             </Grid>
         </>
     );

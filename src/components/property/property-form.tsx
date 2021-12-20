@@ -18,10 +18,13 @@ import { selectPersonsOwners, selectPersonsServiceProviders } from '../../store/
 import { getPersonDisplayNameForFormSelectFields, PersonModel } from '../persons/models/person.model';
 import { stylingConstants } from '../../theme/shared-styles';
 import { createOrUpdateProperty } from '../../store/slices/properties.slice';
+import { useHistory } from 'react-router';
+import routes from '../../routes/route-constants';
 
 export type PropertyFormProps = {
     currentProperty: PropertyModel;
     setCurrentProperty: Dispatch<SetStateAction<PropertyModel>>;
+    isNew: boolean;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -34,13 +37,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const PropertyForm = ({ currentProperty, setCurrentProperty }: PropertyFormProps) => {
+export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: PropertyFormProps) => {
     const cssClasses = useStyles();
 
     const owners = useAppSelector(selectPersonsOwners);
     const janitors = useAppSelector(selectPersonsServiceProviders);
 
     const dispatch = useAppDispatch();
+    const history = useHistory();
 
     // TODO: Reuse
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -69,11 +73,16 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty }: PropertyFo
         }));
     };
 
-    // TODO: Reuse
     const handleSubmit = (e: FormEvent<any>) => {
         e.preventDefault();
-        console.log(currentProperty);
         dispatch(createOrUpdateProperty(currentProperty));
+        if (isNew) {
+            history.push(routes.PROPERTIES_OVERVIEW);
+        }
+    };
+
+    const handleCancel = () => {
+        history.push(routes.PROPERTIES_OVERVIEW);
     };
 
     return (
@@ -228,7 +237,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty }: PropertyFo
                 />
             </Grid>
             {/* TODO: Only enable submit button when form has been "touched" */}
-            <DetailViewFormActions />
+            <DetailViewFormActions handleCancel={handleCancel} />
         </Grid>
     );
 };

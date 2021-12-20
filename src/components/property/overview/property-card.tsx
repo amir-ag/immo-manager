@@ -5,14 +5,14 @@ import { Edit } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 
-const PropertyCard = ({ egid, name, address }: PropertyModel) => {
+const PropertyCard = ({ id, egid, name, address }: PropertyModel) => {
     return (
         <Card elevation={3}>
             <CardHeader
                 action={
                     <IconButton
                         component={Link}
-                        to={routes.PROPERTIES_DETAIL.replace(':id', egid)}
+                        to={routes.PROPERTIES_DETAIL.replace(':id', id)}
                         aria-label="settings"
                     >
                         <Edit />

@@ -13,9 +13,10 @@ export const useStyles = makeStyles((theme) => ({
 type DetailViewFormActionsProps = {
     disableCancel?: boolean;
     disableSave?: boolean;
+    handleCancel: () => void;
 };
 
-const DetailViewFormActions = ({ disableCancel, disableSave }: DetailViewFormActionsProps) => {
+const DetailViewFormActions = ({ disableCancel, disableSave, handleCancel }: DetailViewFormActionsProps) => {
     const sharedCssClasses = useSharedStyles();
     const cssClasses = useStyles();
 
@@ -27,6 +28,7 @@ const DetailViewFormActions = ({ disableCancel, disableSave }: DetailViewFormAct
                     variant="contained"
                     color="default"
                     disabled={disableCancel}
+                    onClick={() => handleCancel()}
                     startIcon={<CancelIcon />}
                 >
                     Cancel
