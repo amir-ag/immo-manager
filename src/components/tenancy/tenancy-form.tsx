@@ -16,7 +16,7 @@ import { dummyProperties } from '../property/dummy-properties';
 import { dummyRentalUnits } from '../rental-unit/dummy-rental-units';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { dummyTenants } from './dummy-tenants';
-import { months } from './constants';
+import { months } from '../../constants';
 import { stylingConstants } from '../../theme/shared-styles';
 import { getDisplayNameOfProperty } from '../property/model/property.model';
 import { getDisplayNameOfRentalUnit } from '../rental-unit/model/rental-unit.model';

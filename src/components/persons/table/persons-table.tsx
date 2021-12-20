@@ -63,6 +63,7 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                 </TableHead>
                 <TableBody>
                     {personsData
+                        // TODO: Doesn't the paging work out-of-the-box? Why the calculations?
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row, index) => (
                             <TableRow key={index}>

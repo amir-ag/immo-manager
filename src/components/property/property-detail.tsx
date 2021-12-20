@@ -8,6 +8,7 @@ import { emptyProperty, getDisplayNameOfProperty } from './model/property.model'
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectProperties } from '../../store/selectors';
 import { propertiesSlice } from '../../store/slices/properties.slice';
+import { rentalUnitsSlice } from '../../store/slices/rental-units.slice';
 
 export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
@@ -22,6 +23,8 @@ export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
     useEffect(() => {
         if (!isNew) {
             dispatch(propertiesSlice.actions.setCurrentProperty(currentProperty));
+            // TODO: Integrate this action into the first one (combine)
+            dispatch(rentalUnitsSlice.actions.setCurrentRentalUnit(null));
         }
     }, [currentProperty]);
 
