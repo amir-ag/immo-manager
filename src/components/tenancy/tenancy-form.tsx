@@ -243,7 +243,6 @@ export const TenancyForm = ({
                 <Grid item xs={12} md={6}>
                     <FormControl fullWidth>
                         <InputLabel id="cancellationMonthsLabel">Cancellation Months</InputLabel>
-                        {/* TODO: Use local state for select state */}
                         <Select
                             labelId="cancellationMonthsLabel"
                             id="cancellationMonths"
