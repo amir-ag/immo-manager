@@ -149,7 +149,7 @@ export const RentalUnitForm = ({
                     value={currentRentalUnit.floorLevel}
                     onChange={(e) => onChangeSelect(e, 'floorLevel')}
                 >
-                    {rentalUnitfloorLevel.map((rufl, i) => (
+                    {rentalUnitfloorLevel.map((rufl) => (
                         <MenuItem value={rufl}>{rufl}</MenuItem>
                     ))}
                 </TextField>
