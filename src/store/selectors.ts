@@ -17,4 +17,8 @@ export const selectProperties = (state: RootState) => state.properties.all;
 export const selectCurrentProperty = (state: RootState) => state.properties.current;
 
 // rental units
-export const selectRentalUnits = (state: RootState) => state.rentalUnits;
+export const selectRentalUnits = (state: RootState) => state.rentalUnits.all;
+export const selectCurrentRentalUnit = (state: RootState) => state.rentalUnits.current;
+
+// tenancies
+export const selectTenancies = (state: RootState) => state.tenancies;

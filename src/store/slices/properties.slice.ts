@@ -51,21 +51,21 @@ export const getProperties = createAsyncThunk('properties/getProperties', async 
 });
 
 interface PropertiesState {
-    current?: PropertyModel;
+    current: PropertyModel | null;
     all: PropertyModel[];
 }
 
 export const propertiesSlice = createSlice({
     name: 'properties',
-    initialState: { all: [] } as PropertiesState,
+    initialState: { current: null, all: [] } as PropertiesState,
     reducers: {
-        setCurrentProperty(state, action: PayloadAction<PropertyModel>) {
+        setCurrentProperty(state: PropertiesState, action: PayloadAction<PropertyModel | null>) {
             state.current = action.payload;
         },
     },
     extraReducers: (builder) => {
         // TODO: Use strongly typed types
-        builder.addCase(getProperties.fulfilled, (state, action: PayloadAction<any>) => {
+        builder.addCase(getProperties.fulfilled, (state: PropertiesState, action: PayloadAction<any>) => {
             state.all = [...action.payload];
         });
     },

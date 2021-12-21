@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Button,
     Grid,
@@ -16,10 +16,13 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
-import { dummyTenancies } from '../dummy-tenancies';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
+import { getTenancies } from '../../../store/slices/tenancy.slice';
+import { getTenantsOfTenancy } from '../model/tenancy.model';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -29,6 +32,15 @@ const useStyles = makeStyles((theme) => ({
 
 export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean }) => {
     const cssClasses = useStyles();
+
+    const dispatch = useAppDispatch();
+    const rentalUnit = useAppSelector(selectCurrentRentalUnit);
+    const tenants = useAppSelector(selectPersonsTenants);
+    const tenancies = useAppSelector(selectTenancies)?.filter((t) => t.rentalUnitId === rentalUnit?.id);
+
+    useEffect(() => {
+        dispatch(getTenancies());
+    }, [dispatch]);
 
     return (
         <>
@@ -76,15 +88,20 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {dummyTenancies.map((t) => (
-                                <TableRow key={t.tenant}>
-                                    <TableCell>{t.tenant}</TableCell>
-                                    {/* TODO: Use data from firestore */}
-                                    <TableCell align="right">
-                                        {t.beginOfContract ? format(t.beginOfContract, 'dd.MM.yyyy') : '-'}
+                            {tenancies.map((ten) => (
+                                <TableRow key={ten.id}>
+                                    <TableCell>
+                                        {getTenantsOfTenancy(ten, tenants)
+                                            .map((t) => t.firstName + ' ' + t.lastName)
+                                            .join(', ')}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {t.endOfContract ? format(t.endOfContract, 'dd.MM.yyyy') : '-'}
+                                        {ten.beginOfContract
+                                            ? format(ten.beginOfContract, 'dd.MM.yyyy')
+                                            : '-'}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {ten.endOfContract ? format(ten.endOfContract, 'dd.MM.yyyy') : '-'}
                                     </TableCell>
                                 </TableRow>
                             ))}

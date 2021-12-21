@@ -31,14 +31,17 @@ const MainApp = ({ menuItems }: MainAppProps) => {
                     <Route path={routes.PROFILE}>
                         <ProfileContainer />
                     </Route>
+
                     {/* Dashboard */}
                     <Route path={routes.DASHBOARD}>
                         <DashboardContainer />
                     </Route>
+
                     {/* Persons */}
                     <Route path={routes.PERSONS}>
                         <PersonsContainer />
                     </Route>
+
                     {/* Properties */}
                     <Route exact path={routes.PROPERTIES_OVERVIEW}>
                         <PropertiesOverview />
@@ -49,6 +52,7 @@ const MainApp = ({ menuItems }: MainAppProps) => {
                     <Route path={routes.PROPERTIES_DETAIL}>
                         <PropertyDetail isNew={false} />
                     </Route>
+
                     {/* Rental Units */}
                     <Route path={routes.RENTAL_UNITS_CREATE}>
                         <RentalUnitDetail isNew={true} />
@@ -56,13 +60,15 @@ const MainApp = ({ menuItems }: MainAppProps) => {
                     <Route path={routes.RENTAL_UNITS_DETAIL}>
                         <RentalUnitDetail isNew={false} />
                     </Route>
+
                     {/* Tenancies */}
                     <Route path={routes.TENANCIES_CREATE}>
-                        <TenancyDetail />
+                        <TenancyDetail isNew={true} />
                     </Route>
                     <Route path={routes.TENANCIES_DETAIL}>
-                        <TenancyDetail />
+                        <TenancyDetail isNew={false} />
                     </Route>
+
                     {/* Rent Schedule */}
                     <Route path={routes.RENT_SCHEDULE}>
                         <RentScheduleContainer />
