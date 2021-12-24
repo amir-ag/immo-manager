@@ -22,6 +22,9 @@ const useStyles = makeStyles({
     buttonIcons: {
         display: 'flex',
     },
+    address: {
+        whiteSpace: 'nowrap',
+    },
 });
 
 type ContentTableProps = {
@@ -79,6 +82,7 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                                 <TableCell align={'right'}>{row.lastName}</TableCell>
                                 <TableCell
                                     align={'right'}
+                                    className={classes.address}
                                 >{`${row.address.addressLine1}, ${row.address.postCode}, ${row.address.city}`}</TableCell>
                                 <TableCell align={'right'}>{row.email}</TableCell>
                                 <TableCell align={'right'}>{row.mobilePhone}</TableCell>
