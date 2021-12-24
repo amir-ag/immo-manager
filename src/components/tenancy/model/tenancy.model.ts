@@ -1,5 +1,6 @@
 import { months } from '../../../constants';
 import { PersonModel } from '../../persons/models/person.model';
+import { format } from 'date-fns';
 
 export type TenancyModel = {
     id: string;
@@ -9,8 +10,8 @@ export type TenancyModel = {
     tenant2Id?: string;
     isVacancy?: boolean;
     isFamilyApartment?: boolean;
-    beginOfContract: Date;
-    endOfContract?: Date;
+    beginOfContract: string;
+    endOfContract?: string;
     cancellationPeriod: number;
     cancellationMonths: typeof months[number][];
     rentNet: number;
@@ -23,7 +24,7 @@ export const emptyTenancy: TenancyModel = {
     id: '',
     propertyId: '',
     rentalUnitId: '',
-    beginOfContract: new Date(),
+    beginOfContract: format(new Date(), 'yyyy.MM.dd'),
     cancellationPeriod: 3,
     cancellationMonths: ['March', 'June', 'September'],
     rentNet: 0,

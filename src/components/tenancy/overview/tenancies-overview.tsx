@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -97,11 +97,13 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
                                     </TableCell>
                                     <TableCell align="right">
                                         {ten.beginOfContract
-                                            ? format(ten.beginOfContract, 'dd.MM.yyyy')
+                                            ? format(parseISO(ten.beginOfContract), 'dd.MM.yyyy')
                                             : '-'}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {ten.endOfContract ? format(ten.endOfContract, 'dd.MM.yyyy') : '-'}
+                                        {ten.endOfContract
+                                            ? format(parseISO(ten.endOfContract), 'dd.MM.yyyy')
+                                            : '-'}
                                     </TableCell>
                                 </TableRow>
                             ))}
