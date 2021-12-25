@@ -10,6 +10,7 @@ import { RentalUnitDetail } from '../rental-unit/rental-unit-detail';
 import { TenancyDetail } from '../tenancy/tenancy-detail';
 import PropertiesOverview from '../property/overview/properties-overview';
 import { PropertyDetail } from '../property/property-detail';
+import RentScheduleTable from '../rent-schedule/rent-schedule-table';
 
 // Props
 type MainAppProps = {
@@ -70,8 +71,11 @@ const MainApp = ({ menuItems }: MainAppProps) => {
                     </Route>
 
                     {/* Rent Schedule */}
-                    <Route path={routes.RENT_SCHEDULE}>
+                    <Route exact={true} path={routes.RENT_SCHEDULE}>
                         <RentSchedule />
+                    </Route>
+                    <Route path={routes.RENT_SCHEDULE_DATA}>
+                        <RentScheduleTable />
                     </Route>
                 </Switch>
             </Layout>
