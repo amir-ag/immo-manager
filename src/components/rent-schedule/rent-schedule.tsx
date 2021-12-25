@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Button, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Button, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
 import EventNoteOutlinedIcon from '@material-ui/icons/EventNoteOutlined';
+import { useAppSelector } from '../../store/hooks';
+import { selectProperties } from '../../store/selectors';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -21,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 export const RentSchedule = () => {
     const cssClasses = useStyles();
     const [state, setState] = useState('');
+    const properties = useAppSelector(selectProperties);
 
     return (
         <>
@@ -39,11 +42,19 @@ export const RentSchedule = () => {
                     fullWidth
                     id={'property'}
                     label={'select a property..'}
+                    select
                     name={'property'}
                     autoComplete={'property'}
                     autoFocus
                     type={'string'}
-                />
+                    required
+                >
+                    {properties.map((property: { name: string }) => (
+                        <MenuItem key={property.name} value={property.name}>
+                            {property.name}
+                        </MenuItem>
+                    ))}
+                </TextField>
                 <Typography variant={'h6'} className={cssClasses.typography}>
                     2) Click the button to generate the report
                 </Typography>
