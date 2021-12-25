@@ -4,7 +4,7 @@ import Layout from '../layout/layout';
 import PersonsContainer from '../persons/persons.container';
 import routes from '../../routes/route-constants';
 import { DashboardContainer } from '../dashboard/dashboard.container';
-import { RentScheduleContainer } from '../rent-schedule/rent-schedule.container';
+import { RentSchedule } from '../rent-schedule/rent-schedule';
 import ProfileContainer from '../profile/profile.container';
 import { RentalUnitDetail } from '../rental-unit/rental-unit-detail';
 import { TenancyDetail } from '../tenancy/tenancy-detail';
@@ -71,7 +71,7 @@ const MainApp = ({ menuItems }: MainAppProps) => {
 
                     {/* Rent Schedule */}
                     <Route path={routes.RENT_SCHEDULE}>
-                        <RentScheduleContainer />
+                        <RentSchedule />
                     </Route>
                 </Switch>
             </Layout>
