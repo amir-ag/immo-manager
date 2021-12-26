@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import { Button, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
 import EventNoteOutlinedIcon from '@material-ui/icons/EventNoteOutlined';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectProperties, selectRentalUnits } from '../../store/selectors';
+import { selectProperties } from '../../store/selectors';
 import { getRentalUnits } from '../../store/slices/rental-units.slice';
 import { PropertyModel } from '../property/model/property.model';
 import { useHistory } from 'react-router';
@@ -29,17 +29,11 @@ export const RentSchedule = () => {
 
     const dispatch = useAppDispatch();
     const history = useHistory();
-
     const properties = useAppSelector(selectProperties);
-    const rentalUnits = useAppSelector(selectRentalUnits);
 
     useEffect(() => {
         dispatch(getRentalUnits());
     }, [dispatch]);
-
-    console.log('properties: ', properties);
-    console.log('rentalUnits: ', rentalUnits);
-    console.log('property: ', property);
 
     const renderTable = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
