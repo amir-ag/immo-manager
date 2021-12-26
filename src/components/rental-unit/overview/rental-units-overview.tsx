@@ -20,7 +20,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { getDisplayNameOfRentalUnit } from '../model/rental-unit.model';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectCurrentProperty, selectRentalUnits } from '../../../store/selectors';
 import { getRentalUnits } from '../../../store/slices/rental-units.slice';
 

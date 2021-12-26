@@ -24,7 +24,7 @@ import {
 import MenuItem from '@material-ui/core/MenuItem';
 import { useHistory } from 'react-router';
 import { format } from 'date-fns';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { logout } from '../../store/slices/user.slice';
 import { NavLink } from 'react-router-dom';
 import routes from '../../routes/route-constants';

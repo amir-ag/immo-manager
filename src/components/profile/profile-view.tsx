@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar, Button, Container, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../hooks/store.hooks';
 import { DropzoneArea } from 'material-ui-dropzone';
 import { ProfileFormData } from './profile.container';
 import { getAuth } from 'firebase/auth';

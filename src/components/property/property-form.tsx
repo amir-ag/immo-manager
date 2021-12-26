@@ -13,7 +13,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Edit } from '@material-ui/icons';
 import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
 import { PropertyModel } from './model/property.model';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { selectPersonsOwners, selectPersonsServiceProviders } from '../../store/selectors';
 import { getPersonDisplayNameForFormSelectFields, PersonModel } from '../persons/models/person.model';
 import { stylingConstants } from '../../theme/shared-styles';

@@ -20,7 +20,7 @@ import { getDisplayNameOfRentalUnit, RentalUnitModel } from '../rental-unit/mode
 import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
 import { TenancyModel } from './model/tenancy.model';
 import { getPersonDisplayNameForFormSelectFields, PersonModel } from '../persons/models/person.model';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch } from '../../hooks/store.hooks';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';
 import { createOrUpdateTenancy } from '../../store/slices/tenancy.slice';

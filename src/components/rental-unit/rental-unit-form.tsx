@@ -5,7 +5,7 @@ import { stylingConstants, useSharedStyles } from '../../theme/shared-styles';
 import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
 import { getDisplayNameOfProperty, PropertyModel } from '../property/model/property.model';
 import routes from '../../routes/route-constants';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch } from '../../hooks/store.hooks';
 import { useHistory } from 'react-router';
 import { createOrUpdateRentalUnit } from '../../store/slices/rental-units.slice';
 
