@@ -1,17 +1,18 @@
 import React, { Dispatch, FormEvent, SetStateAction } from 'react';
-import { AddressModel } from '../models/address.model';
 
-// TODO: Create base model with address property
-export const useForms = <T extends { address: AddressModel }>(
+export const useForms = <T>(
     setFormModelState: Dispatch<SetStateAction<T>>,
     formModelState: T,
     submitFunc: (e: FormEvent<any>) => void
 ) => {
     // --- Change handlers ---
-    const handleBasicInputChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const handleBasicInputChange = (
+        e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+        fieldName?: string
+    ) => {
         setFormModelState((prevState) => ({
             ...prevState,
-            [e.target.id]: e.target.value,
+            [fieldName ? fieldName : e.target.id]: e.target.value,
         }));
     };
 
@@ -19,7 +20,8 @@ export const useForms = <T extends { address: AddressModel }>(
         setFormModelState((prevState) => ({
             ...prevState,
             address: {
-                ...prevState.address,
+                // TODO: Check if there is a better approach
+                ...(prevState as any)?.address,
                 [e.target.id]: e.target.value,
             },
         }));
@@ -34,8 +36,8 @@ export const useForms = <T extends { address: AddressModel }>(
 
     // --- Submit Handler ---
     const handleSubmit = (e: FormEvent<any>) => {
-        submitFunc(e);
         // TODO: Set model snapshot
+        submitFunc(e);
     };
 
     // --- Additional methods ---
