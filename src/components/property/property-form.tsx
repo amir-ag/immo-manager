@@ -15,11 +15,16 @@ import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-fo
 import { PropertyModel } from './model/property.model';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { selectPersonsOwners, selectPersonsServiceProviders } from '../../store/selectors';
-import { getPersonDisplayNameForFormSelectFields, PersonModel } from '../persons/models/person.model';
+import {
+    emptyPerson,
+    getPersonDisplayNameForFormSelectFields,
+    PersonModel,
+} from '../persons/models/person.model';
 import { stylingConstants } from '../../theme/shared-styles';
 import { createOrUpdateProperty } from '../../store/slices/properties.slice';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';
+import { useForms } from '../../hooks/forms.hooks';
 
 export type PropertyFormProps = {
     currentProperty: PropertyModel;
@@ -43,34 +48,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
     const dispatch = useAppDispatch();
     const history = useHistory();
 
-    // TODO: Reuse
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setCurrentProperty((prevState) => ({
-            ...prevState,
-            [e.target.id]: e.target.value,
-        }));
-    };
-
-    // TODO: Reuse
-    const onChangeAddress = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setCurrentProperty((prevState) => ({
-            ...prevState,
-            address: {
-                ...prevState.address,
-                [e.target.id]: e.target.value,
-            },
-        }));
-    };
-
-    // TODO: Reuse
-    const handleAutocompleteChange = (event: any, value: PersonModel | null, fieldName: string) => {
-        setCurrentProperty((prevState) => ({
-            ...prevState,
-            [fieldName]: value ? value.id : '',
-        }));
-    };
-
-    const handleSubmit = (e: FormEvent<any>) => {
+    const submitFunc = (e: FormEvent<any>) => {
         e.preventDefault();
         dispatch(createOrUpdateProperty(currentProperty));
         if (isNew) {
@@ -81,6 +59,14 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
     const handleCancel = () => {
         history.push(routes.PROPERTIES_OVERVIEW);
     };
+
+    const {
+        handleBasicInputChange,
+        handleAddressInputChange,
+        handleAutocompleteChange,
+        handleSubmit,
+        isFormDirty,
+    } = useForms<PropertyModel>(setCurrentProperty, currentProperty, submitFunc);
 
     return (
         <Grid
@@ -127,7 +113,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     variant={'outlined'}
                     fullWidth
                     id={'name'}
-                    onChange={(e) => onChange(e)}
+                    onChange={(e) => handleBasicInputChange(e)}
                     value={currentProperty.name}
                     label={'Name'}
                     inputProps={{ maxLength: 30 }}
@@ -139,7 +125,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     variant={'outlined'}
                     value={currentProperty.egid}
                     fullWidth
-                    onChange={(e) => onChange(e)}
+                    onChange={(e) => handleBasicInputChange(e)}
                     id={'egid'}
                     label={'EGID'}
                     type="number"
@@ -153,7 +139,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     options={owners}
                     onChange={(e, v) => handleAutocompleteChange(e, v, 'owner')}
                     getOptionLabel={getPersonDisplayNameForFormSelectFields}
-                    value={owners.find((o) => o.id === currentProperty.owner)}
+                    value={owners.find((o) => o.id === currentProperty.owner) ?? emptyPerson}
                     getOptionSelected={(option: PersonModel, value: PersonModel) => option.id === value.id}
                     renderInput={(params) => <TextField {...params} label="Owner" variant="outlined" />}
                 />
@@ -163,7 +149,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     variant={'outlined'}
                     fullWidth
                     value={currentProperty.yearOfConstruction}
-                    onChange={(e) => onChange(e)}
+                    onChange={(e) => handleBasicInputChange(e)}
                     id={'yearOfConstruction'}
                     label={'Year of Construction'}
                     type="number"
@@ -177,7 +163,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     options={janitors}
                     onChange={(e, v) => handleAutocompleteChange(e, v, 'janitor')}
                     getOptionLabel={getPersonDisplayNameForFormSelectFields}
-                    value={janitors.find((j) => j.id === currentProperty.janitor)}
+                    value={janitors.find((j) => j.id === currentProperty.janitor) ?? emptyPerson}
                     getOptionSelected={(option: PersonModel, value: PersonModel) => option.id === value.id}
                     renderInput={(params) => <TextField {...params} label="Janitor" variant="outlined" />}
                 />
@@ -191,7 +177,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     fullWidth
                     id={'addressLine1'}
                     value={currentProperty.address.addressLine1}
-                    onChange={(e) => onChangeAddress(e)}
+                    onChange={(e) => handleAddressInputChange(e)}
                     label={'Address Line 1'}
                     type="text"
                     required
@@ -202,7 +188,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     variant={'outlined'}
                     fullWidth
                     value={currentProperty.address.addressLine2}
-                    onChange={(e) => onChangeAddress(e)}
+                    onChange={(e) => handleAddressInputChange(e)}
                     id={'addressLine2'}
                     label={'Address Line 2'}
                     type="text"
@@ -213,8 +199,8 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     variant={'outlined'}
                     fullWidth
                     id={'postCode'}
-                    value={currentProperty.address.postCode}
-                    onChange={(e) => onChangeAddress(e)}
+                    value={currentProperty.address.postCode ?? ''}
+                    onChange={(e) => handleAddressInputChange(e)}
                     label={'Post Code'}
                     inputProps={{ min: 1000, max: 9999 }}
                     type="number"
@@ -225,7 +211,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 <TextField
                     variant={'outlined'}
                     value={currentProperty.address.city}
-                    onChange={(e) => onChangeAddress(e)}
+                    onChange={(e) => handleAddressInputChange(e)}
                     fullWidth
                     id={'city'}
                     label={'City'}
@@ -234,7 +220,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 />
             </Grid>
             {/* TODO: Only enable submit button when form has been "touched" */}
-            <DetailViewFormActions handleCancel={handleCancel} />
+            <DetailViewFormActions disableSave={!isFormDirty()} handleCancel={handleCancel} />
         </Grid>
     );
 };
