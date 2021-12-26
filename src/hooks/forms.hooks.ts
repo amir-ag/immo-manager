@@ -3,16 +3,19 @@ import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 export const useForms = <T>(
     setFormModelState: Dispatch<SetStateAction<T>>,
     formModelState: T,
+    // TODO: Get rid of any here
     submitFunc: (e: FormEvent<any>) => void
 ) => {
     // --- Change handlers ---
     const handleBasicInputChange = (
-        e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-        fieldName?: string
+        // TODO: Get rid of any here
+        e: React.ChangeEvent<any>,
+        fieldName?: string,
+        isCheckbox = false
     ) => {
         setFormModelState((prevState) => ({
             ...prevState,
-            [fieldName ? fieldName : e.target.id]: e.target.value,
+            [fieldName ? fieldName : e.target.id]: isCheckbox ? e.target.checked : e.target.value,
         }));
     };
 
@@ -27,6 +30,7 @@ export const useForms = <T>(
         }));
     };
 
+    // TODO: Get rid of any here
     const handleAutocompleteChange = (event: any, value: { id: string } | null, fieldName: string) => {
         setFormModelState((prevState) => ({
             ...prevState,

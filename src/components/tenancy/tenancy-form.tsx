@@ -19,11 +19,16 @@ import { getDisplayNameOfProperty, PropertyModel } from '../property/model/prope
 import { getDisplayNameOfRentalUnit, RentalUnitModel } from '../rental-unit/model/rental-unit.model';
 import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
 import { TenancyModel } from './model/tenancy.model';
-import { getPersonDisplayNameForFormSelectFields, PersonModel } from '../persons/models/person.model';
+import {
+    emptyPerson,
+    getPersonDisplayNameForFormSelectFields,
+    PersonModel,
+} from '../persons/models/person.model';
 import { useAppDispatch } from '../../hooks/store.hooks';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';
 import { createOrUpdateTenancy } from '../../store/slices/tenancy.slice';
+import { useForms } from '../../hooks/forms.hooks';
 
 export type TenancyFormProps = {
     currentTenancy: TenancyModel;
@@ -45,39 +50,7 @@ export const TenancyForm = ({
     const dispatch = useAppDispatch();
     const history = useHistory();
 
-    // TODO: Reuse
-    const handleAutocompleteChange = (event: any, value: PersonModel | null, fieldName: string) => {
-        setCurrentTenancy((prevState) => ({
-            ...prevState,
-            [fieldName]: value ? value.id : '',
-        }));
-    };
-
-    // TODO: Reuse
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setCurrentTenancy((prevState) => ({
-            ...prevState,
-            [e.target.id]: e.target.value,
-        }));
-    };
-
-    // TODO: Reuse
-    const onChangeCheckbox = (e: React.ChangeEvent<any>, fieldName: string) => {
-        setCurrentTenancy((prevState) => ({
-            ...prevState,
-            [fieldName]: e.target.checked,
-        }));
-    };
-
-    // TODO: Reuse
-    const onChangeSelect = (e: React.ChangeEvent<any>, fieldName: string) => {
-        setCurrentTenancy((prevState) => ({
-            ...prevState,
-            [fieldName]: e.target.value,
-        }));
-    };
-
-    const handleSubmit = (e: FormEvent<any>) => {
+    const submitFunc = (e: FormEvent<any>) => {
         e.preventDefault();
         dispatch(createOrUpdateTenancy(currentTenancy));
         if (isNew) {
@@ -88,6 +61,9 @@ export const TenancyForm = ({
     const handleCancel = () => {
         history.push(routes.getRentalUnitDetailRouteById(rentalUnit.id));
     };
+
+    const { handleBasicInputChange, handleAutocompleteChange, handleSubmit, isFormDirty } =
+        useForms<TenancyModel>(setCurrentTenancy, currentTenancy, submitFunc);
 
     return (
         <Grid
@@ -142,7 +118,7 @@ export const TenancyForm = ({
                         options={tenants}
                         onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant1')}
                         getOptionLabel={getPersonDisplayNameForFormSelectFields}
-                        value={tenants.find((t) => t.id === currentTenancy.tenant1Id)}
+                        value={tenants.find((t) => t.id === currentTenancy.tenant1Id) ?? emptyPerson}
                         getOptionSelected={(option: PersonModel, value: PersonModel) =>
                             option.id === value.id
                         }
@@ -162,7 +138,7 @@ export const TenancyForm = ({
                         options={tenants}
                         onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant2')}
                         getOptionLabel={getPersonDisplayNameForFormSelectFields}
-                        value={tenants.find((t) => t.id === currentTenancy.tenant2Id)}
+                        value={tenants.find((t) => t.id === currentTenancy.tenant2Id) ?? emptyPerson}
                         getOptionSelected={(option: PersonModel, value: PersonModel) =>
                             option.id === value.id
                         }
@@ -178,7 +154,7 @@ export const TenancyForm = ({
                         onChange={(e) => {
                             currentTenancy.tenant1Id = '';
                             currentTenancy.tenant2Id = '';
-                            onChangeCheckbox(e, 'isVacancy');
+                            handleBasicInputChange(e, 'isVacancy', true);
                         }}
                         control={<Checkbox name="isFamilyApartment" />}
                         label="Is Vacancy"
@@ -188,21 +164,20 @@ export const TenancyForm = ({
                 <Grid item xs={12} md={6}>
                     <FormControlLabel
                         id="isFamilyApartment"
-                        onChange={(e) => onChangeCheckbox(e, 'isFamilyApartment')}
+                        onChange={(e) => handleBasicInputChange(e, 'isFamilyApartment', true)}
                         control={<Checkbox name="isFamilyApartment" />}
                         label="Is Family Apartment?"
                         checked={currentTenancy.isFamilyApartment}
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    {/* TODO: Fix timezone issue! */}
                     {/* TODO: Use date picker dialog (https://v4.mui.com/components/pickers/) */}
                     <TextField
                         id="beginOfContract"
                         label="Begin of Contract"
                         type="date"
                         fullWidth
-                        onChange={(e) => onChange(e)}
+                        onChange={(e) => handleBasicInputChange(e)}
                         value={currentTenancy.beginOfContract}
                         InputLabelProps={{
                             shrink: true,
@@ -210,14 +185,13 @@ export const TenancyForm = ({
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    {/* TODO: Fix timezone issue! */}
                     {/* TODO: Use date picker dialog (https://v4.mui.com/components/pickers/) / min. Date should be higher than 'beginOfContract' */}
                     <TextField
                         id="endOfContract"
                         label="End of Contract"
                         type="date"
                         fullWidth
-                        onChange={(e) => onChange(e)}
+                        onChange={(e) => handleBasicInputChange(e)}
                         value={currentTenancy.endOfContract}
                         InputLabelProps={{
                             shrink: true,
@@ -234,7 +208,7 @@ export const TenancyForm = ({
                         label={'Cancellation Period (Months)'}
                         type="number"
                         defaultValue={3}
-                        onChange={(e) => onChange(e)}
+                        onChange={(e) => handleBasicInputChange(e)}
                         value={currentTenancy.cancellationPeriod}
                         inputProps={{ min: 0, max: 12 }}
                         required
@@ -248,7 +222,7 @@ export const TenancyForm = ({
                             id="cancellationMonths"
                             multiple
                             value={currentTenancy.cancellationMonths}
-                            onChange={(e) => onChangeSelect(e, 'cancellationMonths')}
+                            onChange={(e) => handleBasicInputChange(e, 'cancellationMonths')}
                             input={<Input />}
                             renderValue={(selected) => (selected as string[]).join(', ')}
                         >
@@ -280,7 +254,7 @@ export const TenancyForm = ({
                         fullWidth
                         id={'rentNet'}
                         label={'Rent Net (CHF)'}
-                        onChange={(e) => onChange(e)}
+                        onChange={(e) => handleBasicInputChange(e)}
                         value={currentTenancy.rentNet}
                         type="number"
                         inputProps={{ min: 0 }}
@@ -292,7 +266,7 @@ export const TenancyForm = ({
                         variant={'outlined'}
                         fullWidth
                         id={'utilities'}
-                        onChange={(e) => onChange(e)}
+                        onChange={(e) => handleBasicInputChange(e)}
                         value={currentTenancy.utilities}
                         label={'Utilities (CHF)'}
                         type="number"
@@ -305,7 +279,7 @@ export const TenancyForm = ({
                         variant={'outlined'}
                         fullWidth
                         id={'rentDeposit'}
-                        onChange={(e) => onChange(e)}
+                        onChange={(e) => handleBasicInputChange(e)}
                         value={currentTenancy.rentDeposit}
                         label={'Rent Deposit (CHF)'}
                         type="number"
@@ -319,7 +293,7 @@ export const TenancyForm = ({
                         fullWidth
                         id={'rentAccount'}
                         value={currentTenancy.rentAccount}
-                        onChange={(e) => onChange(e)}
+                        onChange={(e) => handleBasicInputChange(e)}
                         label={'Rent Account (IBAN)'}
                         type="text"
                         required
@@ -344,7 +318,7 @@ export const TenancyForm = ({
                 alignItems={'center'}
                 alignContent={'flex-start'}
             >
-                <DetailViewFormActions handleCancel={() => handleCancel()} />
+                <DetailViewFormActions disableSave={!isFormDirty()} handleCancel={() => handleCancel()} />
             </Grid>
         </Grid>
     );
