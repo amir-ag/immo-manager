@@ -8,9 +8,8 @@ import { selectPersons } from '../../store/selectors';
 import { emptyPerson } from './models/person.model';
 import SearchHeader from '../ui/searc-header/search-header';
 
-const PersonsContainer = () => {
+const PersonsOverview = () => {
     const dispatch = useAppDispatch();
-
     const personsData = useAppSelector(selectPersons);
 
     useEffect(() => {
@@ -117,4 +116,4 @@ const PersonsContainer = () => {
     );
 };
 
-export default PersonsContainer;
+export default PersonsOverview;
