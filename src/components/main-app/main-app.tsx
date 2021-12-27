@@ -1,15 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Layout from '../layout/layout';
-import PersonsContainer from '../persons/persons.container';
+import PersonsOverview from '../persons/persons.overview';
 import routes from '../../routes/route-constants';
 import { DashboardContainer } from '../dashboard/dashboard.container';
-import { RentScheduleContainer } from '../rent-schedule/rent-schedule.container';
+import { RentSchedule } from '../rent-schedule/rent-schedule';
 import ProfileContainer from '../profile/profile.container';
 import { RentalUnitDetail } from '../rental-unit/rental-unit-detail';
 import { TenancyDetail } from '../tenancy/tenancy-detail';
 import PropertiesOverview from '../property/overview/properties-overview';
 import { PropertyDetail } from '../property/property-detail';
+import RentScheduleOverview from '../rent-schedule/rent-schedule-overview';
 
 // Props
 type MainAppProps = {
@@ -39,7 +40,7 @@ const MainApp = ({ menuItems }: MainAppProps) => {
 
                     {/* Persons */}
                     <Route path={routes.PERSONS}>
-                        <PersonsContainer />
+                        <PersonsOverview />
                     </Route>
 
                     {/* Properties */}
@@ -70,8 +71,11 @@ const MainApp = ({ menuItems }: MainAppProps) => {
                     </Route>
 
                     {/* Rent Schedule */}
-                    <Route path={routes.RENT_SCHEDULE}>
-                        <RentScheduleContainer />
+                    <Route exact={true} path={routes.RENT_SCHEDULE}>
+                        <RentSchedule />
+                    </Route>
+                    <Route path={routes.RENT_SCHEDULE_DATA}>
+                        <RentScheduleOverview />
                     </Route>
                 </Switch>
             </Layout>

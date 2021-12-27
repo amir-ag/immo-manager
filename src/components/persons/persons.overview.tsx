@@ -8,9 +8,8 @@ import { selectPersons } from '../../store/selectors';
 import { emptyPerson } from './models/person.model';
 import SearchHeader from '../ui/searc-header/search-header';
 
-const PersonsContainer = () => {
+const PersonsOverview = () => {
     const dispatch = useAppDispatch();
-
     const personsData = useAppSelector(selectPersons);
 
     useEffect(() => {
@@ -26,7 +25,6 @@ const PersonsContainer = () => {
     const [currentPerson, setCurrentPerson] = useState({
         ...emptyPerson,
     });
-
 
     // TODO: Reuse
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -118,4 +116,4 @@ const PersonsContainer = () => {
     );
 };
 
-export default PersonsContainer;
+export default PersonsOverview;
