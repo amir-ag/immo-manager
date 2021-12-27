@@ -27,7 +27,6 @@ const PersonsContainer = () => {
         ...emptyPerson,
     });
 
-
     // TODO: Reuse
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setCurrentPerson((prevState) => ({
