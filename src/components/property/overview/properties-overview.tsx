@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Button,
     Container,
@@ -16,6 +16,7 @@ import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectProperties } from '../../../store/selectors';
 import { getProperties } from '../../../store/slices/properties.slice';
+import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 
 const gridSpacing = 3;
 
@@ -41,6 +42,18 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
     useEffect(() => {
         dispatch(getProperties());
     }, [dispatch]);
+
+    const [deletePromptOpen, setDeletePromptOpen] = useState(false);
+    const [propertyToDelete, setPropertyToDelete] = useState('');
+
+    const handleCancelDelete = () => {
+        setDeletePromptOpen(false);
+    };
+
+    const handleDelete = () => {
+        // TODO: Implement
+        console.log('Deleted property with id ' + propertyToDelete);
+    };
 
     return (
         <Container>
@@ -88,10 +101,25 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                     </Grid>
                 </>
             )}
+            <DeletePrompt
+                open={deletePromptOpen}
+                title={'Delete Property?'}
+                description={
+                    'Are you sure you want to delete this property? This will also delete all linked rental units and tenancies!'
+                }
+                handleClose={handleCancelDelete}
+                handleDeletion={handleDelete}
+            />
             <Grid container spacing={gridSpacing}>
                 {properties.map((property) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={property.id}>
-                        <PropertyCard {...property} />
+                        <PropertyCard
+                            property={property}
+                            handleDelete={() => {
+                                setPropertyToDelete(property.id);
+                                setDeletePromptOpen(true);
+                            }}
+                        />
                     </Grid>
                 ))}
             </Grid>

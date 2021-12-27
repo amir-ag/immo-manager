@@ -14,21 +14,26 @@ import routes from '../../../routes/route-constants';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
-const PropertyCard = ({ id, egid, name, address }: PropertyModel) => {
+type PropertyCardProps = {
+    property: PropertyModel;
+    handleDelete: () => void;
+};
+
+const PropertyCard = ({ property, handleDelete }: PropertyCardProps) => {
     return (
         <Card elevation={3}>
             <CardHeader
                 action={
                     <IconButton
                         component={Link}
-                        to={routes.getPropertyDetailRouteById(id)}
+                        to={routes.getPropertyDetailRouteById(property.id)}
                         aria-label="Edit property"
                     >
                         <EditOutlinedIcon />
                     </IconButton>
                 }
-                title={<Typography variant={'h6'}>{name}</Typography>}
-                subheader={`EGID: ${egid}`}
+                title={<Typography variant={'h6'}>{property.name}</Typography>}
+                subheader={`EGID: ${property.egid}`}
             />
             <CardMedia
                 component="img"
@@ -41,9 +46,9 @@ const PropertyCard = ({ id, egid, name, address }: PropertyModel) => {
             />
             <CardContent>
                 <Typography variant="subtitle2">
-                    {address.addressLine1}
+                    {property.address.addressLine1}
                     <br />
-                    {`${address.postCode} ${address.city}`}
+                    {`${property.address.postCode} ${property.address.city}`}
                 </Typography>
 
                 <Typography variant="body1" component={'div'}>
@@ -55,7 +60,7 @@ const PropertyCard = ({ id, egid, name, address }: PropertyModel) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                <IconButton aria-label="Delete property">
+                <IconButton aria-label="Delete property" onClick={handleDelete}>
                     <DeleteOutlineIcon color={'error'} />
                 </IconButton>
             </CardActions>

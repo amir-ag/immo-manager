@@ -33,7 +33,7 @@ const DeletePrompt = ({ open, title, description, handleClose, handleDeletion }:
                         handleClose();
                     }}
                 >
-                    Delete
+                    Confirm Delete
                 </Button>
             </DialogActions>
         </Dialog>
