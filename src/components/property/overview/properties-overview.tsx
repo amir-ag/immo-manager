@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
     Button,
     Container,
@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectProperties } from '../../../store/selectors';
 import { getProperties } from '../../../store/slices/properties.slice';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
+import { useDeletePrompt } from '../../../hooks/ui.hooks';
 
 const gridSpacing = 3;
 
@@ -43,16 +44,12 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
         dispatch(getProperties());
     }, [dispatch]);
 
-    const [deletePromptOpen, setDeletePromptOpen] = useState(false);
-    const [propertyToDelete, setPropertyToDelete] = useState('');
-
-    const handleCancelDelete = () => {
-        setDeletePromptOpen(false);
-    };
+    const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
+        useDeletePrompt();
 
     const handleDelete = () => {
         // TODO: Implement
-        console.log('Deleted property with id ' + propertyToDelete);
+        console.log('Deleted property with id ' + entityToDelete);
     };
 
     return (
@@ -115,10 +112,7 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                     <Grid item xs={12} sm={6} md={4} lg={3} key={property.id}>
                         <PropertyCard
                             property={property}
-                            handleDelete={() => {
-                                setPropertyToDelete(property.id);
-                                setDeletePromptOpen(true);
-                            }}
+                            handleDelete={() => handleOpenDeletePrompt(property.id)}
                         />
                     </Grid>
                 ))}
