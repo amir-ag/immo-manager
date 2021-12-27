@@ -16,7 +16,7 @@ export const DashboardContainer = () => {
             <Typography variant={'h5'} className={cssClasses.title}>
                 Dashboard
             </Typography>
-            <PropertiesOverview showHeader={false} />;
+            <PropertiesOverview showHeader={false} />
         </>
     );
 };

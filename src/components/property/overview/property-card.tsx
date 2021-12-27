@@ -40,7 +40,7 @@ const PropertyCard = ({ property, handleDelete }: PropertyCardProps) => {
                 alt="Property Placeholder Image"
                 height="150"
                 loading="lazy"
-                // TODO: Use local placeholder image
+                // TODO: Use image from firestore storage
                 image="https://cdn.pixabay.com/photo/2016/11/21/15/09/apartments-1845884_640.jpg"
                 title="Property Placeholder Image"
             />
@@ -52,6 +52,7 @@ const PropertyCard = ({ property, handleDelete }: PropertyCardProps) => {
                 </Typography>
 
                 <Typography variant="body1" component={'div'}>
+                    {/* TODO: Use actual data from firestore */}
                     <ul>
                         <li>5 Rental Unit</li>
                         <li>5 Running Tenancies</li>
