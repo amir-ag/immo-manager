@@ -1,6 +1,7 @@
 const propertiesDetailRoute = '/app/properties/:id';
 const rentalUnitsDetailRoute = '/app/rental-units/:id';
 const tenanciesDetailRoute = '/app/tenancies/:id';
+const rentScheduleDataRoute = '/app/rent-schedule/:id';
 
 const routes = {
     // Base
@@ -35,6 +36,8 @@ const routes = {
 
     // Rent Schedule
     RENT_SCHEDULE: '/app/rent-schedule',
+    RENT_SCHEDULE_DATA: rentScheduleDataRoute,
+    getRentScheduleDataRouteById: (id: string) => rentScheduleDataRoute.replace(':id', id),
 };
 
 export default routes;
