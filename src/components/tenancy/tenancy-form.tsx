@@ -182,6 +182,7 @@ export const TenancyForm = ({
                         InputLabelProps={{
                             shrink: true,
                         }}
+                        required
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -255,7 +256,7 @@ export const TenancyForm = ({
                         id={'rentNet'}
                         label={'Rent Net (CHF)'}
                         onChange={(e) => handleBasicInputChange(e)}
-                        value={currentTenancy.rentNet}
+                        value={currentTenancy.rentNet === 0 ? '' : currentTenancy.rentNet}
                         type="number"
                         inputProps={{ min: 0 }}
                         required
@@ -267,7 +268,7 @@ export const TenancyForm = ({
                         fullWidth
                         id={'utilities'}
                         onChange={(e) => handleBasicInputChange(e)}
-                        value={currentTenancy.utilities}
+                        value={currentTenancy.utilities === 0 ? '' : currentTenancy.utilities}
                         label={'Utilities (CHF)'}
                         type="number"
                         inputProps={{ min: 0 }}
@@ -280,7 +281,7 @@ export const TenancyForm = ({
                         fullWidth
                         id={'rentDeposit'}
                         onChange={(e) => handleBasicInputChange(e)}
-                        value={currentTenancy.rentDeposit}
+                        value={currentTenancy.rentDeposit === 0 ? '' : currentTenancy.rentDeposit}
                         label={'Rent Deposit (CHF)'}
                         type="number"
                         inputProps={{ min: 0 }}

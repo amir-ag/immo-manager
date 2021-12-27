@@ -29,5 +29,9 @@ export const emptyPerson: PersonModel = {
 };
 
 // Helper functions
-export const getPersonDisplayNameForFormSelectFields = (person: PersonModel) =>
-    `${person.firstName} ${person.lastName} (${person.address.city})`;
+export const getPersonDisplayNameForFormSelectFields = (person: PersonModel) => {
+    if (person.id === '') {
+        return '';
+    }
+    return `${person.firstName} ${person.lastName} (${person.address.city})`;
+};
