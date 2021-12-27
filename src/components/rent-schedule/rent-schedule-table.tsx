@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { selectProperties, selectRentalUnits, selectTenancies } from '../../store/selectors';
 import {
-    IconButton,
+    Button,
+    Container,
     makeStyles,
     Paper,
     Table,
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     exportContainer: {
         display: 'flex',
         alignItems: 'center',
-        marginBottom: theme.spacing(2),
+        margin: theme.spacing(3),
     },
     title: {
         marginTop: theme.spacing(5),
@@ -71,12 +72,11 @@ const RentScheduleTable = () => {
     return (
         <>
             <div className={classes.exportContainer}>
-                <Typography variant={'h6'}>Export as PDF</Typography>
-                <IconButton onClick={handlePrint}>
-                    <GetAppOutlinedIcon />
-                </IconButton>
+                <Button variant={'outlined'} onClick={handlePrint} endIcon={<GetAppOutlinedIcon />}>
+                    Export as PDF
+                </Button>
             </div>
-            <div className={classes.content} ref={componentRef}>
+            <Container className={classes.content} ref={componentRef}>
                 <Typography className={classes.title} variant={'h5'}>
                     Rent Schedule Report for {getDisplayNameOfProperty(property)}
                 </Typography>
@@ -150,7 +150,7 @@ const RentScheduleTable = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-            </div>
+            </Container>
         </>
     );
 };
