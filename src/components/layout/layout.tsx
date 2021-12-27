@@ -31,6 +31,8 @@ import routes from '../../routes/route-constants';
 import { getAuth } from 'firebase/auth';
 import MenuIcon from '@material-ui/icons/Menu';
 import { selectUser } from '../../store/selectors';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 export type LayoutProps = {
     children: React.ReactNode;
@@ -104,6 +106,9 @@ const useStyles = makeStyles((theme) => {
             [theme.breakpoints.up('lg')]: {
                 display: 'none',
             },
+        },
+        avatarMenuIcon: {
+            marginRight: theme.spacing(1),
         },
     };
 });
@@ -197,9 +202,13 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                                     <ClickAwayListener onClickAway={handleClose}>
                                         <MenuList id="user-menu" onKeyDown={handleListKeyDown}>
                                             <MenuItem onClick={() => history.push(routes.PROFILE)}>
+                                                <AccountCircleIcon className={classes.avatarMenuIcon} />
                                                 Profile
                                             </MenuItem>
-                                            <MenuItem onClick={() => dispatch(logout())}>Logout</MenuItem>
+                                            <MenuItem onClick={() => dispatch(logout())}>
+                                                <ExitToAppIcon className={classes.avatarMenuIcon} />
+                                                Logout
+                                            </MenuItem>
                                         </MenuList>
                                     </ClickAwayListener>
                                 </Paper>
