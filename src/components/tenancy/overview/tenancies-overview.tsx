@@ -15,7 +15,7 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-import { Edit, Search } from '@material-ui/icons';
+import { Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'react-router-dom';
@@ -24,6 +24,8 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
 import { getTenancies } from '../../../store/slices/tenancy.slice';
 import { getTenantsOfTenancy } from '../model/tenancy.model';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -102,7 +104,10 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
                                             component={Link}
                                             to={routes.getTenancyDetailRouteById(ten.id)}
                                         >
-                                            <Edit />
+                                            <EditOutlinedIcon />
+                                        </IconButton>
+                                        <IconButton aria-label={'delete'}>
+                                            <DeleteOutlineIcon color={'error'} />
                                         </IconButton>
                                     </TableCell>
                                     <TableCell className={ten.isVacancy ? cssClasses.tableCellVacancy : ''}>
