@@ -25,6 +25,8 @@ import { selectCurrentProperty, selectRentalUnits } from '../../../store/selecto
 import { getRentalUnits } from '../../../store/slices/rental-units.slice';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { useDeletePrompt } from '../../../hooks/ui.hooks';
+import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -42,6 +44,14 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
     useEffect(() => {
         dispatch(getRentalUnits());
     }, [dispatch]);
+
+    const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
+        useDeletePrompt();
+
+    const handleDelete = () => {
+        // TODO: Implement
+        console.log('Deleted rental unit with id ' + entityToDelete);
+    };
 
     return (
         <>
@@ -78,6 +88,15 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
                 </Button>
             </Grid>
             <Grid item xs={12}>
+                <DeletePrompt
+                    open={deletePromptOpen}
+                    title={'Delete Rental Unit?'}
+                    description={
+                        'Are you sure you want to delete this rental unit? This will also delete all linked tenancies!'
+                    }
+                    handleClose={handleCancelDelete}
+                    handleDeletion={handleDelete}
+                />
                 {/* TODO: Check if it makes sense to extract table as component */}
                 <TableContainer component={Paper}>
                     <Table className={cssClasses.table}>
@@ -100,7 +119,10 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
                                         >
                                             <EditOutlinedIcon />
                                         </IconButton>
-                                        <IconButton aria-label={'delete'}>
+                                        <IconButton
+                                            aria-label={'delete'}
+                                            onClick={() => handleOpenDeletePrompt(ru.id)}
+                                        >
                                             <DeleteOutlineIcon color={'error'} />
                                         </IconButton>
                                     </TableCell>

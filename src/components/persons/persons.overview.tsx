@@ -63,6 +63,7 @@ const PersonsOverview = () => {
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(createUpdatePerson(currentPerson));
+        dispatch(getPersons());
         setCurrentPerson(emptyPerson);
         setOpenModal(false);
     };
