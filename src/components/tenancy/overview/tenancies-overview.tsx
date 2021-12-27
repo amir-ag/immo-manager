@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import {
     Button,
     Grid,
+    IconButton,
     InputAdornment,
     makeStyles,
     Paper,
@@ -14,7 +15,7 @@ import {
     TextField,
     Typography,
 } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
+import { Edit, Search } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'react-router-dom';
@@ -27,6 +28,10 @@ import { getTenantsOfTenancy } from '../model/tenancy.model';
 const useStyles = makeStyles((theme) => ({
     table: {
         width: '100%',
+    },
+    tableCellVacancy: {
+        color: 'red',
+        fontWeight: 'bold',
     },
 }));
 
@@ -82,7 +87,8 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
                     <Table className={cssClasses.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Tenant(s)</TableCell>
+                                <TableCell>Actions</TableCell>
+                                <TableCell align="right">Tenant(s)</TableCell>
                                 <TableCell align="right">From</TableCell>
                                 <TableCell align="right">To</TableCell>
                             </TableRow>
@@ -91,9 +97,20 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
                             {tenancies.map((ten) => (
                                 <TableRow key={ten.id}>
                                     <TableCell>
-                                        {getTenantsOfTenancy(ten, tenants)
-                                            .map((t) => t.firstName + ' ' + t.lastName)
-                                            .join(', ')}
+                                        <IconButton
+                                            aria-label={'edit'}
+                                            component={Link}
+                                            to={routes.getTenancyDetailRouteById(ten.id)}
+                                        >
+                                            <Edit />
+                                        </IconButton>
+                                    </TableCell>
+                                    <TableCell className={ten.isVacancy ? cssClasses.tableCellVacancy : ''}>
+                                        {ten.isVacancy
+                                            ? 'Vacancy'
+                                            : getTenantsOfTenancy(ten, tenants)
+                                                  .map((t) => t.firstName + ' ' + t.lastName)
+                                                  .join(', ')}
                                     </TableCell>
                                     <TableCell align="right">
                                         {ten.beginOfContract
