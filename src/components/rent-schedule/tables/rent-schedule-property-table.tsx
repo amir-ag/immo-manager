@@ -5,7 +5,7 @@ import { getDisplayNameOfProperty, PropertyModel } from '../../property/model/pr
 
 const useStyles = makeStyles((theme) => ({
     propertyDetails: {
-        maxWidth: '40%',
+        maxWidth: 500,
         marginBottom: theme.spacing(2),
         marginTop: theme.spacing(2),
     },
@@ -17,7 +17,7 @@ const RentSchedulePropertyTable = (property: PropertyModel) => {
     return (
         property && (
             <TableContainer className={classes.propertyDetails} component={Paper}>
-                <Table>
+                <Table size="small">
                     <TableBody>
                         <TableRow>
                             <TableCell>Report created on</TableCell>
