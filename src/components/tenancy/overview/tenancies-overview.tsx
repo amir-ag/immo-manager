@@ -19,7 +19,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
 import { getTenancies } from '../../../store/slices/tenancy.slice';
 import { getTenantsOfTenancy } from '../model/tenancy.model';

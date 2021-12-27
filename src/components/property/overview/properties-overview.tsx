@@ -13,7 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { Search } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectProperties } from '../../../store/selectors';
 import { getProperties } from '../../../store/slices/properties.slice';
 

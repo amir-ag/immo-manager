@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import { emptyTenancy, getDisplayNameOfTenancy } from './model/tenancy.model';
 import { TenancyForm } from './tenancy-form';
 import { useParams } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import {
     selectCurrentProperty,
     selectCurrentRentalUnit,

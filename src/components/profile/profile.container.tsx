@@ -1,9 +1,10 @@
 import React from 'react';
 import Profile from './profile-view';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch } from '../../hooks/store.hooks';
 import { update } from '../../store/slices/user.slice';
 import { AddressModel } from '../../models/address.model';
 
+// Create UserModel and move it into its own file
 export type ProfileFormData = {
     image: File | null;
     firstName: string;

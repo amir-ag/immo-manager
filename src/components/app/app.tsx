@@ -6,7 +6,7 @@ import './app.css';
 import routes from '../../routes/route-constants';
 import PrivateRoute from '../../routes/private.route';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { restoreLogin } from '../../store/slices/user.slice';
 import { selectUser } from '../../store/selectors';
 

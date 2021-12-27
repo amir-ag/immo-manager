@@ -5,9 +5,10 @@ import { stylingConstants, useSharedStyles } from '../../theme/shared-styles';
 import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
 import { getDisplayNameOfProperty, PropertyModel } from '../property/model/property.model';
 import routes from '../../routes/route-constants';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch } from '../../hooks/store.hooks';
 import { useHistory } from 'react-router';
 import { createOrUpdateRentalUnit } from '../../store/slices/rental-units.slice';
+import { useForms } from '../../hooks/forms.hooks';
 
 export type RentalUnitFormProps = {
     currentRentalUnit: RentalUnitModel;
@@ -27,26 +28,7 @@ export const RentalUnitForm = ({
     const dispatch = useAppDispatch();
     const history = useHistory();
 
-    // TODO: Reuse
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setCurrentRentalUnit((prevState) => ({
-            ...prevState,
-            [e.target.id]: e.target.value,
-        }));
-    };
-
-    // TODO: Reuse
-    const onChangeSelect = (
-        e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-        fieldName: string
-    ) => {
-        setCurrentRentalUnit((prevState) => ({
-            ...prevState,
-            [fieldName]: e.target.value,
-        }));
-    };
-
-    const handleSubmit = (e: FormEvent<any>) => {
+    const submitFunc = (e: FormEvent<any>) => {
         e.preventDefault();
         dispatch(createOrUpdateRentalUnit(currentRentalUnit));
         if (isNew) {
@@ -57,6 +39,12 @@ export const RentalUnitForm = ({
     const handleCancel = () => {
         history.push(routes.getPropertyDetailRouteById(property.id));
     };
+
+    const { handleBasicInputChange, handleSubmit, isFormDirty } = useForms<RentalUnitModel>(
+        setCurrentRentalUnit,
+        currentRentalUnit,
+        submitFunc
+    );
 
     return (
         <Grid
@@ -94,7 +82,7 @@ export const RentalUnitForm = ({
                         label={'EWID'}
                         type="number"
                         value={currentRentalUnit.ewid}
-                        onChange={(e) => onChange(e)}
+                        onChange={(e) => handleBasicInputChange(e)}
                         required
                     />
                 </Grid>
@@ -107,7 +95,7 @@ export const RentalUnitForm = ({
                         helperText="Select a room type"
                         variant="outlined"
                         value={currentRentalUnit.type}
-                        onChange={(e) => onChangeSelect(e, 'type')}
+                        onChange={(e) => handleBasicInputChange(e, 'type')}
                     >
                         {rentalUnitType.map((rut) => (
                             <MenuItem value={rut}>{rut}</MenuItem>
@@ -123,7 +111,7 @@ export const RentalUnitForm = ({
                     label={'Number of Rooms'}
                     type="number"
                     value={currentRentalUnit.numberOfRooms}
-                    onChange={(e) => onChange(e)}
+                    onChange={(e) => handleBasicInputChange(e)}
                 />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -134,11 +122,10 @@ export const RentalUnitForm = ({
                     label={'Surface in m2'}
                     type="number"
                     value={currentRentalUnit.surfaceInM2}
-                    onChange={(e) => onChange(e)}
+                    onChange={(e) => handleBasicInputChange(e)}
                 />
             </Grid>
             <Grid item xs={12}>
-                {/* TODO: Check if it's possible to use an 'Autocomplete' component */}
                 <TextField
                     id={'floorLevel'}
                     select
@@ -147,14 +134,14 @@ export const RentalUnitForm = ({
                     variant="outlined"
                     fullWidth
                     value={currentRentalUnit.floorLevel}
-                    onChange={(e) => onChangeSelect(e, 'floorLevel')}
+                    onChange={(e) => handleBasicInputChange(e, 'floorLevel')}
                 >
                     {rentalUnitfloorLevel.map((rufl) => (
                         <MenuItem value={rufl}>{rufl}</MenuItem>
                     ))}
                 </TextField>
             </Grid>
-            <DetailViewFormActions handleCancel={() => handleCancel()} />
+            <DetailViewFormActions disableSave={!isFormDirty()} handleCancel={() => handleCancel()} />
         </Grid>
     );
 };

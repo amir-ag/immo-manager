@@ -5,7 +5,7 @@ import { PropertyForm } from './property-form';
 import { RentalUnitsOverview } from '../rental-unit/overview/rental-units-overview';
 import { useParams } from 'react-router';
 import { emptyProperty, getDisplayNameOfProperty } from './model/property.model';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { selectProperties } from '../../store/selectors';
 import { propertiesSlice } from '../../store/slices/properties.slice';
 import { rentalUnitsSlice } from '../../store/slices/rental-units.slice';

@@ -5,7 +5,7 @@ import { stylingConstants } from '../../theme/shared-styles';
 import { RentalUnitForm } from './rental-unit-form';
 import { TenanciesOverview } from '../tenancy/overview/tenancies-overview';
 import { useParams } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { selectCurrentProperty, selectRentalUnits } from '../../store/selectors';
 import { emptyProperty } from '../property/model/property.model';
 import { propertiesSlice } from '../../store/slices/properties.slice';
