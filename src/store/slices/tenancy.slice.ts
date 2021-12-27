@@ -3,6 +3,7 @@ import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase
 import { db } from '../../index';
 import { getUidFromStoreState } from '../store-functions';
 import { TenancyModel } from '../../components/tenancy/model/tenancy.model';
+import { parseISO } from 'date-fns';
 
 const dbName = 'tenancies';
 const sliceName = 'tenancies';
@@ -45,7 +46,12 @@ export const getTenancies = createAsyncThunk(`${sliceName}/getTenancies`, async 
             const id = doc.id;
             data.push({ ...(doc.data() as TenancyModel), id });
         });
-        return data;
+
+        return data.sort((tenA, tenB) => {
+            const dateA = parseISO(tenA.beginOfContract);
+            const dateB = parseISO(tenB.beginOfContract);
+            return dateB.getTime() - dateA.getTime();
+        });
     } catch (e) {
         console.error('Error getting tenancies: ', e);
     }

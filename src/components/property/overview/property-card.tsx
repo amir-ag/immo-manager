@@ -1,9 +1,18 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardMedia, IconButton, Typography } from '@material-ui/core';
+import {
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    CardMedia,
+    IconButton,
+    Typography,
+} from '@material-ui/core';
 import { PropertyModel } from '../model/property.model';
-import { Edit } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 const PropertyCard = ({ id, egid, name, address }: PropertyModel) => {
     return (
@@ -13,9 +22,9 @@ const PropertyCard = ({ id, egid, name, address }: PropertyModel) => {
                     <IconButton
                         component={Link}
                         to={routes.getPropertyDetailRouteById(id)}
-                        aria-label="settings"
+                        aria-label="Edit property"
                     >
-                        <Edit />
+                        <EditOutlinedIcon />
                     </IconButton>
                 }
                 title={<Typography variant={'h6'}>{name}</Typography>}
@@ -45,6 +54,11 @@ const PropertyCard = ({ id, egid, name, address }: PropertyModel) => {
                     </ul>
                 </Typography>
             </CardContent>
+            <CardActions>
+                <IconButton aria-label="Delete property">
+                    <DeleteOutlineIcon color={'error'} />
+                </IconButton>
+            </CardActions>
         </Card>
     );
 };

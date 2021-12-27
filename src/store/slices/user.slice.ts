@@ -115,6 +115,7 @@ export const update = createAsyncThunk('user/update', async (formData: ProfileFo
 
     if (formData.image) {
         const storage = getStorage();
+        // TODO: Add uid or timestamp to prevent filename collision
         const storageRef = ref(storage, `images/${formData.image.name}`);
         await uploadBytes(storageRef, formData.image).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {

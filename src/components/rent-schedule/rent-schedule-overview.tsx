@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
 import { selectProperties, selectRentalUnits, selectTenancies } from '../../store/selectors';
 import { Button, Container, makeStyles, Typography } from '@material-ui/core';
 import { RentalUnitModel } from '../rental-unit/model/rental-unit.model';
@@ -10,6 +9,7 @@ import { useReactToPrint } from 'react-to-print';
 import { getDisplayNameOfProperty } from '../property/model/property.model';
 import RentSchedulePropertyTable from './tables/rent-schedule-property-table';
 import RentScheduleUnitsTable from './tables/rent-schedule-units-table';
+import { useAppSelector } from '../../hooks/store.hooks';
 
 const useStyles = makeStyles((theme) => ({
     exportContainer: {

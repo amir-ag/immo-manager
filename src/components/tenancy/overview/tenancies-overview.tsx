@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import {
     Button,
     Grid,
+    IconButton,
     InputAdornment,
     makeStyles,
     Paper,
@@ -23,10 +24,16 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
 import { getTenancies } from '../../../store/slices/tenancy.slice';
 import { getTenantsOfTenancy } from '../model/tenancy.model';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 const useStyles = makeStyles((theme) => ({
     table: {
         width: '100%',
+    },
+    tableCellVacancy: {
+        color: 'red',
+        fontWeight: 'bold',
     },
 }));
 
@@ -82,7 +89,8 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
                     <Table className={cssClasses.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Tenant(s)</TableCell>
+                                <TableCell>Actions</TableCell>
+                                <TableCell align="right">Tenant(s)</TableCell>
                                 <TableCell align="right">From</TableCell>
                                 <TableCell align="right">To</TableCell>
                             </TableRow>
@@ -91,9 +99,23 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
                             {tenancies.map((ten) => (
                                 <TableRow key={ten.id}>
                                     <TableCell>
-                                        {getTenantsOfTenancy(ten, tenants)
-                                            .map((t) => t.firstName + ' ' + t.lastName)
-                                            .join(', ')}
+                                        <IconButton
+                                            aria-label={'edit'}
+                                            component={Link}
+                                            to={routes.getTenancyDetailRouteById(ten.id)}
+                                        >
+                                            <EditOutlinedIcon />
+                                        </IconButton>
+                                        <IconButton aria-label={'delete'}>
+                                            <DeleteOutlineIcon color={'error'} />
+                                        </IconButton>
+                                    </TableCell>
+                                    <TableCell className={ten.isVacancy ? cssClasses.tableCellVacancy : ''}>
+                                        {ten.isVacancy
+                                            ? 'Vacancy'
+                                            : getTenantsOfTenancy(ten, tenants)
+                                                  .map((t) => t.firstName + ' ' + t.lastName)
+                                                  .join(', ')}
                                     </TableCell>
                                     <TableCell align="right">
                                         {ten.beginOfContract

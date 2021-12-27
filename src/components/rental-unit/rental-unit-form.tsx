@@ -98,7 +98,9 @@ export const RentalUnitForm = ({
                         onChange={(e) => handleBasicInputChange(e, 'type')}
                     >
                         {rentalUnitType.map((rut) => (
-                            <MenuItem value={rut}>{rut}</MenuItem>
+                            <MenuItem key={rut} value={rut}>
+                                {rut}
+                            </MenuItem>
                         ))}
                     </TextField>
                 </Grid>
@@ -137,7 +139,9 @@ export const RentalUnitForm = ({
                     onChange={(e) => handleBasicInputChange(e, 'floorLevel')}
                 >
                     {rentalUnitfloorLevel.map((rufl) => (
-                        <MenuItem value={rufl}>{rufl}</MenuItem>
+                        <MenuItem key={rufl} value={rufl}>
+                            {rufl}
+                        </MenuItem>
                     ))}
                 </TextField>
             </Grid>

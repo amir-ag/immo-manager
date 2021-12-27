@@ -75,7 +75,7 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                                         <EditOutlinedIcon />
                                     </IconButton>
                                     <IconButton aria-label={'delete'} onClick={() => handleDelete(row.id)}>
-                                        <DeleteOutlineIcon />
+                                        <DeleteOutlineIcon color={'error'} />
                                     </IconButton>
                                 </TableCell>
                                 <TableCell scope={'row'}>{row.firstName}</TableCell>
