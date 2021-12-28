@@ -67,11 +67,11 @@ const RentScheduleUnitsTable = ({
                                 </TableCell>
                                 <TableCell align="right">{unit.surfaceInM2}</TableCell>
                                 <TableCell align="right">
-                                    {/*TODO figure out what's wrong here*/}
-                                    {/*{format(parseISO(tenancy.beginOfContract), 'dd.MM.yyyy')}*/}
-                                    {tenancy.beginOfContract}
+                                    {format(parseISO(tenancy.beginOfContract), 'dd.MM.yyyy')}
                                 </TableCell>
-                                <TableCell align="right">{tenancy.endOfContract}</TableCell>
+                                <TableCell align="right">
+                                    {tenancy.endOfContract ? tenancy.endOfContract : '-'}
+                                </TableCell>
                                 <TableCell align="right">{tenancy.rentNet}</TableCell>
                             </TableRow>
                         );
