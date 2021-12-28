@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PropertyModel } from '../../components/property/model/property.model';
-import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
 import { getUidFromStoreState } from '../store-functions';
 
 const dbName = 'properties';
+const sliceName = 'properties';
 
 export const createOrUpdateProperty = createAsyncThunk(
-    'properties/createOrUpdateProperty',
+    `${sliceName}/createOrUpdateProperty`,
     async (property: PropertyModel, thunkAPI) => {
         try {
             const uid = getUidFromStoreState(thunkAPI);
@@ -33,7 +34,7 @@ export const createOrUpdateProperty = createAsyncThunk(
     }
 );
 
-export const getProperties = createAsyncThunk('properties/getProperties', async (_, thunkAPI) => {
+export const getProperties = createAsyncThunk(`${sliceName}/getProperties`, async (_, thunkAPI) => {
     try {
         const uid = getUidFromStoreState(thunkAPI);
         const q = query(collection(db, dbName), where('createdBy', '==', uid));
@@ -50,13 +51,25 @@ export const getProperties = createAsyncThunk('properties/getProperties', async 
     }
 });
 
+export const deleteProperty = createAsyncThunk(
+    `${sliceName}/deleteProperty`,
+    async (id: string, thunkAPI) => {
+        try {
+            await deleteDoc(doc(db, dbName, `${id}`));
+            return thunkAPI.getState();
+        } catch (e) {
+            console.error('Error deleting property: ', e);
+        }
+    }
+);
+
 interface PropertiesState {
     current: PropertyModel | null;
     all: PropertyModel[];
 }
 
 export const propertiesSlice = createSlice({
-    name: 'properties',
+    name: sliceName,
     initialState: { current: null, all: [] } as PropertiesState,
     reducers: {
         setCurrentProperty(state: PropertiesState, action: PayloadAction<PropertyModel | null>) {

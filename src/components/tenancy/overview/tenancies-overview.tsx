@@ -22,10 +22,12 @@ import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
-import { getTenancies } from '../../../store/slices/tenancy.slice';
+import { deleteTenancy, getTenancies } from '../../../store/slices/tenancy.slice';
 import { getTenantsOfTenancy } from '../model/tenancy.model';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import { useDeletePrompt } from '../../../hooks/ui.hooks';
+import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -48,6 +50,14 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
     useEffect(() => {
         dispatch(getTenancies());
     }, [dispatch]);
+
+    const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
+        useDeletePrompt();
+
+    const handleDelete = () => {
+        dispatch(deleteTenancy(entityToDelete));
+        dispatch(getTenancies());
+    };
 
     return (
         <>
@@ -84,6 +94,13 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
                 </Button>
             </Grid>
             <Grid item xs={12}>
+                <DeletePrompt
+                    open={deletePromptOpen}
+                    title={'Delete Tenancy?'}
+                    description={'Are you sure you want to delete this tenancy?'}
+                    handleClose={handleCancelDelete}
+                    handleDeletion={handleDelete}
+                />
                 {/* TODO: Check if it makes sense to extract table as component */}
                 <TableContainer component={Paper}>
                     <Table className={cssClasses.table}>
@@ -106,7 +123,10 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
                                         >
                                             <EditOutlinedIcon />
                                         </IconButton>
-                                        <IconButton aria-label={'delete'}>
+                                        <IconButton
+                                            aria-label={'delete'}
+                                            onClick={() => handleOpenDeletePrompt(ten.id)}
+                                        >
                                             <DeleteOutlineIcon color={'error'} />
                                         </IconButton>
                                     </TableCell>

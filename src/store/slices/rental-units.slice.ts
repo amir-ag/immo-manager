@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
 import { getUidFromStoreState } from '../store-functions';
 import { RentalUnitModel } from '../../components/rental-unit/model/rental-unit.model';
@@ -50,6 +50,18 @@ export const getRentalUnits = createAsyncThunk(`${sliceName}/getRentalUnits`, as
         console.error('Error getting rental units: ', e);
     }
 });
+
+export const deleteRentalUnit = createAsyncThunk(
+    `${sliceName}/deleteRentalUnit`,
+    async (id: string, thunkAPI) => {
+        try {
+            await deleteDoc(doc(db, dbName, `${id}`));
+            return thunkAPI.getState();
+        } catch (e) {
+            console.error('Error deleting rental unit: ', e);
+        }
+    }
+);
 
 interface RentalUnitsState {
     current?: RentalUnitModel | null;

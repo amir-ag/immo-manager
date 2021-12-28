@@ -21,10 +21,13 @@ import { getDisplayNameOfRentalUnit } from '../model/rental-unit.model';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
-import { selectCurrentProperty, selectRentalUnits } from '../../../store/selectors';
-import { getRentalUnits } from '../../../store/slices/rental-units.slice';
+import { selectCurrentProperty, selectRentalUnits, selectTenancies } from '../../../store/selectors';
+import { deleteRentalUnit, getRentalUnits } from '../../../store/slices/rental-units.slice';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { useDeletePrompt } from '../../../hooks/ui.hooks';
+import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
+import { deleteTenancy, getTenancies } from '../../../store/slices/tenancy.slice';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -37,11 +40,28 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
 
     const dispatch = useAppDispatch();
     const property = useAppSelector(selectCurrentProperty);
+    // TODO: Extract these helper methods into its own file - for each entity its own
     const rentalUnits = useAppSelector(selectRentalUnits)?.filter((ru) => ru.propertyId === property?.id);
+    const tenancies = useAppSelector(selectTenancies);
 
     useEffect(() => {
         dispatch(getRentalUnits());
+        dispatch(getTenancies());
     }, [dispatch]);
+
+    const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
+        useDeletePrompt();
+
+    const handleDelete = () => {
+        dispatch(deleteRentalUnit(entityToDelete));
+        // TODO: Combine these store actions within the store (transparent)
+        tenancies
+            ?.filter((ten) => ten.rentalUnitId === entityToDelete)
+            ?.forEach((ten) => {
+                dispatch(deleteTenancy(ten.id));
+            });
+        dispatch(getRentalUnits());
+    };
 
     return (
         <>
@@ -78,6 +98,15 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
                 </Button>
             </Grid>
             <Grid item xs={12}>
+                <DeletePrompt
+                    open={deletePromptOpen}
+                    title={'Delete Rental Unit?'}
+                    description={
+                        'Are you sure you want to delete this rental unit? This will also delete all linked tenancies!'
+                    }
+                    handleClose={handleCancelDelete}
+                    handleDeletion={handleDelete}
+                />
                 {/* TODO: Check if it makes sense to extract table as component */}
                 <TableContainer component={Paper}>
                     <Table className={cssClasses.table}>
@@ -100,7 +129,10 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
                                         >
                                             <EditOutlinedIcon />
                                         </IconButton>
-                                        <IconButton aria-label={'delete'}>
+                                        <IconButton
+                                            aria-label={'delete'}
+                                            onClick={() => handleOpenDeletePrompt(ru.id)}
+                                        >
                                             <DeleteOutlineIcon color={'error'} />
                                         </IconButton>
                                     </TableCell>

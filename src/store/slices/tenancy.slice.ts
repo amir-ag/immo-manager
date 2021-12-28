@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addDoc, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
 import { getUidFromStoreState } from '../store-functions';
 import { TenancyModel } from '../../components/tenancy/model/tenancy.model';
@@ -54,6 +54,15 @@ export const getTenancies = createAsyncThunk(`${sliceName}/getTenancies`, async 
         });
     } catch (e) {
         console.error('Error getting tenancies: ', e);
+    }
+});
+
+export const deleteTenancy = createAsyncThunk(`${sliceName}/deleteTenancy`, async (id: string, thunkAPI) => {
+    try {
+        await deleteDoc(doc(db, dbName, `${id}`));
+        return thunkAPI.getState();
+    } catch (e) {
+        console.error('Error deleting tenancy: ', e);
     }
 });
 
