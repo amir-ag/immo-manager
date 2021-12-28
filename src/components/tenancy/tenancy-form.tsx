@@ -114,9 +114,9 @@ export const TenancyForm = ({
                     <Autocomplete
                         // TODO: Check if this styling is the correct way (https://v4.mui.com/customization/components/)
                         className={'MuiFormControl-marginNormal'}
-                        id="tenant1"
+                        id="tenant1Id"
                         options={tenants}
-                        onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant1')}
+                        onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant1Id')}
                         getOptionLabel={getPersonDisplayNameForFormSelectFields}
                         value={tenants.find((t) => t.id === currentTenancy.tenant1Id) ?? emptyPerson}
                         getOptionSelected={(option: PersonModel, value: PersonModel) =>
@@ -134,9 +134,9 @@ export const TenancyForm = ({
                     <Autocomplete
                         // TODO: Check if this styling is the correct way (https://v4.mui.com/customization/components/)
                         className={'MuiFormControl-marginNormal'}
-                        id="tenant2"
+                        id="tenant2Id"
                         options={tenants}
-                        onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant2')}
+                        onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant2Id')}
                         getOptionLabel={getPersonDisplayNameForFormSelectFields}
                         value={tenants.find((t) => t.id === currentTenancy.tenant2Id) ?? emptyPerson}
                         getOptionSelected={(option: PersonModel, value: PersonModel) =>
