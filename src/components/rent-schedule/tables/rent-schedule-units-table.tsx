@@ -10,7 +10,9 @@ import {
     TableRow,
 } from '@material-ui/core';
 import { getDisplayNameOfRentalUnit, RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
-import { TenancyModel } from '../../tenancy/model/tenancy.model';
+import { getDisplayNameOfTenants, TenancyModel } from '../../tenancy/model/tenancy.model';
+import { format, parseISO } from 'date-fns';
+import { PersonModel } from '../../persons/models/person.model';
 
 const useStyles = makeStyles({
     table: {
@@ -23,11 +25,17 @@ const useStyles = makeStyles({
 
 type RentScheduleUnitsTableProps = {
     rentalUnits: RentalUnitModel[];
-    getTenant: (unit: RentalUnitModel) => TenancyModel;
+    getTenancy: (unit: RentalUnitModel) => TenancyModel;
     rentSum: number;
+    tenants: PersonModel[];
 };
 
-const RentScheduleUnitsTable = ({ rentalUnits, getTenant, rentSum }: RentScheduleUnitsTableProps) => {
+const RentScheduleUnitsTable = ({
+    rentalUnits,
+    getTenancy,
+    rentSum,
+    tenants,
+}: RentScheduleUnitsTableProps) => {
     const classes = useStyles();
 
     return (
@@ -46,18 +54,25 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenant, rentSum }: RentSchedul
                 </TableHead>
                 <TableBody>
                     {rentalUnits.map((unit) => {
-                        const tenant = getTenant(unit);
+                        const tenancy = getTenancy(unit);
                         return (
                             <TableRow key={unit.ewid}>
                                 <TableCell component="th" scope="row">
                                     {unit.ewid}
                                 </TableCell>
                                 <TableCell align="right">{getDisplayNameOfRentalUnit(unit)}</TableCell>
-                                <TableCell align="right">{tenant.id}</TableCell>
+                                <TableCell align="right">
+                                    {/*{tenancy.id}*/}
+                                    {getDisplayNameOfTenants(tenancy, tenants)}
+                                </TableCell>
                                 <TableCell align="right">{unit.surfaceInM2}</TableCell>
-                                <TableCell align="right">{tenant.beginOfContract}</TableCell>
-                                <TableCell align="right">{tenant.endOfContract}</TableCell>
-                                <TableCell align="right">{tenant.rentNet}</TableCell>
+                                <TableCell align="right">
+                                    {/*TODO figure out what's wrong here*/}
+                                    {/*{format(parseISO(tenancy.beginOfContract), 'dd.MM.yyyy')}*/}
+                                    {tenancy.beginOfContract}
+                                </TableCell>
+                                <TableCell align="right">{tenancy.endOfContract}</TableCell>
+                                <TableCell align="right">{tenancy.rentNet}</TableCell>
                             </TableRow>
                         );
                     })}
