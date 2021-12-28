@@ -14,10 +14,12 @@ import { Search } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
-import { selectProperties } from '../../../store/selectors';
-import { getProperties } from '../../../store/slices/properties.slice';
+import { selectProperties, selectRentalUnits, selectTenancies } from '../../../store/selectors';
+import { deleteProperty, getProperties } from '../../../store/slices/properties.slice';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
+import { deleteRentalUnit, getRentalUnits } from '../../../store/slices/rental-units.slice';
+import { deleteTenancy, getTenancies } from '../../../store/slices/tenancy.slice';
 
 const gridSpacing = 3;
 
@@ -39,17 +41,30 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
 
     const dispatch = useAppDispatch();
     const properties = useAppSelector(selectProperties);
+    const rentalUnits = useAppSelector(selectRentalUnits);
+    const tenancies = useAppSelector(selectTenancies);
 
     useEffect(() => {
         dispatch(getProperties());
+        dispatch(getRentalUnits());
+        dispatch(getTenancies());
     }, [dispatch]);
 
     const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
         useDeletePrompt();
 
     const handleDelete = () => {
-        // TODO: Implement
-        console.log('Deleted property with id ' + entityToDelete);
+        dispatch(deleteProperty(entityToDelete));
+        // TODO: Combine these store actions within the store (transparent)
+        rentalUnits
+            ?.filter((ru) => ru.propertyId === entityToDelete)
+            ?.forEach((ru) => {
+                dispatch(deleteRentalUnit(ru.id));
+                tenancies
+                    ?.filter((ten) => ten.rentalUnitId === ru.id)
+                    ?.forEach((ten) => dispatch(deleteTenancy(ten.id)));
+            });
+        dispatch(getProperties());
     };
 
     return (

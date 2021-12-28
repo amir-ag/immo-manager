@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
-import { getTenancies } from '../../../store/slices/tenancy.slice';
+import { deleteTenancy, getTenancies } from '../../../store/slices/tenancy.slice';
 import { getTenantsOfTenancy } from '../model/tenancy.model';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
@@ -55,8 +55,8 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
         useDeletePrompt();
 
     const handleDelete = () => {
-        // TODO: Implement
-        console.log('Deleted tenancy with id ' + entityToDelete);
+        dispatch(deleteTenancy(entityToDelete));
+        dispatch(getTenancies());
     };
 
     return (

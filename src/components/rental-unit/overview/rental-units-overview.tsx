@@ -21,12 +21,13 @@ import { getDisplayNameOfRentalUnit } from '../model/rental-unit.model';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
-import { selectCurrentProperty, selectRentalUnits } from '../../../store/selectors';
-import { getRentalUnits } from '../../../store/slices/rental-units.slice';
+import { selectCurrentProperty, selectRentalUnits, selectTenancies } from '../../../store/selectors';
+import { deleteRentalUnit, getRentalUnits } from '../../../store/slices/rental-units.slice';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
+import { deleteTenancy, getTenancies } from '../../../store/slices/tenancy.slice';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -39,18 +40,27 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
 
     const dispatch = useAppDispatch();
     const property = useAppSelector(selectCurrentProperty);
+    // TODO: Extract these helper methods into its own file - for each entity its own
     const rentalUnits = useAppSelector(selectRentalUnits)?.filter((ru) => ru.propertyId === property?.id);
+    const tenancies = useAppSelector(selectTenancies);
 
     useEffect(() => {
         dispatch(getRentalUnits());
+        dispatch(getTenancies());
     }, [dispatch]);
 
     const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
         useDeletePrompt();
 
     const handleDelete = () => {
-        // TODO: Implement
-        console.log('Deleted rental unit with id ' + entityToDelete);
+        dispatch(deleteRentalUnit(entityToDelete));
+        // TODO: Combine these store actions within the store (transparent)
+        tenancies
+            ?.filter((ten) => ten.rentalUnitId === entityToDelete)
+            ?.forEach((ten) => {
+                dispatch(deleteTenancy(ten.id));
+            });
+        dispatch(getRentalUnits());
     };
 
     return (
