@@ -38,6 +38,12 @@ export const getTenantsOfTenancy = (tenancy: TenancyModel, allTenants: PersonMod
     return allTenants.filter((t) => t.id === tenancy.tenant1Id || t.id === tenancy.tenant2Id);
 };
 
+export const getDisplayNameOfTenants = (tenancy: TenancyModel, allTenants: PersonModel[]) => {
+    return getTenantsOfTenancy(tenancy, allTenants)
+        .map((t) => t.firstName + ' ' + t.lastName)
+        .join(', ');
+};
+
 export const getDisplayNameOfTenancy = (tenancy: TenancyModel, allTenants: PersonModel[]) => {
     const tenants = getTenantsOfTenancy(tenancy, allTenants);
     const desc = 'Tenancy';
