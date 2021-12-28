@@ -21,13 +21,20 @@ import { getDisplayNameOfRentalUnit } from '../model/rental-unit.model';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
-import { selectCurrentProperty, selectRentalUnits, selectTenancies } from '../../../store/selectors';
+import {
+    selectCurrentProperty,
+    selectPersonsTenants,
+    selectRentalUnits,
+    selectTenancies,
+} from '../../../store/selectors';
 import { deleteRentalUnit, getRentalUnits } from '../../../store/slices/rental-units.slice';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { deleteTenancy, getTenancies } from '../../../store/slices/tenancy.slice';
+import { getTenantsOfTenancy } from '../../tenancy/model/tenancy.model';
+import { parseISO } from 'date-fns';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -42,7 +49,8 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
     const property = useAppSelector(selectCurrentProperty);
     // TODO: Extract these helper methods into its own file - for each entity its own
     const rentalUnits = useAppSelector(selectRentalUnits)?.filter((ru) => ru.propertyId === property?.id);
-    const tenancies = useAppSelector(selectTenancies);
+    const tenancies = useAppSelector(selectTenancies).filter((ten) => ten.propertyId === property?.id);
+    const tenants = useAppSelector(selectPersonsTenants);
 
     useEffect(() => {
         dispatch(getRentalUnits());
@@ -61,6 +69,22 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
                 dispatch(deleteTenancy(ten.id));
             });
         dispatch(getRentalUnits());
+    };
+
+    const getTenantsDesc = (ruId: string) => {
+        const ts = getTenantsOfTenancy(
+            // TODO reuse filters and finds
+            tenancies
+                ?.filter((t) => !t.endOfContract || parseISO(t.endOfContract) > new Date())
+                ?.find((ten) => ten.rentalUnitId === ruId),
+            tenants
+        );
+
+        if (!ts.length) {
+            return 'Vacancy';
+        }
+
+        return ts.join(', ');
     };
 
     return (
@@ -115,7 +139,6 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
                                 <TableCell>Actions</TableCell>
                                 <TableCell align="right">Description</TableCell>
                                 <TableCell align="right">Current Tenant</TableCell>
-                                <TableCell align="right">Contract Until</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -137,9 +160,8 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
                                         </IconButton>
                                     </TableCell>
                                     <TableCell align="right">{getDisplayNameOfRentalUnit(ru)}</TableCell>
-                                    {/* TODO: Use data from firestore */}
-                                    <TableCell align="right">Hansli Müller</TableCell>
-                                    <TableCell align="right">01.01.2022</TableCell>
+                                    {/* // TODO: Make font bold and red (error) if it is a Vacancy */}
+                                    <TableCell align="right">{getTenantsDesc(ru.id)}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
