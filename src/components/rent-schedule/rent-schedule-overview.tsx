@@ -49,12 +49,9 @@ const RentScheduleOverview = () => {
     const rentalUnits = useAppSelector(selectRentalUnits).filter((unit) => unit.propertyId === id);
     const tenancies = useAppSelector(selectTenancies);
     const tenants = useAppSelector(selectPersonsTenants);
-    let rentSum = 0;
 
     const getTenancy = (unit: RentalUnitModel) => {
-        const tenancy = tenancies.filter((tenant) => tenant.rentalUnitId === unit.id)[0] || emptyTenancy;
-        rentSum += tenancy.rentNet;
-        return tenancy;
+        return tenancies.filter((tenant) => tenant.rentalUnitId === unit.id)[0] || emptyTenancy;
     };
 
     return (
@@ -69,12 +66,7 @@ const RentScheduleOverview = () => {
                     Rent Schedule Report for {getDisplayNameOfProperty(property)}
                 </Typography>
                 <RentSchedulePropertyTable {...property} />
-                <RentScheduleUnitsTable
-                    rentalUnits={rentalUnits}
-                    getTenancy={getTenancy}
-                    rentSum={rentSum}
-                    tenants={tenants}
-                />
+                <RentScheduleUnitsTable rentalUnits={rentalUnits} getTenancy={getTenancy} tenants={tenants} />
             </Container>
         </>
     );

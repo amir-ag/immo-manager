@@ -26,17 +26,13 @@ const useStyles = makeStyles({
 type RentScheduleUnitsTableProps = {
     rentalUnits: RentalUnitModel[];
     getTenancy: (unit: RentalUnitModel) => TenancyModel;
-    rentSum: number;
     tenants: PersonModel[];
 };
 
-const RentScheduleUnitsTable = ({
-    rentalUnits,
-    getTenancy,
-    rentSum,
-    tenants,
-}: RentScheduleUnitsTableProps) => {
+const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentScheduleUnitsTableProps) => {
     const classes = useStyles();
+
+    let totalRentSum = 0;
 
     return (
         <TableContainer component={Paper}>
@@ -55,6 +51,7 @@ const RentScheduleUnitsTable = ({
                 <TableBody>
                     {rentalUnits.map((unit) => {
                         const tenancy = getTenancy(unit);
+                        totalRentSum += Number(tenancy.rentNet);
                         return (
                             <TableRow key={unit.ewid}>
                                 <TableCell component="th" scope="row">
@@ -85,7 +82,7 @@ const RentScheduleUnitsTable = ({
                         <TableCell />
                         <TableCell />
                         <TableCell className={classes.bold} align={'right'}>
-                            {rentSum}
+                            {totalRentSum}
                         </TableCell>
                     </TableRow>
                 </TableBody>
