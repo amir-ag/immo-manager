@@ -42,8 +42,6 @@ export const RentSchedule = () => {
         history.push(`rent-schedule/${property}`);
     };
 
-    console.log('properties: ', properties);
-
     return (
         <>
             <Typography variant={'h5'} className={cssClasses.title}>
