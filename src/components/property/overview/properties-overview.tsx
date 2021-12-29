@@ -128,6 +128,8 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                         <PropertyCard
                             property={property}
                             handleDelete={() => handleOpenDeletePrompt(property.id)}
+                            rentalUnits={rentalUnits.filter((ru) => ru.propertyId === property.id)}
+                            tenancies={tenancies.filter((ten) => ten.propertyId === property.id)}
                         />
                     </Grid>
                 ))}

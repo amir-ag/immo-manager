@@ -34,7 +34,11 @@ export const emptyTenancy: TenancyModel = {
 };
 
 // Helper functions
-export const getTenantsOfTenancy = (tenancy: TenancyModel, allTenants: PersonModel[]) => {
+export const getTenantsOfTenancy = (tenancy: TenancyModel | undefined, allTenants: PersonModel[]) => {
+    if (!tenancy) {
+        return [];
+    }
+
     return allTenants.filter((t) => t.id === tenancy.tenant1Id || t.id === tenancy.tenant2Id);
 };
 
