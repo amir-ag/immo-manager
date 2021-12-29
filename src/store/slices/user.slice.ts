@@ -7,11 +7,11 @@ import {
     updatePassword,
     updateProfile,
 } from 'firebase/auth';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
 import { ProfileFormData } from '../../components/profile/profile.container';
 import { AddressModel } from '../../models/address.model';
+import * as storeService from '../store-functions';
 
 interface UserState {
     email: string;
@@ -113,17 +113,13 @@ export const update = createAsyncThunk('user/update', async (formData: ProfileFo
     const auth = getAuth();
     const user = auth.currentUser;
 
-    if (formData.image) {
-        const storage = getStorage();
-        // TODO: Add uid or timestamp to prevent filename collision
-        const storageRef = ref(storage, `images/${formData.image.name}`);
-        await uploadBytes(storageRef, formData.image).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then((url) => {
-                user &&
-                    updateProfile(user, {
-                        photoURL: url,
-                    });
-            });
+    if (formData.image && user) {
+        const photoUrl = await storeService.uploadImageAndReturnUrl(
+            formData.image,
+            `images/users/thumbnails/${user.uid}/${formData.image.name}`
+        );
+        await updateProfile(user, {
+            photoURL: photoUrl,
         });
     }
 

@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     dropzone: {
         minHeight: '180px',
     },
+    dropzoneText: {
+        fontSize: theme.typography.body1.fontSize,
+    },
 }));
 
 const ImageUpload = ({ previewImageUrl, handleImageChange }: ImageUploadProps) => {
@@ -36,7 +39,7 @@ const ImageUpload = ({ previewImageUrl, handleImageChange }: ImageUploadProps) =
                 />
             )}
             <DropzoneArea
-                classes={{ root: cssClasses.dropzone }}
+                classes={{ root: cssClasses.dropzone, text: cssClasses.dropzoneText }}
                 filesLimit={1}
                 acceptedFiles={['image/*']}
                 dropzoneText={'Drag and drop your image here...'}

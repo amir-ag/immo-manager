@@ -38,6 +38,17 @@ export const useForms = <T>(
         }));
     };
 
+    const handleThumbnailChange = (image: File) => {
+        setFormModelState((prevState) => ({
+            ...prevState,
+            thumbnail: {
+                // TODO: Check if there is a better approach
+                ...(prevState as any)?.thumbnail,
+                image,
+            },
+        }));
+    };
+
     // --- Submit Handler ---
     const handleSubmit = (e: FormEvent<any>) => {
         // TODO: Set model snapshot
@@ -54,6 +65,7 @@ export const useForms = <T>(
         handleBasicInputChange,
         handleAddressInputChange,
         handleAutocompleteChange,
+        handleThumbnailChange,
         handleSubmit,
         isFormDirty,
     };

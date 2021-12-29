@@ -1,4 +1,5 @@
 import { AddressModel, emptyAddress } from '../../../models/address.model';
+import { ThumbnailModel } from '../../../models/thumbnail.model';
 
 export type PropertyModel = {
     id: string;
@@ -8,7 +9,7 @@ export type PropertyModel = {
     yearOfConstruction?: number;
     janitor: string;
     address: AddressModel;
-    rentalUnits?: string[];
+    thumbnail?: ThumbnailModel;
 };
 
 export const emptyProperty: PropertyModel = {
