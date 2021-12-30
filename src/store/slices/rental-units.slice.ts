@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
 import { getUidFromStoreState } from '../store-functions';
-import { RentalUnitModel } from '../../components/rental-unit/model/rental-unit.model';
+import { rentalUnitfloorLevel, RentalUnitModel } from '../../components/rental-unit/model/rental-unit.model';
 
 const dbName = 'rental-units';
 const sliceName = 'rental-units';
@@ -37,15 +37,22 @@ export const createOrUpdateRentalUnit = createAsyncThunk(
 export const getRentalUnits = createAsyncThunk(`${sliceName}/getRentalUnits`, async (_, thunkAPI) => {
     try {
         const uid = getUidFromStoreState(thunkAPI);
+
         const q = query(collection(db, dbName), where('createdBy', '==', uid));
         const querySnapshot = await getDocs(q);
-        // TODO: Get create typed array
+
         const data: RentalUnitModel[] = [];
         querySnapshot.forEach((doc) => {
             const id = doc.id;
             data.push({ ...(doc.data() as RentalUnitModel), id });
         });
-        return data;
+
+        return data.sort((ruA: RentalUnitModel, ruB: RentalUnitModel) => {
+            const indexA = rentalUnitfloorLevel.indexOf(!ruA.floorLevel ? 'Undefined' : ruA.floorLevel);
+            const indexB = rentalUnitfloorLevel.indexOf(!ruB.floorLevel ? 'Undefined' : ruB.floorLevel);
+
+            return indexA - indexB;
+        });
     } catch (e) {
         console.error('Error getting rental units: ', e);
     }

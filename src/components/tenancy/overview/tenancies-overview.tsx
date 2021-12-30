@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
-import { deleteTenancy, getTenancies } from '../../../store/slices/tenancy.slice';
+import { deleteTenancy, getTenancies } from '../../../store/slices/tenancies.slice';
 import { getTenantsOfTenancy } from '../model/tenancy.model';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
