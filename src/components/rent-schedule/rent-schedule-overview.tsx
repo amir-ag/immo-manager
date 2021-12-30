@@ -51,7 +51,7 @@ const RentScheduleOverview = () => {
     const tenants = useAppSelector(selectPersonsTenants);
 
     const getTenancy = (unit: RentalUnitModel) => {
-        return tenancies.filter((tenant) => tenant.rentalUnitId === unit.id)[0] || emptyTenancy;
+        return tenancies.filter((tenancy) => tenancy.rentalUnitId === unit.id)[0] || emptyTenancy;
     };
 
     return (
