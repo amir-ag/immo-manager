@@ -69,7 +69,6 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
         <>
             {showHeader && (
                 <>
-                    {/* TODO: Check if it makes sense to extract search header (input + button) as component */}
                     <Typography className={cssClasses.headerElements} variant={'h5'}>
                         Properties Overview
                     </Typography>
@@ -78,7 +77,7 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                         handleCreate={handleCreate}
                         originalData={properties}
                         setSearchResult={setSearchResult}
-                        searchParams={['name', 'address.addressLine1', 'address.city']}
+                        searchParams={['name', 'egid', 'address.addressLine1', 'address.city']}
                     />
                 </>
             )}

@@ -11,6 +11,7 @@ export type SearchHeaderProps = {
     setSearchResult: Dispatch<SetStateAction<any>>;
     searchParams: string[];
     disableCreateButton?: boolean;
+    wrapAtMd?: boolean;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +33,8 @@ The parent component has to provide the following to SearchHeader:
 - searchParams: Pass searchParams (keys of object fields) to SearchHeader in an array e.g. ['firstName', 'lastName', 'address.city']
 - handleCreate: Function which is called on click on the button
 - placeholderText: Placeholder text of the search input
+- disableCreateButton: Flag to disable create button
+- wrapAtMd: Flag to wrap controls already at the 'md' breakpoint
  */
 const SearchHeader = ({
     handleCreate,
@@ -40,6 +43,7 @@ const SearchHeader = ({
     setSearchResult,
     searchParams,
     disableCreateButton,
+    wrapAtMd,
 }: SearchHeaderProps) => {
     const cssClasses = useStyles();
     const [searchValue, setSearchValue] = useState('');
@@ -74,12 +78,13 @@ const SearchHeader = ({
     return (
         <Grid
             container
+            item
             justifyContent="space-between"
             alignItems="center"
             spacing={3}
             className={cssClasses.root}
         >
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={wrapAtMd ? false : 8} md={wrapAtMd ? 8 : false}>
                 <SearchBar
                     classes={{ searchIconButton: cssClasses.searchIcon }}
                     value={searchValue}
@@ -88,7 +93,7 @@ const SearchHeader = ({
                     onCancelSearch={() => cancelSearch()}
                 />
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={12} sm={wrapAtMd ? false : 3} md={wrapAtMd ? 3 : false}>
                 <Button
                     onClick={() => handleCreate()}
                     fullWidth
