@@ -15,7 +15,7 @@ import { getDisplayNameOfProperty } from '../property/model/property.model';
 import RentSchedulePropertyTable from './tables/rent-schedule-property-table';
 import RentScheduleUnitsTable from './tables/rent-schedule-units-table';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { getTenancies } from '../../store/slices/tenancy.slice';
+import { getTenancies } from '../../store/slices/tenancies.slice';
 import { getPersons } from '../../store/slices/persons.slice';
 
 const useStyles = makeStyles((theme) => ({
