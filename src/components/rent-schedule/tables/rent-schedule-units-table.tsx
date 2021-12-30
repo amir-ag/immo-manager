@@ -52,9 +52,6 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentSchedu
                     {rentalUnits.map((unit) => {
                         const tenancy = getTenancy(unit);
                         totalRentSum += Number(tenancy.rentNet);
-                        // TODO remove 'replaceAll' as soon as date is provided in the right format
-                        const beginOfContract = tenancy.beginOfContract.replaceAll('.', '-');
-
                         return (
                             <TableRow key={unit.ewid}>
                                 <TableCell component="th" scope="row">
@@ -67,7 +64,7 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentSchedu
                                 <TableCell align="right">{unit.surfaceInM2}</TableCell>
                                 <TableCell align="right">
                                     {tenancy.beginOfContract
-                                        ? format(parseISO(beginOfContract), 'dd.MM.yyyy')
+                                        ? format(parseISO(tenancy.beginOfContract), 'dd.MM.yyyy')
                                         : '-'}
                                 </TableCell>
                                 <TableCell align="right">

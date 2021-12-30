@@ -24,7 +24,7 @@ export const emptyTenancy: TenancyModel = {
     id: '',
     propertyId: '',
     rentalUnitId: '',
-    beginOfContract: format(new Date(), 'yyyy.MM.dd'),
+    beginOfContract: format(new Date(), 'yyyy-MM-dd'),
     cancellationPeriod: 3,
     cancellationMonths: ['March', 'June', 'September'],
     rentNet: 0,
@@ -39,6 +39,7 @@ export const getTenantsOfTenancy = (tenancy: TenancyModel, allTenants: PersonMod
 };
 
 export const getDisplayNameOfTenants = (tenancy: TenancyModel, allTenants: PersonModel[]) => {
+    if (tenancy === undefined) return '-';
     return getTenantsOfTenancy(tenancy, allTenants)
         .map((t) => t.firstName + ' ' + t.lastName)
         .join(', ');
