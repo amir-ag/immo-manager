@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-    Button,
     Grid,
     IconButton,
-    InputAdornment,
     makeStyles,
     Paper,
     Table,
@@ -12,11 +10,8 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    TextField,
     Typography,
 } from '@material-ui/core';
-import { Search } from '@material-ui/icons';
-import AddIcon from '@material-ui/icons/Add';
 import { format, parseISO } from 'date-fns';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
@@ -28,6 +23,8 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
+import SearchHeader from '../../ui/search-header/search-header';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -41,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean }) => {
     const cssClasses = useStyles();
+    const history = useHistory();
 
     const dispatch = useAppDispatch();
     const rentalUnit = useAppSelector(selectCurrentRentalUnit);
@@ -51,6 +49,8 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
         dispatch(getTenancies());
     }, [dispatch]);
 
+    const [searchResult, setSearchResult] = useState(tenancies);
+
     const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
         useDeletePrompt();
 
@@ -59,40 +59,24 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
         dispatch(getTenancies());
     };
 
+    const handleCreate = () => {
+        history.push(routes.TENANCIES_CREATE);
+    };
+
     return (
         <>
-            {/* TODO: Check if it makes sense to extract search header (input + button) as component */}
             <Grid item xs={12}>
                 <Typography variant={'h6'}>Tenancies</Typography>
             </Grid>
-            <Grid item xs={12} md={8}>
-                <TextField
-                    id="textSearch"
-                    variant="outlined"
-                    fullWidth
-                    label="Search for Person"
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <Search />
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-            </Grid>
-            <Grid item xs={12} md={4}>
-                <Button
-                    component={Link}
-                    to={routes.TENANCIES_CREATE}
-                    fullWidth
-                    variant="contained"
-                    color="secondary"
-                    startIcon={<AddIcon />}
-                    disabled={disableCreate}
-                >
-                    New
-                </Button>
-            </Grid>
+            <SearchHeader
+                placeholderText={'Search by description'}
+                handleCreate={handleCreate}
+                originalData={tenancies}
+                setSearchResult={setSearchResult}
+                disableCreateButton={disableCreate}
+                searchParams={['beginOfContract', 'endOfContract']}
+                wrapAtMd={true}
+            />
             <Grid item xs={12}>
                 <DeletePrompt
                     open={deletePromptOpen}
@@ -113,7 +97,7 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {tenancies.map((ten) => (
+                            {searchResult.map((ten) => (
                                 <TableRow key={ten.id}>
                                     <TableCell>
                                         <IconButton
