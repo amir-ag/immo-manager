@@ -1,65 +1,61 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Button, Container, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Button, Grid, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { grey } from '@material-ui/core/colors';
 import SearchBar from '@snekcode/mui-search-bar';
 
+// TODO: Change to generic Component
 export type SearchHeaderProps = {
     handleCreate: () => void;
-    title?: string;
+    placeholderText?: string;
     originalData: { [key: string]: any }[];
     setSearchResult: Dispatch<SetStateAction<any>>;
     searchParams: string[];
 };
 
 const useStyles = makeStyles((theme) => ({
-    button: {
-        margin: theme.spacing(0),
+    root: {
+        marginBottom: theme.spacing(3),
     },
-    header: {
-        flexGrow: 1,
-    },
-    headerContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        borderBottom: `1px solid ${grey[300]}`,
-        padding: theme.spacing(2),
-    },
-    headerTop: {
-        display: 'flex',
+    searchIcon: {
+        marginRight: 0,
     },
 }));
 
-/*
-
-SearchHeader takes originalData and searchParams as props and outputs filtered data by using setSearchResult.
+/**
+SearchHeader takes 'originalData' and 'searchParams' as props and outputs filtered data by using 'setSearchResult'.
 You can then use searchResult in the parent component and pass it on to e.g. a table component
 
 The parent component has to provide the following to SearchHeader:
-
-- originalData: the raw initial data as an array of objects (currently not netsted objects)
-- setSearchResult: track searchResult in the parent component and pass setSearchResult to SearchHeader
-- searchParams: pass searchParams (keys of object) to SearchHeader in an array e.g. ['firstName', 'lastName']
-- handleCreate: function which is called on click on the button
-- title: title of this component
-
+- originalData: The raw initial data as an array of objects (currently not nested objects)
+- setSearchResult: Track searchResult in the parent component and pass setSearchResult to SearchHeader
+- searchParams: Pass searchParams (keys of object fields) to SearchHeader in an array e.g. ['firstName', 'lastName', 'address.city']
+- handleCreate: Function which is called on click on the button
+- placeholderText: Placeholder text of the search input
  */
-
 const SearchHeader = ({
     handleCreate,
-    title = 'Placeholder Title',
+    placeholderText,
     originalData,
     setSearchResult,
     searchParams,
 }: SearchHeaderProps) => {
-    const classes = useStyles();
+    const cssClasses = useStyles();
     const [searchValue, setSearchValue] = useState('');
 
     const requestSearch = (searchValue: string) => {
         let searchResult: {}[] = [];
-        for (let row of originalData) {
-            for (let key of searchParams) {
-                if (row[key].toLowerCase().includes(searchValue.toLowerCase())) {
+        for (const row of originalData) {
+            for (const fieldName of searchParams) {
+                let fieldValue = '';
+
+                if (fieldName.includes('.')) {
+                    const fields = fieldName.split('.');
+                    fieldValue = row[fields[0]][fields[1]];
+                } else {
+                    fieldValue = row[fieldName];
+                }
+
+                if (fieldValue?.toLowerCase()?.includes(searchValue.toLowerCase())) {
                     searchResult.push(row);
                     break;
                 }
@@ -74,32 +70,34 @@ const SearchHeader = ({
     };
 
     return (
-        <Paper elevation={0}>
-            <Container className={classes.headerContainer} maxWidth="xl">
-                <div className={classes.headerTop}>
-                    <Typography variant={'h6'} className={classes.header}>
-                        {title}
-                    </Typography>
-                    <Button
-                        onClick={() => handleCreate()}
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        endIcon={<AddIcon />}
-                    >
-                        New
-                    </Button>
-                </div>
-                <div>
-                    <SearchBar
-                        value={searchValue}
-                        onChange={(searchValue) => requestSearch(searchValue)}
-                        onCancelSearch={() => cancelSearch()}
-                        style={{ justifyContent: 'normal', margin: '10px 0' }}
-                    />
-                </div>
-            </Container>
-        </Paper>
+        <Grid
+            container
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={3}
+            className={cssClasses.root}
+        >
+            <Grid item xs={12} sm={8}>
+                <SearchBar
+                    classes={{ searchIconButton: cssClasses.searchIcon }}
+                    value={searchValue}
+                    placeholder={placeholderText}
+                    onChange={(searchValue) => requestSearch(searchValue)}
+                    onCancelSearch={() => cancelSearch()}
+                />
+            </Grid>
+            <Grid item xs={12} sm={3}>
+                <Button
+                    onClick={() => handleCreate()}
+                    fullWidth
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<AddIcon />}
+                >
+                    New
+                </Button>
+            </Grid>
+        </Grid>
     );
 };
 
