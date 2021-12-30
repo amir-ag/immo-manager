@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Avatar, Button, Container, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
+import { Button, Container, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
 import { useAppSelector } from '../../hooks/store.hooks';
-import { DropzoneArea } from 'material-ui-dropzone';
 import { ProfileFormData } from './profile.container';
 import { getAuth } from 'firebase/auth';
 import { selectUser } from '../../store/selectors';
+import ImageUpload from '../ui/image-upload/image-upload';
 
 const useStyles = makeStyles((theme) => ({
     rightContainer: {
@@ -17,19 +17,6 @@ const useStyles = makeStyles((theme) => ({
     },
     rightBottom: {
         height: '50%',
-    },
-    dropzone: {
-        minHeight: '200px',
-    },
-    avatarContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '10vh',
-    },
-    avatar: {
-        width: theme.spacing(10),
-        height: theme.spacing(10),
     },
 }));
 
@@ -54,10 +41,10 @@ const Profile = ({ handleSubmit }: ProfileProps) => {
         newPasswordConfirm: '',
     });
 
-    const onImageChange = (images: File[]) => {
+    const onImageChange = (image: File) => {
         setFormData((prevState) => ({
             ...prevState,
-            image: images[0],
+            image: image,
         }));
     };
 
@@ -88,16 +75,7 @@ const Profile = ({ handleSubmit }: ProfileProps) => {
             <Grid container spacing={2} component={'form'}>
                 <Grid item xs={12} sm={6}>
                     <Typography variant={'body2'}>General Info</Typography>
-                    {user?.photoURL && (
-                        <div className={classes.avatarContainer}>
-                            <Avatar className={classes.avatar} src={user.photoURL} />
-                        </div>
-                    )}
-                    <DropzoneArea
-                        acceptedFiles={['image/*']}
-                        dropzoneText={'Drag and drop your profile image here'}
-                        onChange={(images) => onImageChange(images)}
-                    />
+                    <ImageUpload previewImageUrl={user?.photoURL} handleImageChange={onImageChange} />
                     <TextField
                         value={formData.firstName}
                         onChange={(e) => onChange(e)}

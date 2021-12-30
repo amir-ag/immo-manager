@@ -1,16 +1,6 @@
 import React, { Dispatch, FormEvent, SetStateAction } from 'react';
-import {
-    Card,
-    CardHeader,
-    CardMedia,
-    Grid,
-    IconButton,
-    makeStyles,
-    TextField,
-    Typography,
-} from '@material-ui/core';
+import { Grid, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Edit } from '@material-ui/icons';
 import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
 import { PropertyModel } from './model/property.model';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
@@ -25,6 +15,7 @@ import { createOrUpdateProperty } from '../../store/slices/properties.slice';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';
 import { useForms } from '../../hooks/forms.hooks';
+import ImageUpload from '../ui/image-upload/image-upload';
 
 export type PropertyFormProps = {
     currentProperty: PropertyModel;
@@ -32,16 +23,7 @@ export type PropertyFormProps = {
     isNew: boolean;
 };
 
-const useStyles = makeStyles((theme) => ({
-    thumbnail: {
-        width: '75%',
-        margin: 'auto',
-    },
-}));
-
 export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: PropertyFormProps) => {
-    const cssClasses = useStyles();
-
     const owners = useAppSelector(selectPersonsOwners);
     const janitors = useAppSelector(selectPersonsServiceProviders);
 
@@ -64,6 +46,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
         handleBasicInputChange,
         handleAddressInputChange,
         handleAutocompleteChange,
+        handleThumbnailChange,
         handleSubmit,
         isFormDirty,
     } = useForms<PropertyModel>(setCurrentProperty, currentProperty, submitFunc);
@@ -84,29 +67,10 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 <Typography variant={'h6'}>General Info</Typography>
             </Grid>
             <Grid item xs={12}>
-                {/*
-                TODO:
-                    - Use same component as in profile view
-                    - Connect to Model/Firestore
-                */}
-                <Card elevation={3} className={cssClasses.thumbnail}>
-                    <CardHeader
-                        action={
-                            <IconButton aria-label="settings">
-                                <Edit />
-                            </IconButton>
-                        }
-                        title={<Typography variant={'body1'}>Edit the thumbnail.</Typography>}
-                    />
-                    <CardMedia
-                        component="img"
-                        alt="Property Placeholder Image"
-                        height="150"
-                        loading="lazy"
-                        image="https://cdn.pixabay.com/photo/2016/11/21/15/09/apartments-1845884_640.jpg"
-                        title="Property Placeholder Image"
-                    />
-                </Card>
+                <ImageUpload
+                    handleImageChange={handleThumbnailChange}
+                    previewImageUrl={currentProperty.thumbnail?.imageUrl}
+                />
             </Grid>
             <Grid item xs={12}>
                 <TextField
