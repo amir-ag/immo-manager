@@ -27,7 +27,7 @@ import {
 import { useAppDispatch } from '../../hooks/store.hooks';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';
-import { createOrUpdateTenancy } from '../../store/slices/tenancy.slice';
+import { createOrUpdateTenancy } from '../../store/slices/tenancies.slice';
 import { useForms } from '../../hooks/forms.hooks';
 
 export type TenancyFormProps = {

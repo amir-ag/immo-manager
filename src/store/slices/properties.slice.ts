@@ -46,15 +46,19 @@ export const createOrUpdateProperty = createAsyncThunk(
 export const getProperties = createAsyncThunk(`${sliceName}/getProperties`, async (_, thunkAPI) => {
     try {
         const uid = storeService.getUidFromStoreState(thunkAPI);
+
         const q = query(collection(db, dbName), where('createdBy', '==', uid));
         const querySnapshot = await getDocs(q);
-        // TODO: Get create typed array
-        const data: any[] = [];
+
+        const data: PropertyModel[] = [];
         querySnapshot.forEach((doc) => {
             const id = doc.id;
-            data.push({ ...doc.data(), id });
+            data.push({ ...(doc.data() as PropertyModel), id });
         });
-        return data;
+
+        return data.sort((propA: PropertyModel, propB: PropertyModel) =>
+            propA.name.localeCompare(propB.name)
+        );
     } catch (e) {
         console.error('Error getting properties: ', e);
     }
