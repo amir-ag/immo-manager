@@ -3,8 +3,8 @@ import PropertiesOverview from '../property/overview/properties-overview';
 import { makeStyles, Typography } from '@material-ui/core';
 import { getProperties } from '../../store/slices/properties.slice';
 import { getRentalUnits } from '../../store/slices/rental-units.slice';
-import { getTenancies } from '../../store/slices/tenancy.slice';
 import { getPersons } from '../../store/slices/persons.slice';
+import { getTenancies } from '../../store/slices/tenancies.slice';
 import { useAppDispatch } from '../../hooks/store.hooks';
 
 const useStyles = makeStyles((theme) => ({

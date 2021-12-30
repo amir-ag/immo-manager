@@ -22,12 +22,12 @@ import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppSelector, useAppDispatch } from '../../../hooks/store.hooks';
 import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
-import { deleteTenancy } from '../../../store/slices/tenancy.slice';
 import { getTenantsOfTenancy } from '../model/tenancy.model';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
+import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 
 const useStyles = makeStyles({
     table: {

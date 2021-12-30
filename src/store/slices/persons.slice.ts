@@ -19,11 +19,12 @@ export const createPerson = createAsyncThunk(
                     createdBy: uid,
                 });
                 console.log('Document written with ID: ', docRef.id);
+                return {
+                    ...personData,
+                    createdBy: uid,
+                    id: docRef.id,
+                };
             }
-            return {
-                ...personData,
-                createdBy: uid,
-            };
         } catch (e) {
             console.error('Error adding document: ', e);
         }

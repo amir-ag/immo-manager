@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-    Button,
-    Container,
-    Grid,
-    InputAdornment,
-    makeStyles,
-    TextField,
-    Typography,
-} from '@material-ui/core';
+import { Button, Grid, InputAdornment, makeStyles, TextField, Typography } from '@material-ui/core';
 import PropertyCard from './property-card';
 import AddIcon from '@material-ui/icons/Add';
 import { Search } from '@material-ui/icons';
@@ -19,7 +11,7 @@ import { deleteProperty, getProperties } from '../../../store/slices/properties.
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import { deleteRentalUnit } from '../../../store/slices/rental-units.slice';
-import { deleteTenancy } from '../../../store/slices/tenancy.slice';
+import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 
 const gridSpacing = 3;
 

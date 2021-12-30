@@ -32,9 +32,9 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
-import { deleteTenancy } from '../../../store/slices/tenancy.slice';
 import { getTenantsOfTenancy } from '../../tenancy/model/tenancy.model';
 import { parseISO } from 'date-fns';
+import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 
 const useStyles = makeStyles({
     table: {
