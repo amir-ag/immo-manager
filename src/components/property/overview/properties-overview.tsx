@@ -19,7 +19,7 @@ import { deleteProperty, getProperties } from '../../../store/slices/properties.
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import { deleteRentalUnit, getRentalUnits } from '../../../store/slices/rental-units.slice';
-import { deleteTenancy, getTenancies } from '../../../store/slices/tenancy.slice';
+import { deleteTenancy, getTenancies } from '../../../store/slices/tenancies.slice';
 
 const gridSpacing = 3;
 

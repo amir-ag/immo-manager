@@ -32,7 +32,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
-import { deleteTenancy, getTenancies } from '../../../store/slices/tenancy.slice';
+import { deleteTenancy, getTenancies } from '../../../store/slices/tenancies.slice';
 import { getTenantsOfTenancy } from '../../tenancy/model/tenancy.model';
 import { parseISO } from 'date-fns';
 

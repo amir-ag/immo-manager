@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
-import { getUidFromStoreState } from '../store-functions';
+import * as storeService from '../store-functions';
 import { TenancyModel } from '../../components/tenancy/model/tenancy.model';
 import { parseISO } from 'date-fns';
 
@@ -12,7 +12,7 @@ export const createOrUpdateTenancy = createAsyncThunk(
     `${sliceName}/createOrUpdateTenancy`,
     async (tenancy: TenancyModel, thunkAPI) => {
         try {
-            const uid = getUidFromStoreState(thunkAPI);
+            const uid = storeService.getUidFromStoreState(thunkAPI);
 
             if (!tenancy.id) {
                 // TODO: Use typed method and create interface with 'createdBy' field
@@ -37,10 +37,11 @@ export const createOrUpdateTenancy = createAsyncThunk(
 
 export const getTenancies = createAsyncThunk(`${sliceName}/getTenancies`, async (_, thunkAPI) => {
     try {
-        const uid = getUidFromStoreState(thunkAPI);
+        const uid = storeService.getUidFromStoreState(thunkAPI);
+
         const q = query(collection(db, dbName), where('createdBy', '==', uid));
         const querySnapshot = await getDocs(q);
-        // TODO: Get create typed array
+
         const data: TenancyModel[] = [];
         querySnapshot.forEach((doc) => {
             const id = doc.id;
