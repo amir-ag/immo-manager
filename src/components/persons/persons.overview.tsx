@@ -90,7 +90,7 @@ const PersonsOverview = () => {
                 handleCreate={handleCreate}
                 title={'Create new Person'}
                 originalData={personsData}
-                setsearchResult={setSearchResult}
+                setSearchResult={setSearchResult}
                 searchParams={['firstName', 'lastName', 'email']}
             />
             {personsData && (

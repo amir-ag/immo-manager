@@ -8,7 +8,7 @@ export type SearchHeaderProps = {
     handleCreate: () => void;
     title?: string;
     originalData: { [key: string]: any }[];
-    setsearchResult: Dispatch<SetStateAction<any>>;
+    setSearchResult: Dispatch<SetStateAction<any>>;
     searchParams: string[];
 };
 
@@ -49,7 +49,7 @@ const SearchHeader = ({
     handleCreate,
     title = 'Placeholder Title',
     originalData,
-    setsearchResult,
+    setSearchResult,
     searchParams,
 }: SearchHeaderProps) => {
     const classes = useStyles();
@@ -65,7 +65,7 @@ const SearchHeader = ({
                 }
             }
         }
-        setsearchResult(searchResult);
+        setSearchResult(searchResult);
     };
 
     const cancelSearch = () => {
