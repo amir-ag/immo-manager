@@ -3,13 +3,14 @@ import { Button, Grid, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SearchBar from '@snekcode/mui-search-bar';
 
-// TODO: Change to generic Component
+// TODO: Change to generic Component (even better to use a custom Hook --> integrate useState(searchResult))
 export type SearchHeaderProps = {
     handleCreate: () => void;
     placeholderText?: string;
     originalData: { [key: string]: any }[];
     setSearchResult: Dispatch<SetStateAction<any>>;
     searchParams: string[];
+    disableCreateButton?: boolean;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +39,7 @@ const SearchHeader = ({
     originalData,
     setSearchResult,
     searchParams,
+    disableCreateButton,
 }: SearchHeaderProps) => {
     const cssClasses = useStyles();
     const [searchValue, setSearchValue] = useState('');
@@ -93,6 +95,7 @@ const SearchHeader = ({
                     variant="contained"
                     color="secondary"
                     startIcon={<AddIcon />}
+                    disabled={disableCreateButton}
                 >
                     New
                 </Button>
