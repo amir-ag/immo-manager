@@ -2,19 +2,15 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import PersonModal from './modal/person-modal';
 import { roles } from './models/person-roles.model';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { createUpdatePerson, deletePerson, getPersons } from '../../store/slices/persons.slice';
+import { createPerson, deletePerson, updatePerson } from '../../store/slices/persons.slice';
 import PersonsTable from './table/persons-table';
 import { selectPersons } from '../../store/selectors';
 import { emptyPerson } from './models/person.model';
 import SearchHeader from '../ui/searc-header/search-header';
 
 const PersonsOverview = () => {
-    const dispatch = useAppDispatch();
     const personsData = useAppSelector(selectPersons);
-
-    useEffect(() => {
-        dispatch(getPersons());
-    }, [dispatch]);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         setSearchResult(personsData);
@@ -62,8 +58,10 @@ const PersonsOverview = () => {
 
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
-        dispatch(createUpdatePerson(currentPerson));
-        dispatch(getPersons());
+        console.log('currentPerson: ', currentPerson);
+        currentPerson.createdBy
+            ? dispatch(updatePerson(currentPerson))
+            : dispatch(createPerson(currentPerson));
         setCurrentPerson(emptyPerson);
         setOpenModal(false);
     };

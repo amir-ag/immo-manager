@@ -1,13 +1,12 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { Button, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
 import EventNoteOutlinedIcon from '@material-ui/icons/EventNoteOutlined';
 import { selectProperties } from '../../store/selectors';
-import { getRentalUnits } from '../../store/slices/rental-units.slice';
 import { PropertyModel } from '../property/model/property.model';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import routes from '../../routes/route-constants';
-import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
+import { useAppSelector } from '../../hooks/store.hooks';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -29,13 +28,8 @@ export const RentSchedule = () => {
     const cssClasses = useStyles();
     const [property, setProperty] = useState('');
 
-    const dispatch = useAppDispatch();
     const history = useHistory();
     const properties = useAppSelector(selectProperties);
-
-    useEffect(() => {
-        dispatch(getRentalUnits());
-    }, [dispatch]);
 
     const renderTable = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();

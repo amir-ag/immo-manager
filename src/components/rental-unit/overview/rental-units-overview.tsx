@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
     Button,
     Grid,
@@ -27,20 +27,20 @@ import {
     selectRentalUnits,
     selectTenancies,
 } from '../../../store/selectors';
-import { deleteRentalUnit, getRentalUnits } from '../../../store/slices/rental-units.slice';
+import { deleteRentalUnit } from '../../../store/slices/rental-units.slice';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
-import { deleteTenancy, getTenancies } from '../../../store/slices/tenancy.slice';
+import { deleteTenancy } from '../../../store/slices/tenancy.slice';
 import { getTenantsOfTenancy } from '../../tenancy/model/tenancy.model';
 import { parseISO } from 'date-fns';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
     table: {
         width: '100%',
     },
-}));
+});
 
 export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean }) => {
     const cssClasses = useStyles();
@@ -51,11 +51,6 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
     const rentalUnits = useAppSelector(selectRentalUnits)?.filter((ru) => ru.propertyId === property?.id);
     const tenancies = useAppSelector(selectTenancies).filter((ten) => ten.propertyId === property?.id);
     const tenants = useAppSelector(selectPersonsTenants);
-
-    useEffect(() => {
-        dispatch(getRentalUnits());
-        dispatch(getTenancies());
-    }, [dispatch]);
 
     const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
         useDeletePrompt();
@@ -68,7 +63,6 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
             ?.forEach((ten) => {
                 dispatch(deleteTenancy(ten.id));
             });
-        dispatch(getRentalUnits());
     };
 
     const getTenantsDesc = (ruId: string) => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
     Button,
     Container,
@@ -18,8 +18,8 @@ import { selectProperties, selectRentalUnits, selectTenancies } from '../../../s
 import { deleteProperty, getProperties } from '../../../store/slices/properties.slice';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
-import { deleteRentalUnit, getRentalUnits } from '../../../store/slices/rental-units.slice';
-import { deleteTenancy, getTenancies } from '../../../store/slices/tenancy.slice';
+import { deleteRentalUnit } from '../../../store/slices/rental-units.slice';
+import { deleteTenancy } from '../../../store/slices/tenancy.slice';
 
 const gridSpacing = 3;
 
@@ -38,17 +38,11 @@ type PropertiesViewProps = {
 
 const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
     const cssClasses = useStyles();
-
     const dispatch = useAppDispatch();
+
     const properties = useAppSelector(selectProperties);
     const rentalUnits = useAppSelector(selectRentalUnits);
     const tenancies = useAppSelector(selectTenancies);
-
-    useEffect(() => {
-        dispatch(getProperties());
-        dispatch(getRentalUnits());
-        dispatch(getTenancies());
-    }, [dispatch]);
 
     const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
         useDeletePrompt();

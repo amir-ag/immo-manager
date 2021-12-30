@@ -6,8 +6,8 @@ import { PersonModel } from '../../components/persons/models/person.model';
 
 const dbName = 'persons';
 
-export const createUpdatePerson = createAsyncThunk(
-    'persons/createUpdate',
+export const createPerson = createAsyncThunk(
+    'persons/createPerson',
     async (personData: PersonModel, thunkAPI) => {
         try {
             // TODO: Use method getUidFromStoreState()
@@ -20,8 +20,24 @@ export const createUpdatePerson = createAsyncThunk(
                     createdBy: uid,
                 });
                 console.log('Document written with ID: ', docRef.id);
-                return docRef;
             }
+            return {
+                ...personData,
+                createdBy: uid,
+            };
+        } catch (e) {
+            console.error('Error adding document: ', e);
+        }
+    }
+);
+
+export const updatePerson = createAsyncThunk(
+    'persons/updatePerson',
+    async (personData: PersonModel, thunkAPI) => {
+        try {
+            // TODO: Use method getUidFromStoreState()
+            const state = thunkAPI.getState() as RootState;
+            const uid = state?.user?.uid;
 
             await setDoc(
                 doc(db, dbName, personData.id),
@@ -31,6 +47,10 @@ export const createUpdatePerson = createAsyncThunk(
                 },
                 { merge: true }
             );
+            return {
+                ...personData,
+                createdBy: uid,
+            };
         } catch (e) {
             console.error('Error adding document: ', e);
         }
@@ -71,6 +91,13 @@ export const personsSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getPersons.fulfilled, (state, action: PayloadAction<any>) => {
             return [...action.payload];
+        });
+        builder.addCase(createPerson.fulfilled, (state, action: PayloadAction<any>) => {
+            state.push(action.payload);
+        });
+        builder.addCase(updatePerson.fulfilled, (state, action: PayloadAction<any>) => {
+            const existingPerson = state.findIndex((person) => person.id === action.payload.id);
+            state[existingPerson] = action.payload;
         });
         builder.addCase(deletePerson.fulfilled, (state, action: any) => {
             // TODO maybe find a better solution to update the state after person has been deleted?
