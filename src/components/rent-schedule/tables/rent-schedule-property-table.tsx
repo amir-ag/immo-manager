@@ -2,6 +2,8 @@ import React from 'react';
 import { makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core';
 import { format } from 'date-fns';
 import { getDisplayNameOfProperty, PropertyModel } from '../../property/model/property.model';
+import { useAppSelector } from '../../../hooks/store.hooks';
+import { selectPersonsOwners } from '../../../store/selectors';
 
 const useStyles = makeStyles((theme) => ({
     propertyDetails: {
@@ -13,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RentSchedulePropertyTable = (property: PropertyModel) => {
     const classes = useStyles();
+    const owner = useAppSelector(selectPersonsOwners).filter((person) => person.id === property.owner)[0];
 
     return (
         property && (
@@ -37,7 +40,7 @@ const RentSchedulePropertyTable = (property: PropertyModel) => {
                         </TableRow>
                         <TableRow>
                             <TableCell>Owner</TableCell>
-                            <TableCell>{property.owner}</TableCell>
+                            <TableCell>{owner ? `${owner.firstName} ${owner.lastName}` : '-'}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

@@ -10,7 +10,9 @@ import {
     TableRow,
 } from '@material-ui/core';
 import { getDisplayNameOfRentalUnit, RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
-import { TenancyModel } from '../../tenancy/model/tenancy.model';
+import { getDisplayNameOfTenants, TenancyModel } from '../../tenancy/model/tenancy.model';
+import { format, parseISO } from 'date-fns';
+import { PersonModel } from '../../persons/models/person.model';
 
 const useStyles = makeStyles({
     table: {
@@ -23,12 +25,14 @@ const useStyles = makeStyles({
 
 type RentScheduleUnitsTableProps = {
     rentalUnits: RentalUnitModel[];
-    getTenant: (unit: RentalUnitModel) => TenancyModel;
-    rentSum: number;
+    getTenancy: (unit: RentalUnitModel) => TenancyModel;
+    tenants: PersonModel[];
 };
 
-const RentScheduleUnitsTable = ({ rentalUnits, getTenant, rentSum }: RentScheduleUnitsTableProps) => {
+const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentScheduleUnitsTableProps) => {
     const classes = useStyles();
+
+    let totalRentSum = 0;
 
     return (
         <TableContainer component={Paper}>
@@ -46,18 +50,27 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenant, rentSum }: RentSchedul
                 </TableHead>
                 <TableBody>
                     {rentalUnits.map((unit) => {
-                        const tenant = getTenant(unit);
+                        const tenancy = getTenancy(unit);
+                        totalRentSum += Number(tenancy.rentNet);
                         return (
                             <TableRow key={unit.ewid}>
                                 <TableCell component="th" scope="row">
                                     {unit.ewid}
                                 </TableCell>
                                 <TableCell align="right">{getDisplayNameOfRentalUnit(unit)}</TableCell>
-                                <TableCell align="right">{tenant.id}</TableCell>
+                                <TableCell align="right">
+                                    {getDisplayNameOfTenants(tenancy, tenants)}
+                                </TableCell>
                                 <TableCell align="right">{unit.surfaceInM2}</TableCell>
-                                <TableCell align="right">{tenant.beginOfContract}</TableCell>
-                                <TableCell align="right">{tenant.endOfContract}</TableCell>
-                                <TableCell align="right">{tenant.rentNet}</TableCell>
+                                <TableCell align="right">
+                                    {tenancy.beginOfContract
+                                        ? format(parseISO(tenancy.beginOfContract), 'dd.MM.yyyy')
+                                        : '-'}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {tenancy.endOfContract ? tenancy.endOfContract : '-'}
+                                </TableCell>
+                                <TableCell align="right">{tenancy.rentNet}</TableCell>
                             </TableRow>
                         );
                     })}
@@ -69,7 +82,7 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenant, rentSum }: RentSchedul
                         <TableCell />
                         <TableCell />
                         <TableCell className={classes.bold} align={'right'}>
-                            {rentSum}
+                            {totalRentSum}
                         </TableCell>
                     </TableRow>
                 </TableBody>
