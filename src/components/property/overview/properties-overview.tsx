@@ -1,13 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-    Button,
-    Container,
-    Grid,
-    InputAdornment,
-    makeStyles,
-    TextField,
-    Typography,
-} from '@material-ui/core';
+import { Button, Grid, InputAdornment, makeStyles, TextField, Typography } from '@material-ui/core';
 import PropertyCard from './property-card';
 import AddIcon from '@material-ui/icons/Add';
 import { Search } from '@material-ui/icons';
@@ -68,7 +60,7 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
     };
 
     return (
-        <Container>
+        <>
             {showHeader && (
                 <>
                     {/* TODO: Check if it makes sense to extract search header (input + button) as component */}
@@ -122,7 +114,7 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                 handleClose={handleCancelDelete}
                 handleDeletion={handleDelete}
             />
-            <Grid container spacing={gridSpacing}>
+            <Grid container spacing={gridSpacing} justifyContent="space-evenly">
                 {properties.map((property) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={property.id}>
                         <PropertyCard
@@ -134,7 +126,7 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                     </Grid>
                 ))}
             </Grid>
-        </Container>
+        </>
     );
 };
 
