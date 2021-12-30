@@ -6,7 +6,7 @@ import { createUpdatePerson, deletePerson, getPersons } from '../../store/slices
 import PersonsTable from './table/persons-table';
 import { selectPersons } from '../../store/selectors';
 import { emptyPerson } from './models/person.model';
-import SearchHeader from '../ui/searc-header/search-header';
+import SearchHeader from '../ui/search-header/search-header';
 
 const PersonsOverview = () => {
     const dispatch = useAppDispatch();
