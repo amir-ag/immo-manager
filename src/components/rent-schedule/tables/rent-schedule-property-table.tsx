@@ -3,7 +3,7 @@ import { makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableRo
 import { format } from 'date-fns';
 import { getDisplayNameOfProperty, PropertyModel } from '../../property/model/property.model';
 import { useAppSelector } from '../../../hooks/store.hooks';
-import { selectPersons } from '../../../store/selectors';
+import { selectPersonsOwners } from '../../../store/selectors';
 
 const useStyles = makeStyles((theme) => ({
     propertyDetails: {
