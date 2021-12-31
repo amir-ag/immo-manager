@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectProperties, selectRentalUnits, selectTenancies } from '../../../store/selectors';
-import { deleteProperty, getProperties } from '../../../store/slices/properties.slice';
+import { deleteProperty } from '../../../store/slices/properties.slice';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import { deleteRentalUnit } from '../../../store/slices/rental-units.slice';
@@ -50,7 +50,6 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                     ?.filter((ten) => ten.rentalUnitId === ru.id)
                     ?.forEach((ten) => dispatch(deleteTenancy(ten.id)));
             });
-        dispatch(getProperties());
     };
 
     return (

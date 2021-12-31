@@ -32,11 +32,18 @@ export const createOrUpdateProperty = createAsyncThunk(
                 // TODO: Use typed method and create interface with 'createdBy' field
                 const docRef = await addDoc(collection(db, dbName), docToPush);
                 console.log(`A new property with id=${docRef.id} has been created!`);
-                return docRef;
+                return {
+                    ...docToPush,
+                    id: docRef.id,
+                    isNew: true,
+                };
             } else {
                 // TODO: Use typed method and create interface with 'createdBy' field
                 await setDoc(doc(db, dbName, property.id), docToPush);
             }
+            return {
+                ...docToPush,
+            };
         } catch (e) {
             console.error('Error when adding/updating property: ', e);
         }
@@ -64,17 +71,16 @@ export const getProperties = createAsyncThunk(`${sliceName}/getProperties`, asyn
     }
 });
 
-export const deleteProperty = createAsyncThunk(
-    `${sliceName}/deleteProperty`,
-    async (id: string, thunkAPI) => {
-        try {
-            await deleteDoc(doc(db, dbName, `${id}`));
-            return thunkAPI.getState();
-        } catch (e) {
-            console.error('Error deleting property: ', e);
-        }
+export const deleteProperty = createAsyncThunk(`${sliceName}/deleteProperty`, async (id: string) => {
+    try {
+        await deleteDoc(doc(db, dbName, `${id}`));
+        return {
+            id,
+        };
+    } catch (e) {
+        console.error('Error deleting property: ', e);
     }
-);
+});
 
 interface PropertiesState {
     current: PropertyModel | null;
@@ -93,6 +99,22 @@ export const propertiesSlice = createSlice({
         // TODO: Use strongly typed types
         builder.addCase(getProperties.fulfilled, (state: PropertiesState, action: PayloadAction<any>) => {
             state.all = [...action.payload];
+        });
+        builder.addCase(
+            createOrUpdateProperty.fulfilled,
+            (state: PropertiesState, action: PayloadAction<any>) => {
+                if (!action.payload.isNew) {
+                    const existingProperty = state.all.findIndex(
+                        (property) => property.id === action.payload.id
+                    );
+                    state.all[existingProperty] = action.payload;
+                } else {
+                    state.all.push(action.payload);
+                }
+            }
+        );
+        builder.addCase(deleteProperty.fulfilled, (state: PropertiesState, action: PayloadAction<any>) => {
+            state.all = state.all.filter((property) => property.id !== action.payload.id);
         });
     },
 });

@@ -76,10 +76,10 @@ export const getPersons = createAsyncThunk(`${sliceName}/getPersons`, async (_, 
     }
 });
 
-export const deletePerson = createAsyncThunk(`${sliceName}/deletePerson`, async (id: string, thunkAPI) => {
+export const deletePerson = createAsyncThunk(`${sliceName}/deletePerson`, async (id: string) => {
     try {
         await deleteDoc(doc(db, dbName, `${id}`));
-        return thunkAPI.getState();
+        return { id };
     } catch (e) {
         console.error('Error deleting person: ', e);
     }
@@ -101,9 +101,7 @@ export const personsSlice = createSlice({
             state[existingPerson] = action.payload;
         });
         builder.addCase(deletePerson.fulfilled, (state, action: any) => {
-            // TODO Rework!
-            const removePersonId = action.meta.arg;
-            return action.payload.persons.filter((person: PersonModel) => person.id !== removePersonId);
+            return state.filter((person) => person.id !== action.payload.id);
         });
     },
 });
