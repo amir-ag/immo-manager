@@ -7,12 +7,11 @@ import * as storeService from '../store-functions';
 const dbName = 'persons';
 const sliceName = 'tenancies';
 
-export const createPerson = createAsyncThunk(
+export const createUpdatePerson = createAsyncThunk(
     `${sliceName}/createPerson`,
     async (personData: PersonModel, thunkAPI) => {
         try {
             const uid = storeService.getUidFromStoreState(thunkAPI);
-
             if (!personData.id) {
                 const docRef = await addDoc(collection(db, dbName), {
                     ...personData,
@@ -23,32 +22,19 @@ export const createPerson = createAsyncThunk(
                     ...personData,
                     createdBy: uid,
                     id: docRef.id,
+                    isNew: true,
                 };
-            }
-        } catch (e) {
-            console.error('Error adding document: ', e);
-        }
-    }
-);
-
-export const updatePerson = createAsyncThunk(
-    'persons/updatePerson',
-    async (personData: PersonModel, thunkAPI) => {
-        try {
-            const uid = storeService.getUidFromStoreState(thunkAPI);
-
-            await setDoc(
-                doc(db, dbName, personData.id),
-                {
+            } else {
+                await setDoc(doc(db, dbName, personData.id), {
                     ...personData,
                     createdBy: uid,
-                },
-                { merge: true }
-            );
-            return {
-                ...personData,
-                createdBy: uid,
-            };
+                });
+                return {
+                    ...personData,
+                    createdBy: uid,
+                    isNew: false,
+                };
+            }
         } catch (e) {
             console.error('Error adding document: ', e);
         }
@@ -93,12 +79,13 @@ export const personsSlice = createSlice({
         builder.addCase(getPersons.fulfilled, (state, action: PayloadAction<any>) => {
             return [...action.payload];
         });
-        builder.addCase(createPerson.fulfilled, (state, action: PayloadAction<any>) => {
-            state.push(action.payload);
-        });
-        builder.addCase(updatePerson.fulfilled, (state, action: PayloadAction<any>) => {
-            const existingPerson = state.findIndex((person) => person.id === action.payload.id);
-            state[existingPerson] = action.payload;
+        builder.addCase(createUpdatePerson.fulfilled, (state, action: PayloadAction<any>) => {
+            if (!action.payload.isNew) {
+                const existingPerson = state.findIndex((person) => person.id === action.payload.id);
+                state[existingPerson] = action.payload;
+            } else {
+                state.push(action.payload);
+            }
         });
         builder.addCase(deletePerson.fulfilled, (state, action: any) => {
             return state.filter((person) => person.id !== action.payload.id);

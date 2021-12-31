@@ -2,7 +2,7 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import PersonModal from './modal/person-modal';
 import { roles } from './models/person-roles.model';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { createPerson, deletePerson, updatePerson } from '../../store/slices/persons.slice';
+import { createUpdatePerson, deletePerson } from '../../store/slices/persons.slice';
 import PersonsTable from './table/persons-table';
 import { selectPersons } from '../../store/selectors';
 import { emptyPerson } from './models/person.model';
@@ -58,10 +58,7 @@ const PersonsOverview = () => {
 
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
-        console.log('currentPerson: ', currentPerson);
-        currentPerson.createdBy
-            ? dispatch(updatePerson(currentPerson))
-            : dispatch(createPerson(currentPerson));
+        dispatch(createUpdatePerson(currentPerson));
         setCurrentPerson(emptyPerson);
         setOpenModal(false);
     };
