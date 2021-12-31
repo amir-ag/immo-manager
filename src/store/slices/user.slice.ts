@@ -162,32 +162,16 @@ export const userSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
-            state.status = 'success';
-            state.email = action.payload.email;
-            state.accessToken = action.payload.user.accessToken;
-            state.uid = action.payload.uid;
-            state.firstName = action.payload.firstName;
-            state.lastName = action.payload.lastName;
-            state.address = { ...action.payload.address };
+            return action.payload;
         });
         builder.addCase(login.rejected, (state) => {
             state.status = 'failed';
         });
         builder.addCase(restoreLogin.fulfilled, (state, action: PayloadAction<any>) => {
-            state.status = 'success';
-            state.email = action.payload.email;
-            state.uid = action.payload.uid;
-            state.firstName = action.payload.firstName;
-            state.lastName = action.payload.lastName;
-            state.address = { ...action.payload.address };
+            return action.payload;
         });
         builder.addCase(signup.fulfilled, (state, action: PayloadAction<any>) => {
-            state.status = 'success';
-            state.email = action.payload.email;
-            state.accessToken = action.payload.accessToken;
-            state.uid = action.payload.uid;
-            state.firstName = action.payload.firstName;
-            state.lastName = action.payload.lastName;
+            return action.payload;
         });
         builder.addCase(signup.rejected, (state) => {
             state.status = 'failed';
@@ -199,9 +183,7 @@ export const userSlice = createSlice({
             state.status = '';
         });
         builder.addCase(update.fulfilled, (state, action: PayloadAction<any>) => {
-            state.email = action.payload.email;
-            state.firstName = action.payload.firstName;
-            state.lastName = action.payload.lastName;
+            return action.payload;
         });
     },
 });
