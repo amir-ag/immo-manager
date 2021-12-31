@@ -49,25 +49,31 @@ const SearchHeader = ({
     const [searchValue, setSearchValue] = useState('');
 
     const requestSearch = (searchValue: string) => {
-        let searchResult: {}[] = [];
-        for (const row of originalData) {
-            for (const fieldName of searchParams) {
-                let fieldValue = '';
+        if (!searchValue) {
+            setSearchResult(originalData);
+        } else {
+            let searchResult: {}[] = [];
 
-                if (fieldName.includes('.')) {
-                    const fields = fieldName.split('.');
-                    fieldValue = row[fields[0]][fields[1]];
-                } else {
-                    fieldValue = row[fieldName];
-                }
+            for (const row of originalData) {
+                for (const fieldName of searchParams) {
+                    let fieldValue = '';
 
-                if (fieldValue?.toLowerCase()?.includes(searchValue.toLowerCase())) {
-                    searchResult.push(row);
-                    break;
+                    if (fieldName.includes('.')) {
+                        const fields = fieldName.split('.');
+                        fieldValue = row[fields[0]][fields[1]];
+                    } else {
+                        fieldValue = row[fieldName];
+                    }
+
+                    if (fieldValue?.toLowerCase()?.includes(searchValue.toLowerCase())) {
+                        searchResult.push(row);
+                        break;
+                    }
                 }
             }
+
+            setSearchResult(searchResult);
         }
-        setSearchResult(searchResult);
     };
 
     const cancelSearch = () => {

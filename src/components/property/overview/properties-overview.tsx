@@ -36,13 +36,18 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
     const tenancies = useAppSelector(selectTenancies);
 
     const history = useHistory();
-    const [searchResult, setSearchResult] = useState(properties);
 
     useEffect(() => {
         dispatch(getProperties());
         dispatch(getRentalUnits());
         dispatch(getTenancies());
     }, [dispatch]);
+
+    const [searchResult, setSearchResult] = useState(properties);
+
+    useEffect(() => {
+        setSearchResult(properties);
+    }, [properties]);
 
     const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
         useDeletePrompt();
@@ -92,7 +97,7 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
             />
             <Grid container spacing={gridSpacing} justifyContent="space-evenly">
                 {searchResult.map((property) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={property.id}>
+                    <Grid item xs={12} sm={6} md={4} xl={3} key={property.id}>
                         <PropertyCard
                             property={property}
                             handleDelete={() => handleOpenDeletePrompt(property.id)}

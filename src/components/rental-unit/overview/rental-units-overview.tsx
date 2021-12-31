@@ -60,6 +60,10 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
 
     const [searchResult, setSearchResult] = useState(rentalUnits);
 
+    useEffect(() => {
+        setSearchResult(rentalUnits);
+    }, [rentalUnits]);
+
     const handleDelete = () => {
         dispatch(deleteRentalUnit(entityToDelete));
         // TODO: Combine these store actions within the store (transparent)

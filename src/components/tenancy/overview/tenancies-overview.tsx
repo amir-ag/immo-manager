@@ -51,6 +51,10 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
 
     const [searchResult, setSearchResult] = useState(tenancies);
 
+    useEffect(() => {
+        setSearchResult(tenancies);
+    }, [tenancies]);
+
     const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
         useDeletePrompt();
 
