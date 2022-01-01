@@ -2,7 +2,7 @@ import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 import { Grid, MenuItem, TextField, Typography } from '@material-ui/core';
 import { rentalUnitfloorLevel, RentalUnitModel, rentalUnitType } from './model/rental-unit.model';
 import { stylingConstants, useSharedStyles } from '../../theme/shared-styles';
-import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
+import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { getDisplayNameOfProperty, PropertyModel } from '../property/model/property.model';
 import routes from '../../routes/route-constants';
 import { useAppDispatch } from '../../hooks/store.hooks';
@@ -145,7 +145,7 @@ export const RentalUnitForm = ({
                     ))}
                 </TextField>
             </Grid>
-            <DetailViewFormActions disableSave={!isFormDirty()} handleCancel={() => handleCancel()} />
+            <FormSubmitBar disableSave={!isFormDirty()} handleCancel={() => handleCancel()} />
         </Grid>
     );
 };

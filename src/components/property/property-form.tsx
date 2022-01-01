@@ -1,7 +1,7 @@
 import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 import { Grid, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
+import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { PropertyModel } from './model/property.model';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { selectPersonsOwners, selectPersonsServiceProviders } from '../../store/selectors';
@@ -184,7 +184,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 />
             </Grid>
             {/* TODO: Only enable submit button when form has been "touched" */}
-            <DetailViewFormActions disableSave={!isFormDirty()} handleCancel={handleCancel} />
+            <FormSubmitBar disableSave={!isFormDirty()} handleCancel={handleCancel} />
         </Grid>
     );
 };
