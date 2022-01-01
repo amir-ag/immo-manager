@@ -15,7 +15,7 @@ import { createOrUpdateProperty } from '../../store/slices/properties.slice';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';
 import { useForms } from '../../hooks/forms.hooks';
-import ImageUpload from '../ui/image-upload/image-upload';
+import ImageUpload from '../forms/image-upload/image-upload';
 
 export type PropertyFormProps = {
     currentProperty: PropertyModel;
