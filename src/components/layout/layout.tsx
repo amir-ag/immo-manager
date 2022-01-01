@@ -91,6 +91,10 @@ const useStyles = makeStyles((theme) => {
         date: {
             flexGrow: 1,
         },
+        dateMobile: {
+            display: 'none',
+            width: '100%',
+        },
         avatar: {
             marginLeft: theme.spacing(2),
         },
@@ -110,6 +114,12 @@ const useStyles = makeStyles((theme) => {
         avatarMenuIcon: {
             marginRight: theme.spacing(1),
         },
+        firstname: {
+            margin: 0,
+        },
+        firstnameMobile: {
+            marginLeft: '60%',
+        },
     };
 });
 
@@ -126,6 +136,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
     const user = auth.currentUser;
 
     const isMdUp = useMediaQuery(theme.breakpoints.up('lg'));
+    const isXsDown = useMediaQuery(theme.breakpoints.down('xs'));
 
     // TODO figure out how to handle KeyboardEvent | MouseEvent
     const toggleDrawer = (event: any) => {
@@ -166,10 +177,18 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography color={'secondary'} variant={'h5'} className={classes.date}>
+                    <Typography
+                        color={'secondary'}
+                        variant={'h5'}
+                        className={isXsDown ? classes.dateMobile : classes.date}
+                    >
                         Today is the {format(new Date(), 'do MMMM Y')}
                     </Typography>
-                    <Typography color={'secondary'} variant={'h6'}>
+                    <Typography
+                        color={'secondary'}
+                        variant={'h6'}
+                        className={isXsDown ? classes.firstnameMobile : classes.firstname}
+                    >
                         {firstName && firstName}
                     </Typography>
                     <div

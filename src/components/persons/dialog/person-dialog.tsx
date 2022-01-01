@@ -66,7 +66,7 @@ const PersonDialog = ({
 }: PersonModalProps) => {
     const classes = useStyles();
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
     return (
         <Dialog
