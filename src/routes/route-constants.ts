@@ -7,6 +7,7 @@ const routes = {
     // Base
     HOME: '/',
     SIGNUP: '/signup',
+    RESETPW: '/reset',
     AUTHENTICATED_AREA: '/app',
 
     // Profile
