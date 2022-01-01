@@ -6,9 +6,18 @@ import { createUpdatePerson, deletePerson, getPersons } from '../../store/slices
 import PersonsTable from './table/persons-table';
 import { selectPersons } from '../../store/selectors';
 import { emptyPerson } from './models/person.model';
-import SearchHeader from '../ui/searc-header/search-header';
+import SearchHeader from '../ui/search-header/search-header';
+import { makeStyles, Typography } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+    header: {
+        marginBottom: theme.spacing(4),
+    },
+}));
 
 const PersonsOverview = () => {
+    const cssClasses = useStyles();
+
     const dispatch = useAppDispatch();
     const personsData = useAppSelector(selectPersons);
 
@@ -86,12 +95,15 @@ const PersonsOverview = () => {
 
     return (
         <>
+            <Typography className={cssClasses.header} variant={'h5'}>
+                Persons
+            </Typography>
             <SearchHeader
                 handleCreate={handleCreate}
-                title={'Create new Person'}
+                placeholderText={'Search by first name, last name, email or address'}
                 originalData={personsData}
-                setsearchResult={setSearchResult}
-                searchParams={['firstName', 'lastName', 'email']}
+                setSearchResult={setSearchResult}
+                searchParams={['firstName', 'lastName', 'email', 'address.addressLine1', 'address.city2']}
             />
             {personsData && (
                 <PersonsTable

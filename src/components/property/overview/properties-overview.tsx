@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react';
-import { Button, Grid, InputAdornment, makeStyles, TextField, Typography } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 import PropertyCard from './property-card';
-import AddIcon from '@material-ui/icons/Add';
-import { Search } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectProperties, selectRentalUnits, selectTenancies } from '../../../store/selectors';
@@ -12,6 +9,8 @@ import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import { deleteRentalUnit, getRentalUnits } from '../../../store/slices/rental-units.slice';
 import { deleteTenancy, getTenancies } from '../../../store/slices/tenancies.slice';
+import { useHistory } from 'react-router';
+import SearchHeader from '../../ui/search-header/search-header';
 
 const gridSpacing = 3;
 
@@ -36,11 +35,19 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
     const rentalUnits = useAppSelector(selectRentalUnits);
     const tenancies = useAppSelector(selectTenancies);
 
+    const history = useHistory();
+
     useEffect(() => {
         dispatch(getProperties());
         dispatch(getRentalUnits());
         dispatch(getTenancies());
     }, [dispatch]);
+
+    const [searchResult, setSearchResult] = useState(properties);
+
+    useEffect(() => {
+        setSearchResult(properties);
+    }, [properties]);
 
     const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
         useDeletePrompt();
@@ -59,50 +66,24 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
         dispatch(getProperties());
     };
 
+    const handleCreate = () => {
+        history.push(routes.PROPERTIES_CREATE);
+    };
+
     return (
         <>
             {showHeader && (
                 <>
-                    {/* TODO: Check if it makes sense to extract search header (input + button) as component */}
                     <Typography className={cssClasses.headerElements} variant={'h5'}>
                         Properties Overview
                     </Typography>
-                    <Grid
-                        container
-                        className={cssClasses.headerElements}
-                        justifyContent="space-between"
-                        alignItems="center"
-                        spacing={gridSpacing}
-                    >
-                        <Grid item xs={12} sm={8}>
-                            <TextField
-                                id="textSearch"
-                                className={cssClasses.headerControls}
-                                variant="outlined"
-                                label="Search for street name, post code, city, ..."
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <Search />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={2}>
-                            <Button
-                                component={Link}
-                                to={routes.PROPERTIES_CREATE}
-                                className={cssClasses.headerControls}
-                                fullWidth
-                                variant="contained"
-                                color="secondary"
-                                startIcon={<AddIcon />}
-                            >
-                                New
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    <SearchHeader
+                        placeholderText={'Search by name or address...'}
+                        handleCreate={handleCreate}
+                        originalData={properties}
+                        setSearchResult={setSearchResult}
+                        searchParams={['name', 'egid', 'address.addressLine1', 'address.city']}
+                    />
                 </>
             )}
             <DeletePrompt
@@ -115,8 +96,8 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                 handleDeletion={handleDelete}
             />
             <Grid container spacing={gridSpacing} justifyContent="space-evenly">
-                {properties.map((property) => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={property.id}>
+                {searchResult.map((property) => (
+                    <Grid item xs={12} sm={6} md={4} xl={3} key={property.id}>
                         <PropertyCard
                             property={property}
                             handleDelete={() => handleOpenDeletePrompt(property.id)}
