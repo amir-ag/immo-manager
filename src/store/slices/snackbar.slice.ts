@@ -2,9 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface SnackbarState {
     snackbarOpen: boolean;
-    snackbarType: string;
+    snackbarType: SnackbarType;
     snackbarMessage: string;
 }
+
+type SnackbarType = 'success' | 'info' | 'error' | 'warning';
 
 const initialState = {
     snackbarOpen: false,
