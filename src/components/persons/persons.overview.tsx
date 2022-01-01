@@ -1,5 +1,5 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import PersonModal from './modal/person-modal';
+import PersonDialog from './dialog/person-dialog';
 import { roles } from './models/person-roles.model';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { createUpdatePerson, deletePerson } from '../../store/slices/persons.slice';
@@ -96,9 +96,9 @@ const PersonsOverview = () => {
                 />
             )}
             {openModal && (
-                <PersonModal
-                    openModal={openModal}
-                    setOpenModal={setOpenModal}
+                <PersonDialog
+                    openDialog={openModal}
+                    setOpenDialog={setOpenModal}
                     handleSubmit={handleSubmit}
                     currentPerson={currentPerson}
                     onChange={onChange}
