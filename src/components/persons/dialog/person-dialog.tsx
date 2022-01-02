@@ -66,13 +66,17 @@ const PersonDialog = ({
 }: PersonModalProps) => {
     const classes = useStyles();
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
+    const isDownXs = useMediaQuery(theme.breakpoints.down('xs'));
 
     return (
         <Dialog
-            fullScreen={fullScreen}
+            fullScreen={isDownXs}
             open={openDialog}
-            onClose={() => setOpenDialog(false)}
+            onClose={(event, reason) => {
+                if (reason !== 'backdropClick') {
+                    setOpenDialog(false);
+                }
+            }}
             aria-labelledby="form-dialog-title"
         >
             <AppBar className={classes.appBar}>
