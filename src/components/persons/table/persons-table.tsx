@@ -10,22 +10,24 @@ import {
     TableHead,
     TablePagination,
     TableRow,
+    useMediaQuery,
 } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { PersonModel } from '../models/person.model';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
+import theme from '../../../theme/theme';
 
 const useStyles = makeStyles({
-    table: {
-        minWidth: 650,
-    },
     buttonIcons: {
         display: 'flex',
     },
     address: {
         whiteSpace: 'nowrap',
+    },
+    hide: {
+        display: 'none',
     },
 });
 
@@ -39,6 +41,11 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
     const classes = useStyles();
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [page, setPage] = React.useState(0);
+    const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+
+    const display = () => {
+        return isSmDown ? classes.hide : '';
+    };
 
     const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
         useDeletePrompt();
@@ -62,19 +69,30 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                 handleDeletion={() => handleDelete(entityToDelete)}
             />
             <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label={'people table'}>
+                <Table aria-label={'people table'}>
                     <TableHead>
                         <TableRow>
                             <TableCell>Actions</TableCell>
                             <TableCell align={'right'}>First Name</TableCell>
                             <TableCell align={'right'}>Last Name</TableCell>
-                            <TableCell align={'right'}>Address</TableCell>
-                            <TableCell align={'right'}>Email</TableCell>
-                            <TableCell align={'right'}>Mobile Phone</TableCell>
-                            <TableCell align={'right'}>Phone</TableCell>
-                            <TableCell align={'right'}>Birthday</TableCell>
-                            <TableCell align={'right'}>Role</TableCell>
-                            {/*<TableCell align={'right'}>Type</TableCell>*/}
+                            <TableCell align={'right'} className={display()}>
+                                Address
+                            </TableCell>
+                            <TableCell align={'right'} className={display()}>
+                                Email
+                            </TableCell>
+                            <TableCell align={'right'} className={display()}>
+                                Mobile Phone
+                            </TableCell>
+                            <TableCell align={'right'} className={display()}>
+                                Phone
+                            </TableCell>
+                            <TableCell align={'right'} className={display()}>
+                                Birthday
+                            </TableCell>
+                            <TableCell align={'right'} className={display()}>
+                                Role
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -94,18 +112,29 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                                             <DeleteOutlineIcon color={'error'} />
                                         </IconButton>
                                     </TableCell>
-                                    <TableCell scope={'row'}>{p.firstName}</TableCell>
+                                    <TableCell align={'right'} scope={'row'}>
+                                        {p.firstName}
+                                    </TableCell>
                                     <TableCell align={'right'}>{p.lastName}</TableCell>
                                     <TableCell
                                         align={'right'}
-                                        className={classes.address}
+                                        className={`${classes.address} ${display()}`}
                                     >{`${p.address.addressLine1}, ${p.address.postCode}, ${p.address.city}`}</TableCell>
-                                    <TableCell align={'right'}>{p.email}</TableCell>
-                                    <TableCell align={'right'}>{p.mobilePhone}</TableCell>
-                                    <TableCell align={'right'}>{p.landline ? p.landline : 'n/a'}</TableCell>
-                                    <TableCell align={'right'}>{p.birthday ? p.birthday : 'n/a'}</TableCell>
-                                    <TableCell align={'right'}>{p.role}</TableCell>
-                                    {/*<TableCell align={'right'}>{row.type}</TableCell>*/}
+                                    <TableCell align={'right'} className={display()}>
+                                        {p.email}
+                                    </TableCell>
+                                    <TableCell align={'right'} className={display()}>
+                                        {p.mobilePhone}
+                                    </TableCell>
+                                    <TableCell align={'right'} className={display()}>
+                                        {p.landline ? p.landline : 'n/a'}
+                                    </TableCell>
+                                    <TableCell align={'right'} className={display()}>
+                                        {p.birthday ? p.birthday : 'n/a'}
+                                    </TableCell>
+                                    <TableCell align={'right'} className={display()}>
+                                        {p.role}
+                                    </TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>
