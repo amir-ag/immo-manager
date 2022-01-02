@@ -82,14 +82,16 @@ const useStyles = makeStyles((theme) => {
         appbar: {
             width: `calc(100% - ${drawerWidth}px)`,
             background: '#FFFFFF',
-        },
-        appbarMobile: {
-            width: '100%',
-            background: '#FFFFFF',
+            [theme.breakpoints.down('md')]: {
+                width: '100%',
+            },
         },
         toolbar: theme.mixins.toolbar,
         date: {
             flexGrow: 1,
+            [theme.breakpoints.down('xs')]: {
+                display: 'none',
+            },
         },
         avatar: {
             marginLeft: theme.spacing(2),
@@ -110,6 +112,12 @@ const useStyles = makeStyles((theme) => {
         avatarMenuIcon: {
             marginRight: theme.spacing(1),
         },
+        firstname: {
+            margin: 0,
+            [theme.breakpoints.down('xs')]: {
+                marginLeft: 'auto',
+            },
+        },
     };
 });
 
@@ -125,7 +133,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
     const auth = getAuth();
     const user = auth.currentUser;
 
-    const isMdUp = useMediaQuery(theme.breakpoints.up('lg'));
+    const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
     // TODO figure out how to handle KeyboardEvent | MouseEvent
     const toggleDrawer = (event: any) => {
@@ -155,7 +163,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
 
     return (
         <div className={classes.root}>
-            <AppBar className={isMdUp ? classes.appbar : classes.appbarMobile} elevation={0}>
+            <AppBar className={classes.appbar} elevation={0}>
                 <Toolbar>
                     <IconButton
                         color={'secondary'}
@@ -169,7 +177,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                     <Typography color={'secondary'} variant={'h5'} className={classes.date}>
                         Today is the {format(new Date(), 'do MMMM Y')}
                     </Typography>
-                    <Typography color={'secondary'} variant={'h6'}>
+                    <Typography color={'secondary'} variant={'h6'} className={classes.firstname}>
                         {firstName && firstName}
                     </Typography>
                     <div
@@ -219,7 +227,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
             </AppBar>
             <Drawer
                 className={classes.drawer}
-                variant={isMdUp ? 'permanent' : 'temporary'}
+                variant={isLgUp ? 'permanent' : 'temporary'}
                 anchor={'left'}
                 open={openDrawer}
                 onClose={toggleDrawer}
