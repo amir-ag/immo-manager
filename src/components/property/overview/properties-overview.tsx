@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import PropertyCard from './property-card';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectProperties, selectRentalUnits, selectTenancies } from '../../../store/selectors';
-import { deleteProperty, getProperties } from '../../../store/slices/properties.slice';
+import { deleteProperty } from '../../../store/slices/properties.slice';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
-import { deleteRentalUnit, getRentalUnits } from '../../../store/slices/rental-units.slice';
-import { deleteTenancy, getTenancies } from '../../../store/slices/tenancies.slice';
+import { deleteRentalUnit } from '../../../store/slices/rental-units.slice';
+import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import { useHistory } from 'react-router';
 import SearchHeader from '../../ui/search-header/search-header';
 
@@ -34,16 +34,9 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
     const properties = useAppSelector(selectProperties);
     const rentalUnits = useAppSelector(selectRentalUnits);
     const tenancies = useAppSelector(selectTenancies);
+    const [searchResult, setSearchResult] = useState(properties);
 
     const history = useHistory();
-
-    useEffect(() => {
-        dispatch(getProperties());
-        dispatch(getRentalUnits());
-        dispatch(getTenancies());
-    }, [dispatch]);
-
-    const [searchResult, setSearchResult] = useState(properties);
 
     useEffect(() => {
         setSearchResult(properties);
@@ -63,7 +56,6 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                     ?.filter((ten) => ten.rentalUnitId === ru.id)
                     ?.forEach((ten) => dispatch(deleteTenancy(ten.id)));
             });
-        dispatch(getProperties());
     };
 
     const handleCreate = () => {

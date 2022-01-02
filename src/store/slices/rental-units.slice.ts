@@ -20,13 +20,22 @@ export const createOrUpdateRentalUnit = createAsyncThunk(
                     createdBy: uid,
                 });
                 console.log(`A new rental unit with id=${docRef.id} has been created!`);
-                return docRef;
+                return {
+                    ...rentalUnit,
+                    createdBy: uid,
+                    id: docRef.id,
+                    isNew: true,
+                };
             } else {
                 // TODO: Use typed method and create interface with 'createdBy' field
                 await setDoc(doc(db, dbName, rentalUnit.id), {
                     ...rentalUnit,
                     createdBy: uid,
                 });
+                return {
+                    ...rentalUnit,
+                    createdBy: uid,
+                };
             }
         } catch (e) {
             console.error('Error when adding/updating rental unit: ', e);
@@ -58,17 +67,14 @@ export const getRentalUnits = createAsyncThunk(`${sliceName}/getRentalUnits`, as
     }
 });
 
-export const deleteRentalUnit = createAsyncThunk(
-    `${sliceName}/deleteRentalUnit`,
-    async (id: string, thunkAPI) => {
-        try {
-            await deleteDoc(doc(db, dbName, `${id}`));
-            return thunkAPI.getState();
-        } catch (e) {
-            console.error('Error deleting rental unit: ', e);
-        }
+export const deleteRentalUnit = createAsyncThunk(`${sliceName}/deleteRentalUnit`, async (id: string) => {
+    try {
+        await deleteDoc(doc(db, dbName, `${id}`));
+        return { id };
+    } catch (e) {
+        console.error('Error deleting rental unit: ', e);
     }
-);
+});
 
 interface RentalUnitsState {
     current?: RentalUnitModel | null;
@@ -87,6 +93,20 @@ export const rentalUnitsSlice = createSlice({
         // TODO: Use strongly typed types
         builder.addCase(getRentalUnits.fulfilled, (state: RentalUnitsState, action: PayloadAction<any>) => {
             state.all = [...action.payload];
+        });
+        builder.addCase(
+            createOrUpdateRentalUnit.fulfilled,
+            (state: RentalUnitsState, action: PayloadAction<any>) => {
+                if (!action.payload.isNew) {
+                    const existingRU = state.all.findIndex((ru) => ru.id === action.payload.id);
+                    state.all[existingRU] = action.payload;
+                } else {
+                    state.all.push(action.payload);
+                }
+            }
+        );
+        builder.addCase(deleteRentalUnit.fulfilled, (state: RentalUnitsState, action: PayloadAction<any>) => {
+            state.all = state.all.filter((ru) => ru.id !== action.payload.id);
         });
     },
 });

@@ -15,18 +15,18 @@ import {
 import { format, parseISO } from 'date-fns';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
-import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
+import { useAppSelector, useAppDispatch } from '../../../hooks/store.hooks';
 import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
-import { deleteTenancy, getTenancies } from '../../../store/slices/tenancies.slice';
 import { getTenantsOfTenancy } from '../model/tenancy.model';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
+import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import SearchHeader from '../../ui/search-header/search-header';
 import { useHistory } from 'react-router';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
     table: {
         width: '100%',
     },
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'red',
         fontWeight: 'bold',
     },
-}));
+});
 
 export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean }) => {
     const cssClasses = useStyles();
@@ -44,10 +44,6 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
     const rentalUnit = useAppSelector(selectCurrentRentalUnit);
     const tenants = useAppSelector(selectPersonsTenants);
     const tenancies = useAppSelector(selectTenancies)?.filter((t) => t.rentalUnitId === rentalUnit?.id);
-
-    useEffect(() => {
-        dispatch(getTenancies());
-    }, [dispatch]);
 
     const [searchResult, setSearchResult] = useState(tenancies);
 
@@ -60,7 +56,6 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
 
     const handleDelete = () => {
         dispatch(deleteTenancy(entityToDelete));
-        dispatch(getTenancies());
     };
 
     const handleCreate = () => {
