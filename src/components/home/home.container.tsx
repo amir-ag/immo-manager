@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { login, signup } from '../../store/slices/user.slice';
+import { login, resetPassword, signup } from '../../store/slices/user.slice';
 import routes from '../../routes/route-constants';
 import { SignInState } from '../sign-in/sign-in';
 import { SignUpState } from '../sign-up/sign-up';
@@ -20,7 +20,7 @@ const HomeContainer = () => {
                 setSnackbar({
                     snackbarOpen: true,
                     snackbarType: 'success',
-                    snackbarMessage: 'Logged in succesfully',
+                    snackbarMessage: 'Logged in successfully',
                 })
             );
             history.push(routes.DASHBOARD);
@@ -35,7 +35,19 @@ const HomeContainer = () => {
         dispatch(signup(state));
     };
 
-    return <Home handleSignIn={handleSignIn} handleSignUp={handleSignUp} />;
+    const handleReset = (email: string) => {
+        dispatch(resetPassword(email));
+        dispatch(
+            setSnackbar({
+                snackbarOpen: true,
+                snackbarType: 'success',
+                snackbarMessage: 'Reset password email sent',
+            })
+        );
+        history.push(routes.AUTHENTICATED_AREA);
+    };
+
+    return <Home handleSignIn={handleSignIn} handleSignUp={handleSignUp} handleReset={handleReset} />;
 };
 
 export default HomeContainer;

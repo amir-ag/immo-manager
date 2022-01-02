@@ -6,6 +6,7 @@ import {
     signOut,
     updatePassword,
     updateProfile,
+    sendPasswordResetEmail,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
@@ -86,6 +87,17 @@ export const restoreLogin = createAsyncThunk('user/restoreLogin', async () => {
             ...docSnap.data(),
         };
     }
+});
+
+export const resetPassword = createAsyncThunk('user/resetPassword', async (email: string) => {
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email)
+        .then(() => {
+            console.log('reset pw email sent');
+        })
+        .catch((error) => {
+            throw new Error(error);
+        });
 });
 
 export const signup = createAsyncThunk(
