@@ -9,7 +9,7 @@ export const useSharedStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             width: `calc(100% - ${theme.spacing(2)}px)`,
         },
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
             marginBottom: theme.spacing(4),
         },
@@ -19,7 +19,7 @@ export const useSharedStyles = makeStyles((theme) => ({
             width: `calc(100% - ${theme.spacing(2)}px)`,
             marginLeft: theme.spacing(2),
         },
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
         },
     },
