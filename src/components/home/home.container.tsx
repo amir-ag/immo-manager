@@ -7,6 +7,7 @@ import { SignInState } from '../sign-in/sign-in';
 import { SignUpState } from '../sign-up/sign-up';
 import Home from './home';
 import { selectUser } from '../../store/selectors';
+import { setSnackbar } from '../../store/slices/snackbar.slice';
 
 const HomeContainer = () => {
     let history = useHistory();
@@ -15,6 +16,13 @@ const HomeContainer = () => {
 
     useEffect(() => {
         if (uid && uid?.length > 0) {
+            dispatch(
+                setSnackbar({
+                    snackbarOpen: true,
+                    snackbarType: 'success',
+                    snackbarMessage: 'Logged in succesfully',
+                })
+            );
             history.push(routes.DASHBOARD);
         }
     }, [uid, history]);

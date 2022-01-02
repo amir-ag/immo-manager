@@ -9,6 +9,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { restoreLogin } from '../../store/slices/user.slice';
 import { selectUser } from '../../store/selectors';
+import CustomizedSnackbar from '../snackbar/snackbar';
 
 function App() {
     const { uid } = useAppSelector(selectUser);
@@ -23,6 +24,7 @@ function App() {
 
     return (
         <div className="App">
+            <CustomizedSnackbar />
             <Router>
                 <Switch>
                     <Route exact path={routes.HOME}>
