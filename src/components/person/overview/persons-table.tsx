@@ -129,7 +129,7 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                                     <TableCell align={'right'} className={classes.hideTableCellWhenMd}>
                                         {p.birthday ? format(parseISO(p.birthday), 'dd.MM.yyyy') : 'n/a'}
                                     </TableCell>
-                                    <TableCell align={'right'}>{p.role}</TableCell>
+                                    <TableCell align={'right'}>{p.roles}</TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>

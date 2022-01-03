@@ -1,8 +1,7 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PersonDialog from '../person-dialog';
-import { roles } from '../model/person-roles.model';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
-import { createUpdatePerson, deletePerson } from '../../../store/slices/persons.slice';
+import { deletePerson } from '../../../store/slices/persons.slice';
 import PersonsTable from './persons-table';
 import { selectPersons } from '../../../store/selectors';
 import { emptyPerson } from '../model/person.model';
@@ -24,52 +23,11 @@ const PersonsOverview = () => {
         setSearchResult(personsData);
     }, [personsData]);
 
-    const [openModal, setOpenModal] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
     const [searchResult, setSearchResult] = useState(personsData);
     const [currentPerson, setCurrentPerson] = useState({
         ...emptyPerson,
     });
-
-    // TODO: Reuse
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setCurrentPerson((prevState) => ({
-            ...prevState,
-            [e.target.id]: e.target.value,
-        }));
-    };
-
-    // TODO: Reuse
-    const onChangeAddress = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setCurrentPerson((prevState) => ({
-            ...prevState,
-            address: {
-                ...prevState.address,
-                [e.target.id]: e.target.value,
-            },
-        }));
-    };
-
-    const onChangeRole = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setCurrentPerson((prevState) => ({
-            ...prevState,
-            role: e.target.value,
-        }));
-    };
-
-    // TODO: Reuse
-    const onChangeDate = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setCurrentPerson((prevState) => ({
-            ...prevState,
-            birthday: e.target.value,
-        }));
-    };
-
-    const handleSubmit = (e: FormEvent<HTMLElement>) => {
-        e.preventDefault();
-        dispatch(createUpdatePerson(currentPerson));
-        setCurrentPerson(emptyPerson);
-        setOpenModal(false);
-    };
 
     const handleDelete = (id: string) => {
         dispatch(deletePerson(id));
@@ -77,14 +35,14 @@ const PersonsOverview = () => {
 
     const handleCreate = () => {
         setCurrentPerson(emptyPerson);
-        setOpenModal(true);
+        setOpenDialog(true);
     };
 
     const handleEdit = (id: string) => {
         const selectedPerson = personsData.filter((person) => person.id === id);
         const editPerson = selectedPerson[0];
         setCurrentPerson(editPerson);
-        setOpenModal(true);
+        setOpenDialog(true);
     };
 
     return (
@@ -106,17 +64,12 @@ const PersonsOverview = () => {
                     handleEdit={handleEdit}
                 />
             )}
-            {openModal && (
+            {openDialog && (
                 <PersonDialog
-                    openDialog={openModal}
-                    setOpenDialog={setOpenModal}
-                    handleSubmit={handleSubmit}
+                    openDialog={openDialog}
+                    setOpenDialog={setOpenDialog}
                     currentPerson={currentPerson}
-                    onChange={onChange}
-                    onChangeAddress={onChangeAddress}
-                    onChangeRole={onChangeRole}
-                    onChangeDate={onChangeDate}
-                    roles={roles}
+                    setCurrentPerson={setCurrentPerson}
                 />
             )}
         </>
