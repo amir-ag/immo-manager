@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Container, Grid, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import { useAppSelector } from '../../hooks/store.hooks';
-import { ProfileFormData } from './profile.container';
 import { getAuth } from 'firebase/auth';
 import { selectUser } from '../../store/selectors';
 import ImageUpload from '../forms/image-upload/image-upload';
+import { emptyUser, UserModel } from './model/user.model';
 
 const useStyles = makeStyles((theme) => ({
     rightContainer: {
@@ -29,25 +29,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-type ProfileProps = {
-    handleSubmit: (formData: ProfileFormData) => void;
+type ProfileFormProps = {
+    handleSubmit: (formData: UserModel) => void;
 };
 
-const Profile = ({ handleSubmit }: ProfileProps) => {
+const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
     const classes = useStyles();
     const auth = getAuth();
     const user = auth.currentUser;
 
     const { firstName, lastName, email, address } = useAppSelector(selectUser);
 
-    const [formData, setFormData] = useState<ProfileFormData>({
-        image: null,
+    const [formData, setFormData] = useState<UserModel>({
+        ...emptyUser,
         firstName: firstName,
         lastName: lastName,
         email: email,
         address: address,
-        newPassword: '',
-        newPasswordConfirm: '',
     });
 
     const onImageChange = (image: File) => {
@@ -79,8 +77,7 @@ const Profile = ({ handleSubmit }: ProfileProps) => {
     };
 
     return (
-        <Container component={Paper} elevation={0}>
-            <Typography variant={'h4'}>Profile</Typography>
+        <>
             <Grid container spacing={2} component={'form'}>
                 <Grid item xs={12} sm={6} className={classes.general}>
                     <Typography className={classes.generalTitle} variant={'body2'}>
@@ -197,8 +194,8 @@ const Profile = ({ handleSubmit }: ProfileProps) => {
             <Button className={classes.button} variant={'contained'} color={'primary'} onClick={onSubmit}>
                 Update
             </Button>
-        </Container>
+        </>
     );
 };
 
-export default Profile;
+export default ProfileForm;
