@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import {
     selectPersonsTenants,
@@ -14,9 +14,7 @@ import { useReactToPrint } from 'react-to-print';
 import { getDisplayNameOfProperty } from '../property/model/property.model';
 import RentSchedulePropertyTable from './tables/rent-schedule-property-table';
 import RentScheduleUnitsTable from './tables/rent-schedule-units-table';
-import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { getTenancies } from '../../store/slices/tenancies.slice';
-import { getPersons } from '../../store/slices/persons.slice';
+import { useAppSelector } from '../../hooks/store.hooks';
 
 const useStyles = makeStyles((theme) => ({
     exportContainer: {
@@ -34,12 +32,6 @@ const RentScheduleOverview = () => {
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
-
-    const dispatch = useAppDispatch();
-    useEffect(() => {
-        dispatch(getTenancies());
-        dispatch(getPersons());
-    }, [dispatch]);
 
     const classes = useStyles();
 

@@ -1,8 +1,8 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import PersonModal from './modal/person-modal';
+import PersonDialog from './dialog/person-dialog';
 import { roles } from './models/person-roles.model';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { createUpdatePerson, deletePerson, getPersons } from '../../store/slices/persons.slice';
+import { createUpdatePerson, deletePerson } from '../../store/slices/persons.slice';
 import PersonsTable from './table/persons-table';
 import { selectPersons } from '../../store/selectors';
 import { emptyPerson } from './models/person.model';
@@ -17,13 +17,8 @@ const useStyles = makeStyles((theme) => ({
 
 const PersonsOverview = () => {
     const cssClasses = useStyles();
-
-    const dispatch = useAppDispatch();
     const personsData = useAppSelector(selectPersons);
-
-    useEffect(() => {
-        dispatch(getPersons());
-    }, [dispatch]);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         setSearchResult(personsData);
@@ -72,7 +67,6 @@ const PersonsOverview = () => {
     const handleSubmit = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(createUpdatePerson(currentPerson));
-        dispatch(getPersons());
         setCurrentPerson(emptyPerson);
         setOpenModal(false);
     };
@@ -113,9 +107,9 @@ const PersonsOverview = () => {
                 />
             )}
             {openModal && (
-                <PersonModal
-                    openModal={openModal}
-                    setOpenModal={setOpenModal}
+                <PersonDialog
+                    openDialog={openModal}
+                    setOpenDialog={setOpenModal}
                     handleSubmit={handleSubmit}
                     currentPerson={currentPerson}
                     onChange={onChange}

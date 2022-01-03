@@ -10,13 +10,22 @@ const useStyles = makeStyles((theme) => ({
     rightContainer: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
     },
-    rightTop: {
-        height: '50%',
+    general: {
+        marginTop: theme.spacing(2),
     },
-    rightBottom: {
-        height: '50%',
+    generalTitle: {
+        marginBottom: theme.spacing(2),
+    },
+    address: {
+        marginTop: theme.spacing(2),
+    },
+    security: {
+        marginTop: theme.spacing(4),
+    },
+    button: {
+        width: '100%',
+        margin: '5% 0',
     },
 }));
 
@@ -73,8 +82,10 @@ const Profile = ({ handleSubmit }: ProfileProps) => {
         <Container component={Paper} elevation={0}>
             <Typography variant={'h4'}>Profile</Typography>
             <Grid container spacing={2} component={'form'}>
-                <Grid item xs={12} sm={6}>
-                    <Typography variant={'body2'}>General Info</Typography>
+                <Grid item xs={12} sm={6} className={classes.general}>
+                    <Typography className={classes.generalTitle} variant={'body2'}>
+                        General Info
+                    </Typography>
                     <ImageUpload previewImageUrl={user?.photoURL} handleImageChange={onImageChange} />
                     <TextField
                         value={formData.firstName}
@@ -115,7 +126,7 @@ const Profile = ({ handleSubmit }: ProfileProps) => {
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} className={classes.rightContainer}>
-                    <div className={classes.rightTop}>
+                    <div className={classes.address}>
                         <Typography variant={'body2'}>Address</Typography>
                         <TextField
                             value={formData.address.addressLine1}
@@ -154,7 +165,7 @@ const Profile = ({ handleSubmit }: ProfileProps) => {
                             type={'string'}
                         />
                     </div>
-                    <div className={classes.rightBottom}>
+                    <div className={classes.security}>
                         <Typography variant={'body2'}>Account & Security</Typography>
                         <TextField
                             value={formData.newPassword}
@@ -183,7 +194,9 @@ const Profile = ({ handleSubmit }: ProfileProps) => {
                     </div>
                 </Grid>
             </Grid>
-            <Button onClick={onSubmit}>Update</Button>
+            <Button className={classes.button} variant={'contained'} color={'primary'} onClick={onSubmit}>
+                Update
+            </Button>
         </Container>
     );
 };

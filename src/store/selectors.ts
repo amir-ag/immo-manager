@@ -22,3 +22,6 @@ export const selectCurrentRentalUnit = (state: RootState) => state.rentalUnits.c
 
 // tenancies
 export const selectTenancies = (state: RootState) => state.tenancies;
+
+// snackbar
+export const selectSnackbar = (state: RootState) => state.snackbar;

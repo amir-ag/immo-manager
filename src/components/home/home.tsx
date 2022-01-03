@@ -5,12 +5,12 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import routes from '../../routes/route-constants';
 import SignIn, { SignInState } from '../sign-in/sign-in';
 import SignUp, { SignUpState } from '../sign-up/sign-up';
+import ResetPassword from '../reset-password/reset-password';
 
 export interface HomeProps {
     handleSignIn: (state: SignInState) => void;
     handleSignUp: (state: SignUpState) => void;
-    // state: LoginCredentials,
-    // onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void,
+    handleReset: (email: string) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Home = ({ handleSignIn, handleSignUp }: HomeProps) => {
+const Home = ({ handleSignIn, handleSignUp, handleReset }: HomeProps) => {
     const classes = useStyles();
 
     return (
@@ -42,6 +42,9 @@ const Home = ({ handleSignIn, handleSignUp }: HomeProps) => {
                         </Route>
                         <Route path={routes.SIGNUP}>
                             <SignUp handleSignUp={handleSignUp} />
+                        </Route>
+                        <Route path={routes.RESETPW}>
+                            <ResetPassword handleReset={handleReset} />
                         </Route>
                     </Switch>
                 </Router>

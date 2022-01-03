@@ -21,13 +21,22 @@ export const createOrUpdateTenancy = createAsyncThunk(
                     createdBy: uid,
                 });
                 console.log(`A new tenancy with id=${docRef.id} has been created!`);
-                return docRef;
+                return {
+                    ...tenancy,
+                    createdBy: uid,
+                    id: docRef.id,
+                    isNew: true,
+                };
             } else {
                 // TODO: Use typed method and create interface with 'createdBy' field
                 await setDoc(doc(db, dbName, tenancy.id), {
                     ...tenancy,
                     createdBy: uid,
                 });
+                return {
+                    ...tenancy,
+                    createdBy: uid,
+                };
             }
         } catch (e) {
             console.error('Error when adding/updating tenancy: ', e);
@@ -58,10 +67,10 @@ export const getTenancies = createAsyncThunk(`${sliceName}/getTenancies`, async 
     }
 });
 
-export const deleteTenancy = createAsyncThunk(`${sliceName}/deleteTenancy`, async (id: string, thunkAPI) => {
+export const deleteTenancy = createAsyncThunk(`${sliceName}/deleteTenancy`, async (id: string) => {
     try {
         await deleteDoc(doc(db, dbName, `${id}`));
-        return thunkAPI.getState();
+        return { id };
     } catch (e) {
         console.error('Error deleting tenancy: ', e);
     }
@@ -75,6 +84,20 @@ export const tenanciesSlice = createSlice({
         // TODO: Use strongly typed types
         builder.addCase(getTenancies.fulfilled, (state: TenancyModel[], action: PayloadAction<any>) => {
             return [...action.payload];
+        });
+        builder.addCase(
+            createOrUpdateTenancy.fulfilled,
+            (state: TenancyModel[], action: PayloadAction<any>) => {
+                if (!action.payload.isNew) {
+                    const existingTenancy = state.findIndex((tenancy) => tenancy.id === action.payload.id);
+                    state[existingTenancy] = action.payload;
+                } else {
+                    state.push(action.payload);
+                }
+            }
+        );
+        builder.addCase(deleteTenancy.fulfilled, (state: TenancyModel[], action: PayloadAction<any>) => {
+            return state.filter((tenancy) => tenancy.id !== action.payload.id);
         });
     },
 });

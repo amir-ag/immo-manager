@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import { emptyTenancy, getDisplayNameOfTenancy } from './model/tenancy.model';
 import { TenancyForm } from './tenancy-form';
 import { useParams } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
+import { useAppSelector } from '../../hooks/store.hooks';
 import {
     selectCurrentProperty,
     selectCurrentRentalUnit,
@@ -15,7 +15,6 @@ import { emptyRentalUnit } from '../rental-unit/model/rental-unit.model';
 
 export const TenancyDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
-    const dispatch = useAppDispatch();
     const tenancyToEdit = useAppSelector(selectTenancies).find((t) => t.id === id);
 
     // TODO: Better error handling!
