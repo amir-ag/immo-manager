@@ -40,6 +40,11 @@ export const useForms = <T>(
     };
 
     const handleThumbnailChange = (image: File) => {
+        // Dropzone control triggers event at initialization with 'image==undefined'
+        if (!image) {
+            return;
+        }
+
         setFormModelState((prevState) => ({
             ...prevState,
             thumbnail: {
@@ -61,12 +66,7 @@ export const useForms = <T>(
     const [isFormDirty, setIsFormDirty] = useState(false);
 
     useEffect(() => {
-        console.log(snapshot);
-        console.log(formModelState);
-        const iseq = isEqual(snapshot, formModelState);
-        console.log(iseq);
-
-        setIsFormDirty(!iseq);
+        setIsFormDirty(!isEqual(snapshot, formModelState));
     }, [snapshot, formModelState]);
 
     return {
