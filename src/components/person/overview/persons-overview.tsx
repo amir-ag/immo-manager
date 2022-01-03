@@ -1,12 +1,12 @@
 import React, { FormEvent, useEffect, useState } from 'react';
-import PersonDialog from './dialog/person-dialog';
-import { roles } from './models/person-roles.model';
-import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { createUpdatePerson, deletePerson } from '../../store/slices/persons.slice';
-import PersonsTable from './table/persons-table';
-import { selectPersons } from '../../store/selectors';
-import { emptyPerson } from './models/person.model';
-import SearchHeader from '../ui/search-header/search-header';
+import PersonDialog from '../person-dialog';
+import { roles } from '../model/person-roles.model';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
+import { createUpdatePerson, deletePerson } from '../../../store/slices/persons.slice';
+import PersonsTable from './persons-table';
+import { selectPersons } from '../../../store/selectors';
+import { emptyPerson } from '../model/person.model';
+import SearchHeader from '../../ui/search-header/search-header';
 import { makeStyles, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({

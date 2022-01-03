@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import { PersonModel } from '../models/person.model';
+import { PersonModel } from '../model/person.model';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import theme from '../../../theme/theme';

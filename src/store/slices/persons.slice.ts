@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
-import { PersonModel } from '../../components/persons/models/person.model';
+import { PersonModel } from '../../components/person/model/person.model';
 import * as storeService from '../store-functions';
 
 const dbName = 'persons';

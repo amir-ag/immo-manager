@@ -23,7 +23,7 @@ import {
     emptyPerson,
     getPersonDisplayNameForFormSelectFields,
     PersonModel,
-} from '../persons/models/person.model';
+} from '../person/model/person.model';
 import { useAppDispatch } from '../../hooks/store.hooks';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';

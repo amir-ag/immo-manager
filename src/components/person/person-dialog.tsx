@@ -17,7 +17,7 @@ import {
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { PersonModel } from '../models/person.model';
+import { PersonModel } from './model/person.model';
 
 export type PersonModalProps = {
     openDialog: boolean;

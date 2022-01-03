@@ -9,7 +9,7 @@ import {
     emptyPerson,
     getPersonDisplayNameForFormSelectFields,
     PersonModel,
-} from '../persons/models/person.model';
+} from '../person/model/person.model';
 import { stylingConstants } from '../../theme/shared-styles';
 import { createOrUpdateProperty } from '../../store/slices/properties.slice';
 import { useHistory } from 'react-router';

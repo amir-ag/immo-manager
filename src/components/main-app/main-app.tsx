@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Layout from '../layout/layout';
-import PersonsOverview from '../persons/persons.overview';
+import PersonsOverview from '../person/overview/persons-overview';
 import routes from '../../routes/route-constants';
 import { DashboardContainer } from '../dashboard/dashboard.container';
 import { RentSchedule } from '../rent-schedule/rent-schedule';

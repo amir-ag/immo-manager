@@ -1,5 +1,5 @@
 import { months } from '../../../constants';
-import { PersonModel } from '../../persons/models/person.model';
+import { PersonModel } from '../../person/model/person.model';
 import { format } from 'date-fns';
 
 export type TenancyModel = {
