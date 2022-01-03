@@ -145,7 +145,7 @@ export const RentalUnitForm = ({
                     ))}
                 </TextField>
             </Grid>
-            <FormSubmitBar disableSave={!isFormDirty()} handleCancel={() => handleCancel()} />
+            <FormSubmitBar disableSave={!isFormDirty} handleCancel={() => handleCancel()} />
         </Grid>
     );
 };

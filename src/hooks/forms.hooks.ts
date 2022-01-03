@@ -1,4 +1,5 @@
-import React, { Dispatch, FormEvent, SetStateAction } from 'react';
+import React, { Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
+import isEqual from 'react-fast-compare';
 
 export const useForms = <T>(
     setFormModelState: Dispatch<SetStateAction<T>>,
@@ -51,15 +52,22 @@ export const useForms = <T>(
 
     // --- Submit Handler ---
     const handleSubmit = (e: FormEvent<any>) => {
-        // TODO: Set model snapshot
+        setSnapshot(formModelState);
         submitFunc(e);
     };
 
-    // --- Additional methods ---
-    const isFormDirty = () => {
-        // TODO: Compare current model to last model snapshot
-        return true;
-    };
+    // --- Additional members ---
+    const [snapshot, setSnapshot] = useState(formModelState);
+    const [isFormDirty, setIsFormDirty] = useState(false);
+
+    useEffect(() => {
+        console.log(snapshot);
+        console.log(formModelState);
+        const iseq = isEqual(snapshot, formModelState);
+        console.log(iseq);
+
+        setIsFormDirty(!iseq);
+    }, [snapshot, formModelState]);
 
     return {
         handleBasicInputChange,

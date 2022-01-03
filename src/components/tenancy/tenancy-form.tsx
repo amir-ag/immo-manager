@@ -319,7 +319,7 @@ export const TenancyForm = ({
                 alignItems={'center'}
                 alignContent={'flex-start'}
             >
-                <FormSubmitBar disableSave={!isFormDirty()} handleCancel={() => handleCancel()} />
+                <FormSubmitBar disableSave={!isFormDirty} handleCancel={() => handleCancel()} />
             </Grid>
         </Grid>
     );
