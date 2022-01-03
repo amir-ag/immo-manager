@@ -65,6 +65,7 @@ export const TenancyForm = ({
     const { handleBasicInputChange, handleAutocompleteChange, handleSubmit, isFormDirty } =
         useForms<TenancyModel>(setCurrentTenancy, currentTenancy, submitFunc);
 
+    // TODO: Reuse Grid (Containers) as custom component
     return (
         <Grid
             component={'form'}
@@ -203,7 +204,6 @@ export const TenancyForm = ({
                 <Grid item xs={12} md={6}>
                     <TextField
                         variant={'outlined'}
-                        margin={'normal'}
                         fullWidth
                         id={'cancellationPeriod'}
                         label={'Cancellation Period (Months)'}
@@ -301,26 +301,7 @@ export const TenancyForm = ({
                     />
                 </Grid>
             </Grid>
-            <Grid
-                item
-                container
-                xs={12}
-                sm={6}
-                spacing={stylingConstants.gridSpacing}
-                alignItems={'center'}
-                alignContent={'flex-start'}
-            />
-            <Grid
-                item
-                container
-                xs={12}
-                sm={6}
-                spacing={stylingConstants.gridSpacing}
-                alignItems={'center'}
-                alignContent={'flex-start'}
-            >
-                <FormSubmitBar disableSave={!isFormDirty} handleCancel={() => handleCancel()} />
-            </Grid>
+            <FormSubmitBar disableSubmit={!isFormDirty} handleCancel={() => handleCancel()} />
         </Grid>
     );
 };

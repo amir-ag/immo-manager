@@ -141,7 +141,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 handleAddressInputChange={handleAddressInputChange}
             />
             {/* TODO: Only enable submit button when form has been "touched" */}
-            <FormSubmitBar disableSave={!isFormDirty} handleCancel={handleCancel} />
+            <FormSubmitBar disableSubmit={!isFormDirty} handleCancel={handleCancel} />
         </Grid>
     );
 };
