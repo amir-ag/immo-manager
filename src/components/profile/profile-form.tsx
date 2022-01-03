@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { Button, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
-import { useAppSelector } from '../../hooks/store.hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { getAuth } from 'firebase/auth';
 import { selectUser } from '../../store/selectors';
 import ImageUpload from '../forms/image-upload/image-upload';
 import { emptyUser, UserModel } from './model/user.model';
+import { useForms } from '../../hooks/forms.hooks';
+import { update } from '../../store/slices/user.slice';
 
 const useStyles = makeStyles((theme) => ({
     rightContainer: {
@@ -29,18 +31,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-type ProfileFormProps = {
-    handleSubmit: (formData: UserModel) => void;
-};
-
-const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
+const ProfileForm = () => {
     const classes = useStyles();
+    const dispatch = useAppDispatch();
     const auth = getAuth();
     const user = auth.currentUser;
 
+    const submitFunc = (e: FormEvent<any>) => {
+        e.preventDefault();
+        dispatch(update(userProfile));
+    };
+
     const { firstName, lastName, email, address } = useAppSelector(selectUser);
 
-    const [formData, setFormData] = useState<UserModel>({
+    const [userProfile, setUserProfile] = useState<UserModel>({
         ...emptyUser,
         firstName: firstName,
         lastName: lastName,
@@ -48,33 +52,13 @@ const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
         address: address,
     });
 
-    const onImageChange = (image: File) => {
-        setFormData((prevState) => ({
-            ...prevState,
-            image: image,
-        }));
-    };
-
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setFormData((prevState) => ({
-            ...prevState,
-            [e.target.id]: e.target.value,
-        }));
-    };
-
-    const onChangeAddress = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setFormData((prevState) => ({
-            ...prevState,
-            address: {
-                ...prevState.address,
-                [e.target.id]: e.target.value,
-            },
-        }));
-    };
-
-    const onSubmit = () => {
-        handleSubmit(formData);
-    };
+    const {
+        handleBasicInputChange,
+        handleAddressInputChange,
+        handleThumbnailChange,
+        handleSubmit,
+        isFormDirty,
+    } = useForms<UserModel>(setUserProfile, userProfile, submitFunc);
 
     return (
         <>
@@ -83,10 +67,10 @@ const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
                     <Typography className={classes.generalTitle} variant={'body2'}>
                         General Info
                     </Typography>
-                    <ImageUpload previewImageUrl={user?.photoURL} handleImageChange={onImageChange} />
+                    <ImageUpload previewImageUrl={user?.photoURL} handleImageChange={handleThumbnailChange} />
                     <TextField
-                        value={formData.firstName}
-                        onChange={(e) => onChange(e)}
+                        value={userProfile.firstName}
+                        onChange={(e) => handleBasicInputChange(e)}
                         variant={'outlined'}
                         margin={'normal'}
                         fullWidth
@@ -98,8 +82,8 @@ const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
                         required
                     />
                     <TextField
-                        value={formData.lastName}
-                        onChange={(e) => onChange(e)}
+                        value={userProfile.lastName}
+                        onChange={(e) => handleBasicInputChange(e)}
                         variant={'outlined'}
                         margin={'normal'}
                         fullWidth
@@ -110,8 +94,8 @@ const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
                         required
                     />
                     <TextField
-                        value={formData.email}
-                        onChange={(e) => onChange(e)}
+                        value={userProfile.email}
+                        onChange={(e) => handleBasicInputChange(e)}
                         variant={'outlined'}
                         margin={'normal'}
                         fullWidth
@@ -126,8 +110,8 @@ const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
                     <div className={classes.address}>
                         <Typography variant={'body2'}>Address</Typography>
                         <TextField
-                            value={formData.address.addressLine1}
-                            onChange={(e) => onChangeAddress(e)}
+                            value={userProfile.address.addressLine1}
+                            onChange={(e) => handleAddressInputChange(e)}
                             variant={'outlined'}
                             margin={'normal'}
                             fullWidth
@@ -138,8 +122,8 @@ const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
                             type={'string'}
                         />
                         <TextField
-                            value={formData.address.postCode}
-                            onChange={(e) => onChangeAddress(e)}
+                            value={userProfile.address.postCode}
+                            onChange={(e) => handleAddressInputChange(e)}
                             variant={'outlined'}
                             margin={'normal'}
                             fullWidth
@@ -150,8 +134,8 @@ const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
                             type={'number'}
                         />
                         <TextField
-                            value={formData.address.city}
-                            onChange={(e) => onChangeAddress(e)}
+                            value={userProfile.address.city}
+                            onChange={(e) => handleAddressInputChange(e)}
                             variant={'outlined'}
                             margin={'normal'}
                             fullWidth
@@ -165,8 +149,8 @@ const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
                     <div className={classes.security}>
                         <Typography variant={'body2'}>Account & Security</Typography>
                         <TextField
-                            value={formData.newPassword}
-                            onChange={(e) => onChange(e)}
+                            value={userProfile.newPassword}
+                            onChange={(e) => handleBasicInputChange(e)}
                             variant={'outlined'}
                             margin={'normal'}
                             fullWidth
@@ -177,8 +161,8 @@ const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
                             type={'password'}
                         />
                         <TextField
-                            value={formData.newPasswordConfirm}
-                            onChange={(e) => onChange(e)}
+                            value={userProfile.newPasswordConfirm}
+                            onChange={(e) => handleBasicInputChange(e)}
                             variant={'outlined'}
                             margin={'normal'}
                             fullWidth
@@ -191,7 +175,7 @@ const ProfileForm = ({ handleSubmit }: ProfileFormProps) => {
                     </div>
                 </Grid>
             </Grid>
-            <Button className={classes.button} variant={'contained'} color={'primary'} onClick={onSubmit}>
+            <Button className={classes.button} variant={'contained'} color={'primary'} onClick={handleSubmit}>
                 Update
             </Button>
         </>
