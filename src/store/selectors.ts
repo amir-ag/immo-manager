@@ -6,11 +6,11 @@ export const selectUser = (state: RootState) => state.user;
 // persons
 export const selectPersons = (state: RootState) => state.persons;
 export const selectPersonsOwners = (state: RootState) =>
-    state.persons.filter((p) => p.roles.includes('Owner'));
+    state.persons.filter((p) => p.roles?.includes('Owner'));
 export const selectPersonsJanitors = (state: RootState) =>
-    state.persons.filter((p) => p.roles.includes('Janitor'));
+    state.persons.filter((p) => p.roles?.includes('Janitor'));
 export const selectPersonsTenants = (state: RootState) =>
-    state.persons.filter((p) => p.roles.includes('Tenant'));
+    state.persons.filter((p) => p.roles?.includes('Tenant'));
 
 // properties
 export const selectProperties = (state: RootState) => state.properties.all;

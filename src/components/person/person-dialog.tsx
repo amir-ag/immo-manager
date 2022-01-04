@@ -17,6 +17,7 @@ import {
     Select,
     TextField,
     Toolbar,
+    Typography,
     useTheme,
 } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -97,6 +98,11 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
             <DialogContent>
                 <Box component={'form'} onSubmit={(e) => handleSubmit(e)} sx={{ mt: 3 }}>
                     <Grid container spacing={stylingConstants.gridSpacing}>
+                        <Grid item xs={12}>
+                            <Typography variant={'subtitle2'} component={'h3'}>
+                                Basic Info
+                            </Typography>
+                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 value={currentPerson.company}
@@ -180,6 +186,11 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                             addressState={currentPerson.address}
                             handleAddressInputChange={handleAddressInputChange}
                         />
+                        <Grid item xs={12}>
+                            <Typography variant={'subtitle2'} component={'h3'}>
+                                Communications
+                            </Typography>
+                        </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 value={currentPerson.email}

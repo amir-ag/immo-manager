@@ -65,13 +65,15 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
             onSubmit={(e: React.FormEvent<any>) => handleSubmit(e)}
         >
             <Grid item xs={12}>
-                <Typography variant={'h6'}>General Info</Typography>
-            </Grid>
-            <Grid item xs={12}>
                 <ImageUpload
                     handleImageChange={handleThumbnailChange}
                     previewImageUrl={currentProperty.thumbnail?.imageUrl}
                 />
+            </Grid>
+            <Grid item xs={12}>
+                <Typography variant={'subtitle2'} component={'h3'}>
+                    Basic Info
+                </Typography>
             </Grid>
             <Grid item xs={12}>
                 <TextField
@@ -133,14 +135,10 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     renderInput={(params) => <TextField {...params} label="Janitor" variant="outlined" />}
                 />
             </Grid>
-            <Grid item xs={12}>
-                <Typography variant={'h6'}>Address</Typography>
-            </Grid>
             <AddressFormFields
                 addressState={currentProperty.address}
                 handleAddressInputChange={handleAddressInputChange}
             />
-            {/* TODO: Only enable submit button when form has been "touched" */}
             <FormSubmitBar disableSubmit={!isFormDirty} handleCancel={handleCancel} />
         </Grid>
     );
