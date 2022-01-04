@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks/store.hooks';
 import { ProfileFormData } from './profile.container';
 import { getAuth } from 'firebase/auth';
 import { selectUser } from '../../store/selectors';
-import ImageUpload from '../ui/image-upload/image-upload';
+import ImageUpload from '../forms/image-upload/image-upload';
 
 const useStyles = makeStyles((theme) => ({
     rightContainer: {

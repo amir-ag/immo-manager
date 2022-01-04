@@ -10,13 +10,13 @@ export const useStyles = makeStyles((theme) => ({
     },
 }));
 
-type DetailViewFormActionsProps = {
+type FormSubmitBarProps = {
     disableCancel?: boolean;
     disableSave?: boolean;
     handleCancel: () => void;
 };
 
-const DetailViewFormActions = ({ disableCancel, disableSave, handleCancel }: DetailViewFormActionsProps) => {
+const FormSubmitBar = ({ disableCancel, disableSave, handleCancel }: FormSubmitBarProps) => {
     const sharedCssClasses = useSharedStyles();
     const cssClasses = useStyles();
 
@@ -50,4 +50,4 @@ const DetailViewFormActions = ({ disableCancel, disableSave, handleCancel }: Det
     );
 };
 
-export default DetailViewFormActions;
+export default FormSubmitBar;

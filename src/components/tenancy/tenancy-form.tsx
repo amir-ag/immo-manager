@@ -17,7 +17,7 @@ import { months } from '../../constants';
 import { stylingConstants } from '../../theme/shared-styles';
 import { getDisplayNameOfProperty, PropertyModel } from '../property/model/property.model';
 import { getDisplayNameOfRentalUnit, RentalUnitModel } from '../rental-unit/model/rental-unit.model';
-import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
+import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { TenancyModel } from './model/tenancy.model';
 import {
     emptyPerson,
@@ -319,7 +319,7 @@ export const TenancyForm = ({
                 alignItems={'center'}
                 alignContent={'flex-start'}
             >
-                <DetailViewFormActions disableSave={!isFormDirty()} handleCancel={() => handleCancel()} />
+                <FormSubmitBar disableSave={!isFormDirty} handleCancel={() => handleCancel()} />
             </Grid>
         </Grid>
     );

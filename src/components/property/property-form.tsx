@@ -1,7 +1,7 @@
 import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 import { Grid, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
+import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { PropertyModel } from './model/property.model';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { selectPersonsOwners, selectPersonsServiceProviders } from '../../store/selectors';
@@ -15,7 +15,8 @@ import { createOrUpdateProperty } from '../../store/slices/properties.slice';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';
 import { useForms } from '../../hooks/forms.hooks';
-import ImageUpload from '../ui/image-upload/image-upload';
+import ImageUpload from '../forms/image-upload/image-upload';
+import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 
 export type PropertyFormProps = {
     currentProperty: PropertyModel;
@@ -135,56 +136,12 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
             <Grid item xs={12}>
                 <Typography variant={'h6'}>Address</Typography>
             </Grid>
-            <Grid item xs={12}>
-                <TextField
-                    variant={'outlined'}
-                    fullWidth
-                    id={'addressLine1'}
-                    value={currentProperty.address.addressLine1}
-                    onChange={(e) => handleAddressInputChange(e)}
-                    label={'Address Line 1'}
-                    type="text"
-                    required
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField
-                    variant={'outlined'}
-                    fullWidth
-                    value={currentProperty.address.addressLine2}
-                    onChange={(e) => handleAddressInputChange(e)}
-                    id={'addressLine2'}
-                    label={'Address Line 2'}
-                    type="text"
-                />
-            </Grid>
-            <Grid item xs={12} md={4}>
-                <TextField
-                    variant={'outlined'}
-                    fullWidth
-                    id={'postCode'}
-                    value={currentProperty.address.postCode ?? ''}
-                    onChange={(e) => handleAddressInputChange(e)}
-                    label={'Post Code'}
-                    inputProps={{ min: 1000, max: 9999 }}
-                    type="number"
-                    required
-                />
-            </Grid>
-            <Grid item xs={12} md={8}>
-                <TextField
-                    variant={'outlined'}
-                    value={currentProperty.address.city}
-                    onChange={(e) => handleAddressInputChange(e)}
-                    fullWidth
-                    id={'city'}
-                    label={'City'}
-                    type="text"
-                    required
-                />
-            </Grid>
+            <AddressFormFields
+                addressState={currentProperty.address}
+                handleAddressInputChange={handleAddressInputChange}
+            />
             {/* TODO: Only enable submit button when form has been "touched" */}
-            <DetailViewFormActions disableSave={!isFormDirty()} handleCancel={handleCancel} />
+            <FormSubmitBar disableSave={!isFormDirty} handleCancel={handleCancel} />
         </Grid>
     );
 };
