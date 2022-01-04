@@ -12,7 +12,7 @@ import {
 import { getDisplayNameOfRentalUnit, RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
 import { getDisplayNameOfTenants, TenancyModel } from '../../tenancy/model/tenancy.model';
 import { format, parseISO } from 'date-fns';
-import { PersonModel } from '../../persons/models/person.model';
+import { PersonModel } from '../../person/model/person.model';
 
 const useStyles = makeStyles({
     table: {

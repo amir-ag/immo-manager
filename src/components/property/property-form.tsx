@@ -4,12 +4,12 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { PropertyModel } from './model/property.model';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { selectPersonsOwners, selectPersonsServiceProviders } from '../../store/selectors';
+import { selectPersonsJanitors, selectPersonsOwners } from '../../store/selectors';
 import {
     emptyPerson,
     getPersonDisplayNameForFormSelectFields,
     PersonModel,
-} from '../persons/models/person.model';
+} from '../person/model/person.model';
 import { stylingConstants } from '../../theme/shared-styles';
 import { createOrUpdateProperty } from '../../store/slices/properties.slice';
 import { useHistory } from 'react-router';
@@ -26,7 +26,7 @@ export type PropertyFormProps = {
 
 export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: PropertyFormProps) => {
     const owners = useAppSelector(selectPersonsOwners);
-    const janitors = useAppSelector(selectPersonsServiceProviders);
+    const janitors = useAppSelector(selectPersonsJanitors);
 
     const dispatch = useAppDispatch();
     const history = useHistory();

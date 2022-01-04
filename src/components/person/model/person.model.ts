@@ -10,9 +10,11 @@ export type PersonModel = {
     email: string;
     mobilePhone: number | null;
     landline?: number | null;
-    role: string;
+    roles: typeof personRoles[number][];
     createdBy?: string;
 };
+
+export const personRoles = ['Owner', 'Tenant', 'Tenant Wait List', 'Janitor', 'Tradesman'] as const;
 
 export const emptyPerson: PersonModel = {
     id: '',
@@ -24,7 +26,7 @@ export const emptyPerson: PersonModel = {
     email: '',
     mobilePhone: null,
     landline: null,
-    role: '',
+    roles: [],
     createdBy: '',
 };
 
