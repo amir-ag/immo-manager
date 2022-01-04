@@ -229,7 +229,7 @@ export const TenancyForm = ({
                             labelId="cancellationMonthsLabel"
                             id="cancellationMonths"
                             multiple
-                            value={currentTenancy.cancellationMonths}
+                            value={currentTenancy.cancellationMonths ?? []}
                             onChange={(e) => handleBasicInputChange(e, 'cancellationMonths')}
                             input={<Input />}
                             renderValue={(selected) => (selected as string[]).join(', ')}
@@ -310,7 +310,11 @@ export const TenancyForm = ({
                     />
                 </Grid>
             </Grid>
-            <FormSubmitBar disableSubmit={!isFormDirty} handleCancel={() => handleCancel()} />
+            <FormSubmitBar
+                disableSubmit={!isFormDirty}
+                handleCancel={() => handleCancel()}
+                submitButtonText={isNew ? 'Create' : 'Update'}
+            />
         </Grid>
     );
 };

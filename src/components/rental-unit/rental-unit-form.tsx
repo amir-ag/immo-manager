@@ -147,7 +147,11 @@ export const RentalUnitForm = ({
                     ))}
                 </TextField>
             </Grid>
-            <FormSubmitBar disableSubmit={!isFormDirty} handleCancel={() => handleCancel()} />
+            <FormSubmitBar
+                disableSubmit={!isFormDirty}
+                handleCancel={() => handleCancel()}
+                submitButtonText={isNew ? 'Create' : 'Update'}
+            />
         </Grid>
     );
 };

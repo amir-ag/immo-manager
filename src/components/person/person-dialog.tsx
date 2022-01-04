@@ -124,14 +124,14 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                                     labelId="roles"
                                     id="roles"
                                     multiple
-                                    value={currentPerson.roles}
+                                    value={currentPerson.roles ?? []}
                                     onChange={(e) => handleBasicInputChange(e, 'roles')}
                                     input={<Input />}
                                     renderValue={(selected) => (selected as string[]).join(', ')}
                                 >
                                     {personRoles.map((name) => (
                                         <MenuItem key={name} value={name}>
-                                            <Checkbox checked={currentPerson.roles.includes(name)} />
+                                            <Checkbox checked={currentPerson.roles?.includes(name)} />
                                             <ListItemText primary={name} />
                                         </MenuItem>
                                     ))}
@@ -233,7 +233,11 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                             />
                         </Grid>
                     </Grid>
-                    <FormSubmitBar disableSubmit={!isFormDirty} handleCancel={handleCancel} />
+                    <FormSubmitBar
+                        disableSubmit={!isFormDirty}
+                        handleCancel={handleCancel}
+                        submitButtonText={currentPerson.id ? `Update` : 'Create'}
+                    />
                 </Box>
             </DialogContent>
         </Dialog>

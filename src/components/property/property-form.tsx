@@ -139,7 +139,11 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 addressState={currentProperty.address}
                 handleAddressInputChange={handleAddressInputChange}
             />
-            <FormSubmitBar disableSubmit={!isFormDirty} handleCancel={handleCancel} />
+            <FormSubmitBar
+                disableSubmit={!isFormDirty}
+                handleCancel={handleCancel}
+                submitButtonText={isNew ? 'Create' : 'Update'}
+            />
         </Grid>
     );
 };

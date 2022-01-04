@@ -93,14 +93,12 @@ const ProfileForm = () => {
                 <Grid item xs={12}>
                     <TextField
                         value={userProfile.email}
-                        onChange={(e) => handleBasicInputChange(e)}
                         variant={'outlined'}
                         fullWidth
                         id={'email'}
                         label={'Email'}
                         name={'email'}
-                        autoComplete={'email'}
-                        required
+                        disabled
                     />
                 </Grid>
             </Grid>
