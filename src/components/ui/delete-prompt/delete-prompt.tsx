@@ -18,7 +18,7 @@ type DeletePromptProps = {
 
 const DeletePrompt = ({ open, title, description, handleClose, handleDeletion }: DeletePromptProps) => {
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={handleClose} data-testid={'delete-prompt-test'}>
             <DialogTitle>{title}</DialogTitle>
             <DialogContent>
                 <DialogContentText>{description}</DialogContentText>
