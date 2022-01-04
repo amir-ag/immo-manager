@@ -55,6 +55,7 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
 
     const [searchResult, setSearchResult] = useState(rentalUnits);
 
+    // TODO: Fix 'Maximum update depth exceeded' error
     useEffect(() => {
         setSearchResult(rentalUnits);
     }, [rentalUnits]);
@@ -92,7 +93,9 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
     return (
         <>
             <Grid item xs={12}>
-                <Typography variant={'h6'}>Rental Units</Typography>
+                <Typography variant={'h6'} component={'h2'}>
+                    Associated Rental Units
+                </Typography>
             </Grid>
             <SearchHeader
                 placeholderText={'Search by description'}

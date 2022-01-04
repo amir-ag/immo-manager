@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, TextField } from '@material-ui/core';
+import { Grid, TextField, Typography } from '@material-ui/core';
 import { AddressModel } from '../../../models/address.model';
 
 type AddressFormFieldsProps = {
@@ -11,6 +11,11 @@ type AddressFormFieldsProps = {
 const AddressFormFields = ({ addressState, handleAddressInputChange }: AddressFormFieldsProps) => {
     return (
         <>
+            <Grid item xs={12}>
+                <Typography variant={'subtitle2'} component={'h3'}>
+                    Address
+                </Typography>
+            </Grid>
             <Grid item xs={12}>
                 <TextField
                     variant={'outlined'}

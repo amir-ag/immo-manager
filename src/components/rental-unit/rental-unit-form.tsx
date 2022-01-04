@@ -59,7 +59,9 @@ export const RentalUnitForm = ({
             onSubmit={(e: React.FormEvent<any>) => handleSubmit(e)}
         >
             <Grid item xs={12}>
-                <Typography variant={'h6'}>General Info</Typography>
+                <Typography variant={'subtitle2'} component={'h3'}>
+                    Basic Info
+                </Typography>
             </Grid>
             <Grid item xs={12}>
                 <TextField
@@ -145,7 +147,11 @@ export const RentalUnitForm = ({
                     ))}
                 </TextField>
             </Grid>
-            <FormSubmitBar disableSubmit={!isFormDirty} handleCancel={() => handleCancel()} />
+            <FormSubmitBar
+                disableSubmit={!isFormDirty}
+                handleCancel={() => handleCancel()}
+                submitButtonText={isNew ? 'Create' : 'Update'}
+            />
         </Grid>
     );
 };

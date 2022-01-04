@@ -17,6 +17,7 @@ import {
     Select,
     TextField,
     Toolbar,
+    Typography,
     useTheme,
 } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -97,6 +98,11 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
             <DialogContent>
                 <Box component={'form'} onSubmit={(e) => handleSubmit(e)} sx={{ mt: 3 }}>
                     <Grid container spacing={stylingConstants.gridSpacing}>
+                        <Grid item xs={12}>
+                            <Typography variant={'subtitle2'} component={'h3'}>
+                                Basic Info
+                            </Typography>
+                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 value={currentPerson.company}
@@ -118,14 +124,14 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                                     labelId="roles"
                                     id="roles"
                                     multiple
-                                    value={currentPerson.roles}
+                                    value={currentPerson.roles ?? []}
                                     onChange={(e) => handleBasicInputChange(e, 'roles')}
                                     input={<Input />}
                                     renderValue={(selected) => (selected as string[]).join(', ')}
                                 >
                                     {personRoles.map((name) => (
                                         <MenuItem key={name} value={name}>
-                                            <Checkbox checked={currentPerson.roles.includes(name)} />
+                                            <Checkbox checked={currentPerson.roles?.includes(name)} />
                                             <ListItemText primary={name} />
                                         </MenuItem>
                                     ))}
@@ -181,6 +187,11 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                             handleAddressInputChange={handleAddressInputChange}
                         />
                         <Grid item xs={12}>
+                            <Typography variant={'subtitle2'} component={'h3'}>
+                                Communications
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
                             <TextField
                                 value={currentPerson.email}
                                 onChange={(e) => handleBasicInputChange(e)}
@@ -222,7 +233,11 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                             />
                         </Grid>
                     </Grid>
-                    <FormSubmitBar disableSubmit={!isFormDirty} handleCancel={handleCancel} />
+                    <FormSubmitBar
+                        disableSubmit={!isFormDirty}
+                        handleCancel={handleCancel}
+                        submitButtonText={currentPerson.id ? `Update` : 'Create'}
+                    />
                 </Box>
             </DialogContent>
         </Dialog>

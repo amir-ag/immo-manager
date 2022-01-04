@@ -56,10 +56,12 @@ const ProfileForm = () => {
                 alignContent={'flex-start'}
             >
                 <Grid item xs={12}>
-                    <Typography variant={'h6'}>General Info</Typography>
+                    <ImageUpload previewImageUrl={user?.photoURL} handleImageChange={handleThumbnailChange} />
                 </Grid>
                 <Grid item xs={12}>
-                    <ImageUpload previewImageUrl={user?.photoURL} handleImageChange={handleThumbnailChange} />
+                    <Typography variant={'subtitle2'} component={'h3'}>
+                        Basic Info
+                    </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <TextField
@@ -91,14 +93,12 @@ const ProfileForm = () => {
                 <Grid item xs={12}>
                     <TextField
                         value={userProfile.email}
-                        onChange={(e) => handleBasicInputChange(e)}
                         variant={'outlined'}
                         fullWidth
                         id={'email'}
                         label={'Email'}
                         name={'email'}
-                        autoComplete={'email'}
-                        required
+                        disabled
                     />
                 </Grid>
             </Grid>
@@ -111,15 +111,14 @@ const ProfileForm = () => {
                 alignItems={'center'}
                 alignContent={'flex-start'}
             >
-                <Grid item xs={12}>
-                    <Typography variant={'h6'}>Address</Typography>
-                </Grid>
                 <AddressFormFields
                     addressState={userProfile.address}
                     handleAddressInputChange={handleAddressInputChange}
                 />
                 <Grid item xs={12}>
-                    <Typography variant={'h6'}>Security</Typography>
+                    <Typography variant={'subtitle2'} component={'h3'}>
+                        Security
+                    </Typography>
                 </Grid>
 
                 <Grid item xs={12}>

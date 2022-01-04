@@ -83,7 +83,9 @@ export const TenancyForm = ({
                 alignContent={'flex-start'}
             >
                 <Grid item xs={12}>
-                    <Typography variant={'h6'}>General Info</Typography>
+                    <Typography variant={'subtitle2'} component={'h3'}>
+                        Basic Info
+                    </Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
@@ -148,6 +150,11 @@ export const TenancyForm = ({
                         )}
                         disabled={currentTenancy.isVacancy}
                     />
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant={'subtitle2'} component={'h3'}>
+                        Contract Details
+                    </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <FormControlLabel
@@ -222,7 +229,7 @@ export const TenancyForm = ({
                             labelId="cancellationMonthsLabel"
                             id="cancellationMonths"
                             multiple
-                            value={currentTenancy.cancellationMonths}
+                            value={currentTenancy.cancellationMonths ?? []}
                             onChange={(e) => handleBasicInputChange(e, 'cancellationMonths')}
                             input={<Input />}
                             renderValue={(selected) => (selected as string[]).join(', ')}
@@ -247,7 +254,9 @@ export const TenancyForm = ({
                 alignContent={'flex-start'}
             >
                 <Grid item xs={12}>
-                    <Typography variant={'h6'}>Rent Info</Typography>
+                    <Typography variant={'subtitle2'} component={'h3'}>
+                        Rent Details
+                    </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <TextField
@@ -301,7 +310,11 @@ export const TenancyForm = ({
                     />
                 </Grid>
             </Grid>
-            <FormSubmitBar disableSubmit={!isFormDirty} handleCancel={() => handleCancel()} />
+            <FormSubmitBar
+                disableSubmit={!isFormDirty}
+                handleCancel={() => handleCancel()}
+                submitButtonText={isNew ? 'Create' : 'Update'}
+            />
         </Grid>
     );
 };
