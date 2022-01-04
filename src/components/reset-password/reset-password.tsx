@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar, Button, Grid, Link, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import SettingsBackupRestoreOutlinedIcon from '@material-ui/icons/SettingsBackupRestoreOutlined';
 import { Link as RouterLink } from 'react-router-dom';
 import routes from '../../routes/route-constants';
 
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.main,
     },
     form: {
         marginTop: theme.spacing(2),
@@ -40,10 +40,10 @@ const ResetPassword = ({ handleReset }: ResetPasswordProps) => {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
+                    <SettingsBackupRestoreOutlinedIcon />
                 </Avatar>
                 <Typography component={'h1'} variant={'h5'}>
-                    Sign in
+                    Reset PW
                 </Typography>
                 <form className={classes.form} noValidate autoComplete={'off'} onSubmit={onSubmit}>
                     <TextField
