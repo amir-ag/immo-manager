@@ -42,9 +42,6 @@ const PropertyCard = ({ property, handleDelete, rentalUnits, tenancies }: Proper
     const vacancies = runningTs?.filter((t) => t.isVacancy);
     const numOfVacancies = vacancies?.length ? vacancies.length : 0;
 
-    const fallbackImageUrl =
-        'https://firebasestorage.googleapis.com/v0/b/immo-manager.appspot.com/o/images%2Fproperties%2Fproperty-thumbnail-placeholder.jpg?alt=media&token=ccb13819-d815-4814-9e36-017c33838d10';
-
     return (
         <Card elevation={3}>
             <CardHeader
@@ -65,7 +62,7 @@ const PropertyCard = ({ property, handleDelete, rentalUnits, tenancies }: Proper
                 alt="Property Placeholder Image"
                 height="150"
                 loading="lazy"
-                image={property.thumbnail?.imageUrl ? property.thumbnail?.imageUrl : fallbackImageUrl}
+                image={property.thumbnail?.imageUrl}
                 title="Property Placeholder Image"
             />
             <CardContent>
