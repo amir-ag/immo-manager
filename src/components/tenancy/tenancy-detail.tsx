@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Typography } from '@material-ui/core';
 import { emptyTenancy, getDisplayNameOfTenancy } from './model/tenancy.model';
 import { TenancyForm } from './tenancy-form';
 import { useParams } from 'react-router';
@@ -12,6 +11,7 @@ import {
 } from '../../store/selectors';
 import { emptyProperty } from '../property/model/property.model';
 import { emptyRentalUnit } from '../rental-unit/model/rental-unit.model';
+import { IntroHeader } from '../ui/intro-header/intro-header';
 
 export const TenancyDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
@@ -31,11 +31,16 @@ export const TenancyDetail = ({ isNew }: { isNew: boolean }) => {
 
     return (
         <>
-            <Typography variant={'h5'}>
-                {tenancyToEdit
-                    ? getDisplayNameOfTenancy(tenancyToEdit, tenants)
-                    : `Create new Tenancy${!isNew ? ' (Tenancy to edit has not been found!)' : ''}`}{' '}
-            </Typography>
+            <IntroHeader
+                title={isNew ? 'Create Tenancy' : 'Edit Tenancy'}
+                subtitle={
+                    isNew
+                        ? 'Create a new tenancy'
+                        : tenancyToEdit
+                        ? getDisplayNameOfTenancy(tenancyToEdit, tenants)
+                        : 'Tenancy has not been found!'
+                }
+            />
             <TenancyForm
                 currentTenancy={currentTenancy}
                 setCurrentTenancy={setCurrentTenancy}

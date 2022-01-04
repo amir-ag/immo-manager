@@ -53,8 +53,8 @@ export const getDisplayNameOfTenancy = (tenancy: TenancyModel, allTenants: Perso
     const tenants = getTenantsOfTenancy(tenancy, allTenants);
     const desc = 'Tenancy';
 
-    if (tenants?.length) {
-        return desc;
+    if (!tenants?.length) {
+        return desc + ' (Vacancy)';
     }
 
     return `${desc} (${tenants.map((t) => t.firstName + ' ' + t.lastName).join(' & ')})`;

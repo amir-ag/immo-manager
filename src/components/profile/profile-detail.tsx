@@ -1,11 +1,11 @@
 import React from 'react';
 import ProfileForm from './profile-form';
-import { Typography } from '@material-ui/core';
+import { IntroHeader } from '../ui/intro-header/intro-header';
 
 const ProfileDetail = () => {
     return (
         <>
-            <Typography variant={'h4'}>Profile</Typography>
+            <IntroHeader title="User Profile" subtitle="Adjust your user profile to your liking." />
             <ProfileForm />
         </>
     );
