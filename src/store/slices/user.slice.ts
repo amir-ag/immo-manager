@@ -2,17 +2,17 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
     createUserWithEmailAndPassword,
     getAuth,
+    sendPasswordResetEmail,
     signInWithEmailAndPassword,
     signOut,
     updatePassword,
     updateProfile,
-    sendPasswordResetEmail,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
-import { ProfileFormData } from '../../components/profile/profile.container';
 import { AddressModel } from '../../models/address.model';
 import * as storeService from '../store-functions';
+import { UserModel } from '../../components/profile/model/user.model';
 
 interface UserState {
     email: string;
@@ -121,14 +121,14 @@ export const signup = createAsyncThunk(
     }
 );
 
-export const update = createAsyncThunk('user/update', async (formData: ProfileFormData) => {
+export const update = createAsyncThunk('user/update', async (formData: UserModel) => {
     const auth = getAuth();
     const user = auth.currentUser;
 
-    if (formData.image && user) {
+    if (formData.thumbnail?.image && user) {
         const photoUrl = await storeService.uploadImageAndReturnUrl(
-            formData.image,
-            `images/users/thumbnails/${user.uid}/${formData.image.name}`
+            formData.thumbnail.image,
+            `images/users/thumbnails/${user.uid}/${formData.thumbnail.image.name}`
         );
         await updateProfile(user, {
             photoURL: photoUrl,
