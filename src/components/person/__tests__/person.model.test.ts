@@ -1,4 +1,4 @@
-import { getPersonDisplayNameForFormSelectFields, PersonModel } from '../models/person.model';
+import { getPersonDisplayNameForFormSelectFields, PersonModel } from '../model/person.model';
 
 export const dummyPerson: PersonModel = {
     id: 'ge645634gr',
@@ -14,7 +14,7 @@ export const dummyPerson: PersonModel = {
     email: 'info@peterl.ch',
     mobilePhone: null,
     landline: null,
-    role: 'Tenant',
+    roles: ['Tenant'],
     createdBy: 'gvfgfdht564',
 };
 
@@ -32,7 +32,7 @@ export const dummyPersonWithoutId: PersonModel = {
     email: 'info@peterl.ch',
     mobilePhone: null,
     landline: null,
-    role: 'Tenant',
+    roles: ['Tenant'],
     createdBy: 'gvfgfdht564',
 };
 
