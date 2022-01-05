@@ -47,17 +47,7 @@ export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
                     setCurrentProperty={setCurrentProperty}
                     isNew={isNew}
                 />
-                <Grid
-                    item
-                    container
-                    xs={12}
-                    sm={6}
-                    spacing={stylingConstants.gridSpacing}
-                    alignItems={'center'}
-                    alignContent={'flex-start'}
-                >
-                    <RentalUnitsOverview disableCreate={isNew || !propertyToEdit} />
-                </Grid>
+                <RentalUnitsOverview disableCreate={isNew || !propertyToEdit} />
             </Grid>
         </>
     );
