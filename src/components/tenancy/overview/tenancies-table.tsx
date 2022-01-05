@@ -20,6 +20,7 @@ import { TenancyModel } from '../model/tenancy.model';
 import { format, parseISO } from 'date-fns';
 import { PersonModel } from '../../person/model/person.model';
 import * as tenancyService from '../service/tenancy.service';
+import * as constants from '../../../constants';
 
 type TenanciesTableProps = {
     tenants: PersonModel[];
@@ -91,12 +92,12 @@ export const TenanciesTable = ({ tenants, handleDelete, searchResult }: Tenancie
                                 </TableCell>
                                 <TableCell align="right">
                                     {ten.beginOfContract
-                                        ? format(parseISO(ten.beginOfContract), 'dd.MM.yyyy')
+                                        ? format(parseISO(ten.beginOfContract), constants.dateFormatShort)
                                         : '-'}
                                 </TableCell>
                                 <TableCell align="right">
                                     {ten.endOfContract
-                                        ? format(parseISO(ten.endOfContract), 'dd.MM.yyyy')
+                                        ? format(parseISO(ten.endOfContract), constants.dateFormatShort)
                                         : '-'}
                                 </TableCell>
                             </TableRow>

@@ -15,6 +15,7 @@ import { format, parseISO } from 'date-fns';
 import { PersonModel } from '../../person/model/person.model';
 import * as rentalUnitService from '../../rental-unit/service/rental-unit.service';
 import * as tenancyService from '../../tenancy/service/tenancy.service';
+import * as constants from '../../../constants';
 
 const useStyles = makeStyles({
     table: {
@@ -68,7 +69,7 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentSchedu
                                 <TableCell align="right">{unit.surfaceInM2}</TableCell>
                                 <TableCell align="right">
                                     {tenancy.beginOfContract
-                                        ? format(parseISO(tenancy.beginOfContract), 'dd.MM.yyyy')
+                                        ? format(parseISO(tenancy.beginOfContract), constants.dateFormatShort)
                                         : '-'}
                                 </TableCell>
                                 <TableCell align="right">

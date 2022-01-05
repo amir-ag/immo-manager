@@ -33,6 +33,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { selectUser } from '../../store/selectors';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import * as constants from '../../constants';
 
 export type LayoutProps = {
     children: React.ReactNode;
@@ -176,7 +177,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                         <MenuIcon />
                     </IconButton>
                     <Typography color={'secondary'} variant={'h5'} className={classes.date}>
-                        Today is the {format(new Date(), 'do MMMM Y')}
+                        Today is the {format(new Date(), constants.dateFormatLong)}
                     </Typography>
                     <Typography color={'secondary'} variant={'h6'} className={classes.firstname}>
                         {firstName && firstName}
