@@ -2,49 +2,43 @@ import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 import {
     AppBar,
     Box,
-    Button,
+    Checkbox,
     Dialog,
     DialogContent,
     DialogTitle,
+    FormControl,
     Grid,
     IconButton,
+    Input,
+    InputLabel,
+    ListItemText,
     makeStyles,
     MenuItem,
+    Select,
     TextField,
     Toolbar,
+    Typography,
     useTheme,
 } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { PersonModel } from '../models/person.model';
+import { emptyPerson, PersonModel, personRoles } from './model/person.model';
+import { useForms } from '../../hooks/forms.hooks';
+import { useAppDispatch } from '../../hooks/store.hooks';
+import { createUpdatePerson } from '../../store/slices/persons.slice';
+import { stylingConstants } from '../../theme/shared-styles';
+import AddressFormFields from '../forms/address-form-fields/address-form-fields';
+import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 
-export type PersonModalProps = {
+export type PersonDialogProps = {
     openDialog: boolean;
     setOpenDialog: Dispatch<SetStateAction<boolean>>;
-    handleSubmit: (e: FormEvent<HTMLElement>) => void;
     currentPerson: PersonModel;
-    onChange: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-    onChangeAddress: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-    onChangeRole: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-    onChangeDate: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-    roles: { value: string }[];
+    setCurrentPerson: Dispatch<SetStateAction<PersonModel>>;
 };
 
 const useStyles = makeStyles({
-    date: {
-        width: '100%',
-    },
-    company: {
-        margin: 0,
-    },
-    submit: {
-        margin: '5% 0',
-        width: '100%',
-    },
-    selectRole: {
-        width: '100%',
-    },
     appBar: {
         position: 'relative',
     },
@@ -53,24 +47,31 @@ const useStyles = makeStyles({
     },
 });
 
-const PersonDialog = ({
-    openDialog,
-    setOpenDialog,
-    handleSubmit,
-    currentPerson,
-    onChange,
-    onChangeAddress,
-    onChangeRole,
-    onChangeDate,
-    roles,
-}: PersonModalProps) => {
+const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPerson }: PersonDialogProps) => {
     const classes = useStyles();
     const theme = useTheme();
+    const dispatch = useAppDispatch();
+
     const isDownXs = useMediaQuery(theme.breakpoints.down('xs'));
+
+    const submitFunc = (e: FormEvent<HTMLElement>) => {
+        e.preventDefault();
+        dispatch(createUpdatePerson(currentPerson));
+        setCurrentPerson(emptyPerson);
+        setOpenDialog(false);
+    };
+
+    const handleCancel = () => {
+        setOpenDialog(false);
+    };
+
+    const { handleBasicInputChange, handleAddressInputChange, handleSubmit, isFormDirty } =
+        useForms<PersonModel>(setCurrentPerson, currentPerson, submitFunc);
 
     return (
         <Dialog
             fullScreen={isDownXs}
+            maxWidth={'md'}
             open={openDialog}
             onClose={(event, reason) => {
                 if (reason !== 'backdropClick') {
@@ -96,47 +97,51 @@ const PersonDialog = ({
             </AppBar>
             <DialogContent>
                 <Box component={'form'} onSubmit={(e) => handleSubmit(e)} sx={{ mt: 3 }}>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={stylingConstants.gridSpacing}>
+                        <Grid item xs={12}>
+                            <Typography variant={'subtitle2'} component={'h3'}>
+                                Basic Info
+                            </Typography>
+                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                className={classes.company}
                                 value={currentPerson.company}
-                                onChange={(e) => onChange(e)}
+                                onChange={(e) => handleBasicInputChange(e)}
                                 variant={'outlined'}
-                                margin={'normal'}
                                 fullWidth
                                 id={'company'}
                                 label={'Company (optional)'}
                                 name={'company'}
                                 autoComplete={'company'}
                                 autoFocus
-                                type={'string'}
+                                type="text"
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            {/* TODO: Field needs to be multi-select because person can have multiple roles */}
-                            <TextField
-                                className={classes.selectRole}
-                                id={'role'}
-                                select
-                                label="Select"
-                                value={currentPerson.role}
-                                onChange={(e) => onChangeRole(e)}
-                                helperText="Please select your clients role"
-                                variant="outlined"
-                                required
-                            >
-                                {roles.map((role: { value: string }) => (
-                                    <MenuItem key={role.value} value={role.value}>
-                                        {role.value}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
+                            <FormControl fullWidth>
+                                <InputLabel id="roles">Roles</InputLabel>
+                                <Select
+                                    labelId="roles"
+                                    id="roles"
+                                    multiple
+                                    value={currentPerson.roles ?? []}
+                                    onChange={(e) => handleBasicInputChange(e, 'roles')}
+                                    input={<Input />}
+                                    renderValue={(selected) => (selected as string[]).join(', ')}
+                                >
+                                    {personRoles.map((name) => (
+                                        <MenuItem key={name} value={name}>
+                                            <Checkbox checked={currentPerson.roles?.includes(name)} />
+                                            <ListItemText primary={name} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 value={currentPerson.firstName}
-                                onChange={(e) => onChange(e)}
+                                onChange={(e) => handleBasicInputChange(e)}
                                 variant={'outlined'}
                                 margin={'normal'}
                                 fullWidth
@@ -152,7 +157,7 @@ const PersonDialog = ({
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 value={currentPerson.lastName}
-                                onChange={(e) => onChange(e)}
+                                onChange={(e) => handleBasicInputChange(e)}
                                 variant={'outlined'}
                                 margin={'normal'}
                                 fullWidth
@@ -166,67 +171,31 @@ const PersonDialog = ({
                         </Grid>
                         <Grid item xs={12} sm={12}>
                             <TextField
-                                id="date"
+                                id="birthday"
                                 label="Birthday"
                                 type="date"
-                                onChange={(e) => onChangeDate(e)}
-                                className={classes.date}
+                                fullWidth
+                                onChange={(e) => handleBasicInputChange(e)}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <TextField
-                                value={currentPerson.address.addressLine1}
-                                onChange={(e) => onChangeAddress(e)}
-                                variant={'outlined'}
-                                margin={'normal'}
-                                fullWidth
-                                id={'addressLine1'}
-                                label={'Street, Number'}
-                                name={'addressLine1'}
-                                autoComplete={'street'}
-                                type={'string'}
                                 required
                             />
                         </Grid>
-                        <Grid item xs={12} sm={3}>
-                            <TextField
-                                value={currentPerson.address.postCode}
-                                onChange={(e) => onChangeAddress(e)}
-                                variant={'outlined'}
-                                margin={'normal'}
-                                fullWidth
-                                id={'postCode'}
-                                label={'PLZ'}
-                                name={'postCode'}
-                                autoComplete={'postCode'}
-                                type={'number'}
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={9}>
-                            <TextField
-                                value={currentPerson.address.city}
-                                onChange={(e) => onChangeAddress(e)}
-                                variant={'outlined'}
-                                margin={'normal'}
-                                fullWidth
-                                id={'city'}
-                                label={'City'}
-                                name={'city'}
-                                autoComplete={'city'}
-                                type={'string'}
-                                required
-                            />
+                        <AddressFormFields
+                            addressState={currentPerson.address}
+                            handleAddressInputChange={handleAddressInputChange}
+                        />
+                        <Grid item xs={12}>
+                            <Typography variant={'subtitle2'} component={'h3'}>
+                                Communications
+                            </Typography>
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 value={currentPerson.email}
-                                onChange={(e) => onChange(e)}
+                                onChange={(e) => handleBasicInputChange(e)}
                                 variant={'outlined'}
-                                margin={'normal'}
                                 fullWidth
                                 id={'email'}
                                 label={'Email'}
@@ -239,9 +208,8 @@ const PersonDialog = ({
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 value={currentPerson.mobilePhone}
-                                onChange={(e) => onChange(e)}
+                                onChange={(e) => handleBasicInputChange(e)}
                                 variant={'outlined'}
-                                margin={'normal'}
                                 fullWidth
                                 id={'mobilePhone'}
                                 label={'Mobile Phone'}
@@ -254,9 +222,8 @@ const PersonDialog = ({
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 value={currentPerson.landline}
-                                onChange={(e) => onChange(e)}
+                                onChange={(e) => handleBasicInputChange(e)}
                                 variant={'outlined'}
-                                margin={'normal'}
                                 fullWidth
                                 id={'landline'}
                                 label={'Landline'}
@@ -266,9 +233,11 @@ const PersonDialog = ({
                             />
                         </Grid>
                     </Grid>
-                    <Button className={classes.submit} color={'primary'} type="submit" variant="contained">
-                        Submit
-                    </Button>
+                    <FormSubmitBar
+                        disableSubmit={!isFormDirty}
+                        handleCancel={handleCancel}
+                        submitButtonText={currentPerson.id ? `Update` : 'Create'}
+                    />
                 </Box>
             </DialogContent>
         </Dialog>

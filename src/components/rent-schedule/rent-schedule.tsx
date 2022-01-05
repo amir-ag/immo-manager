@@ -7,11 +7,9 @@ import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import routes from '../../routes/route-constants';
 import { useAppSelector } from '../../hooks/store.hooks';
+import { IntroHeader } from '../ui/intro-header/intro-header';
 
 const useStyles = makeStyles((theme) => ({
-    title: {
-        marginBottom: theme.spacing(4),
-    },
     form: {
         maxWidth: '600px',
     },
@@ -38,9 +36,7 @@ export const RentSchedule = () => {
 
     return (
         <>
-            <Typography variant={'h5'} className={cssClasses.title}>
-                Rent Schedule
-            </Typography>
+            <IntroHeader title="Rent Schedule" subtitle="Generate a rent schedule for a specific property." />
 
             {properties.length > 0 ? (
                 <form className={cssClasses.form} onSubmit={renderTable}>

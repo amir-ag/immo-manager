@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Layout from '../layout/layout';
-import PersonsOverview from '../persons/persons.overview';
+import PersonsOverview from '../person/overview/persons-overview';
 import routes from '../../routes/route-constants';
 import { DashboardContainer } from '../dashboard/dashboard.container';
 import { RentSchedule } from '../rent-schedule/rent-schedule';
-import ProfileContainer from '../profile/profile.container';
+import ProfileDetail from '../profile/profile-detail';
 import { RentalUnitDetail } from '../rental-unit/rental-unit-detail';
 import { TenancyDetail } from '../tenancy/tenancy-detail';
 import PropertiesOverview from '../property/overview/properties-overview';
@@ -30,7 +30,7 @@ const MainApp = ({ menuItems }: MainAppProps) => {
                 <Switch>
                     {/* Profile */}
                     <Route path={routes.PROFILE}>
-                        <ProfileContainer />
+                        <ProfileDetail />
                     </Route>
 
                     {/* Dashboard */}

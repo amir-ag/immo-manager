@@ -1,5 +1,5 @@
 import { months } from '../../../constants';
-import { PersonModel } from '../../persons/models/person.model';
+import { PersonModel } from '../../person/model/person.model';
 import { format } from 'date-fns';
 
 export type TenancyModel = {
@@ -53,8 +53,8 @@ export const getDisplayNameOfTenancy = (tenancy: TenancyModel, allTenants: Perso
     const tenants = getTenantsOfTenancy(tenancy, allTenants);
     const desc = 'Tenancy';
 
-    if (tenants?.length) {
-        return desc;
+    if (!tenants?.length) {
+        return desc + ' (Vacancy)';
     }
 
     return `${desc} (${tenants.map((t) => t.firstName + ' ' + t.lastName).join(' & ')})`;

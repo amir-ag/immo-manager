@@ -17,13 +17,13 @@ import { months } from '../../constants';
 import { stylingConstants } from '../../theme/shared-styles';
 import { getDisplayNameOfProperty, PropertyModel } from '../property/model/property.model';
 import { getDisplayNameOfRentalUnit, RentalUnitModel } from '../rental-unit/model/rental-unit.model';
-import DetailViewFormActions from '../ui/detail-view-form-actions/detail-view-form-actions';
+import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { TenancyModel } from './model/tenancy.model';
 import {
     emptyPerson,
     getPersonDisplayNameForFormSelectFields,
     PersonModel,
-} from '../persons/models/person.model';
+} from '../person/model/person.model';
 import { useAppDispatch } from '../../hooks/store.hooks';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';
@@ -65,6 +65,7 @@ export const TenancyForm = ({
     const { handleBasicInputChange, handleAutocompleteChange, handleSubmit, isFormDirty } =
         useForms<TenancyModel>(setCurrentTenancy, currentTenancy, submitFunc);
 
+    // TODO: Reuse Grid (Containers) as custom component
     return (
         <Grid
             component={'form'}
@@ -82,7 +83,9 @@ export const TenancyForm = ({
                 alignContent={'flex-start'}
             >
                 <Grid item xs={12}>
-                    <Typography variant={'h6'}>General Info</Typography>
+                    <Typography variant={'subtitle2'} component={'h3'}>
+                        Basic Info
+                    </Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
@@ -148,6 +151,11 @@ export const TenancyForm = ({
                         disabled={currentTenancy.isVacancy}
                     />
                 </Grid>
+                <Grid item xs={12}>
+                    <Typography variant={'subtitle2'} component={'h3'}>
+                        Contract Details
+                    </Typography>
+                </Grid>
                 <Grid item xs={12} md={6}>
                     <FormControlLabel
                         id="isVacancy"
@@ -203,7 +211,6 @@ export const TenancyForm = ({
                 <Grid item xs={12} md={6}>
                     <TextField
                         variant={'outlined'}
-                        margin={'normal'}
                         fullWidth
                         id={'cancellationPeriod'}
                         label={'Cancellation Period (Months)'}
@@ -222,7 +229,7 @@ export const TenancyForm = ({
                             labelId="cancellationMonthsLabel"
                             id="cancellationMonths"
                             multiple
-                            value={currentTenancy.cancellationMonths}
+                            value={currentTenancy.cancellationMonths ?? []}
                             onChange={(e) => handleBasicInputChange(e, 'cancellationMonths')}
                             input={<Input />}
                             renderValue={(selected) => (selected as string[]).join(', ')}
@@ -247,7 +254,9 @@ export const TenancyForm = ({
                 alignContent={'flex-start'}
             >
                 <Grid item xs={12}>
-                    <Typography variant={'h6'}>Rent Info</Typography>
+                    <Typography variant={'subtitle2'} component={'h3'}>
+                        Rent Details
+                    </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <TextField
@@ -301,26 +310,11 @@ export const TenancyForm = ({
                     />
                 </Grid>
             </Grid>
-            <Grid
-                item
-                container
-                xs={12}
-                sm={6}
-                spacing={stylingConstants.gridSpacing}
-                alignItems={'center'}
-                alignContent={'flex-start'}
+            <FormSubmitBar
+                disableSubmit={!isFormDirty}
+                handleCancel={() => handleCancel()}
+                submitButtonText={isNew ? 'Create' : 'Update'}
             />
-            <Grid
-                item
-                container
-                xs={12}
-                sm={6}
-                spacing={stylingConstants.gridSpacing}
-                alignItems={'center'}
-                alignContent={'flex-start'}
-            >
-                <DetailViewFormActions disableSave={!isFormDirty()} handleCancel={() => handleCancel()} />
-            </Grid>
         </Grid>
     );
 };

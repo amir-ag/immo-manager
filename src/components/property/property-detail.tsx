@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { stylingConstants } from '../../theme/shared-styles';
 import { PropertyForm } from './property-form';
 import { RentalUnitsOverview } from '../rental-unit/overview/rental-units-overview';
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { selectProperties } from '../../store/selectors';
 import { propertiesSlice } from '../../store/slices/properties.slice';
 import { rentalUnitsSlice } from '../../store/slices/rental-units.slice';
+import { IntroHeader } from '../ui/intro-header/intro-header';
 
 export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
@@ -30,11 +31,16 @@ export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
 
     return (
         <>
-            <Typography variant={'h5'}>
-                {propertyToEdit
-                    ? getDisplayNameOfProperty(propertyToEdit)
-                    : `Create new Property${!isNew ? ' (Property to edit has not been found!)' : ''}`}
-            </Typography>
+            <IntroHeader
+                title={isNew ? 'Create Property' : 'Edit Property'}
+                subtitle={
+                    isNew
+                        ? 'Create a new property'
+                        : propertyToEdit
+                        ? getDisplayNameOfProperty(propertyToEdit)
+                        : 'Property has not been found!'
+                }
+            />
             <Grid container spacing={stylingConstants.gridSpacing}>
                 <PropertyForm
                     currentProperty={currentProperty}

@@ -15,7 +15,7 @@ import {
 import { format, parseISO } from 'date-fns';
 import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
-import { useAppSelector, useAppDispatch } from '../../../hooks/store.hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
 import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
 import { getTenantsOfTenancy } from '../model/tenancy.model';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -47,6 +47,7 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
 
     const [searchResult, setSearchResult] = useState(tenancies);
 
+    // TODO: Fix 'Maximum update depth exceeded' error
     useEffect(() => {
         setSearchResult(tenancies);
     }, [tenancies]);
@@ -65,7 +66,9 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
     return (
         <>
             <Grid item xs={12}>
-                <Typography variant={'h6'}>Tenancies</Typography>
+                <Typography variant={'h6'} component={'h2'}>
+                    Associated Tenancies
+                </Typography>
             </Grid>
             <SearchHeader
                 placeholderText={'Search by description'}

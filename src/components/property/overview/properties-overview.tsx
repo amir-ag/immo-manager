@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, makeStyles, Typography } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Grid } from '@material-ui/core';
 import PropertyCard from './property-card';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
@@ -11,25 +11,14 @@ import { deleteRentalUnit } from '../../../store/slices/rental-units.slice';
 import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import { useHistory } from 'react-router';
 import SearchHeader from '../../ui/search-header/search-header';
-
-const gridSpacing = 3;
-
-const useStyles = makeStyles((theme) => ({
-    headerControls: {
-        width: '100%',
-    },
-    headerElements: {
-        marginBottom: theme.spacing(4),
-    },
-}));
+import { IntroHeader } from '../../ui/intro-header/intro-header';
+import { stylingConstants } from '../../../theme/shared-styles';
 
 type PropertiesViewProps = {
-    showHeader?: boolean;
+    showSearchHeader?: boolean;
 };
 
-const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
-    const cssClasses = useStyles();
-
+const PropertiesOverview = ({ showSearchHeader = true }: PropertiesViewProps) => {
     const dispatch = useAppDispatch();
     const properties = useAppSelector(selectProperties);
     const rentalUnits = useAppSelector(selectRentalUnits);
@@ -64,11 +53,12 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
 
     return (
         <>
-            {showHeader && (
+            {showSearchHeader && (
                 <>
-                    <Typography className={cssClasses.headerElements} variant={'h5'}>
-                        Properties Overview
-                    </Typography>
+                    <IntroHeader
+                        title="Manage Properties"
+                        subtitle="Search, create, edit, ... all properties."
+                    />
                     <SearchHeader
                         placeholderText={'Search by name or address...'}
                         handleCreate={handleCreate}
@@ -87,7 +77,7 @@ const PropertiesOverview = ({ showHeader = true }: PropertiesViewProps) => {
                 handleClose={handleCancelDelete}
                 handleDeletion={handleDelete}
             />
-            <Grid container spacing={gridSpacing} justifyContent="space-evenly">
+            <Grid container spacing={stylingConstants.gridSpacing} justifyContent="space-evenly">
                 {searchResult.map((property) => (
                     <Grid item xs={12} sm={6} md={4} xl={3} key={property.id}>
                         <PropertyCard

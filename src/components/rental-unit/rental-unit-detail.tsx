@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { emptyRentalUnit, getDisplayNameOfRentalUnit } from './model/rental-unit.model';
 import { stylingConstants } from '../../theme/shared-styles';
 import { RentalUnitForm } from './rental-unit-form';
@@ -10,6 +10,7 @@ import { selectCurrentProperty, selectRentalUnits } from '../../store/selectors'
 import { emptyProperty } from '../property/model/property.model';
 import { propertiesSlice } from '../../store/slices/properties.slice';
 import { rentalUnitsSlice } from '../../store/slices/rental-units.slice';
+import { IntroHeader } from '../ui/intro-header/intro-header';
 
 export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
@@ -33,13 +34,16 @@ export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
 
     return (
         <>
-            <Typography variant={'h5'}>
-                {rentalUnitToEdit
-                    ? getDisplayNameOfRentalUnit(rentalUnitToEdit)
-                    : `Create new Rental Unit${
-                          !isNew ? ' (Rental Unit to edit has not been found!)' : ''
-                      }`}{' '}
-            </Typography>
+            <IntroHeader
+                title={isNew ? 'Create Rental Unit' : 'Edit Rental Unit'}
+                subtitle={
+                    isNew
+                        ? 'Create a new rental unit'
+                        : rentalUnitToEdit
+                        ? getDisplayNameOfRentalUnit(rentalUnitToEdit)
+                        : 'Rental unit has not been found!'
+                }
+            />
             <Grid container spacing={stylingConstants.gridSpacing}>
                 <RentalUnitForm
                     currentRentalUnit={currentRentalUnit}
