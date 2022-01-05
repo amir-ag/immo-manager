@@ -1,9 +1,10 @@
 import React from 'react';
 import { makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core';
 import { format } from 'date-fns';
-import { getDisplayNameOfProperty, PropertyModel } from '../../property/model/property.model';
+import { PropertyModel } from '../../property/model/property.model';
 import { useAppSelector } from '../../../hooks/store.hooks';
 import { selectPersonsOwners } from '../../../store/selectors';
+import * as propertyService from '../../property/service/property.service';
 
 const useStyles = makeStyles((theme) => ({
     propertyDetails: {
@@ -32,7 +33,7 @@ const RentSchedulePropertyTable = (property: PropertyModel) => {
                         </TableRow>
                         <TableRow>
                             <TableCell>Property</TableCell>
-                            <TableCell>{getDisplayNameOfProperty(property)}</TableCell>
+                            <TableCell>{propertyService.getDisplayNameOfProperty(property)}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell>Address</TableCell>

@@ -16,9 +16,10 @@ import routes from '../../../routes/route-constants';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
-import { getTenantsOfTenancy, TenancyModel } from '../model/tenancy.model';
+import { TenancyModel } from '../model/tenancy.model';
 import { format, parseISO } from 'date-fns';
 import { PersonModel } from '../../person/model/person.model';
+import * as tenancyService from '../service/tenancy.service';
 
 type TenanciesTableProps = {
     tenants: PersonModel[];
@@ -83,7 +84,8 @@ export const TenanciesTable = ({ tenants, handleDelete, searchResult }: Tenancie
                                 <TableCell className={ten.isVacancy ? cssClasses.tableCellVacancy : ''}>
                                     {ten.isVacancy
                                         ? 'Vacancy'
-                                        : getTenantsOfTenancy(ten, tenants)
+                                        : tenancyService
+                                              .getTenantsOfTenancy(ten, tenants)
                                               .map((t) => t.firstName + ' ' + t.lastName)
                                               .join(', ')}
                                 </TableCell>

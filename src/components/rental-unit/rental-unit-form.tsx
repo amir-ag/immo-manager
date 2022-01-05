@@ -3,12 +3,13 @@ import { Grid, MenuItem, TextField, Typography } from '@material-ui/core';
 import { rentalUnitfloorLevel, RentalUnitModel, rentalUnitType } from './model/rental-unit.model';
 import { stylingConstants, useSharedStyles } from '../../theme/shared-styles';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
-import { getDisplayNameOfProperty, PropertyModel } from '../property/model/property.model';
+import { PropertyModel } from '../property/model/property.model';
 import routes from '../../routes/route-constants';
 import { useAppDispatch } from '../../hooks/store.hooks';
 import { useHistory } from 'react-router';
 import { createOrUpdateRentalUnit } from '../../store/slices/rental-units.slice';
 import { useForms } from '../../hooks/forms.hooks';
+import * as propertyService from '../property/service/property.service';
 
 export type RentalUnitFormProps = {
     currentRentalUnit: RentalUnitModel;
@@ -70,7 +71,7 @@ export const RentalUnitForm = ({
                     id={'property'}
                     label={'Property'}
                     type="text"
-                    defaultValue={getDisplayNameOfProperty(property)}
+                    defaultValue={propertyService.getDisplayNameOfProperty(property)}
                     required
                     disabled
                 />

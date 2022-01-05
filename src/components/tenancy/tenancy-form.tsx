@@ -15,20 +15,19 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { months } from '../../constants';
 import { stylingConstants } from '../../theme/shared-styles';
-import { getDisplayNameOfProperty, PropertyModel } from '../property/model/property.model';
-import { getDisplayNameOfRentalUnit, RentalUnitModel } from '../rental-unit/model/rental-unit.model';
+import { PropertyModel } from '../property/model/property.model';
+import { RentalUnitModel } from '../rental-unit/model/rental-unit.model';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { TenancyModel } from './model/tenancy.model';
-import {
-    emptyPerson,
-    getPersonDisplayNameForFormSelectFields,
-    PersonModel,
-} from '../person/model/person.model';
+import { emptyPerson, PersonModel } from '../person/model/person.model';
 import { useAppDispatch } from '../../hooks/store.hooks';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';
 import { createOrUpdateTenancy } from '../../store/slices/tenancies.slice';
 import { useForms } from '../../hooks/forms.hooks';
+import * as personService from '../person/service/person.service';
+import * as propertyService from '../property/service/property.service';
+import * as rentalUnitService from '../rental-unit/service/rental-unit.service';
 
 export type TenancyFormProps = {
     currentTenancy: TenancyModel;
@@ -94,7 +93,7 @@ export const TenancyForm = ({
                         id={'property'}
                         label={'Property'}
                         type="text"
-                        defaultValue={getDisplayNameOfProperty(property)}
+                        defaultValue={propertyService.getDisplayNameOfProperty(property)}
                         required
                         disabled
                     />
@@ -106,7 +105,7 @@ export const TenancyForm = ({
                         id={'rentalUnit'}
                         label={'Rental Unit'}
                         type="text"
-                        defaultValue={getDisplayNameOfRentalUnit(rentalUnit)}
+                        defaultValue={rentalUnitService.getDisplayNameOfRentalUnit(rentalUnit)}
                         required
                         disabled
                     />
@@ -120,7 +119,7 @@ export const TenancyForm = ({
                         id="tenant1Id"
                         options={tenants}
                         onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant1Id')}
-                        getOptionLabel={getPersonDisplayNameForFormSelectFields}
+                        getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
                         value={tenants.find((t) => t.id === currentTenancy.tenant1Id) ?? emptyPerson}
                         getOptionSelected={(option: PersonModel, value: PersonModel) =>
                             option.id === value.id
@@ -140,7 +139,7 @@ export const TenancyForm = ({
                         id="tenant2Id"
                         options={tenants}
                         onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant2Id')}
-                        getOptionLabel={getPersonDisplayNameForFormSelectFields}
+                        getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
                         value={tenants.find((t) => t.id === currentTenancy.tenant2Id) ?? emptyPerson}
                         getOptionSelected={(option: PersonModel, value: PersonModel) =>
                             option.id === value.id

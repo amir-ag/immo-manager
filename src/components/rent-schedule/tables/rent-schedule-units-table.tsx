@@ -9,10 +9,12 @@ import {
     TableHead,
     TableRow,
 } from '@material-ui/core';
-import { getDisplayNameOfRentalUnit, RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
-import { getDisplayNameOfTenants, TenancyModel } from '../../tenancy/model/tenancy.model';
+import { RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
+import { TenancyModel } from '../../tenancy/model/tenancy.model';
 import { format, parseISO } from 'date-fns';
 import { PersonModel } from '../../person/model/person.model';
+import * as rentalUnitService from '../../rental-unit/service/rental-unit.service';
+import * as tenancyService from '../../tenancy/service/tenancy.service';
 
 const useStyles = makeStyles({
     table: {
@@ -57,9 +59,11 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentSchedu
                                 <TableCell component="th" scope="row">
                                     {unit.ewid}
                                 </TableCell>
-                                <TableCell align="right">{getDisplayNameOfRentalUnit(unit)}</TableCell>
                                 <TableCell align="right">
-                                    {getDisplayNameOfTenants(tenancy, tenants)}
+                                    {rentalUnitService.getDisplayNameOfRentalUnit(unit)}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {tenancyService.getDisplayNameOfTenants(tenancy, tenants)}
                                 </TableCell>
                                 <TableCell align="right">{unit.surfaceInM2}</TableCell>
                                 <TableCell align="right">
