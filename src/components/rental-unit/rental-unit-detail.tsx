@@ -51,17 +51,8 @@ export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
                     isNew={isNew}
                     property={property}
                 />
-                <Grid
-                    item
-                    container
-                    xs={12}
-                    sm={6}
-                    spacing={stylingConstants.gridSpacing}
-                    alignItems={'center'}
-                    alignContent={'flex-start'}
-                >
-                    <TenanciesOverview disableCreate={isNew || !rentalUnitToEdit} />
-                </Grid>
+
+                <TenanciesOverview disableCreate={isNew || !rentalUnitToEdit} />
             </Grid>
         </>
     );

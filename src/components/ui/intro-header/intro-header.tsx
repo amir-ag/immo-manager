@@ -9,7 +9,10 @@ type IntroHeaderProps = {
 const useStyles = makeStyles((theme) => ({
     root: {
         marginBottom: theme.spacing(6),
+        marginRight: -theme.spacing(3),
+        marginLeft: -theme.spacing(3),
         padding: theme.spacing(2),
+        paddingLeft: theme.spacing(3),
         backgroundColor: theme.palette.secondary.light,
     },
     subtitle: {
@@ -21,7 +24,7 @@ export const IntroHeader = ({ title, subtitle }: IntroHeaderProps) => {
     const cssClasses = useStyles();
 
     return (
-        <Paper elevation={5} className={cssClasses.root}>
+        <Paper elevation={5} square={true} className={cssClasses.root}>
             <Typography variant={'h4'} component={'h1'}>
                 {title}
             </Typography>

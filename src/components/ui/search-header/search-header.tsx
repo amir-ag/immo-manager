@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SearchBar from '@snekcode/mui-search-bar';
+import { stylingConstants } from '../../../theme/shared-styles';
 
 // TODO: Change to generic Component (even better to use a custom Hook --> integrate useState(searchResult))
 export type SearchHeaderProps = {
@@ -87,7 +88,7 @@ const SearchHeader = ({
             item
             justifyContent="space-between"
             alignItems="center"
-            spacing={3}
+            spacing={stylingConstants.gridSpacing}
             className={cssClasses.root}
         >
             <Grid item xs={12} sm={wrapAtMd ? false : 8} md={wrapAtMd ? 8 : false}>
