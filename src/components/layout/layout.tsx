@@ -127,7 +127,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
     const classes = useStyles();
     const theme = useTheme();
     const dispatch = useAppDispatch();
-    const { firstName } = useAppSelector(selectUser);
+    const { firstName, lastName } = useAppSelector(selectUser);
     const [openMenu, setOpenMenu] = useState(false);
     const [openDrawer, setOpenDrawer] = React.useState(false);
     const avatarRef = React.useRef<HTMLDivElement>(null);
@@ -191,7 +191,9 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                         {user?.photoURL ? (
                             <Avatar className={classes.avatar} src={user.photoURL} />
                         ) : (
-                            <Avatar className={classes.avatar} />
+                            <Avatar className={classes.avatar}>
+                                {firstName?.charAt(0)?.toUpperCase() + lastName?.charAt(0)?.toUpperCase()}
+                            </Avatar>
                         )}
                     </div>
                     <Popper

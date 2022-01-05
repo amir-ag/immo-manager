@@ -28,15 +28,15 @@ type TenanciesTableProps = {
     searchResult: TenancyModel[];
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     table: {
         width: '100%',
     },
     tableCellVacancy: {
-        color: 'red',
+        color: theme.palette.error.main,
         fontWeight: 'bold',
     },
-});
+}));
 
 export const TenanciesTable = ({ tenants, handleDelete, searchResult }: TenanciesTableProps) => {
     const cssClasses = useStyles();
