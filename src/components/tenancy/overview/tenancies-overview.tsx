@@ -19,10 +19,9 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
 
     const [searchResult, setSearchResult] = useState(tenancies);
 
-    // TODO: Fix 'Maximum update depth exceeded' error
     useEffect(() => {
         setSearchResult(tenancies);
-    }, [tenancies]);
+    }, [rentalUnit]);
 
     const handleDelete = (tenId: string) => {
         dispatch(deleteTenancy(tenId));
@@ -48,7 +47,7 @@ export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean })
                 </Typography>
             </Grid>
             <SearchHeader
-                placeholderText={'Search by description'}
+                placeholderText={'Search by date (yyyy-MM-dd)'}
                 handleCreate={handleCreate}
                 originalData={tenancies}
                 setSearchResult={setSearchResult}

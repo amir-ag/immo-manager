@@ -27,10 +27,9 @@ export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean 
 
     const [searchResult, setSearchResult] = useState(rentalUnits);
 
-    // TODO: Fix 'Maximum update depth exceeded' error
     useEffect(() => {
         setSearchResult(rentalUnits);
-    }, [rentalUnits]);
+    }, [property]);
 
     const handleDelete = (ruId: string) => {
         dispatch(deleteRentalUnit(ruId));
