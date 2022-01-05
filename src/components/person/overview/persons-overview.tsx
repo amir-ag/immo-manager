@@ -6,7 +6,8 @@ import PersonsTable from './persons-table';
 import { selectPersons } from '../../../store/selectors';
 import { emptyPerson } from '../model/person.model';
 import SearchHeader from '../../ui/search-header/search-header';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
+import { IntroHeader } from '../../ui/intro-header/intro-header';
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -47,9 +48,7 @@ const PersonsOverview = () => {
 
     return (
         <>
-            <Typography className={cssClasses.header} variant={'h5'}>
-                Persons
-            </Typography>
+            <IntroHeader title="Manage Persons" subtitle="Search, create, edit, ... all persons." />
             <SearchHeader
                 handleCreate={handleCreate}
                 placeholderText={'Search by first name, last name, email or address'}
