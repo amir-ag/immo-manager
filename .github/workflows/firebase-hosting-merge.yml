@@ -7,18 +7,6 @@ name: Deploy to Firebase Hosting on merge
     branches:
       - main
 jobs:
-  cypress-run:
-    runs-on: ubuntu-latest
-    env:
-      CI: false
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          build: npm run build
-          start: npm start
   build_and_deploy:
     runs-on: ubuntu-latest
     env:
