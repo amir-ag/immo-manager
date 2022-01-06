@@ -9,6 +9,8 @@ name: Deploy to Firebase Hosting on merge
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+    env:
+      CI: false
     steps:
       - name: Checkout
         uses: actions/checkout@v2
