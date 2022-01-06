@@ -1,6 +1,6 @@
 describe('homepage', () => {
     it('visit homepage', () => {
-        cy.visit('http://localhost:8080/');
+        cy.visit('http://localhost:3000/');
         cy.contains('Forgot password').click();
         cy.url().should('include', '/reset');
         cy.contains('Back').click();
