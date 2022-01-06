@@ -6,6 +6,6 @@ describe('homepage', () => {
         cy.contains('Back').click();
         cy.contains("Don't have an account? Sign up").click();
         cy.contains('Already have an account? Sign in').click();
-        cy.get('button[type=submit]').contains('lol');
+        cy.get('button[type=submit]').contains('Sign In');
     });
 });
