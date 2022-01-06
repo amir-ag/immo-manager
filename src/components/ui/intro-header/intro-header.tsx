@@ -24,7 +24,7 @@ export const IntroHeader = ({ title, subtitle }: IntroHeaderProps) => {
     const cssClasses = useStyles();
 
     return (
-        <Paper elevation={5} square={true} className={cssClasses.root}>
+        <Paper elevation={5} square={true} className={cssClasses.root} data-testid={'intro-header'}>
             <Typography variant={'h4'} component={'h1'}>
                 {title}
             </Typography>
