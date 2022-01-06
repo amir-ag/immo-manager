@@ -1,4 +1,5 @@
-import { getPersonDisplayNameForFormSelectFields, PersonModel } from '../model/person.model';
+import { PersonModel } from '../model/person.model';
+import { getPersonDisplayNameForFormSelectFields } from '../service/person.service';
 
 export const dummyPerson: PersonModel = {
     id: 'ge645634gr',
