@@ -43,7 +43,7 @@ const ImageUpload = ({ previewImageUrl, handleImageChange }: ImageUploadProps) =
                             Preview:
                         </Typography>
                         <img
-                            alt="Preview Image"
+                            alt="Preview Thumbnail"
                             loading="lazy"
                             src={previewImageUrl}
                             className={cssClasses.previewImg}

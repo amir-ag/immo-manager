@@ -4,12 +4,13 @@ import { stylingConstants } from '../../theme/shared-styles';
 import { PropertyForm } from './property-form';
 import { RentalUnitsOverview } from '../rental-unit/overview/rental-units-overview';
 import { useParams } from 'react-router';
-import { emptyProperty, getDisplayNameOfProperty } from './model/property.model';
+import { emptyProperty } from './model/property.model';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { selectProperties } from '../../store/selectors';
 import { propertiesSlice } from '../../store/slices/properties.slice';
 import { rentalUnitsSlice } from '../../store/slices/rental-units.slice';
 import { IntroHeader } from '../ui/intro-header/intro-header';
+import * as propertyService from './service/property.service';
 
 export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
@@ -37,7 +38,7 @@ export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
                     isNew
                         ? 'Create a new property'
                         : propertyToEdit
-                        ? getDisplayNameOfProperty(propertyToEdit)
+                        ? propertyService.getDisplayNameOfProperty(propertyToEdit)
                         : 'Property has not been found!'
                 }
             />

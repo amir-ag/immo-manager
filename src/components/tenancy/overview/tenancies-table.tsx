@@ -16,9 +16,11 @@ import routes from '../../../routes/route-constants';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
-import { getTenantsOfTenancy, TenancyModel } from '../model/tenancy.model';
+import { TenancyModel } from '../model/tenancy.model';
 import { format, parseISO } from 'date-fns';
 import { PersonModel } from '../../person/model/person.model';
+import * as tenancyService from '../service/tenancy.service';
+import * as constants from '../../../constants';
 
 type TenanciesTableProps = {
     tenants: PersonModel[];
@@ -26,15 +28,15 @@ type TenanciesTableProps = {
     searchResult: TenancyModel[];
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     table: {
         width: '100%',
     },
     tableCellVacancy: {
-        color: 'red',
+        color: theme.palette.error.main,
         fontWeight: 'bold',
     },
-});
+}));
 
 export const TenanciesTable = ({ tenants, handleDelete, searchResult }: TenanciesTableProps) => {
     const cssClasses = useStyles();
@@ -83,18 +85,19 @@ export const TenanciesTable = ({ tenants, handleDelete, searchResult }: Tenancie
                                 <TableCell className={ten.isVacancy ? cssClasses.tableCellVacancy : ''}>
                                     {ten.isVacancy
                                         ? 'Vacancy'
-                                        : getTenantsOfTenancy(ten, tenants)
+                                        : tenancyService
+                                              .getTenantsOfTenancy(ten, tenants)
                                               .map((t) => t.firstName + ' ' + t.lastName)
                                               .join(', ')}
                                 </TableCell>
                                 <TableCell align="right">
                                     {ten.beginOfContract
-                                        ? format(parseISO(ten.beginOfContract), 'dd.MM.yyyy')
+                                        ? format(parseISO(ten.beginOfContract), constants.dateFormatShort)
                                         : '-'}
                                 </TableCell>
                                 <TableCell align="right">
                                     {ten.endOfContract
-                                        ? format(parseISO(ten.endOfContract), 'dd.MM.yyyy')
+                                        ? format(parseISO(ten.endOfContract), constants.dateFormatShort)
                                         : '-'}
                                 </TableCell>
                             </TableRow>

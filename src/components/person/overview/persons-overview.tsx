@@ -6,17 +6,9 @@ import PersonsTable from './persons-table';
 import { selectPersons } from '../../../store/selectors';
 import { emptyPerson } from '../model/person.model';
 import SearchHeader from '../../ui/search-header/search-header';
-import { makeStyles } from '@material-ui/core';
 import { IntroHeader } from '../../ui/intro-header/intro-header';
 
-const useStyles = makeStyles((theme) => ({
-    header: {
-        marginBottom: theme.spacing(4),
-    },
-}));
-
 const PersonsOverview = () => {
-    const cssClasses = useStyles();
     const personsData = useAppSelector(selectPersons);
     const dispatch = useAppDispatch();
 

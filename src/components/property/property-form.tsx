@@ -5,11 +5,7 @@ import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { PropertyModel } from './model/property.model';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { selectPersonsJanitors, selectPersonsOwners } from '../../store/selectors';
-import {
-    emptyPerson,
-    getPersonDisplayNameForFormSelectFields,
-    PersonModel,
-} from '../person/model/person.model';
+import { emptyPerson, PersonModel } from '../person/model/person.model';
 import { stylingConstants } from '../../theme/shared-styles';
 import { createOrUpdateProperty } from '../../store/slices/properties.slice';
 import { useHistory } from 'react-router';
@@ -17,6 +13,7 @@ import routes from '../../routes/route-constants';
 import { useForms } from '../../hooks/forms.hooks';
 import ImageUpload from '../forms/image-upload/image-upload';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
+import * as personService from '../person/service/person.service';
 
 export type PropertyFormProps = {
     currentProperty: PropertyModel;
@@ -105,7 +102,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     id="owner"
                     options={owners}
                     onChange={(e, v) => handleAutocompleteChange(e, v, 'owner')}
-                    getOptionLabel={getPersonDisplayNameForFormSelectFields}
+                    getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
                     value={owners.find((o) => o.id === currentProperty.owner) ?? emptyPerson}
                     getOptionSelected={(option: PersonModel, value: PersonModel) => option.id === value.id}
                     renderInput={(params) => <TextField {...params} label="Owner" variant="outlined" />}
@@ -129,7 +126,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     id="janitor"
                     options={janitors}
                     onChange={(e, v) => handleAutocompleteChange(e, v, 'janitor')}
-                    getOptionLabel={getPersonDisplayNameForFormSelectFields}
+                    getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
                     value={janitors.find((j) => j.id === currentProperty.janitor) ?? emptyPerson}
                     getOptionSelected={(option: PersonModel, value: PersonModel) => option.id === value.id}
                     renderInput={(params) => <TextField {...params} label="Janitor" variant="outlined" />}

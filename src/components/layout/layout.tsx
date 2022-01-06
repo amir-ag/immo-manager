@@ -33,6 +33,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { selectUser } from '../../store/selectors';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import * as constants from '../../constants';
 
 export type LayoutProps = {
     children: React.ReactNode;
@@ -126,7 +127,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
     const classes = useStyles();
     const theme = useTheme();
     const dispatch = useAppDispatch();
-    const { firstName } = useAppSelector(selectUser);
+    const { firstName, lastName } = useAppSelector(selectUser);
     const [openMenu, setOpenMenu] = useState(false);
     const [openDrawer, setOpenDrawer] = React.useState(false);
     const avatarRef = React.useRef<HTMLDivElement>(null);
@@ -176,7 +177,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                         <MenuIcon />
                     </IconButton>
                     <Typography color={'secondary'} variant={'h5'} className={classes.date}>
-                        Today is the {format(new Date(), 'do MMMM Y')}
+                        Today is the {format(new Date(), constants.dateFormatLong)}
                     </Typography>
                     <Typography color={'secondary'} variant={'h6'} className={classes.firstname}>
                         {firstName && firstName}
@@ -190,7 +191,9 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                         {user?.photoURL ? (
                             <Avatar className={classes.avatar} src={user.photoURL} />
                         ) : (
-                            <Avatar className={classes.avatar} />
+                            <Avatar className={classes.avatar}>
+                                {firstName?.charAt(0)?.toUpperCase() + lastName?.charAt(0)?.toUpperCase()}
+                            </Avatar>
                         )}
                     </div>
                     <Popper

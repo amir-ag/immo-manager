@@ -18,6 +18,7 @@ import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/ui.hooks';
 import theme from '../../../theme/theme';
 import { format, parseISO } from 'date-fns';
+import * as constants from '../../../constants';
 
 const useStyles = makeStyles({
     buttonIcons: {
@@ -127,7 +128,9 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                                         {p.mobilePhone}
                                     </TableCell>
                                     <TableCell align={'right'} className={classes.hideTableCellWhenMd}>
-                                        {p.birthday ? format(parseISO(p.birthday), 'dd.MM.yyyy') : 'n/a'}
+                                        {p.birthday
+                                            ? format(parseISO(p.birthday), constants.dateFormatShort)
+                                            : 'n/a'}
                                     </TableCell>
                                     <TableCell align={'right'}>{p.roles}</TableCell>
                                 </TableRow>
