@@ -1,4 +1,5 @@
 {
   "testFiles": "**/*.test.{js,ts,jsx,tsx}",
-  "componentFolder": "src"
+  "componentFolder": "src",
+  "nodeVersion": "bundled"
 }
