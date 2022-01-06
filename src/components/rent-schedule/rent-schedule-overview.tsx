@@ -11,10 +11,10 @@ import { RentalUnitModel } from '../rental-unit/model/rental-unit.model';
 import { emptyTenancy } from '../tenancy/model/tenancy.model';
 import GetAppOutlinedIcon from '@material-ui/icons/GetAppOutlined';
 import { useReactToPrint } from 'react-to-print';
-import { getDisplayNameOfProperty } from '../property/model/property.model';
 import RentSchedulePropertyTable from './tables/rent-schedule-property-table';
 import RentScheduleUnitsTable from './tables/rent-schedule-units-table';
 import { useAppSelector } from '../../hooks/store.hooks';
+import * as propertyService from '../property/service/property.service';
 
 const useStyles = makeStyles((theme) => ({
     exportContainer: {
@@ -55,7 +55,7 @@ const RentScheduleOverview = () => {
             </div>
             <Container ref={componentRef}>
                 <Typography className={classes.title} variant={'h5'}>
-                    Rent Schedule Report for {getDisplayNameOfProperty(property)}
+                    Rent Schedule Report for {propertyService.getDisplayNameOfProperty(property)}
                 </Typography>
                 <RentSchedulePropertyTable {...property} />
                 <RentScheduleUnitsTable rentalUnits={rentalUnits} getTenancy={getTenancy} tenants={tenants} />

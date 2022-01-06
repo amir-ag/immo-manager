@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { emptyRentalUnit, getDisplayNameOfRentalUnit } from './model/rental-unit.model';
+import { emptyRentalUnit } from './model/rental-unit.model';
 import { stylingConstants } from '../../theme/shared-styles';
 import { RentalUnitForm } from './rental-unit-form';
 import { TenanciesOverview } from '../tenancy/overview/tenancies-overview';
@@ -11,6 +11,7 @@ import { emptyProperty } from '../property/model/property.model';
 import { propertiesSlice } from '../../store/slices/properties.slice';
 import { rentalUnitsSlice } from '../../store/slices/rental-units.slice';
 import { IntroHeader } from '../ui/intro-header/intro-header';
+import * as rentalUnitService from './service/rental-unit.service';
 
 export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
@@ -40,7 +41,7 @@ export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
                     isNew
                         ? 'Create a new rental unit'
                         : rentalUnitToEdit
-                        ? getDisplayNameOfRentalUnit(rentalUnitToEdit)
+                        ? rentalUnitService.getDisplayNameOfRentalUnit(rentalUnitToEdit)
                         : 'Rental unit has not been found!'
                 }
             />
@@ -51,17 +52,8 @@ export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
                     isNew={isNew}
                     property={property}
                 />
-                <Grid
-                    item
-                    container
-                    xs={12}
-                    sm={6}
-                    spacing={stylingConstants.gridSpacing}
-                    alignItems={'center'}
-                    alignContent={'flex-start'}
-                >
-                    <TenanciesOverview disableCreate={isNew || !rentalUnitToEdit} />
-                </Grid>
+
+                <TenanciesOverview disableCreate={isNew || !rentalUnitToEdit} />
             </Grid>
         </>
     );

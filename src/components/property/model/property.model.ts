@@ -25,8 +25,3 @@ export const emptyProperty: PropertyModel = {
             'https://firebasestorage.googleapis.com/v0/b/immo-manager.appspot.com/o/images%2Fproperties%2Fproperty-thumbnail-placeholder.jpg?alt=media&token=ccb13819-d815-4814-9e36-017c33838d10',
     },
 };
-
-// Helper functions
-export const getDisplayNameOfProperty = (p: PropertyModel) => {
-    return `${p.name} (${p.egid})`;
-};

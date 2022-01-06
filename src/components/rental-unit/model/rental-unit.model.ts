@@ -8,13 +8,6 @@ export type RentalUnitModel = {
     floorLevel?: typeof rentalUnitfloorLevel[number];
 };
 
-export const emptyRentalUnit: RentalUnitModel = {
-    id: '',
-    propertyId: '',
-    ewid: 0,
-    type: 'Apartment',
-};
-
 export const rentalUnitType = ['Parking Lot', 'Hobby Room', 'Apartment'] as const;
 
 export const rentalUnitfloorLevel = [
@@ -35,19 +28,9 @@ export const rentalUnitfloorLevel = [
     '10. Floor',
 ] as const;
 
-// Helper functions
-export const getDisplayNameOfRentalUnit = (ru: RentalUnitModel) => {
-    let resultString = '';
-
-    if (ru.type === 'Apartment' || ru.type === 'Hobby Room') {
-        resultString += `${ru.numberOfRooms} Room `;
-    }
-
-    resultString += ru.type;
-
-    if (ru.floorLevel && ru.floorLevel !== 'Undefined') {
-        resultString += `, ${ru.floorLevel}`;
-    }
-
-    return resultString + ` (${ru.ewid})`;
+export const emptyRentalUnit: RentalUnitModel = {
+    id: '',
+    propertyId: '',
+    ewid: 0,
+    type: 'Apartment',
 };
