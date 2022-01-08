@@ -3,9 +3,9 @@ import { Grid, Hidden, makeStyles } from '@material-ui/core';
 import { ReactComponent as UrbanDesign } from '../../assets/svg/home.svg';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import routes from '../../routes/route-constants';
-import SignIn, { SignInState } from '../sign-in/sign-in';
-import SignUp, { SignUpState } from '../sign-up/sign-up';
-import ResetPassword from '../reset-password/reset-password';
+import SignIn, { SignInState } from './sign-in/sign-in';
+import SignUp, { SignUpState } from './sign-up/sign-up';
+import ResetPassword from './reset-password/reset-password';
 
 export interface HomeProps {
     handleSignIn: (state: SignInState) => void;
