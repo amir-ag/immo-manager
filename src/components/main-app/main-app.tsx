@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Layout from '../layout/layout';
+import Layout from './layout/layout';
 import PersonsOverview from '../person/overview/persons-overview';
 import routes from '../../routes/route-constants';
 import { DashboardContainer } from '../dashboard/dashboard.container';

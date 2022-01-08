@@ -16,7 +16,7 @@ import routes from '../../../routes/route-constants';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { RentalUnitModel } from '../model/rental-unit.model';
-import { useDeletePrompt } from '../../../hooks/ui.hooks';
+import { useDeletePrompt } from '../../../hooks/use-delete-prompt.hook';
 import { TenancyModel } from '../../tenancy/model/tenancy.model';
 import { parseISO } from 'date-fns';
 import { PersonModel } from '../../person/model/person.model';

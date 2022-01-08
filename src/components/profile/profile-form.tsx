@@ -1,15 +1,16 @@
 import React, { FormEvent, useState } from 'react';
 import { Grid, TextField, Typography } from '@material-ui/core';
-import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
+import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { getAuth } from 'firebase/auth';
 import { selectUser } from '../../store/selectors';
 import ImageUpload from '../forms/image-upload/image-upload';
 import { emptyUser, UserModel } from './model/user.model';
-import { useForms } from '../../hooks/forms.hooks';
+import { useForms } from '../../hooks/use-forms.hook';
 import { update } from '../../store/slices/user.slice';
 import { stylingConstants } from '../../theme/shared-styles';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
+import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 
 const ProfileForm = () => {
     const dispatch = useAppDispatch();

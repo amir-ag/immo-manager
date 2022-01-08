@@ -24,8 +24,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CloseIcon from '@material-ui/icons/Close';
 
 import { emptyPerson, PersonModel, personRoles } from './model/person.model';
-import { useForms } from '../../hooks/forms.hooks';
-import { useAppDispatch } from '../../hooks/store.hooks';
+import { useForms } from '../../hooks/use-forms.hook';
+import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { createUpdatePerson } from '../../store/slices/persons.slice';
 import { stylingConstants } from '../../theme/shared-styles';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
