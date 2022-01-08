@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Avatar, Button, Grid, Link, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, Link, makeStyles, Paper, TextField, useTheme } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import routes from '../../../routes/route-constants';
+import { HomeHeader } from '../home-header';
 
 export type SignUpProps = {
     handleSignUp: (state: SignUpState) => void;
@@ -22,10 +23,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.primary.main,
-    },
     form: {
         marginTop: theme.spacing(2),
     },
@@ -36,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
 
 const SignUp = ({ handleSignUp }: SignUpProps) => {
     const classes = useStyles();
+    const theme = useTheme();
 
+    // TODO: Use UserModel
     const [state, setState] = useState({
         firstName: '',
         lastName: '',
@@ -44,6 +43,7 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
         password: '',
     });
 
+    // TODO: Use form hook
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setState((prevState) => ({
             ...prevState,
@@ -51,6 +51,7 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
         }));
     };
 
+    // TODO: Use form hook
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         handleSignUp(state);
@@ -59,12 +60,11 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
     return (
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component={'h1'} variant={'h5'}>
-                    Sign up
-                </Typography>
+                <HomeHeader
+                    iconBackgroundColor={theme.palette.primary.main}
+                    icon={<LockOutlinedIcon />}
+                    title="Sign up"
+                />
                 <form className={classes.form} noValidate autoComplete={'off'} onSubmit={(e) => onSubmit(e)}>
                     <Grid container>
                         <Grid item xs={12} sm={6}>
