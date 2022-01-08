@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { stylingConstants } from '../../theme/shared-styles';
+import { gridSpacing } from '../../theme/shared-styles';
 import { PropertyForm } from './property-form';
 import { RentalUnitsOverview } from '../rental-unit/overview/rental-units-overview';
 import { useParams } from 'react-router';
@@ -43,7 +43,7 @@ export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
                         : 'Property has not been found!'
                 }
             />
-            <Grid container spacing={stylingConstants.gridSpacing}>
+            <Grid container spacing={gridSpacing}>
                 <PropertyForm
                     currentProperty={currentProperty}
                     setCurrentProperty={setCurrentProperty}

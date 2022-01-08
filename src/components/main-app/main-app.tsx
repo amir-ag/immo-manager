@@ -11,12 +11,11 @@ import { TenancyDetail } from '../tenancy/tenancy-detail';
 import PropertiesOverview from '../property/overview/properties-overview';
 import { PropertyDetail } from '../property/property-detail';
 import RentScheduleOverview from '../rent-schedule/rent-schedule-overview';
-import { mainMenuEntries } from './main-menu-entries';
 
 const MainApp = () => {
     return (
         <Router>
-            <Layout menuItems={mainMenuEntries}>
+            <Layout>
                 <Switch>
                     {/* Profile */}
                     <Route path={routes.PROFILE}>
