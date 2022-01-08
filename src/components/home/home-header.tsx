@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, makeStyles, Typography } from '@material-ui/core';
 import { Theme } from '@material-ui/core/styles';
+import { usePageTitle } from '../../hooks/use-page-title.hook';
 
 type ThemeProps = {
     iconBackgroundColor: string;
@@ -22,6 +23,7 @@ const useStyles = makeStyles<Theme, ThemeProps>((theme) => ({
 
 export const HomeHeader = ({ iconBackgroundColor, icon, title }: HomeHeaderProps) => {
     const cssClasses = useStyles({ iconBackgroundColor });
+    usePageTitle(title);
 
     return (
         <>
