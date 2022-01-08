@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@cypress/instrument-cra": "^1.4.0",
     "@fontsource/quicksand": "^4.5.1",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
@@ -17,6 +18,7 @@
     "@types/react": "^17.0.19",
     "@types/react-dom": "^17.0.9",
     "@types/react-redux": "^7.1.18",
+    "add": "^2.0.6",
     "date-fns": "^2.25.0",
     "firebase": "^9.0.2",
     "material-ui-dropzone": "^3.5.0",
@@ -33,9 +35,10 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "PORT=3000 react-scripts -r @cypress/instrument-cra start start",
+    "build": "CI=false && react-scripts build",
     "test": "react-scripts test",
+    "cy:run": "cypress run --spec \"cypress/integration/**/*\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -57,8 +60,13 @@
     ]
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^3.9.12",
+    "@cypress/react": "^5.12.0",
+    "@cypress/webpack-dev-server": "^1.8.0",
     "@types/material-ui": "^0.21.9",
     "@types/react-router-dom": "^5.1.8",
+    "cypress": "^9.2.0",
+    "html-webpack-plugin": "^4.5.0",
     "jest": "^26.6.0",
     "prettier": "2.4.1"
   }
