@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
-import * as storeService from '../store-functions';
+import * as storeService from '../service/store.service';
 import { TenancyModel } from '../../components/tenancy/model/tenancy.model';
 import { parseISO } from 'date-fns';
 

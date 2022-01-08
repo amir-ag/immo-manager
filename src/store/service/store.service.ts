@@ -1,5 +1,5 @@
-import { RootState } from './store';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { RootState } from '../store';
 
 export const getUidFromStoreState = (thunkAPI: { getState: () => any }) => {
     const state = thunkAPI.getState() as RootState;

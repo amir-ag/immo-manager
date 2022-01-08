@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
-import { getUidFromStoreState } from '../store-functions';
+import * as storeService from '../service/store.service';
 import { rentalUnitfloorLevel, RentalUnitModel } from '../../components/rental-unit/model/rental-unit.model';
 
 const dbName = 'rental-units';
@@ -11,7 +11,7 @@ export const createOrUpdateRentalUnit = createAsyncThunk(
     `${sliceName}/createOrUpdateRentalUnit`,
     async (rentalUnit: RentalUnitModel, thunkAPI) => {
         try {
-            const uid = getUidFromStoreState(thunkAPI);
+            const uid = storeService.getUidFromStoreState(thunkAPI);
 
             if (!rentalUnit.id) {
                 // TODO: Use typed method and create interface with 'createdBy' field
@@ -45,7 +45,7 @@ export const createOrUpdateRentalUnit = createAsyncThunk(
 
 export const getRentalUnits = createAsyncThunk(`${sliceName}/getRentalUnits`, async (_, thunkAPI) => {
     try {
-        const uid = getUidFromStoreState(thunkAPI);
+        const uid = storeService.getUidFromStoreState(thunkAPI);
 
         const q = query(collection(db, dbName), where('createdBy', '==', uid));
         const querySnapshot = await getDocs(q);
