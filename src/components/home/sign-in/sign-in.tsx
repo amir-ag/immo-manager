@@ -65,6 +65,7 @@ const SignIn = ({ handleSignIn }: SignInProps) => {
 
     return (
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            {/* TODO: Move this to the home component (grid and div) */}
             <div className={classes.paper}>
                 <HomeHeader
                     iconBackgroundColor={theme.palette.secondary.main}
