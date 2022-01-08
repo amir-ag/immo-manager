@@ -49,7 +49,10 @@ export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
                     setCurrentProperty={setCurrentProperty}
                     isNew={isNew}
                 />
-                <RentalUnitsOverview disableCreate={isNew || !propertyToEdit} />
+                <RentalUnitsOverview
+                    disableCreate={isNew || !propertyToEdit}
+                    relatedProperty={currentProperty}
+                />
             </Grid>
         </>
     );

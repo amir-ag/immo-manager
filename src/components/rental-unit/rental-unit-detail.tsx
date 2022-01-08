@@ -54,7 +54,10 @@ export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
                     property={property}
                 />
 
-                <TenanciesOverview disableCreate={isNew || !rentalUnitToEdit} />
+                <TenanciesOverview
+                    disableCreate={isNew || !rentalUnitToEdit}
+                    relatedRentalUnit={currentRentalUnit}
+                />
             </Grid>
         </>
     );

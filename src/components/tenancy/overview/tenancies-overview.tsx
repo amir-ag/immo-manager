@@ -1,28 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
-import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
+import { selectPersonsTenants, selectTenancies } from '../../../store/selectors';
 import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import SearchHeader from '../../ui/search-header/search-header';
 import { useHistory } from 'react-router';
 import { TenanciesTable } from './tenancies-table';
 import { stylingConstants } from '../../../theme/shared-styles';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
+import { RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
 
-export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean }) => {
+type TenanciesOverviewProps = {
+    disableCreate: boolean;
+    relatedRentalUnit: RentalUnitModel | null;
+};
+
+export const TenanciesOverview = ({ disableCreate, relatedRentalUnit }: TenanciesOverviewProps) => {
     const history = useHistory();
 
     const dispatch = useAppDispatch();
-    const rentalUnit = useAppSelector(selectCurrentRentalUnit);
     const tenants = useAppSelector(selectPersonsTenants);
-    const tenancies = useAppSelector(selectTenancies)?.filter((t) => t.rentalUnitId === rentalUnit?.id);
+    const tenancies = useAppSelector(selectTenancies)?.filter(
+        (t) => t.rentalUnitId === relatedRentalUnit?.id
+    );
 
     const [searchResult, setSearchResult] = useState(tenancies);
-
-    useEffect(() => {
-        setSearchResult(tenancies);
-    }, [rentalUnit]);
 
     const handleDelete = (tenId: string) => {
         dispatch(deleteTenancy(tenId));

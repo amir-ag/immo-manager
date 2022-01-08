@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
-import {
-    selectCurrentProperty,
-    selectPersonsTenants,
-    selectRentalUnits,
-    selectTenancies,
-} from '../../../store/selectors';
+import { selectPersonsTenants, selectRentalUnits, selectTenancies } from '../../../store/selectors';
 import { deleteRentalUnit } from '../../../store/slices/rental-units.slice';
 import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import SearchHeader from '../../ui/search-header/search-header';
@@ -15,22 +10,25 @@ import { useHistory } from 'react-router';
 import { RentalUnitsTable } from './rental-units-table';
 import { stylingConstants } from '../../../theme/shared-styles';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
+import { PropertyModel } from '../../property/model/property.model';
 
-export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean }) => {
+type RentalUnitsOverviewProps = {
+    disableCreate: boolean;
+    relatedProperty: PropertyModel | null;
+};
+
+export const RentalUnitsOverview = ({ disableCreate, relatedProperty }: RentalUnitsOverviewProps) => {
     const history = useHistory();
 
     const dispatch = useAppDispatch();
-    const property = useAppSelector(selectCurrentProperty);
     // TODO: Extract these filter methods into its own file - for each entity its own
-    const rentalUnits = useAppSelector(selectRentalUnits)?.filter((ru) => ru.propertyId === property?.id);
-    const tenancies = useAppSelector(selectTenancies).filter((ten) => ten.propertyId === property?.id);
+    const rentalUnits = useAppSelector(selectRentalUnits)?.filter(
+        (ru) => ru.propertyId === relatedProperty?.id
+    );
+    const tenancies = useAppSelector(selectTenancies).filter((ten) => ten.propertyId === relatedProperty?.id);
     const tenants = useAppSelector(selectPersonsTenants);
 
     const [searchResult, setSearchResult] = useState(rentalUnits);
-
-    useEffect(() => {
-        setSearchResult(rentalUnits);
-    }, [property]);
 
     const handleDelete = (ruId: string) => {
         dispatch(deleteRentalUnit(ruId));
