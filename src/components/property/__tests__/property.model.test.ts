@@ -1,5 +1,6 @@
 import { emptyAddress } from '../../../models/address.model';
-import { getDisplayNameOfProperty, PropertyModel } from '../model/property.model';
+import { PropertyModel } from '../model/property.model';
+import { getDisplayNameOfProperty } from '../service/property.service';
 
 const dummyProperty: PropertyModel = {
     id: 'gfg56htghfg',

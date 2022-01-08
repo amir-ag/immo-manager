@@ -1,4 +1,5 @@
-import { getDisplayNameOfRentalUnit, RentalUnitModel } from '../model/rental-unit.model';
+import { RentalUnitModel } from '../model/rental-unit.model';
+import { getDisplayNameOfRentalUnit } from '../service/rental-unit.service';
 
 const dummyRentalUnit: RentalUnitModel = {
     id: 'fsdtr4545',
