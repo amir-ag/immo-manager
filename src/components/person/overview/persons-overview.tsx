@@ -3,22 +3,23 @@ import PersonDialog from '../person-dialog';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
 import { deletePerson } from '../../../store/slices/persons.slice';
 import PersonsTable from './persons-table';
-import { selectPersons } from '../../../store/selectors';
+import { selectAllPersons } from '../../../store/selectors';
 import { emptyPerson } from '../model/person.model';
 import SearchHeader from '../../ui/search-header/search-header';
 import { IntroHeader } from '../../ui/intro-header/intro-header';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
+import { getItemFromCollectionById } from '../../../services/collection-utils';
 
 const PersonsOverview = () => {
-    const personsData = useAppSelector(selectPersons);
+    const allPersons = useAppSelector(selectAllPersons);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        setSearchResult(personsData);
-    }, [personsData]);
+        setSearchResult(allPersons);
+    }, [allPersons]);
 
     const [openDialog, setOpenDialog] = useState(false);
-    const [searchResult, setSearchResult] = useState(personsData);
+    const [searchResult, setSearchResult] = useState(allPersons);
     const [currentPerson, setCurrentPerson] = useState({
         ...emptyPerson,
     });
@@ -33,10 +34,11 @@ const PersonsOverview = () => {
     };
 
     const handleEdit = (id: string) => {
-        const selectedPerson = personsData.filter((person) => person.id === id);
-        const editPerson = selectedPerson[0];
-        setCurrentPerson(editPerson);
-        setOpenDialog(true);
+        const personToEdit = getItemFromCollectionById(id, allPersons);
+        if (personToEdit) {
+            setCurrentPerson(personToEdit);
+            setOpenDialog(true);
+        }
     };
 
     return (
@@ -45,11 +47,11 @@ const PersonsOverview = () => {
             <SearchHeader
                 handleCreate={handleCreate}
                 placeholderText={'Search by first name, last name, email or address'}
-                originalData={personsData}
+                originalData={allPersons}
                 setSearchResult={setSearchResult}
                 searchParams={['firstName', 'lastName', 'email', 'address.addressLine1', 'address.city2']}
             />
-            {personsData && (
+            {allPersons && (
                 <PersonsTable
                     personsData={searchResult}
                     handleDelete={handleDelete}

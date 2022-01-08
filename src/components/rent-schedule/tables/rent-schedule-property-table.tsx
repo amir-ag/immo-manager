@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core';
 import { format } from 'date-fns';
 import { PropertyModel } from '../../property/model/property.model';
-import { selectPersonsOwners } from '../../../store/selectors';
+import { selectPersonById } from '../../../store/selectors';
 import * as propertyService from '../../property/service/property.service';
 import * as constants from '../../../constants';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RentSchedulePropertyTable = (property: PropertyModel) => {
     const classes = useStyles();
-    const owner = useAppSelector(selectPersonsOwners).filter((person) => person.id === property.owner)[0];
+    const owner = useAppSelector(selectPersonById(property.owner));
 
     return (
         property && (

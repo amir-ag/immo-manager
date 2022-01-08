@@ -4,7 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { PropertyModel } from './model/property.model';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
-import { selectPersonsJanitors, selectPersonsOwners } from '../../store/selectors';
+import { selectJanitors, selectOwners } from '../../store/selectors';
 import { emptyPerson, PersonModel } from '../person/model/person.model';
 import { stylingConstants } from '../../theme/shared-styles';
 import { createOrUpdateProperty } from '../../store/slices/properties.slice';
@@ -15,6 +15,7 @@ import ImageUpload from '../forms/image-upload/image-upload';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import * as personService from '../person/service/person.service';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
+import * as collectionUtils from '../../services/collection-utils';
 
 export type PropertyFormProps = {
     currentProperty: PropertyModel;
@@ -23,8 +24,8 @@ export type PropertyFormProps = {
 };
 
 export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: PropertyFormProps) => {
-    const owners = useAppSelector(selectPersonsOwners);
-    const janitors = useAppSelector(selectPersonsJanitors);
+    const owners = useAppSelector(selectOwners);
+    const janitors = useAppSelector(selectJanitors);
 
     const dispatch = useAppDispatch();
     const history = useHistory();
@@ -104,7 +105,10 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     options={owners}
                     onChange={(e, v) => handleAutocompleteChange(e, v, 'owner')}
                     getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
-                    value={owners.find((o) => o.id === currentProperty.owner) ?? emptyPerson}
+                    value={
+                        collectionUtils.getItemFromCollectionById(currentProperty.owner, owners) ??
+                        emptyPerson
+                    }
                     getOptionSelected={(option: PersonModel, value: PersonModel) => option.id === value.id}
                     renderInput={(params) => <TextField {...params} label="Owner" variant="outlined" />}
                 />
@@ -128,7 +132,10 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     options={janitors}
                     onChange={(e, v) => handleAutocompleteChange(e, v, 'janitor')}
                     getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
-                    value={janitors.find((j) => j.id === currentProperty.janitor) ?? emptyPerson}
+                    value={
+                        collectionUtils.getItemFromCollectionById(currentProperty.janitor, janitors) ??
+                        emptyPerson
+                    }
                     getOptionSelected={(option: PersonModel, value: PersonModel) => option.id === value.id}
                     renderInput={(params) => <TextField {...params} label="Janitor" variant="outlined" />}
                 />

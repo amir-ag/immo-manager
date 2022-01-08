@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
 import { PersonModel } from '../../components/person/model/person.model';
-import * as storeService from '../store-functions';
+import * as storeService from '../service/store.service';
 
 const dbName = 'persons';
 const sliceName = 'tenancies';

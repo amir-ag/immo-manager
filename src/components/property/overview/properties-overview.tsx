@@ -14,6 +14,8 @@ import SearchHeader from '../../ui/search-header/search-header';
 import { IntroHeader } from '../../ui/intro-header/intro-header';
 import { stylingConstants } from '../../../theme/shared-styles';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
+import * as rentalUnitService from '../../rental-unit/service/rental-unit.service';
+import * as tenancyService from '../../tenancy/service/tenancy.service';
 
 type PropertiesViewProps = {
     showSearchHeader?: boolean;
@@ -38,14 +40,12 @@ const PropertiesOverview = ({ showSearchHeader = true }: PropertiesViewProps) =>
     const handleDelete = () => {
         dispatch(deleteProperty(entityToDelete));
         // TODO: Combine these store actions within the store (transparent)
-        rentalUnits
-            ?.filter((ru) => ru.propertyId === entityToDelete)
-            ?.forEach((ru) => {
-                dispatch(deleteRentalUnit(ru.id));
-                tenancies
-                    ?.filter((ten) => ten.rentalUnitId === ru.id)
-                    ?.forEach((ten) => dispatch(deleteTenancy(ten.id)));
-            });
+        rentalUnitService.getRentalUnitsByPropertyId(entityToDelete, rentalUnits)?.forEach((ru) => {
+            dispatch(deleteRentalUnit(ru.id));
+            tenancyService
+                .getTenanciesByRentalUnitId(ru.id, tenancies)
+                ?.forEach((ten) => dispatch(deleteTenancy(ten.id)));
+        });
     };
 
     const handleCreate = () => {
@@ -84,8 +84,11 @@ const PropertiesOverview = ({ showSearchHeader = true }: PropertiesViewProps) =>
                         <PropertyCard
                             property={property}
                             handleDelete={() => handleOpenDeletePrompt(property.id)}
-                            rentalUnits={rentalUnits.filter((ru) => ru.propertyId === property.id)}
-                            tenancies={tenancies.filter((ten) => ten.propertyId === property.id)}
+                            rentalUnits={rentalUnitService.getRentalUnitsByPropertyId(
+                                property.id,
+                                rentalUnits
+                            )}
+                            tenancies={tenancyService.getTenanciesByPropertyId(property.id, tenancies)}
                         />
                     </Grid>
                 ))}

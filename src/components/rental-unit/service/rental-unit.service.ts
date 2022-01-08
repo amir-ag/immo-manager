@@ -15,3 +15,6 @@ export const getDisplayNameOfRentalUnit = (ru: RentalUnitModel) => {
 
     return resultString + ` (${ru.ewid})`;
 };
+
+export const getRentalUnitsByPropertyId = (propertyId: string, rentalUnits: RentalUnitModel[]) =>
+    rentalUnits.filter((ru) => ru.propertyId === propertyId);

@@ -2,8 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PropertyModel } from '../../components/property/model/property.model';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
-// TODO: Apply this service patterns everywhere
-import * as storeService from '../store-functions';
+import * as storeService from '../service/store.service';
 
 const dbName = 'properties';
 const sliceName = 'properties';
