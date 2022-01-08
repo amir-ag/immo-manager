@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-    Avatar,
     Button,
     Checkbox,
     FormControlLabel,
@@ -9,11 +8,12 @@ import {
     makeStyles,
     Paper,
     TextField,
-    Typography,
+    useTheme,
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import routes from '../../../routes/route-constants';
+import { HomeHeader } from '../home-header';
 
 export type SignInProps = {
     handleSignIn: (state: SignInState) => void;
@@ -31,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
     form: {
         marginTop: theme.spacing(2),
     },
@@ -45,12 +41,15 @@ const useStyles = makeStyles((theme) => ({
 
 const SignIn = ({ handleSignIn }: SignInProps) => {
     const classes = useStyles();
+    const theme = useTheme();
 
+    // TODO: Use UserModel
     const [state, setState] = useState({
         email: '',
         password: '',
     });
 
+    // TODO: Use form hook
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setState((prevState) => ({
             ...prevState,
@@ -58,6 +57,7 @@ const SignIn = ({ handleSignIn }: SignInProps) => {
         }));
     };
 
+    // TODO: Use form hook
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         handleSignIn(state);
@@ -65,13 +65,13 @@ const SignIn = ({ handleSignIn }: SignInProps) => {
 
     return (
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            {/* TODO: Move this to the home component (grid and div) */}
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component={'h1'} variant={'h5'}>
-                    Sign in
-                </Typography>
+                <HomeHeader
+                    iconBackgroundColor={theme.palette.secondary.main}
+                    icon={<LockOutlinedIcon />}
+                    title="Sign in"
+                />
                 <form className={classes.form} noValidate autoComplete={'off'} onSubmit={(e) => onSubmit(e)}>
                     <TextField
                         value={state.email}
