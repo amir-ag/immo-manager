@@ -6,10 +6,11 @@ import './app.css';
 import routes from '../../routes/route-constants';
 import PrivateRoute from '../../routes/private.route';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
+import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { restoreLogin } from '../../store/slices/user.slice';
 import { selectUser } from '../../store/selectors';
 import CustomizedSnackbar from '../ui/snackbar/snackbar';
+import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 
 function App() {
     const { uid } = useAppSelector(selectUser);

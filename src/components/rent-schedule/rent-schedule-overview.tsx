@@ -13,8 +13,8 @@ import GetAppOutlinedIcon from '@material-ui/icons/GetAppOutlined';
 import { useReactToPrint } from 'react-to-print';
 import RentSchedulePropertyTable from './tables/rent-schedule-property-table';
 import RentScheduleUnitsTable from './tables/rent-schedule-units-table';
-import { useAppSelector } from '../../hooks/store.hooks';
 import * as propertyService from '../property/service/property.service';
+import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 
 const useStyles = makeStyles((theme) => ({
     exportContainer: {

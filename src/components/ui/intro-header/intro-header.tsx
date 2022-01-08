@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, Paper, Typography } from '@material-ui/core';
+import { usePageTitle } from '../../../hooks/use-page-title.hook';
 
 type IntroHeaderProps = {
     title: string;
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const IntroHeader = ({ title, subtitle }: IntroHeaderProps) => {
     const cssClasses = useStyles();
+    usePageTitle(title);
 
     return (
         <Paper elevation={5} square={true} className={cssClasses.root} data-testid={'intro-header'}>

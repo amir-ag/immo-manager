@@ -6,8 +6,8 @@ import { PropertyModel } from '../property/model/property.model';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import routes from '../../routes/route-constants';
-import { useAppSelector } from '../../hooks/store.hooks';
 import { IntroHeader } from '../ui/intro-header/intro-header';
+import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 
 const useStyles = makeStyles((theme) => ({
     form: {
