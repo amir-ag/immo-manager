@@ -76,6 +76,7 @@ const NavigationPanel = ({ handleToggleNavPanel, isNavPanelOpen }: NavigationPan
                 {mainMenuEntries.map((item) => (
                     <ListItem
                         key={item.text}
+                        data-testid={item.text}
                         button
                         component={NavLink}
                         to={item.path}

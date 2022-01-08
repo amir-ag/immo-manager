@@ -105,6 +105,7 @@ const MainHeader = ({ handleToggleNavPanel }: MainHeaderProps) => {
                     edge="start"
                     onClick={handleToggleNavPanel}
                     className={cssClasses.navigationButton}
+                    data-testid={'burger-menu'}
                 >
                     <MenuIcon />
                 </IconButton>
@@ -116,6 +117,7 @@ const MainHeader = ({ handleToggleNavPanel }: MainHeaderProps) => {
                 </Typography>
                 <div
                     onClick={handleProfileMenuToggle}
+                    data-testid={'avatar'}
                     aria-controls="user-menu"
                     aria-haspopup="true"
                     ref={avatarRef}

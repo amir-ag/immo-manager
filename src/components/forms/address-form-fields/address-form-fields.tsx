@@ -21,7 +21,7 @@ const AddressFormFields = ({ addressState, handleAddressInputChange }: AddressFo
                     variant={'outlined'}
                     fullWidth
                     id={'addressLine1'}
-                    value={addressState.addressLine1}
+                    value={addressState?.addressLine1 ?? ''}
                     onChange={(e) => handleAddressInputChange(e)}
                     label={'Address Line 1'}
                     type="text"
@@ -32,7 +32,7 @@ const AddressFormFields = ({ addressState, handleAddressInputChange }: AddressFo
                 <TextField
                     variant={'outlined'}
                     fullWidth
-                    value={addressState.addressLine2}
+                    value={addressState?.addressLine2 ?? ''}
                     onChange={(e) => handleAddressInputChange(e)}
                     id={'addressLine2'}
                     label={'Address Line 2'}
@@ -44,7 +44,7 @@ const AddressFormFields = ({ addressState, handleAddressInputChange }: AddressFo
                     variant={'outlined'}
                     fullWidth
                     id={'postCode'}
-                    value={addressState.postCode ?? ''}
+                    value={addressState?.postCode ?? ''}
                     onChange={(e) => handleAddressInputChange(e)}
                     label={'Post Code'}
                     inputProps={{ min: 1000, max: 9999 }}
@@ -55,7 +55,7 @@ const AddressFormFields = ({ addressState, handleAddressInputChange }: AddressFo
             <Grid item xs={12} md={8}>
                 <TextField
                     variant={'outlined'}
-                    value={addressState.city}
+                    value={addressState?.city ?? ''}
                     onChange={(e) => handleAddressInputChange(e)}
                     fullWidth
                     id={'city'}
