@@ -80,7 +80,7 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentSchedu
                         );
                     })}
                     <TableRow>
-                        <TableCell className={classes.bold}>Total Liegenschaft</TableCell>
+                        <TableCell className={classes.bold}>Total Property</TableCell>
                         <TableCell />
                         <TableCell />
                         <TableCell />

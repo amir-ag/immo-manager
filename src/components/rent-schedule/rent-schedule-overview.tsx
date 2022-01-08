@@ -15,6 +15,7 @@ import RentSchedulePropertyTable from './tables/rent-schedule-property-table';
 import RentScheduleUnitsTable from './tables/rent-schedule-units-table';
 import * as propertyService from '../property/service/property.service';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
+import { emptyProperty } from '../property/model/property.model';
 
 const useStyles = makeStyles((theme) => ({
     exportContainer: {
@@ -37,13 +38,14 @@ const RentScheduleOverview = () => {
 
     const { id } = useParams<{ id: string }>();
 
-    const property = useAppSelector(selectProperties).filter((property) => property.id === id)[0];
+    // TODO: Use better error handling
+    const property = useAppSelector(selectProperties).find((property) => property.id === id) || emptyProperty;
     const rentalUnits = useAppSelector(selectRentalUnits).filter((unit) => unit.propertyId === id);
     const tenancies = useAppSelector(selectTenancies);
     const tenants = useAppSelector(selectPersonsTenants);
 
     const getTenancy = (unit: RentalUnitModel) => {
-        return tenancies.filter((tenancy) => tenancy.rentalUnitId === unit.id)[0] || emptyTenancy;
+        return tenancies.find((tenancy) => tenancy.rentalUnitId === unit.id) || emptyTenancy;
     };
 
     return (

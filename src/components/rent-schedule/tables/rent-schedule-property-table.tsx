@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RentSchedulePropertyTable = (property: PropertyModel) => {
     const classes = useStyles();
-    const owner = useAppSelector(selectPersonsOwners).filter((person) => person.id === property.owner)[0];
+    const owner = useAppSelector(selectPersonsOwners).find((person) => person.id === property.owner);
 
     return (
         property && (

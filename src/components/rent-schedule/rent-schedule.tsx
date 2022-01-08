@@ -50,7 +50,7 @@ export const RentSchedule = () => {
                         margin={'normal'}
                         fullWidth
                         id={'property'}
-                        label={'select a property..'}
+                        label={'Select a property'}
                         select
                         name={'property'}
                         autoComplete={'property'}
