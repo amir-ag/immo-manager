@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { HomeRoute } from '../../routes/home.route';
-import { DashboardRoute } from '../../routes/dashboard.route';
+import { MainAppRoute } from '../../routes/main-app.route';
 import './app.css';
 import routes from '../../routes/route-constants';
 import PrivateRoute from '../../routes/private.route';
@@ -9,7 +9,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { restoreLogin } from '../../store/slices/user.slice';
 import { selectUser } from '../../store/selectors';
-import CustomizedSnackbar from '../snackbar/snackbar';
+import CustomizedSnackbar from '../ui/snackbar/snackbar';
 
 function App() {
     const { uid } = useAppSelector(selectUser);
@@ -33,7 +33,7 @@ function App() {
                     <Route exact path={routes.SIGNUP}>
                         <HomeRoute />
                     </Route>
-                    <PrivateRoute exact={false} component={DashboardRoute} path={routes.AUTHENTICATED_AREA} />
+                    <PrivateRoute exact={false} component={MainAppRoute} path={routes.AUTHENTICATED_AREA} />
                 </Switch>
             </Router>
         </div>

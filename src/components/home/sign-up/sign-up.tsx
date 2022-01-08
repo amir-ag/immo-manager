@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Avatar, Button, Grid, Link, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import routes from '../../routes/route-constants';
+import routes from '../../../routes/route-constants';
 
 export type SignUpProps = {
     handleSignUp: (state: SignUpState) => void;
