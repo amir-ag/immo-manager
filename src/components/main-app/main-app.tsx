@@ -11,22 +11,12 @@ import { TenancyDetail } from '../tenancy/tenancy-detail';
 import PropertiesOverview from '../property/overview/properties-overview';
 import { PropertyDetail } from '../property/property-detail';
 import RentScheduleOverview from '../rent-schedule/rent-schedule-overview';
+import { mainMenuEntries } from './main-menu-entries';
 
-// Props
-type MainAppProps = {
-    menuItems: MenuItems[];
-};
-
-type MenuItems = {
-    text: string;
-    icon: JSX.Element;
-    path: string;
-};
-
-const MainApp = ({ menuItems }: MainAppProps) => {
+const MainApp = () => {
     return (
         <Router>
-            <Layout menuItems={menuItems}>
+            <Layout menuItems={mainMenuEntries}>
                 <Switch>
                     {/* Profile */}
                     <Route path={routes.PROFILE}>

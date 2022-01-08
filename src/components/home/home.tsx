@@ -40,10 +40,10 @@ const Home = ({ handleSignIn, handleSignUp, handleReset }: HomeProps) => {
                         <Route exact path={routes.HOME}>
                             <SignIn handleSignIn={handleSignIn} />
                         </Route>
-                        <Route path={routes.SIGNUP}>
+                        <Route path={routes.SIGN_UP}>
                             <SignUp handleSignUp={handleSignUp} />
                         </Route>
-                        <Route path={routes.RESETPW}>
+                        <Route path={routes.RESET_PW}>
                             <ResetPassword handleReset={handleReset} />
                         </Route>
                     </Switch>

@@ -4,10 +4,12 @@ const tenanciesDetailRoute = '/app/tenancies/:id';
 const rentScheduleDataRoute = '/app/rent-schedule/:id';
 
 const routes = {
-    // Base
+    // External
     HOME: '/',
-    SIGNUP: '/signup',
-    RESETPW: '/reset',
+    SIGN_UP: '/signup',
+    RESET_PW: '/reset',
+
+    // Base Internal
     AUTHENTICATED_AREA: '/app',
 
     // Profile
