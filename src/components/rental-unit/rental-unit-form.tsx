@@ -5,10 +5,10 @@ import { stylingConstants, useSharedStyles } from '../../theme/shared-styles';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { PropertyModel } from '../property/model/property.model';
 import routes from '../../routes/route-constants';
-import { useAppDispatch } from '../../hooks/store.hooks';
+import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { useHistory } from 'react-router';
 import { createOrUpdateRentalUnit } from '../../store/slices/rental-units.slice';
-import { useForms } from '../../hooks/forms.hooks';
+import { useForms } from '../../hooks/use-forms.hook';
 import * as propertyService from '../property/service/property.service';
 
 export type RentalUnitFormProps = {

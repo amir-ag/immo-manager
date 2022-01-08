@@ -3,17 +3,18 @@ import { Grid, TextField, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { PropertyModel } from './model/property.model';
-import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
+import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { selectPersonsJanitors, selectPersonsOwners } from '../../store/selectors';
 import { emptyPerson, PersonModel } from '../person/model/person.model';
 import { stylingConstants } from '../../theme/shared-styles';
 import { createOrUpdateProperty } from '../../store/slices/properties.slice';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';
-import { useForms } from '../../hooks/forms.hooks';
+import { useForms } from '../../hooks/use-forms.hook';
 import ImageUpload from '../forms/image-upload/image-upload';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import * as personService from '../person/service/person.service';
+import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 
 export type PropertyFormProps = {
     currentProperty: PropertyModel;

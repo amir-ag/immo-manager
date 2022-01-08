@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PersonDialog from '../person-dialog';
-import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
+import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
 import { deletePerson } from '../../../store/slices/persons.slice';
 import PersonsTable from './persons-table';
 import { selectPersons } from '../../../store/selectors';
 import { emptyPerson } from '../model/person.model';
 import SearchHeader from '../../ui/search-header/search-header';
 import { IntroHeader } from '../../ui/intro-header/intro-header';
+import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 
 const PersonsOverview = () => {
     const personsData = useAppSelector(selectPersons);

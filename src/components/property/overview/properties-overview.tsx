@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import PropertyCard from './property-card';
 import routes from '../../../routes/route-constants';
-import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
+import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
 import { selectProperties, selectRentalUnits, selectTenancies } from '../../../store/selectors';
 import { deleteProperty } from '../../../store/slices/properties.slice';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
-import { useDeletePrompt } from '../../../hooks/ui.hooks';
+import { useDeletePrompt } from '../../../hooks/use-delete-prompt.hook';
 import { deleteRentalUnit } from '../../../store/slices/rental-units.slice';
 import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import { useHistory } from 'react-router';
 import SearchHeader from '../../ui/search-header/search-header';
 import { IntroHeader } from '../../ui/intro-header/intro-header';
 import { stylingConstants } from '../../../theme/shared-styles';
+import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 
 type PropertiesViewProps = {
     showSearchHeader?: boolean;

@@ -2,10 +2,10 @@ import React from 'react';
 import { makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@material-ui/core';
 import { format } from 'date-fns';
 import { PropertyModel } from '../../property/model/property.model';
-import { useAppSelector } from '../../../hooks/store.hooks';
 import { selectPersonsOwners } from '../../../store/selectors';
 import * as propertyService from '../../property/service/property.service';
 import * as constants from '../../../constants';
+import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 
 const useStyles = makeStyles((theme) => ({
     propertyDetails: {

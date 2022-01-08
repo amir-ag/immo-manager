@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Avatar, Button, Grid, Link, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
-import SettingsBackupRestoreOutlinedIcon from '@material-ui/icons/SettingsBackupRestoreOutlined';
+import { Button, Grid, Link, makeStyles, Paper, TextField, useTheme } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
-import routes from '../../routes/route-constants';
+import routes from '../../../routes/route-constants';
+import { HomeHeader } from '../home-header';
+import SettingsBackupRestoreOutlinedIcon from '@material-ui/icons/SettingsBackupRestoreOutlined';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -10,10 +11,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.primary.main,
     },
     form: {
         marginTop: theme.spacing(2),
@@ -29,6 +26,7 @@ export type ResetPasswordProps = {
 
 const ResetPassword = ({ handleReset }: ResetPasswordProps) => {
     const classes = useStyles();
+    const theme = useTheme();
     const [email, setEmail] = useState('');
 
     const onSubmit = (e: React.FormEvent) => {
@@ -38,13 +36,13 @@ const ResetPassword = ({ handleReset }: ResetPasswordProps) => {
 
     return (
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            {/* TODO: Move this to the home component (grid and div) */}
             <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <SettingsBackupRestoreOutlinedIcon />
-                </Avatar>
-                <Typography component={'h1'} variant={'h5'}>
-                    Reset PW
-                </Typography>
+                <HomeHeader
+                    iconBackgroundColor={theme.palette.primary.main}
+                    icon={<SettingsBackupRestoreOutlinedIcon />}
+                    title="Reset Password"
+                />
                 <form className={classes.form} noValidate autoComplete={'off'} onSubmit={onSubmit}>
                     <TextField
                         value={email}

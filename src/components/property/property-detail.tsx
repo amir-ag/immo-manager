@@ -5,12 +5,13 @@ import { PropertyForm } from './property-form';
 import { RentalUnitsOverview } from '../rental-unit/overview/rental-units-overview';
 import { useParams } from 'react-router';
 import { emptyProperty } from './model/property.model';
-import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
+import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { selectProperties } from '../../store/selectors';
 import { propertiesSlice } from '../../store/slices/properties.slice';
 import { rentalUnitsSlice } from '../../store/slices/rental-units.slice';
 import { IntroHeader } from '../ui/intro-header/intro-header';
 import * as propertyService from './service/property.service';
+import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 
 export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();

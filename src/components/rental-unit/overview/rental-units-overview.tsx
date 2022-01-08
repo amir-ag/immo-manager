@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import routes from '../../../routes/route-constants';
-import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
+import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
 import {
     selectCurrentProperty,
     selectPersonsTenants,
@@ -14,6 +14,7 @@ import SearchHeader from '../../ui/search-header/search-header';
 import { useHistory } from 'react-router';
 import { RentalUnitsTable } from './rental-units-table';
 import { stylingConstants } from '../../../theme/shared-styles';
+import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 
 export const RentalUnitsOverview = ({ disableCreate }: { disableCreate: boolean }) => {
     const history = useHistory();

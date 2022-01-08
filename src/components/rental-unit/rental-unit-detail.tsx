@@ -5,13 +5,14 @@ import { stylingConstants } from '../../theme/shared-styles';
 import { RentalUnitForm } from './rental-unit-form';
 import { TenanciesOverview } from '../tenancy/overview/tenancies-overview';
 import { useParams } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
+import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { selectCurrentProperty, selectRentalUnits } from '../../store/selectors';
 import { emptyProperty } from '../property/model/property.model';
 import { propertiesSlice } from '../../store/slices/properties.slice';
 import { rentalUnitsSlice } from '../../store/slices/rental-units.slice';
 import { IntroHeader } from '../ui/intro-header/intro-header';
 import * as rentalUnitService from './service/rental-unit.service';
+import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 
 export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
