@@ -174,6 +174,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                         edge="start"
                         onClick={toggleDrawer}
                         className={classes.menuButton}
+                        data-testid={'burger-menu'}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -185,6 +186,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                     </Typography>
                     <div
                         onClick={handleMenuToggle}
+                        data-testid={'avatar'}
                         aria-controls="user-menu"
                         aria-haspopup="true"
                         ref={avatarRef}
@@ -245,6 +247,7 @@ const Layout = ({ children, menuItems }: LayoutProps) => {
                     {menuItems.map((item) => (
                         <ListItem
                             key={item.text}
+                            data-testid={item.text}
                             button
                             component={NavLink}
                             to={item.path}
