@@ -17,4 +17,7 @@ export const dateFormatStoring = 'yyyy-MM-dd';
 export const dateFormatShort = 'dd.MM.yyyy';
 export const dateFormatLong = 'do MMMM Y';
 
+// TODO: Replace with hardcoded values
+export const notAvailableText = 'n/a';
+
 export const appName = 'Immo Manager';

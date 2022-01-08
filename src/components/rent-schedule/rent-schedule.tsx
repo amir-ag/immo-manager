@@ -24,28 +24,29 @@ const useStyles = makeStyles((theme) => ({
 
 export const RentSchedule = () => {
     const cssClasses = useStyles();
-    const [property, setProperty] = useState('');
+    const [propertyId, setPropertyId] = useState('');
 
     const history = useHistory();
+    // TODO: Use form hook
     const properties = useAppSelector(selectProperties);
 
     const renderTable = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
-        history.push(`rent-schedule/${property}`);
+        history.push(routes.getRentScheduleDataRouteById(propertyId));
     };
 
     return (
         <>
             <IntroHeader title="Rent Schedule" subtitle="Generate a rent schedule for a specific property." />
 
-            {properties.length > 0 ? (
+            {properties?.length ? (
                 <form className={cssClasses.form} onSubmit={renderTable}>
                     <Typography variant={'h6'} className={cssClasses.typography}>
                         1) Choose the property you want to generate a report for
                     </Typography>
                     <TextField
-                        value={property}
-                        onChange={(e) => setProperty(e.target.value)}
+                        value={propertyId}
+                        onChange={(e) => setPropertyId(e.target.value)}
                         variant={'outlined'}
                         margin={'normal'}
                         fullWidth

@@ -16,7 +16,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
 import { TenancyModel } from '../../tenancy/model/tenancy.model';
-import { parseISO } from 'date-fns';
+import * as tenancyService from '../../tenancy/service/tenancy.service';
 
 type PropertyCardProps = {
     property: PropertyModel;
@@ -36,7 +36,7 @@ const PropertyCard = ({ property, handleDelete, rentalUnits, tenancies }: Proper
 
     const numOfRUs = rentalUnits?.length ? rentalUnits.length : 0;
 
-    const runningTs = tenancies?.filter((t) => !t.endOfContract || parseISO(t.endOfContract) > new Date());
+    const runningTs = tenancyService.getRunningTenancies(tenancies);
     const numOfRunningTs = runningTs?.length ? runningTs.length : 0;
 
     const vacancies = runningTs?.filter((t) => t.isVacancy);

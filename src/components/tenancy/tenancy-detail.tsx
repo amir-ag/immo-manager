@@ -5,8 +5,8 @@ import { useParams } from 'react-router';
 import {
     selectCurrentProperty,
     selectCurrentRentalUnit,
-    selectPersonsTenants,
-    selectTenancies,
+    selectTenancyById,
+    selectTenants,
 } from '../../store/selectors';
 import { emptyProperty } from '../property/model/property.model';
 import { emptyRentalUnit } from '../rental-unit/model/rental-unit.model';
@@ -16,13 +16,13 @@ import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 
 export const TenancyDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
-    const tenancyToEdit = useAppSelector(selectTenancies).find((t) => t.id === id);
+    const tenancyToEdit = useAppSelector(selectTenancyById(id));
 
     // TODO: Better error handling!
     const property = useAppSelector(selectCurrentProperty) ?? emptyProperty;
     const rentalUnit = useAppSelector(selectCurrentRentalUnit) ?? emptyRentalUnit;
 
-    const tenants = useAppSelector(selectPersonsTenants);
+    const tenants = useAppSelector(selectTenants);
 
     const [currentTenancy, setCurrentTenancy] = useState(
         !isNew && tenancyToEdit

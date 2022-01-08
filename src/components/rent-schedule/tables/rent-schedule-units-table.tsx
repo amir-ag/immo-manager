@@ -54,7 +54,7 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentSchedu
                 <TableBody>
                     {rentalUnits.map((unit) => {
                         const tenancy = getTenancy(unit);
-                        totalRentSum += Number(tenancy.rentNet);
+                        totalRentSum += Number(tenancy?.rentNet ?? 0);
                         return (
                             <TableRow key={unit.ewid}>
                                 <TableCell component="th" scope="row">
@@ -68,14 +68,15 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentSchedu
                                 </TableCell>
                                 <TableCell align="right">{unit.surfaceInM2}</TableCell>
                                 <TableCell align="right">
-                                    {tenancy.beginOfContract
+                                    {/* TODO: Use shared function */}
+                                    {tenancy?.beginOfContract
                                         ? format(parseISO(tenancy.beginOfContract), constants.dateFormatShort)
                                         : '-'}
                                 </TableCell>
                                 <TableCell align="right">
-                                    {tenancy.endOfContract ? tenancy.endOfContract : '-'}
+                                    {tenancy?.endOfContract ? tenancy.endOfContract : '-'}
                                 </TableCell>
-                                <TableCell align="right">{tenancy.rentNet}</TableCell>
+                                <TableCell align="right">{tenancy?.rentNet}</TableCell>
                             </TableRow>
                         );
                     })}

@@ -3,7 +3,7 @@ import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } fro
 import { db } from '../../index';
 import * as storeService from '../service/store.service';
 import { TenancyModel } from '../../components/tenancy/model/tenancy.model';
-import { parseISO } from 'date-fns';
+import { tenanciesDescComparer } from '../../components/tenancy/service/tenancy.service';
 
 const dbName = 'tenancies';
 const sliceName = 'tenancies';
@@ -57,11 +57,7 @@ export const getTenancies = createAsyncThunk(`${sliceName}/getTenancies`, async 
             data.push({ ...(doc.data() as TenancyModel), id });
         });
 
-        return data.sort((tenA, tenB) => {
-            const dateA = parseISO(tenA.beginOfContract);
-            const dateB = parseISO(tenB.beginOfContract);
-            return dateB.getTime() - dateA.getTime();
-        });
+        return data.sort(tenanciesDescComparer);
     } catch (e) {
         console.error('Error getting tenancies: ', e);
     }

@@ -28,6 +28,7 @@ import { useForms } from '../../hooks/use-forms.hook';
 import * as personService from '../person/service/person.service';
 import * as propertyService from '../property/service/property.service';
 import * as rentalUnitService from '../rental-unit/service/rental-unit.service';
+import { getItemFromCollectionById } from '../../services/collection-utils';
 
 export type TenancyFormProps = {
     currentTenancy: TenancyModel;
@@ -120,7 +121,9 @@ export const TenancyForm = ({
                         options={tenants}
                         onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant1Id')}
                         getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
-                        value={tenants.find((t) => t.id === currentTenancy.tenant1Id) ?? emptyPerson}
+                        value={
+                            getItemFromCollectionById(currentTenancy?.tenant1Id ?? '', tenants) ?? emptyPerson
+                        }
                         getOptionSelected={(option: PersonModel, value: PersonModel) =>
                             option.id === value.id
                         }
@@ -140,7 +143,9 @@ export const TenancyForm = ({
                         options={tenants}
                         onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant2Id')}
                         getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
-                        value={tenants.find((t) => t.id === currentTenancy.tenant2Id) ?? emptyPerson}
+                        value={
+                            getItemFromCollectionById(currentTenancy?.tenant2Id ?? '', tenants) ?? emptyPerson
+                        }
                         getOptionSelected={(option: PersonModel, value: PersonModel) =>
                             option.id === value.id
                         }

@@ -6,7 +6,7 @@ import { RentalUnitForm } from './rental-unit-form';
 import { TenanciesOverview } from '../tenancy/overview/tenancies-overview';
 import { useParams } from 'react-router';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
-import { selectCurrentProperty, selectRentalUnits } from '../../store/selectors';
+import { selectCurrentProperty, selectRentalUnitById } from '../../store/selectors';
 import { emptyProperty } from '../property/model/property.model';
 import { propertiesSlice } from '../../store/slices/properties.slice';
 import { rentalUnitsSlice } from '../../store/slices/rental-units.slice';
@@ -18,7 +18,7 @@ export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
     const dispatch = useAppDispatch();
 
-    const rentalUnitToEdit = useAppSelector(selectRentalUnits).find((ru) => ru.id === id);
+    const rentalUnitToEdit = useAppSelector(selectRentalUnitById(id));
     // TODO: Better error handling!
     const property = useAppSelector(selectCurrentProperty) ?? emptyProperty;
 

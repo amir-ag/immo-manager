@@ -18,14 +18,13 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { RentalUnitModel } from '../model/rental-unit.model';
 import { useDeletePrompt } from '../../../hooks/use-delete-prompt.hook';
 import { TenancyModel } from '../../tenancy/model/tenancy.model';
-import { parseISO } from 'date-fns';
 import { PersonModel } from '../../person/model/person.model';
 import * as rentalUnitService from '../service/rental-unit.service';
 import * as tenancyService from '../../tenancy/service/tenancy.service';
 
 type RentalUnitsTableProps = {
-    tenancies: TenancyModel[];
-    tenants: PersonModel[];
+    allTenancies: TenancyModel[];
+    allTenants: PersonModel[];
     handleDelete: (ruId: string) => void;
     searchResult: RentalUnitModel[];
 };
@@ -37,8 +36,8 @@ const useStyles = makeStyles({
 });
 
 export const RentalUnitsTable = ({
-    tenancies,
-    tenants,
+    allTenancies,
+    allTenants,
     handleDelete,
     searchResult,
 }: RentalUnitsTableProps) => {
@@ -49,11 +48,8 @@ export const RentalUnitsTable = ({
 
     const getTenantsDesc = (ruId: string) => {
         const ts = tenancyService.getTenantsOfTenancy(
-            // TODO reuse filters and finds
-            tenancies
-                ?.filter((t) => !t.endOfContract || parseISO(t.endOfContract) > new Date())
-                ?.find((ten) => ten.rentalUnitId === ruId),
-            tenants
+            tenancyService.getRunningTenancyByRentalUnitId(ruId, allTenancies),
+            allTenants
         );
 
         if (!ts.length) {

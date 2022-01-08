@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
-import { selectPersonsTenants, selectTenancies } from '../../../store/selectors';
+import { selectTenanciesByRentalUnitId, selectTenants } from '../../../store/selectors';
 import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import SearchHeader from '../../ui/search-header/search-header';
 import { useHistory } from 'react-router';
@@ -20,10 +20,8 @@ export const TenanciesOverview = ({ disableCreate, relatedRentalUnit }: Tenancie
     const history = useHistory();
 
     const dispatch = useAppDispatch();
-    const tenants = useAppSelector(selectPersonsTenants);
-    const tenancies = useAppSelector(selectTenancies)?.filter(
-        (t) => t.rentalUnitId === relatedRentalUnit?.id
-    );
+    const tenants = useAppSelector(selectTenants);
+    const tenancies = useAppSelector(selectTenanciesByRentalUnitId(relatedRentalUnit?.id ?? ''));
 
     const [searchResult, setSearchResult] = useState(tenancies);
 
