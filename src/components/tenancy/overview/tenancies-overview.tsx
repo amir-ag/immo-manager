@@ -7,9 +7,9 @@ import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import SearchHeader from '../../ui/search-header/search-header';
 import { useHistory } from 'react-router';
 import { TenanciesTable } from './tenancies-table';
-import { stylingConstants } from '../../../theme/shared-styles';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import { RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
+import { gridSpacing } from '../../../theme/shared-styles';
 
 type TenanciesOverviewProps = {
     disableCreate: boolean;
@@ -39,7 +39,7 @@ export const TenanciesOverview = ({ disableCreate, relatedRentalUnit }: Tenancie
             container
             xs={12}
             sm={6}
-            spacing={stylingConstants.gridSpacing}
+            spacing={gridSpacing}
             alignItems={'center'}
             alignContent={'flex-start'}
         >

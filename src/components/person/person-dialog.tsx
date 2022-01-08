@@ -27,7 +27,7 @@ import { emptyPerson, PersonModel, personRoles } from './model/person.model';
 import { useForms } from '../../hooks/use-forms.hook';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { createUpdatePerson } from '../../store/slices/persons.slice';
-import { stylingConstants } from '../../theme/shared-styles';
+import { gridSpacing } from '../../theme/shared-styles';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 
@@ -97,7 +97,7 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
             </AppBar>
             <DialogContent>
                 <Box component={'form'} onSubmit={(e) => handleSubmit(e)} sx={{ mt: 3 }}>
-                    <Grid container spacing={stylingConstants.gridSpacing}>
+                    <Grid container spacing={gridSpacing}>
                         <Grid item xs={12}>
                             <Typography variant={'subtitle2'} component={'h3'}>
                                 Basic Info

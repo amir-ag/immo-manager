@@ -12,10 +12,10 @@ import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import { useHistory } from 'react-router';
 import SearchHeader from '../../ui/search-header/search-header';
 import { IntroHeader } from '../../ui/intro-header/intro-header';
-import { stylingConstants } from '../../../theme/shared-styles';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import * as rentalUnitService from '../../rental-unit/service/rental-unit.service';
 import * as tenancyService from '../../tenancy/service/tenancy.service';
+import { gridSpacing } from '../../../theme/shared-styles';
 
 type PropertiesViewProps = {
     showSearchHeader?: boolean;
@@ -78,7 +78,7 @@ const PropertiesOverview = ({ showSearchHeader = true }: PropertiesViewProps) =>
                 handleClose={handleCancelDelete}
                 handleDeletion={handleDelete}
             />
-            <Grid container spacing={stylingConstants.gridSpacing} justifyContent="space-evenly">
+            <Grid container spacing={gridSpacing} justifyContent="space-evenly">
                 {searchResult.map((property) => (
                     <Grid item xs={12} sm={6} md={4} xl={3} key={property.id}>
                         <PropertyCard

@@ -31,7 +31,7 @@ function App() {
                     <Route exact path={routes.HOME}>
                         <HomeRoute />
                     </Route>
-                    <Route exact path={routes.SIGNUP}>
+                    <Route exact path={routes.SIGN_UP}>
                         <HomeRoute />
                     </Route>
                     <PrivateRoute exact={false} component={MainAppRoute} path={routes.AUTHENTICATED_AREA} />

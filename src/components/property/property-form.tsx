@@ -6,7 +6,7 @@ import { PropertyModel } from './model/property.model';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { selectJanitors, selectOwners } from '../../store/selectors';
 import { emptyPerson, PersonModel } from '../person/model/person.model';
-import { stylingConstants } from '../../theme/shared-styles';
+import { gridSpacing } from '../../theme/shared-styles';
 import { createOrUpdateProperty } from '../../store/slices/properties.slice';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';
@@ -57,7 +57,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
             container
             xs={12}
             sm={6}
-            spacing={stylingConstants.gridSpacing}
+            spacing={gridSpacing}
             alignItems={'center'}
             alignContent={'flex-start'}
             component={'form'}

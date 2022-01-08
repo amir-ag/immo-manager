@@ -1,5 +1,5 @@
-import MainAppContainer from '../components/main-app/main-app.container';
+import MainApp from '../components/main-app/main-app';
 
 export const MainAppRoute = () => {
-    return <MainAppContainer />;
+    return <MainApp />;
 };

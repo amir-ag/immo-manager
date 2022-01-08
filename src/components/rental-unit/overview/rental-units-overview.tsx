@@ -8,10 +8,10 @@ import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import SearchHeader from '../../ui/search-header/search-header';
 import { useHistory } from 'react-router';
 import { RentalUnitsTable } from './rental-units-table';
-import { stylingConstants } from '../../../theme/shared-styles';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import { PropertyModel } from '../../property/model/property.model';
 import { getTenanciesByRentalUnitId } from '../../tenancy/service/tenancy.service';
+import { gridSpacing } from '../../../theme/shared-styles';
 
 type RentalUnitsOverviewProps = {
     disableCreate: boolean;
@@ -46,7 +46,7 @@ export const RentalUnitsOverview = ({ disableCreate, relatedProperty }: RentalUn
             container
             xs={12}
             sm={6}
-            spacing={stylingConstants.gridSpacing}
+            spacing={gridSpacing}
             alignItems={'center'}
             alignContent={'flex-start'}
         >

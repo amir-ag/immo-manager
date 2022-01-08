@@ -114,12 +114,12 @@ const SignIn = ({ handleSignIn }: SignInProps) => {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link component={RouterLink} to={routes.RESETPW} variant={'body2'}>
+                            <Link component={RouterLink} to={routes.RESET_PW} variant={'body2'}>
                                 Forgot password?
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link component={RouterLink} to={routes.SIGNUP} variant={'body2'}>
+                            <Link component={RouterLink} to={routes.SIGN_UP} variant={'body2'}>
                                 {"Don't have an account? Sign up"}
                             </Link>
                         </Grid>
