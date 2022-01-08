@@ -2,9 +2,10 @@ import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
+import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
 import { selectSnackbar } from '../../../store/selectors';
 import { setSnackbar } from '../../../store/slices/snackbar.slice';
+import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;

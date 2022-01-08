@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { useAppSelector } from '../hooks/store.hooks';
 import { selectUser } from '../store/selectors';
+import { useAppSelector } from '../hooks/store/use-app-selector.hook';
 
 interface PrivateRouteProps extends RouteProps {
     // tslint:disable-next-line:no-any

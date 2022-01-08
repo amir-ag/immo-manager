@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import routes from '../../../routes/route-constants';
-import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
+import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
 import { selectCurrentRentalUnit, selectPersonsTenants, selectTenancies } from '../../../store/selectors';
 import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import SearchHeader from '../../ui/search-header/search-header';
 import { useHistory } from 'react-router';
 import { TenanciesTable } from './tenancies-table';
 import { stylingConstants } from '../../../theme/shared-styles';
+import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 
 export const TenanciesOverview = ({ disableCreate }: { disableCreate: boolean }) => {
     const history = useHistory();

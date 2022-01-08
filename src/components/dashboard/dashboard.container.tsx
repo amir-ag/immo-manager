@@ -4,7 +4,7 @@ import { getProperties } from '../../store/slices/properties.slice';
 import { getRentalUnits } from '../../store/slices/rental-units.slice';
 import { getPersons } from '../../store/slices/persons.slice';
 import { getTenancies } from '../../store/slices/tenancies.slice';
-import { useAppDispatch } from '../../hooks/store.hooks';
+import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { IntroHeader } from '../ui/intro-header/intro-header';
 
 export const DashboardContainer = () => {

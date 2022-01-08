@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import { useDeletePrompt } from '../../../hooks/ui.hooks';
+import { useDeletePrompt } from '../../../hooks/use-delete-prompt.hook';
 import { TenancyModel } from '../model/tenancy.model';
 import { format, parseISO } from 'date-fns';
 import { PersonModel } from '../../person/model/person.model';

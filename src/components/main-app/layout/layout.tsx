@@ -24,7 +24,7 @@ import {
 import MenuItem from '@material-ui/core/MenuItem';
 import { useHistory } from 'react-router';
 import { format } from 'date-fns';
-import { useAppDispatch, useAppSelector } from '../../../hooks/store.hooks';
+import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
 import { logout } from '../../../store/slices/user.slice';
 import { NavLink } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
@@ -34,6 +34,7 @@ import { selectUser } from '../../../store/selectors';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import * as constants from '../../../constants';
+import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 
 export type LayoutProps = {
     children: React.ReactNode;
