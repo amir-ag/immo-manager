@@ -63,7 +63,7 @@ const SearchHeader = ({
                         const fields = fieldName.split('.');
                         fieldValue = row[fields[0]][fields[1]];
                     } else {
-                        fieldValue = row[fieldName];
+                        fieldValue = row[fieldName]?.toString();
                     }
 
                     if (fieldValue?.toLowerCase()?.includes(searchValue.toLowerCase())) {

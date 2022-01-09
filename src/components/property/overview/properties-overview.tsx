@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import PropertyCard from './property-card';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
-import { selectProperties, selectRentalUnits, selectTenancies } from '../../../store/selectors';
+import { selectAllProperties, selectAllRentalUnits, selectAllTenancies } from '../../../store/selectors';
 import { deleteProperty } from '../../../store/slices/properties.slice';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/use-delete-prompt.hook';
@@ -23,9 +23,9 @@ type PropertiesViewProps = {
 
 const PropertiesOverview = ({ showSearchHeader = true }: PropertiesViewProps) => {
     const dispatch = useAppDispatch();
-    const properties = useAppSelector(selectProperties);
-    const rentalUnits = useAppSelector(selectRentalUnits);
-    const tenancies = useAppSelector(selectTenancies);
+    const properties = useAppSelector(selectAllProperties);
+    const rentalUnits = useAppSelector(selectAllRentalUnits);
+    const tenancies = useAppSelector(selectAllTenancies);
     const [searchResult, setSearchResult] = useState(properties);
 
     const history = useHistory();

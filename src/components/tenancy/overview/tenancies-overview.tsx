@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
-import { selectTenanciesByRentalUnitId, selectTenants } from '../../../store/selectors';
+import { selectAllTenancies, selectTenants } from '../../../store/selectors';
 import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import SearchHeader from '../../ui/search-header/search-header';
 import { useHistory } from 'react-router';
@@ -10,6 +10,7 @@ import { TenanciesTable } from './tenancies-table';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import { RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
 import { gridSpacing } from '../../../theme/shared-styles';
+import { getTenanciesByRentalUnitId } from '../service/tenancy.service';
 
 type TenanciesOverviewProps = {
     disableCreate: boolean;
@@ -18,12 +19,22 @@ type TenanciesOverviewProps = {
 
 export const TenanciesOverview = ({ disableCreate, relatedRentalUnit }: TenanciesOverviewProps) => {
     const history = useHistory();
-
     const dispatch = useAppDispatch();
-    const tenants = useAppSelector(selectTenants);
-    const tenancies = useAppSelector(selectTenanciesByRentalUnitId(relatedRentalUnit?.id ?? ''));
 
-    const [searchResult, setSearchResult] = useState(tenancies);
+    const tenants = useAppSelector(selectTenants);
+    const allTenancies = useAppSelector(selectAllTenancies);
+    const relatedTenancies = getTenanciesByRentalUnitId(relatedRentalUnit?.id ?? '', allTenancies);
+
+    const [searchResult, setSearchResult] = useState(relatedTenancies);
+
+    /*
+        Do not use the filtered rental units here as a dependency.
+        Otherwise 'useEffect()' will trigger a loop because the reference
+        is always a new one due to the nature of the '.filter()' function.
+    */
+    useEffect(() => {
+        setSearchResult(relatedTenancies);
+    }, [allTenancies]);
 
     const handleDelete = (tenId: string) => {
         dispatch(deleteTenancy(tenId));
@@ -51,7 +62,7 @@ export const TenanciesOverview = ({ disableCreate, relatedRentalUnit }: Tenancie
             <SearchHeader
                 placeholderText={'Search by date (yyyy-MM-dd)'}
                 handleCreate={handleCreate}
-                originalData={tenancies}
+                originalData={relatedTenancies}
                 setSearchResult={setSearchResult}
                 disableCreateButton={disableCreate}
                 searchParams={['beginOfContract', 'endOfContract']}

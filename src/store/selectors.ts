@@ -16,14 +16,14 @@ export const selectJanitors = (state: RootState) => state.persons.filter((p) => 
 export const selectTenants = (state: RootState) => state.persons.filter((p) => p.roles?.includes('Tenant'));
 
 // properties
-export const selectProperties = (state: RootState) => state.properties.all;
+export const selectAllProperties = (state: RootState) => state.properties.all;
 export const selectPropertyById = (id: string) => {
     return (state: RootState) => getItemFromCollectionById(id, state.properties.all);
 };
 export const selectCurrentProperty = (state: RootState) => state.properties.current;
 
 // rental units
-export const selectRentalUnits = (state: RootState) => state.rentalUnits.all;
+export const selectAllRentalUnits = (state: RootState) => state.rentalUnits.all;
 export const selectRentalUnitById = (id: string) => {
     return (state: RootState) => getItemFromCollectionById(id, state.rentalUnits.all);
 };
@@ -34,7 +34,7 @@ export const selectRentalUnitsByPropertyId = (propertyId: string) => {
 export const selectCurrentRentalUnit = (state: RootState) => state.rentalUnits.current;
 
 // tenancies
-export const selectTenancies = (state: RootState) => state.tenancies;
+export const selectAllTenancies = (state: RootState) => state.tenancies;
 export const selectTenancyById = (id: string) => {
     return (state: RootState) => getItemFromCollectionById(id, state.tenancies);
 };
