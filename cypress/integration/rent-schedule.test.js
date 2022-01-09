@@ -10,7 +10,7 @@ describe('rent schedule', () => {
     });
     it('rent schedule', () => {
         cy.contains("You currently don't have any properties. Start by creating one!");
-        cy.get('button span.MuiButton-label').contains('Start by creating one!').click();
+        cy.get('button span.MuiButton-label').contains('Create').click();
         cy.contains('Create Property');
     });
 });
