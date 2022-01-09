@@ -13,6 +13,12 @@ type HomeHeaderProps = ThemeProps & {
 };
 
 const useStyles = makeStyles<Theme, ThemeProps>((theme) => ({
+    root: {
+        marginBottom: theme.spacing(3),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
     avatar: {
         margin: theme.spacing(1),
         width: theme.spacing(7),
@@ -26,11 +32,11 @@ export const HomeHeader = ({ iconBackgroundColor, icon, title }: HomeHeaderProps
     usePageTitle(title);
 
     return (
-        <>
+        <div className={cssClasses.root}>
             <Avatar className={cssClasses.avatar}>{icon}</Avatar>
             <Typography component={'h1'} variant={'h5'}>
                 {title}
             </Typography>
-        </>
+        </div>
     );
 };

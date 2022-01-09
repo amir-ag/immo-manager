@@ -72,6 +72,7 @@ const SignIn = ({ handleSignIn }: SignInProps) => {
                     icon={<LockOutlinedIcon />}
                     title="Sign in"
                 />
+                {/* TODO: Use grid container here */}
                 <form className={classes.form} noValidate autoComplete={'off'} onSubmit={(e) => onSubmit(e)}>
                     <TextField
                         value={state.email}

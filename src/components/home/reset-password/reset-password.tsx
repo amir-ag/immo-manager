@@ -43,6 +43,7 @@ const ResetPassword = ({ handleReset }: ResetPasswordProps) => {
                     icon={<SettingsBackupRestoreOutlinedIcon />}
                     title="Reset Password"
                 />
+                {/* TODO: Use grid container here */}
                 <form className={classes.form} noValidate autoComplete={'off'} onSubmit={onSubmit}>
                     <TextField
                         value={email}
