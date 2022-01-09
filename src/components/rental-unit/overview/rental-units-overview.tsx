@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import routes from '../../../routes/route-constants';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
-import { selectRentalUnitsByPropertyId, selectTenancies, selectTenants } from '../../../store/selectors';
+import { selectAllRentalUnits, selectAllTenancies, selectTenants } from '../../../store/selectors';
 import { deleteRentalUnit } from '../../../store/slices/rental-units.slice';
 import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import SearchHeader from '../../ui/search-header/search-header';
@@ -12,6 +12,7 @@ import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import { PropertyModel } from '../../property/model/property.model';
 import { getTenanciesByRentalUnitId } from '../../tenancy/service/tenancy.service';
 import { gridSpacing } from '../../../theme/shared-styles';
+import { getRentalUnitsByPropertyId } from '../service/rental-unit.service';
 
 type RentalUnitsOverviewProps = {
     disableCreate: boolean;
@@ -20,13 +21,23 @@ type RentalUnitsOverviewProps = {
 
 export const RentalUnitsOverview = ({ disableCreate, relatedProperty }: RentalUnitsOverviewProps) => {
     const history = useHistory();
-
     const dispatch = useAppDispatch();
-    const rentalUnits = useAppSelector(selectRentalUnitsByPropertyId(relatedProperty?.id ?? ''));
-    const allTenancies = useAppSelector(selectTenancies);
+
+    const allRentalUnits = useAppSelector(selectAllRentalUnits);
+    const relatedRentalUnits = getRentalUnitsByPropertyId(relatedProperty?.id ?? '', allRentalUnits);
+    const allTenancies = useAppSelector(selectAllTenancies);
     const allTenants = useAppSelector(selectTenants);
 
-    const [searchResult, setSearchResult] = useState(rentalUnits);
+    const [searchResult, setSearchResult] = useState(relatedRentalUnits);
+
+    /*
+        Do not use the filtered rental units here as a dependency.
+        Otherwise 'useEffect()' will trigger a loop because the reference
+        is always a new one due to the nature of the '.filter()' function.
+    */
+    useEffect(() => {
+        setSearchResult(relatedRentalUnits);
+    }, [allRentalUnits]);
 
     const handleDelete = (ruId: string) => {
         dispatch(deleteRentalUnit(ruId));
@@ -58,7 +69,7 @@ export const RentalUnitsOverview = ({ disableCreate, relatedProperty }: RentalUn
             <SearchHeader
                 placeholderText={'Search by description'}
                 handleCreate={handleCreate}
-                originalData={rentalUnits}
+                originalData={relatedRentalUnits}
                 setSearchResult={setSearchResult}
                 disableCreateButton={disableCreate}
                 searchParams={['ewid', 'type', 'numberOfRooms', 'floorLevel']}

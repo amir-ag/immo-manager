@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from 'react';
 import { Button, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
 import EventNoteOutlinedIcon from '@material-ui/icons/EventNoteOutlined';
-import { selectProperties } from '../../store/selectors';
+import { selectAllProperties } from '../../store/selectors';
 import { PropertyModel } from '../property/model/property.model';
 import { useHistory } from 'react-router';
 import { NavLink } from 'react-router-dom';
@@ -28,7 +28,7 @@ export const RentSchedule = () => {
 
     const history = useHistory();
     // TODO: Use form hook
-    const properties = useAppSelector(selectProperties);
+    const properties = useAppSelector(selectAllProperties);
 
     const renderTable = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();

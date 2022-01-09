@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import {
+    selectAllTenancies,
     selectPropertyById,
     selectRentalUnitsByPropertyId,
-    selectTenancies,
     selectTenants,
 } from '../../store/selectors';
 import { Button, Container, makeStyles, Typography } from '@material-ui/core';
@@ -41,7 +41,7 @@ const RentScheduleOverview = () => {
     // TODO: Use better approach for error handling
     const property = useAppSelector(selectPropertyById(id)) || emptyProperty;
     const rentalUnits = useAppSelector(selectRentalUnitsByPropertyId(id));
-    const tenancies = useAppSelector(selectTenancies);
+    const tenancies = useAppSelector(selectAllTenancies);
     const tenants = useAppSelector(selectTenants);
 
     return (

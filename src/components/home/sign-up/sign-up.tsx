@@ -4,6 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import routes from '../../../routes/route-constants';
 import { HomeHeader } from '../home-header';
+import { gridSpacing } from '../../../theme/shared-styles';
 
 export type SignUpProps = {
     handleSignUp: (state: SignUpState) => void;
@@ -67,13 +68,12 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                     title="Sign up"
                 />
                 <form className={classes.form} noValidate autoComplete={'off'} onSubmit={(e) => onSubmit(e)}>
-                    <Grid container>
+                    <Grid container spacing={gridSpacing}>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 value={state.firstName}
                                 onChange={(e) => onChange(e)}
                                 variant={'outlined'}
-                                margin={'normal'}
                                 fullWidth
                                 id={'firstName'}
                                 label={'Firstname'}
@@ -88,7 +88,6 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                                 value={state.lastName}
                                 onChange={(e) => onChange(e)}
                                 variant={'outlined'}
-                                margin={'normal'}
                                 fullWidth
                                 id={'lastName'}
                                 label={'Lastname'}
@@ -102,7 +101,6 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                                 value={state.email}
                                 onChange={(e) => onChange(e)}
                                 variant={'outlined'}
-                                margin={'normal'}
                                 fullWidth
                                 id={'email'}
                                 label={'Email'}
@@ -116,7 +114,6 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                                 value={state.password}
                                 onChange={(e) => onChange(e)}
                                 variant={'outlined'}
-                                margin={'normal'}
                                 fullWidth
                                 id={'password'}
                                 type={'password'}

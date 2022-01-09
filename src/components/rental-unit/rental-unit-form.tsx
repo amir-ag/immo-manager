@@ -84,7 +84,7 @@ export const RentalUnitForm = ({
                         id={'ewid'}
                         label={'EWID'}
                         type="number"
-                        value={currentRentalUnit.ewid}
+                        value={currentRentalUnit.ewid === 0 ? '' : currentRentalUnit.ewid}
                         onChange={(e) => handleBasicInputChange(e)}
                         required
                     />
@@ -95,10 +95,21 @@ export const RentalUnitForm = ({
                         id={'type'}
                         select
                         label="Select"
-                        helperText="Select a room type"
+                        helperText="Select the unit type"
                         variant="outlined"
                         value={currentRentalUnit.type}
-                        onChange={(e) => handleBasicInputChange(e, 'type')}
+                        onChange={(e) => {
+                            if (e.target.value === rentalUnitType[0]) {
+                                currentRentalUnit.numberOfRooms = 0;
+                            }
+
+                            if (e.target.value === rentalUnitType[1]) {
+                                currentRentalUnit.numberOfRooms = 1;
+                            }
+
+                            handleBasicInputChange(e, 'type');
+                        }}
+                        required
                     >
                         {rentalUnitType.map((rut) => (
                             <MenuItem key={rut} value={rut}>
@@ -115,8 +126,9 @@ export const RentalUnitForm = ({
                     id={'numberOfRooms'}
                     label={'Number of Rooms'}
                     type="number"
-                    value={currentRentalUnit.numberOfRooms}
+                    value={currentRentalUnit.numberOfRooms === 0 ? '' : currentRentalUnit.numberOfRooms}
                     onChange={(e) => handleBasicInputChange(e)}
+                    disabled={currentRentalUnit.type === 'Parking Lot'}
                 />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -135,11 +147,12 @@ export const RentalUnitForm = ({
                     id={'floorLevel'}
                     select
                     label="Select"
-                    helperText="Select a floor level"
+                    helperText="Select the floor level"
                     variant="outlined"
                     fullWidth
                     value={currentRentalUnit.floorLevel}
                     onChange={(e) => handleBasicInputChange(e, 'floorLevel')}
+                    required
                 >
                     {rentalUnitfloorLevel.map((rufl) => (
                         <MenuItem key={rufl} value={rufl}>
