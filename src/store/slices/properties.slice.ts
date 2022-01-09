@@ -3,6 +3,7 @@ import { PropertyModel } from '../../components/property/model/property.model';
 import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../../index';
 import * as storeService from '../service/store.service';
+import { emptyThumbnail } from '../../models/thumbnail.model';
 
 const dbName = 'properties';
 const sliceName = 'properties';
@@ -14,13 +15,14 @@ export const createOrUpdateProperty = createAsyncThunk(
             const uid = storeService.getUidFromStoreState(thunkAPI);
             const docToPush = {
                 ...property,
-                thumbnail: {
-                    imageUrl: '',
-                },
                 createdBy: uid,
             };
 
             if (property.thumbnail?.image) {
+                if (!docToPush.thumbnail) {
+                    docToPush.thumbnail = emptyThumbnail;
+                }
+
                 docToPush.thumbnail.imageUrl = await storeService.uploadImageAndReturnUrl(
                     property.thumbnail?.image,
                     `images/properties/thumbnails/${uid}/${property.thumbnail.image.name}`

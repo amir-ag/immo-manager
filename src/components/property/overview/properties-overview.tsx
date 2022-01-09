@@ -16,6 +16,7 @@ import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import * as rentalUnitService from '../../rental-unit/service/rental-unit.service';
 import * as tenancyService from '../../tenancy/service/tenancy.service';
 import { gridSpacing } from '../../../theme/shared-styles';
+import { InfoBox } from '../../ui/info-box/info-box';
 
 type PropertiesViewProps = {
     showSearchHeader?: boolean;
@@ -23,16 +24,16 @@ type PropertiesViewProps = {
 
 const PropertiesOverview = ({ showSearchHeader = true }: PropertiesViewProps) => {
     const dispatch = useAppDispatch();
-    const properties = useAppSelector(selectAllProperties);
-    const rentalUnits = useAppSelector(selectAllRentalUnits);
-    const tenancies = useAppSelector(selectAllTenancies);
-    const [searchResult, setSearchResult] = useState(properties);
+    const allProperties = useAppSelector(selectAllProperties);
+    const allRentalUnits = useAppSelector(selectAllRentalUnits);
+    const allTenancies = useAppSelector(selectAllTenancies);
+    const [searchResult, setSearchResult] = useState(allProperties);
 
     const history = useHistory();
 
     useEffect(() => {
-        setSearchResult(properties);
-    }, [properties]);
+        setSearchResult(allProperties);
+    }, [allProperties]);
 
     const { deletePromptOpen, entityToDelete, handleOpenDeletePrompt, handleCancelDelete } =
         useDeletePrompt();
@@ -40,10 +41,10 @@ const PropertiesOverview = ({ showSearchHeader = true }: PropertiesViewProps) =>
     const handleDelete = () => {
         dispatch(deleteProperty(entityToDelete));
         // TODO: Combine these store actions within the store (transparent)
-        rentalUnitService.getRentalUnitsByPropertyId(entityToDelete, rentalUnits)?.forEach((ru) => {
+        rentalUnitService.getRentalUnitsByPropertyId(entityToDelete, allRentalUnits)?.forEach((ru) => {
             dispatch(deleteRentalUnit(ru.id));
             tenancyService
-                .getTenanciesByRentalUnitId(ru.id, tenancies)
+                .getTenanciesByRentalUnitId(ru.id, allTenancies)
                 ?.forEach((ten) => dispatch(deleteTenancy(ten.id)));
         });
     };
@@ -63,36 +64,50 @@ const PropertiesOverview = ({ showSearchHeader = true }: PropertiesViewProps) =>
                     <SearchHeader
                         placeholderText={'Search by name or address...'}
                         handleCreate={handleCreate}
-                        originalData={properties}
+                        originalData={allProperties}
                         setSearchResult={setSearchResult}
                         searchParams={['name', 'egid', 'address.addressLine1', 'address.city']}
                     />
                 </>
             )}
-            <DeletePrompt
-                open={deletePromptOpen}
-                title={'Delete Property?'}
-                description={
-                    'Are you sure you want to delete this property? This will also delete all linked rental units and tenancies!'
-                }
-                handleClose={handleCancelDelete}
-                handleDeletion={handleDelete}
-            />
-            <Grid container spacing={gridSpacing} justifyContent="space-evenly">
-                {searchResult.map((property) => (
-                    <Grid item xs={12} sm={6} md={4} xl={3} key={property.id}>
-                        <PropertyCard
-                            property={property}
-                            handleDelete={() => handleOpenDeletePrompt(property.id)}
-                            rentalUnits={rentalUnitService.getRentalUnitsByPropertyId(
-                                property.id,
-                                rentalUnits
-                            )}
-                            tenancies={tenancyService.getTenanciesByPropertyId(property.id, tenancies)}
-                        />
+            {allProperties?.length ? (
+                <>
+                    <DeletePrompt
+                        open={deletePromptOpen}
+                        title={'Delete Property?'}
+                        description={
+                            'Are you sure you want to delete this property? This will also delete all linked rental units and tenancies!'
+                        }
+                        handleClose={handleCancelDelete}
+                        handleDeletion={handleDelete}
+                    />
+                    <Grid container spacing={gridSpacing} justifyContent="space-evenly">
+                        {searchResult.map((property) => (
+                            <Grid item xs={12} sm={6} md={4} xl={3} key={property.id}>
+                                <PropertyCard
+                                    property={property}
+                                    handleDelete={() => handleOpenDeletePrompt(property.id)}
+                                    rentalUnits={rentalUnitService.getRentalUnitsByPropertyId(
+                                        property.id,
+                                        allRentalUnits
+                                    )}
+                                    tenancies={tenancyService.getTenanciesByPropertyId(
+                                        property.id,
+                                        allTenancies
+                                    )}
+                                />
+                            </Grid>
+                        ))}
                     </Grid>
-                ))}
-            </Grid>
+                </>
+            ) : (
+                <InfoBox
+                    title="No Properties found!"
+                    text="You currently don't have any properties. Start by creating one!"
+                    buttonText="Create"
+                    handleButtonClick={() => handleCreate()}
+                />
+            )}
         </>
     );
 };

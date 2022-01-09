@@ -21,7 +21,6 @@ export const emptyProperty: PropertyModel = {
     address: emptyAddress,
     thumbnail: {
         ...emptyThumbnail,
-        imageUrl:
-            'https://firebasestorage.googleapis.com/v0/b/immo-manager.appspot.com/o/images%2Fproperties%2Fproperty-thumbnail-placeholder.jpg?alt=media&token=ccb13819-d815-4814-9e36-017c33838d10',
+        imageUrl: '/img/property-thumbnail-placeholder.jpg',
     },
 };

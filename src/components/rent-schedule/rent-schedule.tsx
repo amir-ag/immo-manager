@@ -4,10 +4,10 @@ import EventNoteOutlinedIcon from '@material-ui/icons/EventNoteOutlined';
 import { selectAllProperties } from '../../store/selectors';
 import { PropertyModel } from '../property/model/property.model';
 import { useHistory } from 'react-router';
-import { NavLink } from 'react-router-dom';
 import routes from '../../routes/route-constants';
 import { IntroHeader } from '../ui/intro-header/intro-header';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
+import { InfoBox } from '../ui/info-box/info-box';
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
 
 export const RentSchedule = () => {
     const cssClasses = useStyles();
+    // TODO: Use form hook
     const [propertyId, setPropertyId] = useState('');
 
     const history = useHistory();
-    // TODO: Use form hook
     const properties = useAppSelector(selectAllProperties);
 
     const renderTable = (e: FormEvent<HTMLElement>) => {
@@ -74,10 +74,12 @@ export const RentSchedule = () => {
                     </Button>
                 </form>
             ) : (
-                <Typography variant={'h5'}>
-                    Currently you don't have any properties.{' '}
-                    <NavLink to={routes.PROPERTIES_OVERVIEW}>Start by creating one!</NavLink>
-                </Typography>
+                <InfoBox
+                    title="No Properties found!"
+                    text="You currently don't have any properties. Start by creating one!"
+                    buttonText="Create"
+                    handleButtonClick={() => history.push(routes.PROPERTIES_CREATE)}
+                />
             )}
         </>
     );

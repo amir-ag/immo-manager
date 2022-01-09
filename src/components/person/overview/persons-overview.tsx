@@ -9,6 +9,7 @@ import SearchHeader from '../../ui/search-header/search-header';
 import { IntroHeader } from '../../ui/intro-header/intro-header';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import { getItemFromCollectionById } from '../../../services/collection-utils';
+import { InfoBox } from '../../ui/info-box/info-box';
 
 const PersonsOverview = () => {
     const allPersons = useAppSelector(selectAllPersons);
@@ -51,11 +52,18 @@ const PersonsOverview = () => {
                 setSearchResult={setSearchResult}
                 searchParams={['firstName', 'lastName', 'email', 'address.addressLine1', 'address.city2']}
             />
-            {allPersons && (
+            {allPersons?.length ? (
                 <PersonsTable
                     personsData={searchResult}
                     handleDelete={handleDelete}
                     handleEdit={handleEdit}
+                />
+            ) : (
+                <InfoBox
+                    title="No Persons found!"
+                    text="You currently don't have any persons. Start by creating one!"
+                    buttonText="Create"
+                    handleButtonClick={() => handleCreate()}
                 />
             )}
             {openDialog && (
