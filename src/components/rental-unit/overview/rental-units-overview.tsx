@@ -13,6 +13,7 @@ import { PropertyModel } from '../../property/model/property.model';
 import { getTenanciesByRentalUnitId } from '../../tenancy/service/tenancy.service';
 import { gridSpacing } from '../../../theme/shared-styles';
 import { getRentalUnitsByPropertyId } from '../service/rental-unit.service';
+import { InfoBox } from '../../ui/info-box/info-box';
 
 type RentalUnitsOverviewProps = {
     disableCreate: boolean;
@@ -76,12 +77,24 @@ export const RentalUnitsOverview = ({ disableCreate, relatedProperty }: RentalUn
                 wrapAtMd={true}
             />
             <Grid item xs={12}>
-                <RentalUnitsTable
-                    allTenancies={allTenancies}
-                    allTenants={allTenants}
-                    handleDelete={handleDelete}
-                    searchResult={searchResult}
-                />
+                {relatedRentalUnits?.length ? (
+                    <RentalUnitsTable
+                        allTenancies={allTenancies}
+                        allTenants={allTenants}
+                        handleDelete={handleDelete}
+                        searchResult={searchResult}
+                    />
+                ) : (
+                    <InfoBox
+                        title="No Rental Units found!"
+                        text={`This property currently doesn't have any rental units. ${
+                            disableCreate ? 'Start by creating the property first!' : 'Start by creating one!'
+                        }`}
+                        noButton={disableCreate}
+                        buttonText="Create"
+                        handleButtonClick={() => handleCreate()}
+                    />
+                )}
             </Grid>
         </Grid>
     );

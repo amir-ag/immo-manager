@@ -1,15 +1,16 @@
 import React from 'react';
 import { Button, makeStyles } from '@material-ui/core';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { NavLink } from 'react-router-dom';
 
 type InfoBoxProps = {
     title: string;
     text: string;
+    noButton?: boolean;
     buttonText: string;
-    buttonUrl: string;
+    handleButtonClick: () => void;
 };
 
+// TODO: Make a narrow and wide variant
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: 'auto',
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const InfoBox = ({ title, text, buttonText, buttonUrl }: InfoBoxProps) => {
+export const InfoBox = ({ title, text, noButton, buttonText, handleButtonClick }: InfoBoxProps) => {
     const cssClasses = useStyles();
 
     return (
@@ -28,9 +29,11 @@ export const InfoBox = ({ title, text, buttonText, buttonUrl }: InfoBoxProps) =>
             className={cssClasses.root}
             severity="info"
             action={
-                <Button color="inherit" size="small" component={NavLink} to={buttonUrl}>
-                    {buttonText}
-                </Button>
+                noButton ? undefined : (
+                    <Button color="inherit" size="small" onClick={() => handleButtonClick()}>
+                        {buttonText}
+                    </Button>
+                )
             }
         >
             <AlertTitle>{title}</AlertTitle>

@@ -11,6 +11,7 @@ import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import { RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
 import { gridSpacing } from '../../../theme/shared-styles';
 import { getTenanciesByRentalUnitId } from '../service/tenancy.service';
+import { InfoBox } from '../../ui/info-box/info-box';
 
 type TenanciesOverviewProps = {
     disableCreate: boolean;
@@ -69,7 +70,25 @@ export const TenanciesOverview = ({ disableCreate, relatedRentalUnit }: Tenancie
                 wrapAtMd={true}
             />
             <Grid item xs={12}>
-                <TenanciesTable tenants={tenants} handleDelete={handleDelete} searchResult={searchResult} />
+                {relatedTenancies?.length ? (
+                    <TenanciesTable
+                        tenants={tenants}
+                        handleDelete={handleDelete}
+                        searchResult={searchResult}
+                    />
+                ) : (
+                    <InfoBox
+                        title="No Tenancies found!"
+                        text={`This rental unit currently doesn't have any tenancies. ${
+                            disableCreate
+                                ? 'Start by creating the rental unit first!'
+                                : 'Start by creating one!'
+                        }`}
+                        noButton={disableCreate}
+                        buttonText="Create"
+                        handleButtonClick={() => handleCreate()}
+                    />
+                )}
             </Grid>
         </Grid>
     );
