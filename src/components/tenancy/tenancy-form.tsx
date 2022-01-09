@@ -164,8 +164,11 @@ export const TenancyForm = ({
                     <FormControlLabel
                         id="isVacancy"
                         onChange={(e) => {
-                            currentTenancy.tenant1Id = '';
-                            currentTenancy.tenant2Id = '';
+                            setCurrentTenancy({
+                                ...currentTenancy,
+                                tenant1Id: '',
+                                tenant2Id: '',
+                            });
                             handleBasicInputChange(e, 'isVacancy', true);
                         }}
                         control={<Checkbox name="isFamilyApartment" />}
@@ -285,7 +288,6 @@ export const TenancyForm = ({
                         label={'Utilities (CHF)'}
                         type="number"
                         inputProps={{ min: 0 }}
-                        required
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -298,7 +300,6 @@ export const TenancyForm = ({
                         label={'Rent Deposit (CHF)'}
                         type="number"
                         inputProps={{ min: 0 }}
-                        required
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -309,6 +310,8 @@ export const TenancyForm = ({
                         value={currentTenancy.rentAccount}
                         onChange={(e) => handleBasicInputChange(e)}
                         label={'Rent Account (IBAN)'}
+                        helperText={'Provide a valid IBAN'}
+                        inputProps={{ minLength: 34 }}
                         type="text"
                         required
                     />

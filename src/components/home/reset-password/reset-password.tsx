@@ -4,6 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { HomeHeader } from '../home-header';
 import SettingsBackupRestoreOutlinedIcon from '@material-ui/icons/SettingsBackupRestoreOutlined';
+import { emailPattern } from '../../../constants';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -44,7 +45,7 @@ const ResetPassword = ({ handleReset }: ResetPasswordProps) => {
                     title="Reset Password"
                 />
                 {/* TODO: Use grid container here */}
-                <form className={classes.form} noValidate autoComplete={'off'} onSubmit={onSubmit}>
+                <form className={classes.form} onSubmit={onSubmit}>
                     <TextField
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -54,6 +55,8 @@ const ResetPassword = ({ handleReset }: ResetPasswordProps) => {
                         id={'email'}
                         label={'Email Address'}
                         name={'email'}
+                        type={'email'}
+                        inputProps={{ pattern: emailPattern }}
                         autoComplete={'email'}
                         autoFocus
                         required

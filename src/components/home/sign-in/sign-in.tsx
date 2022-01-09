@@ -14,6 +14,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import routes from '../../../routes/route-constants';
 import { HomeHeader } from '../home-header';
+import { emailPattern } from '../../../constants';
 
 export type SignInProps = {
     handleSignIn: (state: SignInState) => void;
@@ -73,7 +74,7 @@ const SignIn = ({ handleSignIn }: SignInProps) => {
                     title="Sign in"
                 />
                 {/* TODO: Use grid container here */}
-                <form className={classes.form} noValidate autoComplete={'off'} onSubmit={(e) => onSubmit(e)}>
+                <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
                     <TextField
                         value={state.email}
                         onChange={(e) => onChange(e)}
@@ -84,6 +85,8 @@ const SignIn = ({ handleSignIn }: SignInProps) => {
                         label={'Email Address'}
                         name={'email'}
                         autoComplete={'email'}
+                        type={'email'}
+                        inputProps={{ pattern: emailPattern }}
                         autoFocus
                         required
                     />

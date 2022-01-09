@@ -30,6 +30,7 @@ import { createUpdatePerson } from '../../store/slices/persons.slice';
 import { gridSpacing } from '../../theme/shared-styles';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
+import { emailPattern, swissPhoneHelpText, swissPhonePattern } from '../../constants';
 
 export type PersonDialogProps = {
     openDialog: boolean;
@@ -118,7 +119,7 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <FormControl fullWidth>
+                            <FormControl fullWidth required>
                                 <InputLabel id="roles">Roles</InputLabel>
                                 <Select
                                     labelId="roles"
@@ -173,6 +174,7 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                             <TextField
                                 id="birthday"
                                 label="Birthday"
+                                value={currentPerson.birthday}
                                 type="date"
                                 fullWidth
                                 onChange={(e) => handleBasicInputChange(e)}
@@ -202,6 +204,7 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                                 name={'email'}
                                 autoComplete={'email'}
                                 type={'email'}
+                                inputProps={{ pattern: emailPattern }}
                                 required
                             />
                         </Grid>
@@ -215,7 +218,9 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                                 label={'Mobile Phone'}
                                 name={'mobilephone'}
                                 autoComplete={'mobilephone'}
-                                type={'number'}
+                                type={'tel'}
+                                helperText={swissPhoneHelpText}
+                                inputProps={{ pattern: swissPhonePattern }}
                                 required
                             />
                         </Grid>
@@ -229,7 +234,9 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                                 label={'Landline'}
                                 name={'landline'}
                                 autoComplete={'landline'}
-                                type={'number'}
+                                helperText={swissPhoneHelpText}
+                                inputProps={{ pattern: swissPhonePattern }}
+                                type={'tel'}
                             />
                         </Grid>
                     </Grid>

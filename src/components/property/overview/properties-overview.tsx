@@ -62,7 +62,7 @@ const PropertiesOverview = ({ showSearchHeader = true }: PropertiesViewProps) =>
                         subtitle="Search, create, edit, ... all properties."
                     />
                     <SearchHeader
-                        placeholderText={'Search by name or address...'}
+                        placeholderText={'Search by egid, name or address...'}
                         handleCreate={handleCreate}
                         originalData={allProperties}
                         setSearchResult={setSearchResult}
