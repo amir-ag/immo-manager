@@ -132,7 +132,12 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                                             ? format(parseISO(p.birthday), constants.dateFormatShort)
                                             : constants.notAvailableText}
                                     </TableCell>
-                                    <TableCell align={'right'}>{p.roles}</TableCell>
+                                    <TableCell align={'right'}>
+                                        {
+                                            // Slicing enables sorting of readonly array
+                                            p.roles?.slice()?.sort()?.join(', ')
+                                        }
+                                    </TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>

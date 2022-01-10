@@ -5,6 +5,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import routes from '../../../routes/route-constants';
 import { HomeHeader } from '../home-header';
 import { gridSpacing } from '../../../theme/shared-styles';
+import { emailPattern } from '../../../constants';
 
 export type SignUpProps = {
     handleSignUp: (state: SignUpState) => void;
@@ -67,7 +68,7 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                     icon={<LockOutlinedIcon />}
                     title="Sign up"
                 />
-                <form className={classes.form} noValidate autoComplete={'off'} onSubmit={(e) => onSubmit(e)}>
+                <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -105,6 +106,8 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                                 id={'email'}
                                 label={'Email'}
                                 name={'email'}
+                                type={'email'}
+                                inputProps={{ pattern: emailPattern }}
                                 autoComplete={'email'}
                                 required
                             />

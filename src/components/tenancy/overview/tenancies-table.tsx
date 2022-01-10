@@ -53,7 +53,6 @@ export const TenanciesTable = ({ tenants, handleDelete, searchResult }: Tenancie
                 handleClose={handleCancelDelete}
                 handleDeletion={() => handleDelete(entityToDelete)}
             />
-            {/* TODO: Check if it makes sense to extract table as component */}
             <TableContainer component={Paper}>
                 <Table className={cssClasses.table}>
                     <TableHead>

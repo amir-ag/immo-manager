@@ -100,11 +100,19 @@ export const RentalUnitForm = ({
                         value={currentRentalUnit.type}
                         onChange={(e) => {
                             if (e.target.value === rentalUnitType[0]) {
-                                currentRentalUnit.numberOfRooms = 0;
+                                setCurrentRentalUnit({
+                                    ...currentRentalUnit,
+                                    numberOfRooms: 0,
+                                    surfaceInM2: 0,
+                                    floorLevel: 'Undefined',
+                                });
                             }
 
                             if (e.target.value === rentalUnitType[1]) {
-                                currentRentalUnit.numberOfRooms = 1;
+                                setCurrentRentalUnit({
+                                    ...currentRentalUnit,
+                                    numberOfRooms: 1,
+                                });
                             }
 
                             handleBasicInputChange(e, 'type');
@@ -138,8 +146,9 @@ export const RentalUnitForm = ({
                     id={'surfaceInM2'}
                     label={'Surface in m2'}
                     type="number"
-                    value={currentRentalUnit.surfaceInM2}
+                    value={currentRentalUnit.surfaceInM2 === 0 ? '' : currentRentalUnit.surfaceInM2}
                     onChange={(e) => handleBasicInputChange(e)}
+                    disabled={currentRentalUnit.type === 'Parking Lot'}
                 />
             </Grid>
             <Grid item xs={12}>
@@ -152,6 +161,7 @@ export const RentalUnitForm = ({
                     fullWidth
                     value={currentRentalUnit.floorLevel}
                     onChange={(e) => handleBasicInputChange(e, 'floorLevel')}
+                    disabled={currentRentalUnit.type === 'Parking Lot'}
                     required
                 >
                     {rentalUnitfloorLevel.map((rufl) => (

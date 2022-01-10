@@ -112,10 +112,8 @@ export const TenancyForm = ({
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    {/* TODO: Input needs to be required an the second tenant must not be the same as the first one */}
                     {/* TODO: Resolve console error about change (controlled vs. uncontrolled) */}
                     <Autocomplete
-                        // TODO: Check if this styling is the correct way (https://v4.mui.com/customization/components/)
                         className={'MuiFormControl-marginNormal'}
                         id="tenant1Id"
                         options={tenants}
@@ -134,10 +132,8 @@ export const TenancyForm = ({
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    {/* TODO: Input needs to be required an the second tenant must not be the same as the first one */}
                     {/* TODO: Resolve console error about change (controlled vs. uncontrolled) */}
                     <Autocomplete
-                        // TODO: Check if this styling is the correct way (https://v4.mui.com/customization/components/)
                         className={'MuiFormControl-marginNormal'}
                         id="tenant2Id"
                         options={tenants}
@@ -164,8 +160,11 @@ export const TenancyForm = ({
                     <FormControlLabel
                         id="isVacancy"
                         onChange={(e) => {
-                            currentTenancy.tenant1Id = '';
-                            currentTenancy.tenant2Id = '';
+                            setCurrentTenancy({
+                                ...currentTenancy,
+                                tenant1Id: '',
+                                tenant2Id: '',
+                            });
                             handleBasicInputChange(e, 'isVacancy', true);
                         }}
                         control={<Checkbox name="isFamilyApartment" />}
@@ -183,7 +182,6 @@ export const TenancyForm = ({
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    {/* TODO: Use date picker dialog (https://v4.mui.com/components/pickers/) */}
                     <TextField
                         id="beginOfContract"
                         label="Begin of Contract"
@@ -198,7 +196,6 @@ export const TenancyForm = ({
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    {/* TODO: Use date picker dialog (https://v4.mui.com/components/pickers/) / min. Date should be higher than 'beginOfContract' */}
                     <TextField
                         id="endOfContract"
                         label="End of Contract"
@@ -206,6 +203,7 @@ export const TenancyForm = ({
                         fullWidth
                         onChange={(e) => handleBasicInputChange(e)}
                         value={currentTenancy.endOfContract}
+                        inputProps={{ min: currentTenancy.beginOfContract }}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -285,7 +283,6 @@ export const TenancyForm = ({
                         label={'Utilities (CHF)'}
                         type="number"
                         inputProps={{ min: 0 }}
-                        required
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -298,7 +295,6 @@ export const TenancyForm = ({
                         label={'Rent Deposit (CHF)'}
                         type="number"
                         inputProps={{ min: 0 }}
-                        required
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -309,6 +305,8 @@ export const TenancyForm = ({
                         value={currentTenancy.rentAccount}
                         onChange={(e) => handleBasicInputChange(e)}
                         label={'Rent Account (IBAN)'}
+                        helperText={'Provide a valid IBAN'}
+                        inputProps={{ minLength: 34 }}
                         type="text"
                         required
                     />
