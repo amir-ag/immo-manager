@@ -306,7 +306,7 @@ export const TenancyForm = ({
                         onChange={(e) => handleBasicInputChange(e)}
                         label={'Rent Account (IBAN)'}
                         helperText={'Provide a valid IBAN'}
-                        inputProps={{ minLength: 34 }}
+                        inputProps={{ minLength: 19 }}
                         type="text"
                         required
                     />

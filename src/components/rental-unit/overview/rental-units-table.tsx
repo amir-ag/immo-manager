@@ -56,7 +56,7 @@ export const RentalUnitsTable = ({
             return 'Vacancy';
         }
 
-        return ts.join(', ');
+        return ts.map((tenant) => `${tenant.firstName} ${tenant.lastName}`).join(', ');
     };
 
     return (
