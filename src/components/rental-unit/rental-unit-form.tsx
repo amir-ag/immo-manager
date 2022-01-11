@@ -162,7 +162,7 @@ export const RentalUnitForm = ({
                     value={currentRentalUnit.floorLevel}
                     onChange={(e) => handleBasicInputChange(e, 'floorLevel')}
                     disabled={currentRentalUnit.type === 'Parking Lot'}
-                    required
+                    required={currentRentalUnit.type !== 'Parking Lot'}
                 >
                     {rentalUnitfloorLevel.map((rufl) => (
                         <MenuItem key={rufl} value={rufl}>
