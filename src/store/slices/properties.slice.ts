@@ -8,6 +8,11 @@ import { emptyThumbnail } from '../../models/thumbnail.model';
 const dbName = 'properties';
 const sliceName = 'properties';
 
+interface PropertiesState {
+    current: PropertyModel | null;
+    all: PropertyModel[];
+}
+
 export const createOrUpdateProperty = createAsyncThunk(
     `${sliceName}/createOrUpdateProperty`,
     async (property: PropertyModel, thunkAPI) => {
@@ -82,11 +87,6 @@ export const deleteProperty = createAsyncThunk(`${sliceName}/deleteProperty`, as
         console.error('Error deleting property: ', e);
     }
 });
-
-interface PropertiesState {
-    current: PropertyModel | null;
-    all: PropertyModel[];
-}
 
 export const propertiesSlice = createSlice({
     name: sliceName,
