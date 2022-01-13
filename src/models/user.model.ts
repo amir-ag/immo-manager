@@ -1,5 +1,5 @@
-import { AddressModel, emptyAddress } from '../../../models/address.model';
-import { ThumbnailModel } from '../../../models/thumbnail.model';
+import { AddressModel, emptyAddress } from './address.model';
+import { ThumbnailModel } from './thumbnail.model';
 
 export type UserModel = {
     uid: string;

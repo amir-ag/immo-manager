@@ -12,7 +12,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
 import { AddressModel } from '../../models/address.model';
 import * as storeService from '../service/store.service';
-import { UserModel } from '../../components/profile/model/user.model';
+import { UserModel } from '../../models/user.model';
 
 interface UserState {
     email: string;

@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { getAuth } from 'firebase/auth';
 import { selectUser } from '../../store/selectors';
 import ImageUpload from '../forms/image-upload/image-upload';
-import { emptyUser, UserModel } from './model/user.model';
+import { emptyUser, UserModel } from '../../models/user.model';
 import { useForms } from '../../hooks/use-forms.hook';
 import { update } from '../../store/slices/user.slice';
 import { gridSpacing } from '../../theme/shared-styles';
