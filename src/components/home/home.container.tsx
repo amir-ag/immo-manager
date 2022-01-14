@@ -30,7 +30,6 @@ const HomeContainer = () => {
 
     const handleReset = (email: string) => {
         dispatch(resetPassword({ email }));
-        history.push(routes.AUTHENTICATED_AREA);
     };
 
     return <Home handleLogin={handleLoginIn} handleSignUp={handleSignUp} handlePwReset={handleReset} />;

@@ -28,11 +28,11 @@ export const logout = createAsyncThunk(`${sliceName}/logout`, async (_, thunkAPI
     try {
         const auth = getAuth();
         await signOut(auth);
+        await storeService.triggerNotificatorSuccess(thunkAPI, 'Sign-Out successful!');
 
-        // TODO: Snackbar logout notification
         return;
     } catch (e) {
-        // TODO: Snackbar logout error
+        await storeService.triggerNotificatorError(thunkAPI, 'Error when logging out', e);
         return thunkAPI.rejectWithValue(e);
     }
 });
@@ -49,7 +49,8 @@ export const login = createAsyncThunk(
             const docSnap = docRef && (await getDoc(docRef));
 
             if (docSnap && docSnap.exists()) {
-                // TODO: Snackbar login success
+                await storeService.triggerNotificatorSuccess(thunkAPI, 'Login successful!');
+
                 return {
                     ...(docSnap.data() as UserModel),
                 } as UserState;
@@ -57,7 +58,7 @@ export const login = createAsyncThunk(
                 throw 'No user data found!';
             }
         } catch (e) {
-            // TODO: Snackbar login error
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when logging in', e);
             return thunkAPI.rejectWithValue(e);
         }
     }
@@ -72,7 +73,8 @@ export const restoreLogin = createAsyncThunk(`${sliceName}/restoreLogin`, async 
         const docSnap = docRef && (await getDoc(docRef));
 
         if (user && docSnap && docSnap.exists()) {
-            // TODO: Snackbar restoreLogin notification
+            await storeService.triggerNotificatorSuccess(thunkAPI, 'Restored Login successfully!');
+
             return {
                 ...(docSnap.data() as UserModel),
                 uid: user.uid,
@@ -82,7 +84,7 @@ export const restoreLogin = createAsyncThunk(`${sliceName}/restoreLogin`, async 
             throw 'No user data found!';
         }
     } catch (e) {
-        // TODO: Snackbar restoreLogin error
+        await storeService.triggerNotificatorError(thunkAPI, 'Error when restoring login', e);
         return thunkAPI.rejectWithValue(e);
     }
 });
@@ -93,11 +95,11 @@ export const resetPassword = createAsyncThunk(
         try {
             const auth = getAuth();
             await sendPasswordResetEmail(auth, email);
-            // TODO: Snackbar resetPassword notification
+            await storeService.triggerNotificatorSuccess(thunkAPI, 'Reset email was sent!');
 
             return;
         } catch (e) {
-            // TODO: Snackbar resetPassword error
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when resetting email', e);
             return thunkAPI.rejectWithValue(e);
         }
     }
@@ -124,7 +126,7 @@ export const signup = createAsyncThunk(
                     ...userData,
                 });
 
-                // TODO: Snackbar signup notification
+                await storeService.triggerNotificatorSuccess(thunkAPI, 'Sign-Up successful!');
 
                 return {
                     ...userData,
@@ -133,7 +135,7 @@ export const signup = createAsyncThunk(
                 throw 'Could not create user';
             }
         } catch (e) {
-            // TODO: Snackbar signup error
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when signing up', e);
             return thunkAPI.rejectWithValue(e);
         }
     }
@@ -184,15 +186,15 @@ export const updateUser = createAsyncThunk(
                 },
                 { merge: true }
             );
+            await storeService.triggerNotificatorSuccess(thunkAPI, 'Profile Update successful!');
 
-            // TODO: Snackbar updateUser notification
             return {
                 firstName: profileData.firstName,
                 lastName: profileData.lastName,
                 address: { ...profileData.address },
             };
         } catch (e) {
-            // TODO: Snackbar updateUser error
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when updating user', e);
             return thunkAPI.rejectWithValue(e);
         }
     }
