@@ -3,8 +3,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
-import { selectSnackbar } from '../../../store/selectors';
-import { setSnackbar } from '../../../store/slices/snackbar.slice';
+import { selectNotificator } from '../../../store/selectors';
+import { setNotificator } from '../../../store/slices/notificator.slice';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 
 function Alert(props: AlertProps) {
@@ -20,23 +20,29 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-export default function CustomizedSnackbar() {
-    const classes = useStyles();
-    const { snackbarOpen, snackbarType, snackbarMessage } = useAppSelector(selectSnackbar);
+export default function Notificator() {
+    const cssClasses = useStyles();
+    const { notificatorOpen, notificatorType, notificatorMessage } = useAppSelector(selectNotificator);
     const dispatch = useAppDispatch();
 
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
-        dispatch(setSnackbar({ snackbarOpen: false, snackbarType, snackbarMessage }));
+        dispatch(
+            setNotificator({
+                notificatorOpen: false,
+                notificatorType: undefined,
+                notificatorMessage: '',
+            })
+        );
     };
 
     return (
-        <div className={classes.root}>
-            <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleClose}>
-                <Alert variant={'filled'} onClose={handleClose} severity={snackbarType}>
-                    {snackbarMessage}
+        <div className={cssClasses.root}>
+            <Snackbar open={notificatorOpen} autoHideDuration={3000} onClose={handleClose}>
+                <Alert variant={'filled'} onClose={handleClose} severity={notificatorType}>
+                    {notificatorMessage}
                 </Alert>
             </Snackbar>
         </div>

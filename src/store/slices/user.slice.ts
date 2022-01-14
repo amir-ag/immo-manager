@@ -17,6 +17,7 @@ import { ResetPwModel } from '../../components/home/reset-password/model/reset-p
 import { SignUpModel } from '../../components/home/sign-up/model/sign-up.model';
 import { ProfileModel } from '../../components/profile/model/profile.model';
 import { minPasswordLength } from '../../constants';
+import { AddressModel } from '../../models/address.model';
 
 interface UserState extends UserModel {}
 
@@ -138,6 +139,12 @@ export const signup = createAsyncThunk(
     }
 );
 
+interface UpdateUserPayload {
+    firstName: string;
+    lastName: string;
+    address: AddressModel;
+}
+
 export const updateUser = createAsyncThunk(
     `${sliceName}/updateUser`,
     async (profileData: ProfileModel, thunkAPI) => {
@@ -170,7 +177,6 @@ export const updateUser = createAsyncThunk(
             await setDoc(
                 doc(db, dbName, user.uid),
                 {
-                    uid: user.uid,
                     email: user.email,
                     firstName: profileData.firstName,
                     lastName: profileData.lastName,
@@ -181,13 +187,10 @@ export const updateUser = createAsyncThunk(
 
             // TODO: Snackbar updateUser notification
             return {
-                ...emptyUser,
-                uid: user.uid,
-                email: user.email,
                 firstName: profileData.firstName,
                 lastName: profileData.lastName,
                 address: { ...profileData.address },
-            } as UserState;
+            };
         } catch (e) {
             // TODO: Snackbar updateUser error
             return thunkAPI.rejectWithValue(e);
@@ -211,11 +214,13 @@ export const userSlice = createSlice({
         builder.addCase(signup.fulfilled, (state, action: PayloadAction<UserState>) => {
             return action.payload;
         });
-        builder.addCase(logout.fulfilled, (state) => {
+        builder.addCase(logout.fulfilled, () => {
             return { ...emptyUser } as UserState;
         });
-        builder.addCase(updateUser.fulfilled, (state, action: PayloadAction<UserState>) => {
-            return action.payload;
+        builder.addCase(updateUser.fulfilled, (state, action: PayloadAction<UpdateUserPayload>) => {
+            state.firstName = action.payload.firstName;
+            state.lastName = action.payload.lastName;
+            state.address = action.payload.address;
         });
     },
 });

@@ -42,5 +42,5 @@ export const selectTenanciesByRentalUnitId = (ruId: string) => {
     return (state: RootState) => tenancyService.getTenanciesByRentalUnitId(ruId, state.tenancies);
 };
 
-// snackbar
-export const selectSnackbar = (state: RootState) => state.snackbar;
+// notificator
+export const selectNotificator = (state: RootState) => state.notificator;

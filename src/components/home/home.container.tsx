@@ -5,7 +5,6 @@ import { login, resetPassword, signup } from '../../store/slices/user.slice';
 import routes from '../../routes/route-constants';
 import Home from './home';
 import { selectUser } from '../../store/selectors';
-import { setSnackbar } from '../../store/slices/snackbar.slice';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 import { LoginModel } from './login/model/login.model';
 import { SignUpModel } from './sign-up/model/sign-up.model';
@@ -17,13 +16,6 @@ const HomeContainer = () => {
 
     useEffect(() => {
         if (uid && uid?.length > 0) {
-            dispatch(
-                setSnackbar({
-                    snackbarOpen: true,
-                    snackbarType: 'success',
-                    snackbarMessage: 'Logged in successfully',
-                })
-            );
             history.push(routes.DASHBOARD);
         }
     }, [uid, history]);
@@ -38,13 +30,6 @@ const HomeContainer = () => {
 
     const handleReset = (email: string) => {
         dispatch(resetPassword({ email }));
-        dispatch(
-            setSnackbar({
-                snackbarOpen: true,
-                snackbarType: 'success',
-                snackbarMessage: 'Reset password email sent',
-            })
-        );
         history.push(routes.AUTHENTICATED_AREA);
     };
 

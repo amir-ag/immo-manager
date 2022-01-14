@@ -27,6 +27,7 @@ const ProfileForm = () => {
 
     const [userProfile, setUserProfile] = useState<ProfileModel>({
         ...emptyProfile,
+        uid: user?.uid ?? '',
         firstName: firstName,
         lastName: lastName,
         email: email,
