@@ -1,5 +1,4 @@
 import { AddressModel, emptyAddress } from './address.model';
-import { ThumbnailModel } from './thumbnail.model';
 
 export type UserModel = {
     uid: string;
@@ -7,9 +6,6 @@ export type UserModel = {
     lastName: string;
     email: string;
     address: AddressModel;
-    thumbnail?: ThumbnailModel;
-    newPassword?: string;
-    newPasswordConfirm?: string;
 };
 
 export const emptyUser: UserModel = {
@@ -18,6 +14,4 @@ export const emptyUser: UserModel = {
     lastName: '',
     email: '',
     address: emptyAddress,
-    newPassword: '',
-    newPasswordConfirm: '',
 };

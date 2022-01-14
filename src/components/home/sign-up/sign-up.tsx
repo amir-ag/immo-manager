@@ -5,17 +5,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import routes from '../../../routes/route-constants';
 import { HomeHeader } from '../home-header';
 import { gridSpacing } from '../../../theme/shared-styles';
-import { emailPattern } from '../../../constants';
+import { emailPattern, minPasswordLength, passwordLengthHint } from '../../../constants';
+import { SignUpModel } from './model/sign-up.model';
 
 export type SignUpProps = {
-    handleSignUp: (state: SignUpState) => void;
-};
-
-export type SignUpState = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
+    handleSignUp: (state: SignUpModel) => void;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -123,6 +117,8 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                                 label={'Password'}
                                 name={'password'}
                                 autoComplete={'password'}
+                                inputProps={{ minLength: minPasswordLength }}
+                                helperText={passwordLengthHint}
                                 required
                             />
                         </Grid>

@@ -4,13 +4,14 @@ import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { getAuth } from 'firebase/auth';
 import { selectUser } from '../../store/selectors';
 import ImageUpload from '../forms/image-upload/image-upload';
-import { emptyUser, UserModel } from '../../models/user.model';
 import { useForms } from '../../hooks/use-forms.hook';
-import { update } from '../../store/slices/user.slice';
+import { updateUser } from '../../store/slices/user.slice';
 import { gridSpacing } from '../../theme/shared-styles';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
+import { emptyProfile, ProfileModel } from './model/profile.model';
+import { minPasswordLength, passwordLengthHint } from '../../constants';
 
 const ProfileForm = () => {
     const dispatch = useAppDispatch();
@@ -19,13 +20,13 @@ const ProfileForm = () => {
 
     const submitFunc = (e: FormEvent<any>) => {
         e.preventDefault();
-        dispatch(update(userProfile));
+        dispatch(updateUser(userProfile));
     };
 
     const { firstName, lastName, email, address } = useAppSelector(selectUser);
 
-    const [userProfile, setUserProfile] = useState<UserModel>({
-        ...emptyUser,
+    const [userProfile, setUserProfile] = useState<ProfileModel>({
+        ...emptyProfile,
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -38,7 +39,7 @@ const ProfileForm = () => {
         handleThumbnailChange,
         handleSubmit,
         isFormDirty,
-    } = useForms<UserModel>(setUserProfile, userProfile, submitFunc);
+    } = useForms<ProfileModel>(setUserProfile, userProfile, submitFunc);
 
     return (
         <Grid
@@ -133,6 +134,8 @@ const ProfileForm = () => {
                         name={'password'}
                         autoComplete={'password'}
                         type={'password'}
+                        helperText={passwordLengthHint}
+                        inputProps={{ minLength: minPasswordLength }}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -146,6 +149,9 @@ const ProfileForm = () => {
                         name={'newPasswordConfirm'}
                         autoComplete={'newPasswordConfirm'}
                         type={'password'}
+                        helperText={passwordLengthHint}
+                        inputProps={{ minLength: minPasswordLength }}
+                        required={(userProfile.newPassword?.length ?? 0) > 0}
                     />
                 </Grid>
             </Grid>

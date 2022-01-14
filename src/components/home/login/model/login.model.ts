@@ -1,9 +1,9 @@
-export type SignInModel = {
+export type LoginModel = {
     email: string;
     password: string;
 };
 
-export const emptySignIn: SignInModel = {
+export const emptyLogin: LoginModel = {
     email: '',
     password: '',
 };
