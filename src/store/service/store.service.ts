@@ -34,7 +34,6 @@ export const triggerNotificatorError = async (
     messagePrefix: string,
     error?: any
 ) => {
-    debugger;
     let errorMessage = '';
 
     if (error && typeof error === 'string') {
