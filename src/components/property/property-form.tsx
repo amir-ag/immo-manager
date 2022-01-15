@@ -122,7 +122,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     id={'yearOfConstruction'}
                     label={'Year of Construction'}
                     type="number"
-                    inputProps={{ min: 0 }}
+                    inputProps={{ min: 0, max: new Date().getFullYear() + 10 }}
                 />
             </Grid>
             <Grid item xs={12} md={6}>
