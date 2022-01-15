@@ -1,17 +1,27 @@
 import { createTheme } from '@material-ui/core/styles';
-import '@fontsource/quicksand';
+import { red } from '@material-ui/core/colors';
 
 const theme = createTheme({
     palette: {
+        type: 'dark',
         primary: {
-            main: '#556cd6',
+            main: '#26292C',
+            light: '#515B5F',
+            dark: '#1A2327',
+            contrastText: '#FFFFFF',
         },
         secondary: {
-            main: '#19857b',
-            light: '#8ac4c1',
+            main: '#FFB74D',
+            light: '#FFC670',
+            dark: '#C89259',
+            contrastText: '#000000DE',
         },
         background: {
-            default: '#fff',
+            default: '#39311D',
+            paper: '#515B5F',
+        },
+        error: {
+            main: red.A400,
         },
     },
     typography: {

@@ -27,9 +27,8 @@ const useStyles = makeStyles((theme) => ({
         width: drawerWidth,
     },
     appLogo: {
-        padding: theme.spacing(2),
         width: drawerWidth - 2 * theme.spacing(2),
-        marginBottom: theme.spacing(2),
+        margin: theme.spacing(2),
         height: '50px',
     },
     navList: {
