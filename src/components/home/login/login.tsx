@@ -15,14 +15,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import routes from '../../../routes/route-constants';
 import { HomeHeader } from '../home-header';
 import { emailPattern } from '../../../constants';
+import { LoginModel } from './model/login.model';
 
 export type SignInProps = {
-    handleSignIn: (state: SignInState) => void;
-};
-
-export type SignInState = {
-    email: string;
-    password: string;
+    handleSignIn: (state: LoginModel) => void;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignIn = ({ handleSignIn }: SignInProps) => {
+const Login = ({ handleSignIn }: SignInProps) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -134,4 +130,4 @@ const SignIn = ({ handleSignIn }: SignInProps) => {
     );
 };
 
-export default SignIn;
+export default Login;

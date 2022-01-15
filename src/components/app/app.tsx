@@ -9,7 +9,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { restoreLogin } from '../../store/slices/user.slice';
 import { selectUser } from '../../store/selectors';
-import CustomizedSnackbar from '../ui/snackbar/snackbar';
+import Notificator from '../ui/notificator/notificator';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
 
     return (
         <div className="App">
-            <CustomizedSnackbar />
+            <Notificator />
             <Router>
                 <Switch>
                     <Route exact path={routes.HOME}>

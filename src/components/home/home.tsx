@@ -3,14 +3,16 @@ import { Grid, Hidden, makeStyles } from '@material-ui/core';
 import { ReactComponent as UrbanDesign } from '../../assets/svg/home.svg';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import routes from '../../routes/route-constants';
-import SignIn, { SignInState } from './sign-in/sign-in';
-import SignUp, { SignUpState } from './sign-up/sign-up';
+import Login from './login/login';
+import SignUp from './sign-up/sign-up';
 import ResetPassword from './reset-password/reset-password';
+import { LoginModel } from './login/model/login.model';
+import { SignUpModel } from './sign-up/model/sign-up.model';
 
 export interface HomeProps {
-    handleSignIn: (state: SignInState) => void;
-    handleSignUp: (state: SignUpState) => void;
-    handleReset: (email: string) => void;
+    handleLogin: (loginData: LoginModel) => void;
+    handleSignUp: (signUpData: SignUpModel) => void;
+    handlePwReset: (email: string) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Home = ({ handleSignIn, handleSignUp, handleReset }: HomeProps) => {
+const Home = ({ handleLogin, handleSignUp, handlePwReset }: HomeProps) => {
     const classes = useStyles();
 
     return (
@@ -38,13 +40,13 @@ const Home = ({ handleSignIn, handleSignUp, handleReset }: HomeProps) => {
                 <Router>
                     <Switch>
                         <Route exact path={routes.HOME}>
-                            <SignIn handleSignIn={handleSignIn} />
+                            <Login handleSignIn={handleLogin} />
                         </Route>
                         <Route path={routes.SIGN_UP}>
                             <SignUp handleSignUp={handleSignUp} />
                         </Route>
                         <Route path={routes.RESET_PW}>
-                            <ResetPassword handleReset={handleReset} />
+                            <ResetPassword handleReset={handlePwReset} />
                         </Route>
                     </Switch>
                 </Router>
