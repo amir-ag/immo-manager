@@ -16,12 +16,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RentSchedulePropertyTable = (property: PropertyModel) => {
-    const classes = useStyles();
+    const cssClasses = useStyles();
     const owner = useAppSelector(selectPersonById(property.owner));
 
     return (
         property && (
-            <TableContainer className={classes.propertyDetails} component={Paper}>
+            <TableContainer className={cssClasses.propertyDetails} component={Paper}>
                 <Table size="small">
                     <TableBody>
                         <TableRow>

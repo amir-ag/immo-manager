@@ -9,7 +9,7 @@ import { useHistory } from 'react-router';
 import { TenanciesTable } from './tenancies-table';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import { RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
-import { gridSpacing } from '../../../theme/shared-styles';
+import { gridSpacingBig } from '../../../theme/shared-styles';
 import { getTenanciesByRentalUnitId } from '../service/tenancy.service';
 import { InfoBox } from '../../ui/info-box/info-box';
 
@@ -51,7 +51,7 @@ export const TenanciesOverview = ({ disableCreate, relatedRentalUnit }: Tenancie
             container
             xs={12}
             sm={6}
-            spacing={gridSpacing}
+            spacing={gridSpacingBig}
             alignItems={'center'}
             alignContent={'flex-start'}
         >

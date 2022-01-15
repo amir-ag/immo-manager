@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { months } from '../../constants';
-import { gridSpacing } from '../../theme/shared-styles';
+import { gridSpacingBig } from '../../theme/shared-styles';
 import { PropertyModel } from '../property/model/property.model';
 import { RentalUnitModel } from '../rental-unit/model/rental-unit.model';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
@@ -71,14 +71,14 @@ export const TenancyForm = ({
             component={'form'}
             onSubmit={(e: React.FormEvent<any>) => handleSubmit(e)}
             container
-            spacing={gridSpacing}
+            spacing={gridSpacingBig}
         >
             <Grid
                 item
                 container
                 xs={12}
                 sm={6}
-                spacing={gridSpacing}
+                spacing={gridSpacingBig}
                 alignItems={'center'}
                 alignContent={'flex-start'}
             >
@@ -256,7 +256,7 @@ export const TenancyForm = ({
                 container
                 xs={12}
                 sm={6}
-                spacing={gridSpacing}
+                spacing={gridSpacingBig}
                 alignItems={'center'}
                 alignContent={'flex-start'}
             >

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { emptyRentalUnit } from './model/rental-unit.model';
-import { gridSpacing } from '../../theme/shared-styles';
+import { gridSpacingBig } from '../../theme/shared-styles';
 import { RentalUnitForm } from './rental-unit-form';
 import { TenanciesOverview } from '../tenancy/overview/tenancies-overview';
 import { useParams } from 'react-router';
@@ -46,7 +46,7 @@ export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
                         : 'Rental unit has not been found!'
                 }
             />
-            <Grid container spacing={gridSpacing}>
+            <Grid container spacing={gridSpacingBig}>
                 <RentalUnitForm
                     currentRentalUnit={currentRentalUnit}
                     setCurrentRentalUnit={setCurrentRentalUnit}
