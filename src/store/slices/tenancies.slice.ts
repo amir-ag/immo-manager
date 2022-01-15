@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
 import * as storeService from '../service/store.service';
 import { TenancyModel } from '../../components/tenancy/model/tenancy.model';
-import { tenanciesDescComparer } from '../../components/tenancy/service/tenancy.service';
+import * as tenancyService from '../../components/tenancy/service/tenancy.service';
+import { CreatedByType, IsNewType } from '../model/base-store.model';
 
 const dbName = 'tenancies';
 const sliceName = 'tenancies';
@@ -15,31 +16,29 @@ export const createOrUpdateTenancy = createAsyncThunk(
             const uid = storeService.getUidFromStoreState(thunkAPI);
 
             if (!tenancy.id) {
-                // TODO: Use typed method and create interface with 'createdBy' field
                 const docRef = await addDoc(collection(db, dbName), {
                     ...tenancy,
                     createdBy: uid,
-                });
-                console.log(`A new tenancy with id=${docRef.id} has been created!`);
+                } as TenancyModel & CreatedByType);
+                await storeService.triggerNotificatorSuccess(thunkAPI, 'Tenancy was created successfully!');
+
                 return {
                     ...tenancy,
-                    createdBy: uid,
                     id: docRef.id,
                     isNew: true,
-                };
+                } as TenancyModel & IsNewType;
             } else {
-                // TODO: Use typed method and create interface with 'createdBy' field
-                await setDoc(doc(db, dbName, tenancy.id), {
-                    ...tenancy,
-                    createdBy: uid,
-                });
+                await setDoc(doc(db, dbName, tenancy.id), { ...tenancy }, { merge: true });
+                await storeService.triggerNotificatorSuccess(thunkAPI, 'Tenancy was updated successfully!');
+
                 return {
                     ...tenancy,
-                    createdBy: uid,
-                };
+                    isNew: false,
+                } as TenancyModel & IsNewType;
             }
         } catch (e) {
-            console.error('Error when adding/updating tenancy: ', e);
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when creating/updating tenancy', e);
+            return thunkAPI.rejectWithValue(e);
         }
     }
 );
@@ -48,7 +47,7 @@ export const getTenancies = createAsyncThunk(`${sliceName}/getTenancies`, async 
     try {
         const uid = storeService.getUidFromStoreState(thunkAPI);
 
-        const q = query(collection(db, dbName), where('createdBy', '==', uid));
+        const q = storeService.buildGetEntitiesQuery(dbName, uid);
         const querySnapshot = await getDocs(q);
 
         const data: TenancyModel[] = [];
@@ -57,18 +56,23 @@ export const getTenancies = createAsyncThunk(`${sliceName}/getTenancies`, async 
             data.push({ ...(doc.data() as TenancyModel), id });
         });
 
-        return data.sort(tenanciesDescComparer);
+        tenancyService.sortTenanciesByBeginDateDesc(data);
+        return data;
     } catch (e) {
-        console.error('Error getting tenancies: ', e);
+        await storeService.triggerNotificatorError(thunkAPI, 'Error when getting tenancies', e);
+        return thunkAPI.rejectWithValue(e);
     }
 });
 
-export const deleteTenancy = createAsyncThunk(`${sliceName}/deleteTenancy`, async (id: string) => {
+export const deleteTenancy = createAsyncThunk(`${sliceName}/deleteTenancy`, async (id: string, thunkAPI) => {
     try {
-        await deleteDoc(doc(db, dbName, `${id}`));
+        await deleteDoc(doc(db, dbName, id));
+        await storeService.triggerNotificatorSuccess(thunkAPI, 'Tenancy was deleted successfully!');
+
         return { id };
     } catch (e) {
-        console.error('Error deleting tenancy: ', e);
+        await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting tenancy', e);
+        return thunkAPI.rejectWithValue(e);
     }
 });
 
@@ -77,23 +81,30 @@ export const tenanciesSlice = createSlice({
     initialState: [] as TenancyModel[],
     reducers: {},
     extraReducers: (builder) => {
-        // TODO: Use strongly typed types
-        builder.addCase(getTenancies.fulfilled, (state: TenancyModel[], action: PayloadAction<any>) => {
-            return [...action.payload];
-        });
+        builder.addCase(
+            getTenancies.fulfilled,
+            (state: TenancyModel[], action: PayloadAction<TenancyModel[]>) => {
+                return [...action.payload];
+            }
+        );
         builder.addCase(
             createOrUpdateTenancy.fulfilled,
-            (state: TenancyModel[], action: PayloadAction<any>) => {
+            (state: TenancyModel[], action: PayloadAction<TenancyModel & IsNewType>) => {
                 if (!action.payload.isNew) {
                     const existingTenancy = state.findIndex((tenancy) => tenancy.id === action.payload.id);
                     state[existingTenancy] = action.payload;
                 } else {
                     state.push(action.payload);
                 }
+
+                tenancyService.sortTenanciesByBeginDateDesc(state);
             }
         );
-        builder.addCase(deleteTenancy.fulfilled, (state: TenancyModel[], action: PayloadAction<any>) => {
-            return state.filter((tenancy) => tenancy.id !== action.payload.id);
-        });
+        builder.addCase(
+            deleteTenancy.fulfilled,
+            (state: TenancyModel[], action: PayloadAction<{ id: string }>) => {
+                return state.filter((tenancy) => tenancy.id !== action.payload.id);
+            }
+        );
     },
 });

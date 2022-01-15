@@ -34,6 +34,10 @@ export const tenanciesDescComparer = (tenA: TenancyModel, tenB: TenancyModel) =>
     return dateB.getTime() - dateA.getTime();
 };
 
+export const sortTenanciesByBeginDateDesc = (tenancies: TenancyModel[]) => {
+    tenancies.sort(tenanciesDescComparer);
+};
+
 export const getTenanciesByRentalUnitId = (rentalUnitId: string, tenancies: TenancyModel[]) =>
     tenancies.filter((ten) => ten.rentalUnitId === rentalUnitId);
 
