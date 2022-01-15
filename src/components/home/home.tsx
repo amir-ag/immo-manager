@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Hidden, makeStyles } from '@material-ui/core';
+import { Grid, Hidden, makeStyles, Paper } from '@material-ui/core';
 import { ReactComponent as UrbanDesign } from '../../assets/svg/home.svg';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import routes from '../../routes/route-constants';
@@ -25,31 +25,41 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'flex-end',
     },
+    paper: {
+        margin: theme.spacing(8, 4),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
 }));
 
 const Home = ({ handleLogin, handleSignUp, handlePwReset }: HomeProps) => {
-    const classes = useStyles();
+    const cssClasses = useStyles();
 
     return (
-        <Grid container component="main" className={classes.root}>
+        <Grid container component="main" className={cssClasses.root}>
             <Hidden only="xs">
-                <Grid item xs={false} sm={4} md={7} className={classes.left}>
+                <Grid item xs={false} sm={4} md={7} className={cssClasses.left}>
                     <UrbanDesign />
                 </Grid>
             </Hidden>
             {
                 <Router>
-                    <Switch>
-                        <Route exact path={routes.HOME}>
-                            <Login handleSignIn={handleLogin} />
-                        </Route>
-                        <Route path={routes.SIGN_UP}>
-                            <SignUp handleSignUp={handleSignUp} />
-                        </Route>
-                        <Route path={routes.RESET_PW}>
-                            <ResetPassword handleReset={handlePwReset} />
-                        </Route>
-                    </Switch>
+                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                        <div className={cssClasses.paper}>
+                            <Switch>
+                                <Route exact path={routes.HOME}>
+                                    <Login handleSignIn={handleLogin} />
+                                </Route>
+                                <Route path={routes.SIGN_UP}>
+                                    <SignUp handleSignUp={handleSignUp} />
+                                </Route>
+                                <Route path={routes.RESET_PW}>
+                                    <ResetPassword handleReset={handlePwReset} />
+                                </Route>
+                            </Switch>
+                        </div>
+                    </Grid>
                 </Router>
             }
         </Grid>

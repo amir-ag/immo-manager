@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Grid, Link, makeStyles, Paper, TextField, useTheme } from '@material-ui/core';
+import { Button, Grid, Link, TextField, useTheme } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import routes from '../../../routes/route-constants';
 import { HomeHeader } from '../home-header';
@@ -7,30 +7,14 @@ import SettingsBackupRestoreOutlinedIcon from '@material-ui/icons/SettingsBackup
 import { emailPattern } from '../../../constants';
 import { emptyResetPw, ResetPwModel } from './model/reset-password.model';
 import { useForms } from '../../../hooks/use-forms.hook';
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        margin: theme.spacing(8, 4),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    form: {
-        marginTop: theme.spacing(2),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-}));
+import { gridSpacingSmall } from '../../../theme/shared-styles';
 
 export type ResetPasswordProps = {
     handleReset: (resetPwData: ResetPwModel) => void;
 };
 
 const ResetPassword = ({ handleReset }: ResetPasswordProps) => {
-    const classes = useStyles();
     const theme = useTheme();
-
     const [resetPwForm, setResetPwForm] = useState(emptyResetPw);
 
     const submitFunc = (e: React.FormEvent) => {
@@ -45,21 +29,18 @@ const ResetPassword = ({ handleReset }: ResetPasswordProps) => {
     );
 
     return (
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-            {/* TODO: Move this to the home component (grid and div) */}
-            <div className={classes.paper}>
-                <HomeHeader
-                    iconBackgroundColor={theme.palette.primary.main}
-                    icon={<SettingsBackupRestoreOutlinedIcon />}
-                    title="Reset Password"
-                />
-                {/* TODO: Use grid container here */}
-                <form className={classes.form} onSubmit={handleSubmit}>
+        <>
+            <HomeHeader
+                iconBackgroundColor={theme.palette.primary.main}
+                icon={<SettingsBackupRestoreOutlinedIcon />}
+                title="Reset Password"
+            />
+            <Grid container spacing={gridSpacingSmall} component={'form'} onSubmit={handleSubmit}>
+                <Grid item xs={12}>
                     <TextField
                         value={resetPwForm.email}
                         onChange={(e) => handleBasicInputChange(e)}
                         variant={'outlined'}
-                        margin={'normal'}
                         fullWidth
                         id={'email'}
                         label={'Email Address'}
@@ -70,25 +51,19 @@ const ResetPassword = ({ handleReset }: ResetPasswordProps) => {
                         autoFocus
                         required
                     />
-                    <Button
-                        type={'submit'}
-                        fullWidth
-                        variant={'contained'}
-                        color={'primary'}
-                        className={classes.submit}
-                    >
+                </Grid>
+                <Grid item xs={12}>
+                    <Button type={'submit'} fullWidth variant={'contained'} color={'primary'}>
                         Send me a reset password email
                     </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link component={RouterLink} to={routes.HOME} variant={'body2'}>
-                                Back
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-        </Grid>
+                </Grid>
+                <Grid item>
+                    <Link component={RouterLink} to={routes.HOME} variant={'body2'}>
+                        Back
+                    </Link>
+                </Grid>
+            </Grid>
+        </>
     );
 };
 

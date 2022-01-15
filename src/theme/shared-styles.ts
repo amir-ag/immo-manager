@@ -1,6 +1,7 @@
 import { GridSpacing, makeStyles } from '@material-ui/core';
 
-export const gridSpacing: GridSpacing = 4;
+export const gridSpacingBig: GridSpacing = 4;
+export const gridSpacingSmall: GridSpacing = 4;
 export const drawerWidth = 240;
 
 export const useSharedStyles = makeStyles((theme) => ({
