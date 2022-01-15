@@ -14,7 +14,7 @@ type HomeHeaderProps = ThemeProps & {
 
 const useStyles = makeStyles<Theme, ThemeProps>((theme) => ({
     root: {
-        marginBottom: theme.spacing(3),
+        marginBottom: theme.spacing(5),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

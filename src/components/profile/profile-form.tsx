@@ -6,7 +6,7 @@ import { selectUser } from '../../store/selectors';
 import ImageUpload from '../forms/image-upload/image-upload';
 import { useForms } from '../../hooks/use-forms.hook';
 import { updateUser } from '../../store/slices/user.slice';
-import { gridSpacing } from '../../theme/shared-styles';
+import { gridSpacingBig } from '../../theme/shared-styles';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
@@ -47,14 +47,14 @@ const ProfileForm = () => {
             component={'form'}
             onSubmit={(e: React.FormEvent<any>) => handleSubmit(e)}
             container
-            spacing={gridSpacing}
+            spacing={gridSpacingBig}
         >
             <Grid
                 item
                 container
                 xs={12}
                 sm={6}
-                spacing={gridSpacing}
+                spacing={gridSpacingBig}
                 alignItems={'center'}
                 alignContent={'flex-start'}
             >
@@ -110,7 +110,7 @@ const ProfileForm = () => {
                 container
                 xs={12}
                 sm={6}
-                spacing={gridSpacing}
+                spacing={gridSpacingBig}
                 alignItems={'center'}
                 alignContent={'flex-start'}
             >

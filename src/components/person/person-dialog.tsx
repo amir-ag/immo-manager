@@ -27,7 +27,7 @@ import { emptyPerson, PersonModel, personRoles } from './model/person.model';
 import { useForms } from '../../hooks/use-forms.hook';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { createOrUpdatePerson } from '../../store/slices/persons.slice';
-import { gridSpacing } from '../../theme/shared-styles';
+import { gridSpacingBig } from '../../theme/shared-styles';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import * as constants from '../../constants';
@@ -51,7 +51,7 @@ const useStyles = makeStyles({
 });
 
 const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPerson }: PersonDialogProps) => {
-    const classes = useStyles();
+    const cssClasses = useStyles();
     const theme = useTheme();
     const dispatch = useAppDispatch();
 
@@ -83,9 +83,9 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
             }}
             aria-labelledby="form-dialog-title"
         >
-            <AppBar className={classes.appBar}>
+            <AppBar className={cssClasses.appBar}>
                 <Toolbar>
-                    <DialogTitle id="form-dialog-title" className={classes.title}>
+                    <DialogTitle id="form-dialog-title" className={cssClasses.title}>
                         {currentPerson.id ? `Edit existing person` : 'Add a new person'}
                     </DialogTitle>
                     <IconButton
@@ -100,7 +100,7 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
             </AppBar>
             <DialogContent>
                 <Box component={'form'} onSubmit={(e) => handleSubmit(e)} sx={{ mt: 3 }}>
-                    <Grid container spacing={gridSpacing}>
+                    <Grid container spacing={gridSpacingBig}>
                         <Grid item xs={12}>
                             <Typography variant={'subtitle2'} component={'h3'}>
                                 Basic Info

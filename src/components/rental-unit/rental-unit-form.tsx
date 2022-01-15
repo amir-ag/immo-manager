@@ -1,7 +1,7 @@
 import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 import { Grid, MenuItem, TextField, Typography } from '@material-ui/core';
 import { rentalUnitfloorLevel, RentalUnitModel, rentalUnitType } from './model/rental-unit.model';
-import { gridSpacing, useSharedStyles } from '../../theme/shared-styles';
+import { gridSpacingBig, useSharedStyles } from '../../theme/shared-styles';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { PropertyModel } from '../property/model/property.model';
 import routes from '../../routes/route-constants';
@@ -53,7 +53,7 @@ export const RentalUnitForm = ({
             container
             xs={12}
             sm={6}
-            spacing={gridSpacing}
+            spacing={gridSpacingBig}
             alignItems={'center'}
             alignContent={'flex-start'}
             component={'form'}

@@ -33,13 +33,13 @@ type RentScheduleUnitsTableProps = {
 };
 
 const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentScheduleUnitsTableProps) => {
-    const classes = useStyles();
+    const cssClasses = useStyles();
 
     let totalRentSum = 0;
 
     return (
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="rent-schedule table">
+            <Table className={cssClasses.table} aria-label="rent-schedule table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Ewid ID</TableCell>
@@ -81,13 +81,13 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentSchedu
                         );
                     })}
                     <TableRow>
-                        <TableCell className={classes.bold}>Total Property</TableCell>
+                        <TableCell className={cssClasses.bold}>Total Property</TableCell>
                         <TableCell />
                         <TableCell />
                         <TableCell />
                         <TableCell />
                         <TableCell />
-                        <TableCell className={classes.bold} align={'right'}>
+                        <TableCell className={cssClasses.bold} align={'right'}>
                             {totalRentSum}
                         </TableCell>
                     </TableRow>

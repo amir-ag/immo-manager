@@ -15,7 +15,7 @@ import { IntroHeader } from '../../ui/intro-header/intro-header';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import * as rentalUnitService from '../../rental-unit/service/rental-unit.service';
 import * as tenancyService from '../../tenancy/service/tenancy.service';
-import { gridSpacing } from '../../../theme/shared-styles';
+import { gridSpacingBig } from '../../../theme/shared-styles';
 import { InfoBox } from '../../ui/info-box/info-box';
 
 type PropertiesViewProps = {
@@ -81,7 +81,7 @@ const PropertiesOverview = ({ showSearchHeader = true }: PropertiesViewProps) =>
                         handleClose={handleCancelDelete}
                         handleDeletion={handleDelete}
                     />
-                    <Grid container spacing={gridSpacing} justifyContent="space-evenly">
+                    <Grid container spacing={gridSpacingBig} justifyContent="space-evenly">
                         {searchResult.map((property) => (
                             <Grid item xs={12} sm={6} md={4} xl={3} key={property.id}>
                                 <PropertyCard

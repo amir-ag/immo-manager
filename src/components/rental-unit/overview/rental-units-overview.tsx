@@ -11,7 +11,7 @@ import { RentalUnitsTable } from './rental-units-table';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import { PropertyModel } from '../../property/model/property.model';
 import { getTenanciesByRentalUnitId } from '../../tenancy/service/tenancy.service';
-import { gridSpacing } from '../../../theme/shared-styles';
+import { gridSpacingBig } from '../../../theme/shared-styles';
 import { getRentalUnitsByPropertyId } from '../service/rental-unit.service';
 import { InfoBox } from '../../ui/info-box/info-box';
 
@@ -58,7 +58,7 @@ export const RentalUnitsOverview = ({ disableCreate, relatedProperty }: RentalUn
             container
             xs={12}
             sm={6}
-            spacing={gridSpacing}
+            spacing={gridSpacingBig}
             alignItems={'center'}
             alignContent={'flex-start'}
         >

@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 const Layout = ({ children }: LayoutProps) => {
-    const classes = useStyles();
+    const cssClasses = useStyles();
     const [isNavPanelOpen, setIsNavPanelOpen] = React.useState(false);
 
     // TODO figure out how to handle KeyboardEvent | MouseEvent
@@ -35,13 +35,13 @@ const Layout = ({ children }: LayoutProps) => {
     };
 
     return (
-        <div className={classes.root}>
+        <div className={cssClasses.root}>
             <MainHeader handleToggleNavPanel={handleToggleNavPanel} />
             <NavigationPanel handleToggleNavPanel={handleToggleNavPanel} isNavPanelOpen={isNavPanelOpen} />
 
             {/* Page Content */}
-            <div className={classes.pageContainer}>
-                <div className={classes.headerSpacer} />
+            <div className={cssClasses.pageContainer}>
+                <div className={cssClasses.headerSpacer} />
                 {children}
             </div>
         </div>

@@ -45,7 +45,7 @@ type ContentTableProps = {
 };
 
 const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTableProps) => {
-    const classes = useStyles();
+    const cssClasses = useStyles();
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [page, setPage] = React.useState(0);
 
@@ -77,16 +77,16 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                             <TableCell>Actions</TableCell>
                             <TableCell align={'right'}>First Name</TableCell>
                             <TableCell align={'right'}>Last Name</TableCell>
-                            <TableCell align={'right'} className={classes.hideTableCellWhenMd}>
+                            <TableCell align={'right'} className={cssClasses.hideTableCellWhenMd}>
                                 Address
                             </TableCell>
-                            <TableCell align={'right'} className={classes.hideTableCellWhenSm}>
+                            <TableCell align={'right'} className={cssClasses.hideTableCellWhenSm}>
                                 Email
                             </TableCell>
-                            <TableCell align={'right'} className={classes.hideTableCellWhenSm}>
+                            <TableCell align={'right'} className={cssClasses.hideTableCellWhenSm}>
                                 Mobile Phone
                             </TableCell>
-                            <TableCell align={'right'} className={classes.hideTableCellWhenMd}>
+                            <TableCell align={'right'} className={cssClasses.hideTableCellWhenMd}>
                                 Birthday
                             </TableCell>
                             <TableCell align={'right'}>Role</TableCell>
@@ -97,7 +97,7 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((p, index) => (
                                 <TableRow key={index}>
-                                    <TableCell className={classes.buttonIcons}>
+                                    <TableCell className={cssClasses.buttonIcons}>
                                         <IconButton aria-label={'edit'} onClick={() => handleEdit(p.id)}>
                                             <EditOutlinedIcon />
                                         </IconButton>
@@ -114,19 +114,19 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                                     <TableCell align={'right'}>{p.lastName}</TableCell>
                                     <TableCell
                                         align={'right'}
-                                        className={`${classes.address} ${classes.hideTableCellWhenMd}`}
+                                        className={`${cssClasses.address} ${cssClasses.hideTableCellWhenMd}`}
                                     >
                                         {p.address.addressLine1}
                                         <br />
                                         {`${p.address.postCode} ${p.address.city}`}
                                     </TableCell>
-                                    <TableCell align={'right'} className={classes.hideTableCellWhenSm}>
+                                    <TableCell align={'right'} className={cssClasses.hideTableCellWhenSm}>
                                         {p.email}
                                     </TableCell>
-                                    <TableCell align={'right'} className={classes.hideTableCellWhenSm}>
+                                    <TableCell align={'right'} className={cssClasses.hideTableCellWhenSm}>
                                         {p.mobilePhone}
                                     </TableCell>
-                                    <TableCell align={'right'} className={classes.hideTableCellWhenMd}>
+                                    <TableCell align={'right'} className={cssClasses.hideTableCellWhenMd}>
                                         {p.birthday
                                             ? format(parseISO(p.birthday), constants.dateFormatShort)
                                             : constants.notAvailableText}

@@ -34,7 +34,7 @@ const RentScheduleOverview = () => {
         content: () => componentRef.current,
     });
 
-    const classes = useStyles();
+    const cssClasses = useStyles();
 
     const { id } = useParams<{ id: string }>();
 
@@ -46,13 +46,13 @@ const RentScheduleOverview = () => {
 
     return (
         <>
-            <div className={classes.exportContainer}>
+            <div className={cssClasses.exportContainer}>
                 <Button variant={'outlined'} onClick={handlePrint} endIcon={<GetAppOutlinedIcon />}>
                     Export as PDF
                 </Button>
             </div>
             <Container ref={componentRef}>
-                <Typography className={classes.title} variant={'h5'}>
+                <Typography className={cssClasses.title} variant={'h5'}>
                     Rent Schedule Report for {propertyService.getDisplayNameOfProperty(property)}
                 </Typography>
                 <RentSchedulePropertyTable {...property} />
