@@ -2,10 +2,23 @@ import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { RootState } from '../store';
 import { Dispatch } from 'redux';
 import { setNotificator } from '../slices/notificator.slice';
+import { collection, query, where } from 'firebase/firestore';
+import { db } from '../../index';
 
+// TODO: Check if its more stable to get uid directly from firebase methods
 export const getUidFromStoreState = (thunkAPI: { getState: () => any }) => {
     const state = thunkAPI.getState() as RootState;
-    return state?.user?.uid;
+    const uid = state?.user?.uid;
+
+    if (!uid) {
+        throw 'Problem with user id';
+    }
+
+    return uid;
+};
+
+export const buildGetEntitiesQuery = (dbName: string, uid: string) => {
+    return query(collection(db, dbName), where('createdBy', '==', uid));
 };
 
 export const uploadImageAndReturnUrl = async (image: File | null, storageUrl: string) => {
