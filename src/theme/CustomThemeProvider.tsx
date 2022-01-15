@@ -5,12 +5,12 @@ import normal from './normal';
 
 type CustomThemeContextType = {
     currentTheme: string;
-    setTheme: { (name: string): void } | null;
+    setCurrentTheme: { (name: string): void } | null;
 };
 
 export const CustomThemeContext = React.createContext<CustomThemeContextType>({
     currentTheme: 'normal',
-    setTheme: null,
+    setCurrentTheme: null,
 });
 
 const CustomThemeProvider = (props: { children: React.ReactNode }) => {
@@ -29,7 +29,7 @@ const CustomThemeProvider = (props: { children: React.ReactNode }) => {
 
     const contextValue: CustomThemeContextType = {
         currentTheme: themeName,
-        setTheme: setThemeName,
+        setCurrentTheme: setThemeName,
     };
 
     return (
