@@ -7,6 +7,11 @@ import { rentalUnitfloorLevel, RentalUnitModel } from '../../components/rental-u
 const dbName = 'rental-units';
 const sliceName = 'rental-units';
 
+interface RentalUnitsState {
+    current?: RentalUnitModel | null;
+    all: RentalUnitModel[];
+}
+
 export const createOrUpdateRentalUnit = createAsyncThunk(
     `${sliceName}/createOrUpdateRentalUnit`,
     async (rentalUnit: RentalUnitModel, thunkAPI) => {
@@ -75,11 +80,6 @@ export const deleteRentalUnit = createAsyncThunk(`${sliceName}/deleteRentalUnit`
         console.error('Error deleting rental unit: ', e);
     }
 });
-
-interface RentalUnitsState {
-    current?: RentalUnitModel | null;
-    all: RentalUnitModel[];
-}
 
 export const rentalUnitsSlice = createSlice({
     name: sliceName,

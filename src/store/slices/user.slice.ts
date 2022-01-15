@@ -10,192 +10,219 @@ import {
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
-import { AddressModel } from '../../models/address.model';
 import * as storeService from '../service/store.service';
-import { UserModel } from '../../components/profile/model/user.model';
+import { emptyUser, UserModel } from '../../models/user.model';
+import { LoginModel } from '../../components/home/login/model/login.model';
+import { ResetPwModel } from '../../components/home/reset-password/model/reset-password.model';
+import { SignUpModel } from '../../components/home/sign-up/model/sign-up.model';
+import { ProfileModel } from '../../components/profile/model/profile.model';
+import { minPasswordLength } from '../../constants';
+import { AddressModel } from '../../models/address.model';
 
-interface UserState {
-    email: string;
-    accessToken: string;
-    uid: string;
-    status: string;
+interface UserState extends UserModel {}
+
+const dbName = 'users';
+const sliceName = 'users';
+
+export const logout = createAsyncThunk(`${sliceName}/logout`, async (_, thunkAPI) => {
+    try {
+        const auth = getAuth();
+        await signOut(auth);
+        await storeService.triggerNotificatorSuccess(thunkAPI, 'Sign-Out successful!');
+
+        return;
+    } catch (e) {
+        await storeService.triggerNotificatorError(thunkAPI, 'Error when logging out', e);
+        return thunkAPI.rejectWithValue(e);
+    }
+});
+
+export const login = createAsyncThunk(
+    `${sliceName}/login`,
+    async ({ email, password }: LoginModel, thunkAPI) => {
+        try {
+            const auth = getAuth();
+            const login = await signInWithEmailAndPassword(auth, email, password);
+            const user = login && auth.currentUser;
+
+            const docRef = user && doc(db, dbName, user.uid);
+            const docSnap = docRef && (await getDoc(docRef));
+
+            if (docSnap && docSnap.exists()) {
+                await storeService.triggerNotificatorSuccess(thunkAPI, 'Login successful!');
+
+                return {
+                    ...(docSnap.data() as UserModel),
+                } as UserState;
+            } else {
+                throw 'No user data found!';
+            }
+        } catch (e) {
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when logging in', e);
+            return thunkAPI.rejectWithValue(e);
+        }
+    }
+);
+
+export const restoreLogin = createAsyncThunk(`${sliceName}/restoreLogin`, async (_, thunkAPI) => {
+    try {
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        const docRef = user && doc(db, dbName, user.uid);
+        const docSnap = docRef && (await getDoc(docRef));
+
+        if (user && docSnap && docSnap.exists()) {
+            await storeService.triggerNotificatorSuccess(thunkAPI, 'Restored Login successfully!');
+
+            return {
+                ...(docSnap.data() as UserModel),
+                uid: user.uid,
+                email: user.email,
+            } as UserState;
+        } else {
+            throw 'No user data found!';
+        }
+    } catch (e) {
+        await storeService.triggerNotificatorError(thunkAPI, 'Error when restoring login', e);
+        return thunkAPI.rejectWithValue(e);
+    }
+});
+
+export const resetPassword = createAsyncThunk(
+    `${sliceName}/resetPassword`,
+    async ({ email }: ResetPwModel, thunkAPI) => {
+        try {
+            const auth = getAuth();
+            await sendPasswordResetEmail(auth, email);
+            await storeService.triggerNotificatorSuccess(thunkAPI, 'Reset email was sent!');
+
+            return;
+        } catch (e) {
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when resetting email', e);
+            return thunkAPI.rejectWithValue(e);
+        }
+    }
+);
+
+export const signup = createAsyncThunk(
+    `${sliceName}/signup`,
+    async ({ email, password, firstName, lastName }: SignUpModel, thunkAPI) => {
+        try {
+            const auth = getAuth();
+            await createUserWithEmailAndPassword(auth, email, password);
+            const user = auth.currentUser;
+
+            if (user) {
+                const userData: UserModel = {
+                    ...emptyUser,
+                    uid: user.uid,
+                    email: user.email ?? '',
+                    firstName,
+                    lastName,
+                };
+
+                await setDoc(doc(db, dbName, user.uid), {
+                    ...userData,
+                });
+
+                await storeService.triggerNotificatorSuccess(thunkAPI, 'Sign-Up successful!');
+
+                return {
+                    ...userData,
+                } as UserState;
+            } else {
+                throw 'Could not create user';
+            }
+        } catch (e) {
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when signing up', e);
+            return thunkAPI.rejectWithValue(e);
+        }
+    }
+);
+
+interface UpdateUserPayload {
     firstName: string;
     lastName: string;
     address: AddressModel;
 }
 
-const initialState: UserState = {
-    email: '',
-    accessToken: '',
-    uid: '',
-    status: '',
-    firstName: '',
-    lastName: '',
-    address: {
-        addressLine1: '',
-        postCode: null,
-        city: '',
-    },
-};
+export const updateUser = createAsyncThunk(
+    `${sliceName}/updateUser`,
+    async (profileData: ProfileModel, thunkAPI) => {
+        try {
+            const auth = getAuth();
+            const user = auth.currentUser;
 
-type LoginProps = {
-    email: string;
-    password: string;
-};
+            if (!user || user.uid !== profileData.uid) {
+                throw 'Could not update profile because of user authentication issues';
+            }
 
-type SignupProps = {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-};
+            if (profileData.thumbnail?.image) {
+                const photoUrl = await storeService.uploadImageAndReturnUrl(
+                    profileData.thumbnail.image,
+                    `images/users/thumbnails/${user.uid}/${profileData.thumbnail.image.name}`
+                );
+                await updateProfile(user, {
+                    photoURL: photoUrl,
+                });
+            }
 
-const dbName = 'users';
+            if (
+                (profileData.newPassword?.length ?? 0) > minPasswordLength - 1 &&
+                profileData.newPasswordConfirm &&
+                profileData.newPassword === profileData.newPasswordConfirm
+            ) {
+                await updatePassword(user, profileData.newPassword);
+            }
 
-export const logout = createAsyncThunk('user/logout', async () => {
-    const auth = getAuth();
-    return await signOut(auth);
-});
+            await setDoc(
+                doc(db, dbName, user.uid),
+                {
+                    email: user.email,
+                    firstName: profileData.firstName,
+                    lastName: profileData.lastName,
+                    address: { ...profileData.address },
+                },
+                { merge: true }
+            );
+            await storeService.triggerNotificatorSuccess(thunkAPI, 'Profile Update successful!');
 
-export const login = createAsyncThunk('user/login', async ({ email, password }: LoginProps) => {
-    const auth = getAuth();
-    const login = await signInWithEmailAndPassword(auth, email, password);
-    const user = login && auth.currentUser;
-    const docRef = user && doc(db, dbName, user.uid);
-    const docSnap = docRef && (await getDoc(docRef));
-
-    if (docSnap && docSnap.exists()) {
-        return {
-            ...login,
-            ...docSnap.data(),
-        };
-    } else {
-        console.log('error, no data available');
-    }
-    return login;
-});
-
-export const restoreLogin = createAsyncThunk('user/restoreLogin', async () => {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const docRef = user && doc(db, dbName, user.uid);
-    const docSnap = docRef && (await getDoc(docRef));
-
-    if (user && docSnap && docSnap.exists()) {
-        return {
-            ...user,
-            ...docSnap.data(),
-        };
-    }
-});
-
-export const resetPassword = createAsyncThunk('user/resetPassword', async (email: string) => {
-    const auth = getAuth();
-    sendPasswordResetEmail(auth, email)
-        .then(() => {
-            console.log('reset pw email sent');
-        })
-        .catch((error) => {
-            throw new Error(error);
-        });
-});
-
-export const signup = createAsyncThunk(
-    'user/signup',
-    async ({ email, password, firstName, lastName }: SignupProps) => {
-        const auth = getAuth();
-        await createUserWithEmailAndPassword(auth, email, password);
-        const user = auth.currentUser;
-        user &&
-            (await setDoc(doc(db, dbName, user.uid), {
-                uid: user.uid,
-                firstName,
-                lastName,
-                email: user.email,
-            }));
-        return {
-            ...user,
-            firstName,
-            lastName,
-        };
+            return {
+                firstName: profileData.firstName,
+                lastName: profileData.lastName,
+                address: { ...profileData.address },
+            };
+        } catch (e) {
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when updating user', e);
+            return thunkAPI.rejectWithValue(e);
+        }
     }
 );
 
-export const update = createAsyncThunk('user/update', async (formData: UserModel) => {
-    const auth = getAuth();
-    const user = auth.currentUser;
-
-    if (formData.thumbnail?.image && user) {
-        const photoUrl = await storeService.uploadImageAndReturnUrl(
-            formData.thumbnail.image,
-            `images/users/thumbnails/${user.uid}/${formData.thumbnail.image.name}`
-        );
-        await updateProfile(user, {
-            photoURL: photoUrl,
-        });
-    }
-
-    if (formData.newPassword) {
-        if (formData.newPassword === formData.newPasswordConfirm) {
-            user &&
-                updatePassword(user, formData.newPassword)
-                    .then(() => {
-                        console.log('password update successful');
-                    })
-                    .catch((error) => {
-                        console.log('an error ocurred: ', error);
-                    });
-        }
-    }
-
-    user &&
-        (await setDoc(
-            doc(db, dbName, user.uid),
-            {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                email: user.email,
-                address: { ...formData.address },
-            },
-            { merge: true }
-        ));
-
-    return {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        address: { ...formData.address },
-    };
-});
+const initialState: UserState = { ...emptyUser };
 
 export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
+        builder.addCase(login.fulfilled, (state, action: PayloadAction<UserState>) => {
             return action.payload;
         });
-        builder.addCase(login.rejected, (state) => {
-            state.status = 'failed';
-        });
-        builder.addCase(restoreLogin.fulfilled, (state, action: PayloadAction<any>) => {
+        builder.addCase(restoreLogin.fulfilled, (state, action: PayloadAction<UserState>) => {
             return action.payload;
         });
-        builder.addCase(signup.fulfilled, (state, action: PayloadAction<any>) => {
+        builder.addCase(signup.fulfilled, (state, action: PayloadAction<UserState>) => {
             return action.payload;
         });
-        builder.addCase(signup.rejected, (state) => {
-            state.status = 'failed';
+        builder.addCase(logout.fulfilled, () => {
+            return { ...emptyUser } as UserState;
         });
-        builder.addCase(logout.fulfilled, (state) => {
-            state.email = '';
-            state.accessToken = '';
-            state.uid = '';
-            state.status = '';
-        });
-        builder.addCase(update.fulfilled, (state, action: PayloadAction<any>) => {
-            return action.payload;
+        builder.addCase(updateUser.fulfilled, (state, action: PayloadAction<UpdateUserPayload>) => {
+            state.firstName = action.payload.firstName;
+            state.lastName = action.payload.lastName;
+            state.address = action.payload.address;
         });
     },
 });

@@ -3,12 +3,11 @@ import React, { useEffect } from 'react';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { login, resetPassword, signup } from '../../store/slices/user.slice';
 import routes from '../../routes/route-constants';
-import { SignInState } from './sign-in/sign-in';
-import { SignUpState } from './sign-up/sign-up';
 import Home from './home';
 import { selectUser } from '../../store/selectors';
-import { setSnackbar } from '../../store/slices/snackbar.slice';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
+import { LoginModel } from './login/model/login.model';
+import { SignUpModel } from './sign-up/model/sign-up.model';
 
 const HomeContainer = () => {
     let history = useHistory();
@@ -17,38 +16,23 @@ const HomeContainer = () => {
 
     useEffect(() => {
         if (uid && uid?.length > 0) {
-            dispatch(
-                setSnackbar({
-                    snackbarOpen: true,
-                    snackbarType: 'success',
-                    snackbarMessage: 'Logged in successfully',
-                })
-            );
             history.push(routes.DASHBOARD);
         }
     }, [uid, history]);
 
-    const handleSignIn = (state: SignInState) => {
-        dispatch(login(state));
+    const handleLoginIn = (loginData: LoginModel) => {
+        dispatch(login(loginData));
     };
 
-    const handleSignUp = (state: SignUpState) => {
-        dispatch(signup(state));
+    const handleSignUp = (signUpData: SignUpModel) => {
+        dispatch(signup(signUpData));
     };
 
     const handleReset = (email: string) => {
-        dispatch(resetPassword(email));
-        dispatch(
-            setSnackbar({
-                snackbarOpen: true,
-                snackbarType: 'success',
-                snackbarMessage: 'Reset password email sent',
-            })
-        );
-        history.push(routes.AUTHENTICATED_AREA);
+        dispatch(resetPassword({ email }));
     };
 
-    return <Home handleSignIn={handleSignIn} handleSignUp={handleSignUp} handleReset={handleReset} />;
+    return <Home handleLogin={handleLoginIn} handleSignUp={handleSignUp} handlePwReset={handleReset} />;
 };
 
 export default HomeContainer;
