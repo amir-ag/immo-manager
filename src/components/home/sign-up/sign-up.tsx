@@ -6,7 +6,8 @@ import routes from '../../../routes/route-constants';
 import { HomeHeader } from '../home-header';
 import { gridSpacing } from '../../../theme/shared-styles';
 import { emailPattern, minPasswordLength, passwordLengthHint } from '../../../constants';
-import { SignUpModel } from './model/sign-up.model';
+import { emptySignUp, SignUpModel } from './model/sign-up.model';
+import { useForms } from '../../../hooks/use-forms.hook';
 
 export type SignUpProps = {
     handleSignUp: (state: SignUpModel) => void;
@@ -31,27 +32,18 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
     const classes = useStyles();
     const theme = useTheme();
 
-    // TODO: Use UserModel
-    const [state, setState] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-    });
+    const [signUpFormState, setSignUpFormState] = useState(emptySignUp);
 
-    // TODO: Use form hook
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setState((prevState) => ({
-            ...prevState,
-            [e.target.id]: e.target.value,
-        }));
-    };
-
-    // TODO: Use form hook
-    const onSubmit = (e: React.FormEvent) => {
+    const submitFunc = (e: React.FormEvent) => {
         e.preventDefault();
-        handleSignUp(state);
+        handleSignUp(signUpFormState);
     };
+
+    const { handleBasicInputChange, handleSubmit } = useForms<SignUpModel>(
+        setSignUpFormState,
+        signUpFormState,
+        submitFunc
+    );
 
     return (
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -62,12 +54,12 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                     icon={<LockOutlinedIcon />}
                     title="Sign up"
                 />
-                <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
+                <form className={classes.form} onSubmit={handleSubmit}>
                     <Grid container spacing={gridSpacing}>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                value={state.firstName}
-                                onChange={(e) => onChange(e)}
+                                value={signUpFormState.firstName}
+                                onChange={(e) => handleBasicInputChange(e)}
                                 variant={'outlined'}
                                 fullWidth
                                 id={'firstName'}
@@ -80,8 +72,8 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                value={state.lastName}
-                                onChange={(e) => onChange(e)}
+                                value={signUpFormState.lastName}
+                                onChange={(e) => handleBasicInputChange(e)}
                                 variant={'outlined'}
                                 fullWidth
                                 id={'lastName'}
@@ -93,8 +85,8 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                value={state.email}
-                                onChange={(e) => onChange(e)}
+                                value={signUpFormState.email}
+                                onChange={(e) => handleBasicInputChange(e)}
                                 variant={'outlined'}
                                 fullWidth
                                 id={'email'}
@@ -108,8 +100,8 @@ const SignUp = ({ handleSignUp }: SignUpProps) => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                value={state.password}
-                                onChange={(e) => onChange(e)}
+                                value={signUpFormState.password}
+                                onChange={(e) => handleBasicInputChange(e)}
                                 variant={'outlined'}
                                 fullWidth
                                 id={'password'}

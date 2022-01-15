@@ -8,6 +8,7 @@ import { selectUser } from '../../store/selectors';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 import { LoginModel } from './login/model/login.model';
 import { SignUpModel } from './sign-up/model/sign-up.model';
+import { ResetPwModel } from './reset-password/model/reset-password.model';
 
 const HomeContainer = () => {
     let history = useHistory();
@@ -28,8 +29,8 @@ const HomeContainer = () => {
         dispatch(signup(signUpData));
     };
 
-    const handleReset = (email: string) => {
-        dispatch(resetPassword({ email }));
+    const handleReset = (resetPwData: ResetPwModel) => {
+        dispatch(resetPassword(resetPwData));
     };
 
     return <Home handleLogin={handleLoginIn} handleSignUp={handleSignUp} handlePwReset={handleReset} />;

@@ -15,7 +15,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import routes from '../../../routes/route-constants';
 import { HomeHeader } from '../home-header';
 import { emailPattern } from '../../../constants';
-import { LoginModel } from './model/login.model';
+import { emptyLogin, LoginModel } from './model/login.model';
+import { useForms } from '../../../hooks/use-forms.hook';
 
 export type SignInProps = {
     handleSignIn: (state: LoginModel) => void;
@@ -40,25 +41,18 @@ const Login = ({ handleSignIn }: SignInProps) => {
     const classes = useStyles();
     const theme = useTheme();
 
-    // TODO: Use UserModel
-    const [state, setState] = useState({
-        email: '',
-        password: '',
-    });
+    const [loginFormState, setLoginFormState] = useState(emptyLogin);
 
-    // TODO: Use form hook
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setState((prevState) => ({
-            ...prevState,
-            [e.target.id]: e.target.value,
-        }));
-    };
-
-    // TODO: Use form hook
-    const onSubmit = (e: React.FormEvent) => {
+    const submitFunc = (e: React.FormEvent<any>) => {
         e.preventDefault();
-        handleSignIn(state);
+        handleSignIn(loginFormState);
     };
+
+    const { handleBasicInputChange, handleSubmit } = useForms<LoginModel>(
+        setLoginFormState,
+        loginFormState,
+        submitFunc
+    );
 
     return (
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -70,10 +64,10 @@ const Login = ({ handleSignIn }: SignInProps) => {
                     title="Sign in"
                 />
                 {/* TODO: Use grid container here */}
-                <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
+                <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
-                        value={state.email}
-                        onChange={(e) => onChange(e)}
+                        value={loginFormState.email}
+                        onChange={(e) => handleBasicInputChange(e)}
                         variant={'outlined'}
                         margin={'normal'}
                         fullWidth
@@ -87,8 +81,8 @@ const Login = ({ handleSignIn }: SignInProps) => {
                         required
                     />
                     <TextField
-                        value={state.password}
-                        onChange={(e) => onChange(e)}
+                        value={loginFormState.password}
+                        onChange={(e) => handleBasicInputChange(e)}
                         variant={'outlined'}
                         margin={'normal'}
                         fullWidth

@@ -5,6 +5,8 @@ import routes from '../../../routes/route-constants';
 import { HomeHeader } from '../home-header';
 import SettingsBackupRestoreOutlinedIcon from '@material-ui/icons/SettingsBackupRestoreOutlined';
 import { emailPattern } from '../../../constants';
+import { emptyResetPw, ResetPwModel } from './model/reset-password.model';
+import { useForms } from '../../../hooks/use-forms.hook';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -22,18 +24,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export type ResetPasswordProps = {
-    handleReset: (email: string) => void;
+    handleReset: (resetPwData: ResetPwModel) => void;
 };
 
 const ResetPassword = ({ handleReset }: ResetPasswordProps) => {
     const classes = useStyles();
     const theme = useTheme();
-    const [email, setEmail] = useState('');
 
-    const onSubmit = (e: React.FormEvent) => {
+    const [resetPwForm, setResetPwForm] = useState(emptyResetPw);
+
+    const submitFunc = (e: React.FormEvent) => {
         e.preventDefault();
-        handleReset(email);
+        handleReset(resetPwForm);
     };
+
+    const { handleBasicInputChange, handleSubmit } = useForms<ResetPwModel>(
+        setResetPwForm,
+        resetPwForm,
+        submitFunc
+    );
 
     return (
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -45,10 +54,10 @@ const ResetPassword = ({ handleReset }: ResetPasswordProps) => {
                     title="Reset Password"
                 />
                 {/* TODO: Use grid container here */}
-                <form className={classes.form} onSubmit={onSubmit}>
+                <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={resetPwForm.email}
+                        onChange={(e) => handleBasicInputChange(e)}
                         variant={'outlined'}
                         margin={'normal'}
                         fullWidth

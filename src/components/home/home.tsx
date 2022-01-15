@@ -8,11 +8,12 @@ import SignUp from './sign-up/sign-up';
 import ResetPassword from './reset-password/reset-password';
 import { LoginModel } from './login/model/login.model';
 import { SignUpModel } from './sign-up/model/sign-up.model';
+import { ResetPwModel } from './reset-password/model/reset-password.model';
 
 export interface HomeProps {
     handleLogin: (loginData: LoginModel) => void;
     handleSignUp: (signUpData: SignUpModel) => void;
-    handlePwReset: (email: string) => void;
+    handlePwReset: (resetPwData: ResetPwModel) => void;
 }
 
 const useStyles = makeStyles((theme) => ({
