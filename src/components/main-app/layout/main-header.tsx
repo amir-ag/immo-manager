@@ -66,10 +66,16 @@ const useStyles = makeStyles((theme) => ({
     avatarMenuIcon: {
         marginRight: theme.spacing(1),
     },
-    formControlLabel: {
+    themeSwitch: {
         color: theme.palette.secondary.main,
         display: 'flex',
         alignItems: 'flex-end',
+    },
+    sunnyIcon: {
+        color: theme.palette.secondary.main,
+    },
+    nightIcon: {
+        color: theme.palette.primary.main,
     },
 }));
 
@@ -80,7 +86,7 @@ const MainHeader = ({ handleToggleNavPanel }: MainHeaderProps) => {
     const history = useHistory();
     const dispatch = useAppDispatch();
     const [openProfileMenu, setOpenProfileMenu] = useState(false);
-    const { currentTheme, setTheme } = useContext(CustomThemeContext);
+    const { currentTheme, setCurrentTheme } = useContext(CustomThemeContext);
     const isDark = Boolean(currentTheme === 'dark');
 
     const { firstName, lastName } = useAppSelector(selectUser);
@@ -112,9 +118,9 @@ const MainHeader = ({ handleToggleNavPanel }: MainHeaderProps) => {
     const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { checked } = event.target;
         if (checked) {
-            setTheme && setTheme('dark');
+            setCurrentTheme && setCurrentTheme('dark');
         } else {
-            setTheme && setTheme('normal');
+            setCurrentTheme && setCurrentTheme('normal');
         }
     };
 
@@ -135,13 +141,13 @@ const MainHeader = ({ handleToggleNavPanel }: MainHeaderProps) => {
                     Today is the {format(new Date(), constants.dateFormatLong)}
                 </Typography>
                 <FormControlLabel
-                    className={cssClasses.formControlLabel}
+                    className={cssClasses.themeSwitch}
                     control={<Switch checked={isDark} onChange={handleThemeChange} />}
                     label={
                         isDark ? (
-                            <WbSunnyOutlinedIcon style={{ color: '#FFC570' }} />
+                            <WbSunnyOutlinedIcon className={cssClasses.sunnyIcon} />
                         ) : (
-                            <Brightness4Icon style={{ color: '#39311D' }} />
+                            <Brightness4Icon className={cssClasses.nightIcon} />
                         )
                     }
                 />
