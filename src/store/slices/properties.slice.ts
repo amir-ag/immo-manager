@@ -93,9 +93,7 @@ export const deleteProperty = createAsyncThunk(
             await deleteDoc(doc(db, dbName, id));
             await storeService.triggerNotificatorSuccess(thunkAPI, 'Property was deleted successfully!');
 
-            return {
-                id,
-            };
+            return { id };
         } catch (e) {
             await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting property', e);
             return thunkAPI.rejectWithValue(e);

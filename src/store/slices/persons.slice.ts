@@ -28,13 +28,7 @@ export const createOrUpdatePerson = createAsyncThunk(
                     isNew: true,
                 } as PersonModel & IsNewType;
             } else {
-                await setDoc(
-                    doc(db, dbName, personData.id),
-                    {
-                        ...personData,
-                    },
-                    { merge: true }
-                );
+                await setDoc(doc(db, dbName, personData.id), { ...personData }, { merge: true });
                 await storeService.triggerNotificatorSuccess(thunkAPI, 'Person was updated successfully!');
 
                 return {
