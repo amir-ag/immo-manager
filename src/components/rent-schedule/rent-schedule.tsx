@@ -68,7 +68,7 @@ export const RentSchedule = () => {
                     <Typography variant={'h6'} className={cssClasses.typography}>
                         2) Click the button to generate the report
                     </Typography>
-                    <Button color={'primary'} type="submit" fullWidth variant="contained">
+                    <Button color={'secondary'} type="submit" fullWidth variant="contained">
                         Generate Report
                         <EventNoteOutlinedIcon className={cssClasses.icon} />
                     </Button>

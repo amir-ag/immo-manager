@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
     AppBar,
     Avatar,
     ClickAwayListener,
+    FormControlLabel,
     Grow,
     IconButton,
     makeStyles,
@@ -12,6 +13,7 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core';
+import Switch from '@material-ui/core/Switch';
 import MenuIcon from '@material-ui/icons/Menu';
 import { format } from 'date-fns';
 import * as constants from '../../../constants';
@@ -27,11 +29,14 @@ import { getAuth } from 'firebase/auth';
 import { useHistory } from 'react-router';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
 import { ToggleNavPanelProps } from '../model/toggle-nav-panel.props';
+import { CustomThemeContext } from '../../../theme/CustomThemeProvider';
+import WbSunnyOutlinedIcon from '@material-ui/icons/WbSunnyOutlined';
+import Brightness4Icon from '@material-ui/icons/Brightness4';
 
 const useStyles = makeStyles((theme) => ({
     appbar: {
         width: `calc(100% - ${drawerWidth}px)`,
-        background: '#FFFFFF',
+        background: theme.palette.background.paper,
         [theme.breakpoints.down('md')]: {
             width: '100%',
         },
@@ -49,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     userName: {
+        color: theme.palette.secondary.main,
         margin: 0,
         [theme.breakpoints.down('xs')]: {
             marginLeft: 'auto',
@@ -60,6 +66,11 @@ const useStyles = makeStyles((theme) => ({
     avatarMenuIcon: {
         marginRight: theme.spacing(1),
     },
+    formControlLabel: {
+        color: theme.palette.secondary.main,
+        display: 'flex',
+        alignItems: 'flex-end',
+    },
 }));
 
 type MainHeaderProps = ToggleNavPanelProps & {};
@@ -69,6 +80,8 @@ const MainHeader = ({ handleToggleNavPanel }: MainHeaderProps) => {
     const history = useHistory();
     const dispatch = useAppDispatch();
     const [openProfileMenu, setOpenProfileMenu] = useState(false);
+    const { currentTheme, setTheme } = useContext(CustomThemeContext);
+    const isDark = Boolean(currentTheme === 'dark');
 
     const { firstName, lastName } = useAppSelector(selectUser);
 
@@ -96,6 +109,15 @@ const MainHeader = ({ handleToggleNavPanel }: MainHeaderProps) => {
         }
     };
 
+    const handleThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { checked } = event.target;
+        if (checked) {
+            setTheme && setTheme('dark');
+        } else {
+            setTheme && setTheme('normal');
+        }
+    };
+
     return (
         <AppBar className={cssClasses.appbar} elevation={0}>
             <Toolbar>
@@ -112,7 +134,18 @@ const MainHeader = ({ handleToggleNavPanel }: MainHeaderProps) => {
                 <Typography color={'secondary'} variant={'h5'} className={cssClasses.notificationArea}>
                     Today is the {format(new Date(), constants.dateFormatLong)}
                 </Typography>
-                <Typography color={'secondary'} variant={'h6'} className={cssClasses.userName}>
+                <FormControlLabel
+                    className={cssClasses.formControlLabel}
+                    control={<Switch checked={isDark} onChange={handleThemeChange} />}
+                    label={
+                        isDark ? (
+                            <WbSunnyOutlinedIcon style={{ color: '#FFC570' }} />
+                        ) : (
+                            <Brightness4Icon style={{ color: '#39311D' }} />
+                        )
+                    }
+                />
+                <Typography variant={'h6'} className={cssClasses.userName}>
                     {firstName && firstName}
                 </Typography>
                 <div
