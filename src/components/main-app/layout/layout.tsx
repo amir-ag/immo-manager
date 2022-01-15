@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => {
             display: 'flex',
         },
         pageContainer: {
-            background: '#f9f9f9',
+            background: theme.palette.background.default,
             width: '100%',
             padding: theme.spacing(3),
             paddingTop: 0,
