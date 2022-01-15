@@ -18,7 +18,7 @@ const ProfileForm = () => {
     const auth = getAuth();
     const user = auth.currentUser;
 
-    const submitFunc = (e: FormEvent<any>) => {
+    const submitFunc = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(updateUser(userProfile));
     };
@@ -45,7 +45,7 @@ const ProfileForm = () => {
     return (
         <Grid
             component={'form'}
-            onSubmit={(e: React.FormEvent<any>) => handleSubmit(e)}
+            onSubmit={(e: React.FormEvent<HTMLElement>) => handleSubmit(e)}
             container
             spacing={gridSpacingBig}
         >

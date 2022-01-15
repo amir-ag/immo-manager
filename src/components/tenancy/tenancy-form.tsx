@@ -50,7 +50,7 @@ export const TenancyForm = ({
     const dispatch = useAppDispatch();
     const history = useHistory();
 
-    const submitFunc = (e: FormEvent<any>) => {
+    const submitFunc = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(createOrUpdateTenancy(currentTenancy));
         if (isNew) {
@@ -69,7 +69,7 @@ export const TenancyForm = ({
     return (
         <Grid
             component={'form'}
-            onSubmit={(e: React.FormEvent<any>) => handleSubmit(e)}
+            onSubmit={(e: React.FormEvent<HTMLElement>) => handleSubmit(e)}
             container
             spacing={gridSpacingBig}
         >
@@ -117,7 +117,7 @@ export const TenancyForm = ({
                         className={'MuiFormControl-marginNormal'}
                         id="tenant1Id"
                         options={tenants}
-                        onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant1Id')}
+                        onChange={(e, v) => handleAutocompleteChange(v, 'tenant1Id')}
                         getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
                         value={
                             getItemFromCollectionById(currentTenancy?.tenant1Id ?? '', tenants) ?? emptyPerson
@@ -142,7 +142,7 @@ export const TenancyForm = ({
                         className={'MuiFormControl-marginNormal'}
                         id="tenant2Id"
                         options={tenants}
-                        onChange={(e, v) => handleAutocompleteChange(e, v, 'tenant2Id')}
+                        onChange={(e, v) => handleAutocompleteChange(v, 'tenant2Id')}
                         getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
                         value={
                             getItemFromCollectionById(currentTenancy?.tenant2Id ?? '', tenants) ?? emptyPerson

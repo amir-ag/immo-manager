@@ -29,7 +29,7 @@ export const RentalUnitForm = ({
     const dispatch = useAppDispatch();
     const history = useHistory();
 
-    const submitFunc = (e: FormEvent<any>) => {
+    const submitFunc = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(createOrUpdateRentalUnit(currentRentalUnit));
         if (isNew) {
@@ -57,7 +57,7 @@ export const RentalUnitForm = ({
             alignItems={'center'}
             alignContent={'flex-start'}
             component={'form'}
-            onSubmit={(e: React.FormEvent<any>) => handleSubmit(e)}
+            onSubmit={(e: React.FormEvent<HTMLElement>) => handleSubmit(e)}
         >
             <Grid item xs={12}>
                 <Typography variant={'subtitle2'} component={'h3'}>

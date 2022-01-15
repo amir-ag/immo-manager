@@ -30,7 +30,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
     const dispatch = useAppDispatch();
     const history = useHistory();
 
-    const submitFunc = (e: FormEvent<any>) => {
+    const submitFunc = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch(createOrUpdateProperty(currentProperty));
         if (isNew) {
@@ -61,7 +61,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
             alignItems={'center'}
             alignContent={'flex-start'}
             component={'form'}
-            onSubmit={(e: React.FormEvent<any>) => handleSubmit(e)}
+            onSubmit={(e: React.FormEvent<HTMLElement>) => handleSubmit(e)}
         >
             <Grid item xs={12}>
                 <ImageUpload
@@ -103,7 +103,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 <Autocomplete
                     id="owner"
                     options={owners}
-                    onChange={(e, v) => handleAutocompleteChange(e, v, 'owner')}
+                    onChange={(e, v) => handleAutocompleteChange(v, 'owner')}
                     getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
                     value={
                         collectionUtils.getItemFromCollectionById(currentProperty.owner, owners) ??
@@ -130,7 +130,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 <Autocomplete
                     id="janitor"
                     options={janitors}
-                    onChange={(e, v) => handleAutocompleteChange(e, v, 'janitor')}
+                    onChange={(e, v) => handleAutocompleteChange(v, 'janitor')}
                     getOptionLabel={personService.getPersonDisplayNameForFormSelectFields}
                     value={
                         collectionUtils.getItemFromCollectionById(currentProperty.janitor, janitors) ??
