@@ -26,11 +26,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import { emptyPerson, PersonModel, personRoles } from './model/person.model';
 import { useForms } from '../../hooks/use-forms.hook';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
-import { createUpdatePerson } from '../../store/slices/persons.slice';
+import { createOrUpdatePerson } from '../../store/slices/persons.slice';
 import { gridSpacing } from '../../theme/shared-styles';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
+import * as constants from '../../constants';
 import { emailPattern, swissPhoneHelpText, swissPhonePattern } from '../../constants';
+import { format } from 'date-fns';
 
 export type PersonDialogProps = {
     openDialog: boolean;
@@ -57,7 +59,7 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
 
     const submitFunc = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
-        dispatch(createUpdatePerson(currentPerson));
+        dispatch(createOrUpdatePerson(currentPerson));
         setCurrentPerson(emptyPerson);
         setOpenDialog(false);
     };
@@ -181,6 +183,7 @@ const PersonDialog = ({ openDialog, setOpenDialog, currentPerson, setCurrentPers
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
+                                inputProps={{ max: format(new Date(), constants.dateFormatStoring) }}
                                 required
                             />
                         </Grid>
