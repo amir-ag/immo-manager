@@ -126,7 +126,12 @@ export const TenancyForm = ({
                             option.id === value.id
                         }
                         renderInput={(params) => (
-                            <TextField {...params} label="Tenant 1" variant="outlined" />
+                            <TextField
+                                {...params}
+                                label="Tenant 1"
+                                variant="outlined"
+                                required={!currentTenancy.isVacancy}
+                            />
                         )}
                         disabled={currentTenancy.isVacancy}
                     />

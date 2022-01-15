@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PropertyModel } from '../../components/property/model/property.model';
-import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
 import * as storeService from '../service/store.service';
 import { emptyThumbnail } from '../../models/thumbnail.model';
+import { CreatedByType, IsNewType } from '../model/base-store.model';
+import * as propertyService from '../../components/property/service/property.service';
 
 const dbName = 'properties';
 const sliceName = 'properties';
@@ -18,40 +20,47 @@ export const createOrUpdateProperty = createAsyncThunk(
     async (property: PropertyModel, thunkAPI) => {
         try {
             const uid = storeService.getUidFromStoreState(thunkAPI);
-            const docToPush = {
-                ...property,
-                createdBy: uid,
-            };
 
+            let imageUrl;
             if (property.thumbnail?.image) {
-                if (!docToPush.thumbnail) {
-                    docToPush.thumbnail = emptyThumbnail;
-                }
-
-                docToPush.thumbnail.imageUrl = await storeService.uploadImageAndReturnUrl(
+                imageUrl = await storeService.uploadImageAndReturnUrl(
                     property.thumbnail?.image,
                     `images/properties/thumbnails/${uid}/${property.thumbnail.image.name}`
                 );
             }
 
+            const docToPush = {
+                ...property,
+                thumbnail: {
+                    ...emptyThumbnail,
+                    imageUrl: imageUrl ?? property.thumbnail?.imageUrl,
+                },
+            } as PropertyModel;
+
             if (!property.id) {
-                // TODO: Use typed method and create interface with 'createdBy' field
-                const docRef = await addDoc(collection(db, dbName), docToPush);
-                console.log(`A new property with id=${docRef.id} has been created!`);
+                const docRef = await addDoc(collection(db, dbName), {
+                    ...docToPush,
+                    createdBy: uid,
+                } as PropertyModel & CreatedByType);
+                await storeService.triggerNotificatorSuccess(thunkAPI, 'Property was created successfully!');
+
                 return {
                     ...docToPush,
                     id: docRef.id,
                     isNew: true,
-                };
+                } as PropertyModel & IsNewType;
             } else {
-                // TODO: Use typed method and create interface with 'createdBy' field
-                await setDoc(doc(db, dbName, property.id), docToPush);
+                await setDoc(doc(db, dbName, property.id), docToPush, { merge: true });
+                await storeService.triggerNotificatorSuccess(thunkAPI, 'Property was updated successfully!');
+
+                return {
+                    ...docToPush,
+                    isNew: false,
+                } as PropertyModel & IsNewType;
             }
-            return {
-                ...docToPush,
-            };
         } catch (e) {
-            console.error('Error when adding/updating property: ', e);
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when creating/updating property', e);
+            return thunkAPI.rejectWithValue(e);
         }
     }
 );
@@ -60,7 +69,7 @@ export const getProperties = createAsyncThunk(`${sliceName}/getProperties`, asyn
     try {
         const uid = storeService.getUidFromStoreState(thunkAPI);
 
-        const q = query(collection(db, dbName), where('createdBy', '==', uid));
+        const q = storeService.buildGetEntitiesQuery(dbName, uid);
         const querySnapshot = await getDocs(q);
 
         const data: PropertyModel[] = [];
@@ -69,41 +78,56 @@ export const getProperties = createAsyncThunk(`${sliceName}/getProperties`, asyn
             data.push({ ...(doc.data() as PropertyModel), id });
         });
 
-        return data.sort((propA: PropertyModel, propB: PropertyModel) =>
-            propA.name.localeCompare(propB.name)
-        );
+        propertyService.sortPropertiesByNameAsc(data);
+        return data;
     } catch (e) {
-        console.error('Error getting properties: ', e);
+        await storeService.triggerNotificatorError(thunkAPI, 'Error when getting properties', e);
+        return thunkAPI.rejectWithValue(e);
     }
 });
 
-export const deleteProperty = createAsyncThunk(`${sliceName}/deleteProperty`, async (id: string) => {
-    try {
-        await deleteDoc(doc(db, dbName, `${id}`));
-        return {
-            id,
-        };
-    } catch (e) {
-        console.error('Error deleting property: ', e);
+export const deleteProperty = createAsyncThunk(
+    `${sliceName}/deleteProperty`,
+    async (id: string, thunkAPI) => {
+        try {
+            await deleteDoc(doc(db, dbName, id));
+            await storeService.triggerNotificatorSuccess(thunkAPI, 'Property was deleted successfully!');
+
+            return { id };
+        } catch (e) {
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting property', e);
+            return thunkAPI.rejectWithValue(e);
+        }
     }
-});
+);
 
 export const propertiesSlice = createSlice({
     name: sliceName,
     initialState: { current: null, all: [] } as PropertiesState,
     reducers: {
         setCurrentProperty(state: PropertiesState, action: PayloadAction<PropertyModel | null>) {
-            state.current = action.payload;
+            let propertyToSet = null;
+            if (action.payload) {
+                propertyToSet = {
+                    ...action.payload,
+                    thumbnail: {
+                        image: null,
+                    },
+                } as PropertyModel;
+            }
+            state.current = propertyToSet;
         },
     },
     extraReducers: (builder) => {
-        // TODO: Use strongly typed types
-        builder.addCase(getProperties.fulfilled, (state: PropertiesState, action: PayloadAction<any>) => {
-            state.all = [...action.payload];
-        });
+        builder.addCase(
+            getProperties.fulfilled,
+            (state: PropertiesState, action: PayloadAction<PropertyModel[]>) => {
+                state.all = [...action.payload];
+            }
+        );
         builder.addCase(
             createOrUpdateProperty.fulfilled,
-            (state: PropertiesState, action: PayloadAction<any>) => {
+            (state: PropertiesState, action: PayloadAction<PropertyModel & IsNewType>) => {
                 if (!action.payload.isNew) {
                     const existingProperty = state.all.findIndex(
                         (property) => property.id === action.payload.id
@@ -112,10 +136,15 @@ export const propertiesSlice = createSlice({
                 } else {
                     state.all.push(action.payload);
                 }
+
+                propertyService.sortPropertiesByNameAsc(state.all);
             }
         );
-        builder.addCase(deleteProperty.fulfilled, (state: PropertiesState, action: PayloadAction<any>) => {
-            state.all = state.all.filter((property) => property.id !== action.payload.id);
-        });
+        builder.addCase(
+            deleteProperty.fulfilled,
+            (state: PropertiesState, action: PayloadAction<{ id: string }>) => {
+                state.all = state.all.filter((property) => property.id !== action.payload.id);
+            }
+        );
     },
 });

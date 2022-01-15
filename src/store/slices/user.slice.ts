@@ -22,7 +22,7 @@ import { AddressModel } from '../../models/address.model';
 interface UserState extends UserModel {}
 
 const dbName = 'users';
-const sliceName = 'users';
+const sliceName = 'user';
 
 export const logout = createAsyncThunk(`${sliceName}/logout`, async (_, thunkAPI) => {
     try {
@@ -203,7 +203,7 @@ export const updateUser = createAsyncThunk(
 const initialState: UserState = { ...emptyUser };
 
 export const userSlice = createSlice({
-    name: 'user',
+    name: sliceName,
     initialState,
     reducers: {},
     extraReducers: (builder) => {

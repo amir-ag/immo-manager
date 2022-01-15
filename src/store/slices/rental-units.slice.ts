@@ -1,14 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../../index';
 import * as storeService from '../service/store.service';
-import { rentalUnitfloorLevel, RentalUnitModel } from '../../components/rental-unit/model/rental-unit.model';
+import { RentalUnitModel } from '../../components/rental-unit/model/rental-unit.model';
+import { CreatedByType, IsNewType } from '../model/base-store.model';
+import * as rentalUnitService from '../../components/rental-unit/service/rental-unit.service';
 
 const dbName = 'rental-units';
 const sliceName = 'rental-units';
 
 interface RentalUnitsState {
-    current?: RentalUnitModel | null;
+    current: RentalUnitModel | null;
     all: RentalUnitModel[];
 }
 
@@ -19,31 +21,39 @@ export const createOrUpdateRentalUnit = createAsyncThunk(
             const uid = storeService.getUidFromStoreState(thunkAPI);
 
             if (!rentalUnit.id) {
-                // TODO: Use typed method and create interface with 'createdBy' field
                 const docRef = await addDoc(collection(db, dbName), {
                     ...rentalUnit,
                     createdBy: uid,
-                });
-                console.log(`A new rental unit with id=${docRef.id} has been created!`);
+                } as RentalUnitModel & CreatedByType);
+                await storeService.triggerNotificatorSuccess(
+                    thunkAPI,
+                    'Rental Unit was created successfully!'
+                );
+
                 return {
                     ...rentalUnit,
-                    createdBy: uid,
                     id: docRef.id,
                     isNew: true,
-                };
+                } as RentalUnitModel & IsNewType;
             } else {
-                // TODO: Use typed method and create interface with 'createdBy' field
-                await setDoc(doc(db, dbName, rentalUnit.id), {
-                    ...rentalUnit,
-                    createdBy: uid,
-                });
+                await setDoc(doc(db, dbName, rentalUnit.id), { ...rentalUnit }, { merge: true });
+                await storeService.triggerNotificatorSuccess(
+                    thunkAPI,
+                    'Rental Unit was updated successfully!'
+                );
+
                 return {
                     ...rentalUnit,
-                    createdBy: uid,
-                };
+                    isNew: false,
+                } as RentalUnitModel & IsNewType;
             }
         } catch (e) {
-            console.error('Error when adding/updating rental unit: ', e);
+            await storeService.triggerNotificatorError(
+                thunkAPI,
+                'Error when creating/updating rental unit',
+                e
+            );
+            return thunkAPI.rejectWithValue(e);
         }
     }
 );
@@ -52,7 +62,7 @@ export const getRentalUnits = createAsyncThunk(`${sliceName}/getRentalUnits`, as
     try {
         const uid = storeService.getUidFromStoreState(thunkAPI);
 
-        const q = query(collection(db, dbName), where('createdBy', '==', uid));
+        const q = storeService.buildGetEntitiesQuery(dbName, uid);
         const querySnapshot = await getDocs(q);
 
         const data: RentalUnitModel[] = [];
@@ -61,25 +71,28 @@ export const getRentalUnits = createAsyncThunk(`${sliceName}/getRentalUnits`, as
             data.push({ ...(doc.data() as RentalUnitModel), id });
         });
 
-        return data.sort((ruA: RentalUnitModel, ruB: RentalUnitModel) => {
-            const indexA = rentalUnitfloorLevel.indexOf(!ruA.floorLevel ? 'Undefined' : ruA.floorLevel);
-            const indexB = rentalUnitfloorLevel.indexOf(!ruB.floorLevel ? 'Undefined' : ruB.floorLevel);
-
-            return indexA - indexB;
-        });
+        rentalUnitService.sortRentalUnitsByFloorLevelAsc(data);
+        return data;
     } catch (e) {
-        console.error('Error getting rental units: ', e);
+        await storeService.triggerNotificatorError(thunkAPI, 'Error when getting rental units', e);
+        return thunkAPI.rejectWithValue(e);
     }
 });
 
-export const deleteRentalUnit = createAsyncThunk(`${sliceName}/deleteRentalUnit`, async (id: string) => {
-    try {
-        await deleteDoc(doc(db, dbName, `${id}`));
-        return { id };
-    } catch (e) {
-        console.error('Error deleting rental unit: ', e);
+export const deleteRentalUnit = createAsyncThunk(
+    `${sliceName}/deleteRentalUnit`,
+    async (id: string, thunkAPI) => {
+        try {
+            await deleteDoc(doc(db, dbName, id));
+            await storeService.triggerNotificatorSuccess(thunkAPI, 'Rental Unit was deleted successfully!');
+
+            return { id };
+        } catch (e) {
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting person', e);
+            return thunkAPI.rejectWithValue(e);
+        }
     }
-});
+);
 
 export const rentalUnitsSlice = createSlice({
     name: sliceName,
@@ -90,23 +103,30 @@ export const rentalUnitsSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        // TODO: Use strongly typed types
-        builder.addCase(getRentalUnits.fulfilled, (state: RentalUnitsState, action: PayloadAction<any>) => {
-            state.all = [...action.payload];
-        });
+        builder.addCase(
+            getRentalUnits.fulfilled,
+            (state: RentalUnitsState, action: PayloadAction<RentalUnitModel[]>) => {
+                state.all = [...action.payload];
+            }
+        );
         builder.addCase(
             createOrUpdateRentalUnit.fulfilled,
-            (state: RentalUnitsState, action: PayloadAction<any>) => {
+            (state: RentalUnitsState, action: PayloadAction<RentalUnitModel & IsNewType>) => {
                 if (!action.payload.isNew) {
                     const existingRU = state.all.findIndex((ru) => ru.id === action.payload.id);
                     state.all[existingRU] = action.payload;
                 } else {
                     state.all.push(action.payload);
                 }
+
+                rentalUnitService.sortRentalUnitsByFloorLevelAsc(state.all);
             }
         );
-        builder.addCase(deleteRentalUnit.fulfilled, (state: RentalUnitsState, action: PayloadAction<any>) => {
-            state.all = state.all.filter((ru) => ru.id !== action.payload.id);
-        });
+        builder.addCase(
+            deleteRentalUnit.fulfilled,
+            (state: RentalUnitsState, action: PayloadAction<{ id: string }>) => {
+                state.all = state.all.filter((ru) => ru.id !== action.payload.id);
+            }
+        );
     },
 });
