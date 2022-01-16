@@ -7,7 +7,7 @@ import { getTenancies } from '../../store/slices/tenancies.slice';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { IntroHeader } from '../ui/intro-header/intro-header';
 
-export const DashboardContainer = () => {
+export const Dashboard = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
