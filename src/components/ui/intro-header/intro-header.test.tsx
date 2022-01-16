@@ -1,11 +1,14 @@
 import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { IntroHeader } from './intro-header';
 
 test('test IntroHeader', () => {
+    // Act
     render(<IntroHeader title={'Open Intro Title'} subtitle={'This is the subtitle'} />);
-    const introheader = screen.getByTestId('intro-header');
-    expect(introheader).toBeInTheDocument();
-    expect(introheader).toHaveTextContent('Open Intro Title');
-    expect(introheader).toHaveTextContent('This is the subtitle');
+
+    // Assert
+    const introHeader = screen.getByTestId('intro-header');
+    expect(introHeader).toBeInTheDocument();
+    expect(introHeader).toHaveTextContent('Open Intro Title');
+    expect(introHeader).toHaveTextContent('This is the subtitle');
 });

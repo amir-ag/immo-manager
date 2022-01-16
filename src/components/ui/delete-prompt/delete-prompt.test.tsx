@@ -1,8 +1,9 @@
 import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import DeletePrompt from './delete-prompt';
 
 test('test delete dialog', () => {
+    // Act
     render(
         <DeletePrompt
             open={true}
@@ -12,6 +13,8 @@ test('test delete dialog', () => {
             handleDeletion={() => null}
         />
     );
+
+    // Assert
     const deletePrompt = screen.getByTestId('delete-prompt-test');
     expect(deletePrompt).toBeInTheDocument();
     expect(deletePrompt).toHaveTextContent('Delete Test');
