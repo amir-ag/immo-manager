@@ -111,7 +111,6 @@ export const TenancyForm = ({
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    {/* TODO: Resolve console error about change (controlled vs. uncontrolled) */}
                     <Autocomplete
                         className={'MuiFormControl-marginNormal'}
                         id="tenant1Id"
@@ -136,7 +135,6 @@ export const TenancyForm = ({
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    {/* TODO: Resolve console error about change (controlled vs. uncontrolled) */}
                     <Autocomplete
                         className={'MuiFormControl-marginNormal'}
                         id="tenant2Id"
@@ -206,7 +204,7 @@ export const TenancyForm = ({
                         type="date"
                         fullWidth
                         onChange={(e) => handleBasicInputChange(e)}
-                        value={currentTenancy.endOfContract}
+                        value={currentTenancy.endOfContract ?? ''}
                         inputProps={{ min: currentTenancy.beginOfContract }}
                         InputLabelProps={{
                             shrink: true,
@@ -221,7 +219,6 @@ export const TenancyForm = ({
                         id={'cancellationPeriod'}
                         label={'Cancellation Period (Months)'}
                         type="number"
-                        defaultValue={3}
                         onChange={(e) => handleBasicInputChange(e)}
                         value={currentTenancy.cancellationPeriod}
                         inputProps={{ min: 0, max: 12 }}

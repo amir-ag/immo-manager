@@ -1,3 +1,3 @@
 export type ToggleNavPanelProps = {
-    handleToggleNavPanel: (e: any) => void;
+    handleToggleNavPanel: () => void;
 };

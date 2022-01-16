@@ -99,7 +99,6 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 />
             </Grid>
             <Grid item xs={12} md={6}>
-                {/* TODO: Resolve console error about change (controlled vs. uncontrolled) */}
                 <Autocomplete
                     id="owner"
                     options={owners}
@@ -126,7 +125,6 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 />
             </Grid>
             <Grid item xs={12} md={6}>
-                {/* TODO: Resolve console error about change (controlled vs. uncontrolled) */}
                 <Autocomplete
                     id="janitor"
                     options={janitors}

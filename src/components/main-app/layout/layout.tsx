@@ -26,12 +26,7 @@ const Layout = ({ children }: LayoutProps) => {
     const cssClasses = useStyles();
     const [isNavPanelOpen, setIsNavPanelOpen] = React.useState(false);
 
-    // TODO figure out how to handle KeyboardEvent | MouseEvent
-    const handleToggleNavPanel = (event: any) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-
+    const handleToggleNavPanel = () => {
         setIsNavPanelOpen(!isNavPanelOpen);
     };
 
