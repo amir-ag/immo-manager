@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { Button, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
+import { Button, Grid, makeStyles, MenuItem, TextField, Typography } from '@material-ui/core';
 import EventNoteOutlinedIcon from '@material-ui/icons/EventNoteOutlined';
 import { selectAllProperties } from '../../store/selectors';
 import { PropertyModel } from '../property/model/property.model';
@@ -8,71 +8,96 @@ import routes from '../../routes/route-constants';
 import { IntroHeader } from '../ui/intro-header/intro-header';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 import { InfoBox } from '../ui/info-box/info-box';
+import LooksOneIcon from '@material-ui/icons/LooksOne';
+import LooksTwoIcon from '@material-ui/icons/LooksTwo';
+import { gridSpacingSmall } from '../../theme/shared-styles';
+import { getDisplayNameOfProperty } from '../property/service/property.service';
+import { emptyRentScheduleForm, RentScheduleFormModel } from './model/rent-schedule-form.model';
+import { useForms } from '../../hooks/use-forms.hook';
 
 const useStyles = makeStyles((theme) => ({
-    form: {
-        maxWidth: '600px',
+    formContainer: {
+        maxWidth: '750px',
+        margin: '0 auto',
     },
-    typography: {
-        marginBottom: theme.spacing(2),
-        marginTop: theme.spacing(4),
-    },
-    icon: {
+    buttonIcon: {
         marginLeft: theme.spacing(1),
     },
 }));
 
 export const RentSchedule = () => {
     const cssClasses = useStyles();
-    // TODO: Use form hook
-    const [propertyId, setPropertyId] = useState('');
+    const [rentScheduleForm, setRentScheduleForm] = useState(emptyRentScheduleForm);
 
     const history = useHistory();
     const properties = useAppSelector(selectAllProperties);
 
-    const renderTable = (e: FormEvent<HTMLElement>) => {
+    const submitFunc = (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
-        history.push(routes.getRentScheduleDataRouteById(propertyId));
+        history.push(routes.getRentScheduleDataRouteById(rentScheduleForm.propertyId));
     };
+
+    const { handleBasicInputChange, handleSubmit } = useForms<RentScheduleFormModel>(
+        setRentScheduleForm,
+        rentScheduleForm,
+        submitFunc
+    );
 
     return (
         <>
             <IntroHeader title="Rent Schedule" subtitle="Generate a rent schedule for a specific property." />
 
             {properties?.length ? (
-                <form className={cssClasses.form} onSubmit={renderTable}>
-                    <Typography variant={'h6'} className={cssClasses.typography}>
-                        1) Choose the property you want to generate a report for
-                    </Typography>
-                    <TextField
-                        value={propertyId}
-                        onChange={(e) => setPropertyId(e.target.value)}
-                        variant={'outlined'}
-                        margin={'normal'}
-                        fullWidth
-                        id={'property'}
-                        label={'Select a property'}
-                        select
-                        name={'property'}
-                        autoComplete={'property'}
-                        autoFocus
-                        type={'string'}
-                        required
-                    >
-                        {properties.map((property: PropertyModel) => (
-                            <MenuItem key={property.name} value={property.id}>
-                                {`${property.name} - ${property.id}`}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                    <Typography variant={'h6'} className={cssClasses.typography}>
-                        2) Click the button to generate the report
-                    </Typography>
-                    <Button color={'secondary'} type="submit" fullWidth variant="contained">
-                        Generate Report
-                        <EventNoteOutlinedIcon className={cssClasses.icon} />
-                    </Button>
-                </form>
+                <Grid
+                    container
+                    spacing={gridSpacingSmall}
+                    component={'form'}
+                    onSubmit={handleSubmit}
+                    className={cssClasses.formContainer}
+                >
+                    <Grid item xs={1}>
+                        <LooksOneIcon color="secondary" fontSize="large" />
+                    </Grid>
+                    <Grid item xs={11}>
+                        <Typography variant={'subtitle1'}>
+                            Choose the property you want to generate a report for
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            value={rentScheduleForm.propertyId}
+                            onChange={(e) => handleBasicInputChange(e, 'propertyId')}
+                            variant={'outlined'}
+                            fullWidth
+                            id={'property'}
+                            label={'Select a property'}
+                            select
+                            name={'property'}
+                            autoComplete={'property'}
+                            autoFocus
+                            type={'string'}
+                            required
+                        >
+                            {properties.map((property: PropertyModel) => (
+                                <MenuItem key={property.id} value={property.id}>
+                                    {getDisplayNameOfProperty(property)}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <LooksTwoIcon color="secondary" fontSize="large" />
+                    </Grid>
+                    <Grid item xs={11}>
+                        <Typography variant={'subtitle1'}>Click the button to generate the report</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button color={'secondary'} type="submit" fullWidth variant="contained">
+                            Generate Report
+                            <EventNoteOutlinedIcon className={cssClasses.buttonIcon} />
+                        </Button>
+                    </Grid>
+                </Grid>
             ) : (
                 <InfoBox
                     title="No Properties found!"
