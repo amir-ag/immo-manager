@@ -10,6 +10,7 @@ import {
     ListItemIcon,
     ListItemText,
     makeStyles,
+    Typography,
     useMediaQuery,
     useTheme,
 } from '@material-ui/core';
@@ -21,9 +22,6 @@ import { ToggleNavPanelProps } from '../model/toggle-nav-panel.props';
 
 const useStyles = makeStyles((theme) => ({
     drawer: {
-        width: drawerWidth,
-    },
-    drawerPaper: {
         width: drawerWidth,
     },
     appLogo: {
@@ -44,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
     },
     logoutButton: {
-        margin: theme.spacing(10, 1),
+        margin: theme.spacing(0, 2, 5, 2),
         padding: theme.spacing(2),
     },
 }));
@@ -66,7 +64,6 @@ const NavigationPanel = ({ handleToggleNavPanel, isNavPanelOpen }: NavigationPan
             anchor={'left'}
             open={isNavPanelOpen}
             onClose={handleToggleNavPanel}
-            classes={{ paper: cssClasses.drawerPaper }}
         >
             <NavLink to={routes.DASHBOARD}>
                 <ImmoLogo className={cssClasses.appLogo} />
@@ -83,7 +80,13 @@ const NavigationPanel = ({ handleToggleNavPanel, isNavPanelOpen }: NavigationPan
                         onClick={handleToggleNavPanel}
                     >
                         <ListItemIcon>{item.icon}</ListItemIcon>
-                        <ListItemText primary={item.text} />
+                        <ListItemText
+                            primary={
+                                <Typography variant="button" color="secondary" component="span">
+                                    {item.text}
+                                </Typography>
+                            }
+                        />
                     </ListItem>
                 ))}
             </List>
