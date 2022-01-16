@@ -28,7 +28,7 @@ export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
             dispatch(propertiesSlice.actions.setCurrentProperty(currentProperty));
             dispatch(rentalUnitsSlice.actions.setCurrentRentalUnit(null));
         }
-    }, [currentProperty]);
+    }, [currentProperty, dispatch, isNew]);
 
     return (
         <>

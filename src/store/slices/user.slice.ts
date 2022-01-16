@@ -33,7 +33,7 @@ export const logout = createAsyncThunk(`${sliceName}/logout`, async (_, thunkAPI
         return;
     } catch (e) {
         await storeService.triggerNotificatorError(thunkAPI, 'Error when logging out', e);
-        return thunkAPI.rejectWithValue(e);
+        return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
     }
 });
 
@@ -55,11 +55,12 @@ export const login = createAsyncThunk(
                     ...(docSnap.data() as UserModel),
                 } as UserState;
             } else {
+                // eslint-disable-next-line
                 throw 'No user data found!';
             }
         } catch (e) {
             await storeService.triggerNotificatorError(thunkAPI, 'Error when logging in', e);
-            return thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
         }
     }
 );
@@ -81,11 +82,12 @@ export const restoreLogin = createAsyncThunk(`${sliceName}/restoreLogin`, async 
                 email: user.email,
             } as UserState;
         } else {
+            // eslint-disable-next-line
             throw 'No user data found!';
         }
     } catch (e) {
         await storeService.triggerNotificatorError(thunkAPI, 'Error when restoring login', e);
-        return thunkAPI.rejectWithValue(e);
+        return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
     }
 });
 
@@ -100,7 +102,7 @@ export const resetPassword = createAsyncThunk(
             return;
         } catch (e) {
             await storeService.triggerNotificatorError(thunkAPI, 'Error when resetting email', e);
-            return thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
         }
     }
 );
@@ -132,11 +134,12 @@ export const signup = createAsyncThunk(
                     ...userData,
                 } as UserState;
             } else {
+                // eslint-disable-next-line
                 throw 'Could not create user';
             }
         } catch (e) {
             await storeService.triggerNotificatorError(thunkAPI, 'Error when signing up', e);
-            return thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
         }
     }
 );
@@ -155,6 +158,7 @@ export const updateUser = createAsyncThunk(
             const user = auth.currentUser;
 
             if (!user || user.uid !== profileData.uid) {
+                // eslint-disable-next-line
                 throw 'Could not update profile because of user authentication issues';
             }
 
@@ -195,7 +199,7 @@ export const updateUser = createAsyncThunk(
             };
         } catch (e) {
             await storeService.triggerNotificatorError(thunkAPI, 'Error when updating user', e);
-            return thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
         }
     }
 );

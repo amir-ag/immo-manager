@@ -38,7 +38,7 @@ export const createOrUpdateTenancy = createAsyncThunk(
             }
         } catch (e) {
             await storeService.triggerNotificatorError(thunkAPI, 'Error when creating/updating tenancy', e);
-            return thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
         }
     }
 );
@@ -60,7 +60,7 @@ export const getTenancies = createAsyncThunk(`${sliceName}/getTenancies`, async 
         return data;
     } catch (e) {
         await storeService.triggerNotificatorError(thunkAPI, 'Error when getting tenancies', e);
-        return thunkAPI.rejectWithValue(e);
+        return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
     }
 });
 
@@ -76,7 +76,7 @@ export const deleteTenancy = createAsyncThunk(
             return { id };
         } catch (e) {
             await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting tenancy', e);
-            return thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
         }
     }
 );

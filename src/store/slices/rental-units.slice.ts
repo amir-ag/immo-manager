@@ -56,7 +56,7 @@ export const createOrUpdateRentalUnit = createAsyncThunk(
                 'Error when creating/updating rental unit',
                 e
             );
-            return thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
         }
     }
 );
@@ -78,7 +78,7 @@ export const getRentalUnits = createAsyncThunk(`${sliceName}/getRentalUnits`, as
         return data;
     } catch (e) {
         await storeService.triggerNotificatorError(thunkAPI, 'Error when getting rental units', e);
-        return thunkAPI.rejectWithValue(e);
+        return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
     }
 });
 
@@ -105,7 +105,7 @@ export const deleteRentalUnit = createAsyncThunk(
             return { id };
         } catch (e) {
             await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting rental unit', e);
-            return thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
         }
     }
 );

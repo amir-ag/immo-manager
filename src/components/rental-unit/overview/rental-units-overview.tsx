@@ -36,6 +36,7 @@ export const RentalUnitsOverview = ({ disableCreate, relatedProperty }: RentalUn
     */
     useEffect(() => {
         setSearchResult(relatedRentalUnits);
+        // eslint-disable-next-line
     }, [allRentalUnits]);
 
     const handleDelete = (ruId: string) => {

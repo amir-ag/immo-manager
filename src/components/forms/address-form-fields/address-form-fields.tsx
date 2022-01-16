@@ -47,7 +47,7 @@ const AddressFormFields = ({ addressState, handleAddressInputChange }: AddressFo
                     value={addressState?.postCode ?? ''}
                     onChange={(e) => handleAddressInputChange(e)}
                     label={'Post Code'}
-                    inputProps={{ min: 1000, max: 9999 }}
+                    inputProps={{ min: 1000, max: 9700 }}
                     type="number"
                     required
                 />

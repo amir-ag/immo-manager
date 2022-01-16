@@ -18,7 +18,6 @@ export const TenancyDetail = ({ isNew }: { isNew: boolean }) => {
     const { id } = useParams<{ id: string }>();
     const tenancyToEdit = useAppSelector(selectTenancyById(id));
 
-    // TODO: Better error handling!
     const property = useAppSelector(selectCurrentProperty) ?? emptyProperty;
     const rentalUnit = useAppSelector(selectCurrentRentalUnit) ?? emptyRentalUnit;
 

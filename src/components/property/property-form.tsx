@@ -95,6 +95,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                     id={'egid'}
                     label={'EGID'}
                     type="number"
+                    inputProps={{ min: 0 }}
                     required
                 />
             </Grid>
@@ -116,7 +117,7 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 <TextField
                     variant={'outlined'}
                     fullWidth
-                    value={currentProperty.yearOfConstruction}
+                    value={currentProperty.yearOfConstruction ?? ''}
                     onChange={(e) => handleBasicInputChange(e)}
                     id={'yearOfConstruction'}
                     label={'Year of Construction'}

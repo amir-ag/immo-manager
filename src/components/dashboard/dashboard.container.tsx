@@ -15,7 +15,7 @@ export const DashboardContainer = () => {
         dispatch(getRentalUnits());
         dispatch(getTenancies());
         dispatch(getPersons());
-    }, []);
+    }, [dispatch]);
 
     return (
         <>

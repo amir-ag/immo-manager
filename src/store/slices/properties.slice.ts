@@ -28,7 +28,7 @@ export const createOrUpdateProperty = createAsyncThunk(
             if (property.thumbnail?.image) {
                 imageUrl = await storeService.uploadImageAndReturnUrl(
                     property.thumbnail?.image,
-                    `images/properties/thumbnails/${uid}/${property.thumbnail.image.name}`
+                    `images/properties/thumbnails/${uid}/${Date.now()}_${property.thumbnail.image.name}`
                 );
             }
 
@@ -63,7 +63,7 @@ export const createOrUpdateProperty = createAsyncThunk(
             }
         } catch (e) {
             await storeService.triggerNotificatorError(thunkAPI, 'Error when creating/updating property', e);
-            return thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
         }
     }
 );
@@ -85,7 +85,7 @@ export const getProperties = createAsyncThunk(`${sliceName}/getProperties`, asyn
         return data;
     } catch (e) {
         await storeService.triggerNotificatorError(thunkAPI, 'Error when getting properties', e);
-        return thunkAPI.rejectWithValue(e);
+        return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
     }
 });
 
@@ -110,7 +110,7 @@ export const deleteProperty = createAsyncThunk(
             return { id };
         } catch (e) {
             await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting property', e);
-            return thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
         }
     }
 );
