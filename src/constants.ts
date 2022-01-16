@@ -25,6 +25,6 @@ export const swissPhoneHelpText = 'Valid Swiss phone number';
 export const minPasswordLength = 12;
 export const passwordLengthHint = `Min. length is ${minPasswordLength} chars.`;
 
-export const notAvailableText = 'n/a';
+export const notAvailableText = '-';
 
 export const appName = 'Immo Manager';

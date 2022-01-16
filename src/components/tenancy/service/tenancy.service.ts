@@ -1,6 +1,7 @@
 import { PersonModel } from '../../person/model/person.model';
 import { TenancyModel } from '../model/tenancy.model';
 import { parseISO } from 'date-fns';
+import * as constants from '../../../constants';
 
 export const getTenantsOfTenancy = (tenancy: TenancyModel | undefined, allTenants: PersonModel[]) => {
     if (!tenancy) {
@@ -11,7 +12,10 @@ export const getTenantsOfTenancy = (tenancy: TenancyModel | undefined, allTenant
 };
 
 export const getDisplayNameOfTenants = (tenancy: TenancyModel, allTenants: PersonModel[]) => {
-    if (tenancy === undefined) return '-';
+    if (tenancy === undefined) {
+        return constants.notAvailableText;
+    }
+
     return getTenantsOfTenancy(tenancy, allTenants)
         .map((t) => t.firstName + ' ' + t.lastName)
         .join(', ');

@@ -1,5 +1,5 @@
 import { RootState } from './store';
-import { getItemFromCollectionById } from '../services/collection-utils';
+import { getItemFromCollectionById } from '../services/collection-utils.service';
 import * as rentalUnitService from '../components/rental-unit/service/rental-unit.service';
 import * as tenancyService from '../components/tenancy/service/tenancy.service';
 

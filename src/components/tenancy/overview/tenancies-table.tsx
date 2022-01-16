@@ -17,10 +17,9 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { useDeletePrompt } from '../../../hooks/use-delete-prompt.hook';
 import { TenancyModel } from '../model/tenancy.model';
-import { format, parseISO } from 'date-fns';
 import { PersonModel } from '../../person/model/person.model';
 import * as tenancyService from '../service/tenancy.service';
-import * as constants from '../../../constants';
+import { formatNormalizedDateToShortString } from '../../../services/date-utils.service';
 
 type TenanciesTableProps = {
     tenants: PersonModel[];
@@ -90,14 +89,10 @@ export const TenanciesTable = ({ tenants, handleDelete, searchResult }: Tenancie
                                               .join(', ')}
                                 </TableCell>
                                 <TableCell align="right">
-                                    {ten.beginOfContract
-                                        ? format(parseISO(ten.beginOfContract), constants.dateFormatShort)
-                                        : '-'}
+                                    {formatNormalizedDateToShortString(ten.beginOfContract)}
                                 </TableCell>
                                 <TableCell align="right">
-                                    {ten.endOfContract
-                                        ? format(parseISO(ten.endOfContract), constants.dateFormatShort)
-                                        : '-'}
+                                    {formatNormalizedDateToShortString(ten.endOfContract)}
                                 </TableCell>
                             </TableRow>
                         ))}

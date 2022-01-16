@@ -16,8 +16,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { PersonModel } from '../model/person.model';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/use-delete-prompt.hook';
-import { format, parseISO } from 'date-fns';
-import * as constants from '../../../constants';
+import { formatNormalizedDateToShortString } from '../../../services/date-utils.service';
 
 const useStyles = makeStyles((theme) => ({
     buttonIcons: {
@@ -127,9 +126,7 @@ const PersonsTable = ({ personsData, handleDelete, handleEdit }: ContentTablePro
                                         {p.mobilePhone}
                                     </TableCell>
                                     <TableCell align={'right'} className={cssClasses.hideTableCellWhenMd}>
-                                        {p.birthday
-                                            ? format(parseISO(p.birthday), constants.dateFormatShort)
-                                            : constants.notAvailableText}
+                                        {formatNormalizedDateToShortString(p.birthday)}
                                     </TableCell>
                                     <TableCell align={'right'}>
                                         {

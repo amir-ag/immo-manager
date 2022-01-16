@@ -15,7 +15,7 @@ import ImageUpload from '../forms/image-upload/image-upload';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import * as personService from '../person/service/person.service';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
-import * as collectionUtils from '../../services/collection-utils';
+import * as collectionUtils from '../../services/collection-utils.service';
 
 export type PropertyFormProps = {
     currentProperty: PropertyModel;
@@ -99,7 +99,6 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 />
             </Grid>
             <Grid item xs={12} md={6}>
-                {/* TODO: Resolve console error about change (controlled vs. uncontrolled) */}
                 <Autocomplete
                     id="owner"
                     options={owners}
@@ -126,7 +125,6 @@ export const PropertyForm = ({ currentProperty, setCurrentProperty, isNew }: Pro
                 />
             </Grid>
             <Grid item xs={12} md={6}>
-                {/* TODO: Resolve console error about change (controlled vs. uncontrolled) */}
                 <Autocomplete
                     id="janitor"
                     options={janitors}

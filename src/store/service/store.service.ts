@@ -5,7 +5,6 @@ import { setNotificator } from '../slices/notificator.slice';
 import { collection, query, where } from 'firebase/firestore';
 import { db } from '../../index';
 
-// TODO: Check if its more stable to get uid directly from firebase methods
 export const getUidFromStoreState = (thunkAPI: { getState: () => any }) => {
     const state = thunkAPI.getState() as RootState;
     const uid = state?.user?.uid;
@@ -47,15 +46,14 @@ export const triggerNotificatorError = async (
     messagePrefix: string,
     error?: any
 ) => {
-    let errorMessage = '';
+    let errorMessage;
 
-    if (error && typeof error === 'string') {
-        errorMessage = error;
+    if (error?.code) {
+        errorMessage = error.code;
     } else if (error instanceof Error) {
-        // TODO: Map error codes to proper messages (use extra service)
         errorMessage = error.message;
     } else {
-        errorMessage = error as string;
+        errorMessage = error;
     }
 
     thunkAPI.dispatch(

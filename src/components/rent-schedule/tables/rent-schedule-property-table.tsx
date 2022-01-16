@@ -42,7 +42,9 @@ const RentSchedulePropertyTable = (property: PropertyModel) => {
                         </TableRow>
                         <TableRow>
                             <TableCell>Owner</TableCell>
-                            <TableCell>{owner ? `${owner.firstName} ${owner.lastName}` : '-'}</TableCell>
+                            <TableCell>
+                                {owner ? `${owner.firstName} ${owner.lastName}` : constants.notAvailableText}
+                            </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

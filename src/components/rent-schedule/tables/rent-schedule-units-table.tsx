@@ -11,11 +11,10 @@ import {
 } from '@material-ui/core';
 import { RentalUnitModel } from '../../rental-unit/model/rental-unit.model';
 import { TenancyModel } from '../../tenancy/model/tenancy.model';
-import { format, parseISO } from 'date-fns';
 import { PersonModel } from '../../person/model/person.model';
 import * as rentalUnitService from '../../rental-unit/service/rental-unit.service';
 import * as tenancyService from '../../tenancy/service/tenancy.service';
-import * as constants from '../../../constants';
+import { formatNormalizedDateToShortString } from '../../../services/date-utils.service';
 
 const useStyles = makeStyles({
     table: {
@@ -68,13 +67,10 @@ const RentScheduleUnitsTable = ({ rentalUnits, getTenancy, tenants }: RentSchedu
                                 </TableCell>
                                 <TableCell align="right">{unit.surfaceInM2}</TableCell>
                                 <TableCell align="right">
-                                    {/* TODO: Use shared function */}
-                                    {tenancy?.beginOfContract
-                                        ? format(parseISO(tenancy.beginOfContract), constants.dateFormatShort)
-                                        : '-'}
+                                    {formatNormalizedDateToShortString(tenancy?.beginOfContract)}
                                 </TableCell>
                                 <TableCell align="right">
-                                    {tenancy?.endOfContract ? tenancy.endOfContract : '-'}
+                                    {formatNormalizedDateToShortString(tenancy?.endOfContract)}
                                 </TableCell>
                                 <TableCell align="right">{tenancy?.rentNet}</TableCell>
                             </TableRow>

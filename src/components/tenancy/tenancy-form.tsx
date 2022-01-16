@@ -28,7 +28,7 @@ import { useForms } from '../../hooks/use-forms.hook';
 import * as personService from '../person/service/person.service';
 import * as propertyService from '../property/service/property.service';
 import * as rentalUnitService from '../rental-unit/service/rental-unit.service';
-import { getItemFromCollectionById } from '../../services/collection-utils';
+import { getItemFromCollectionById } from '../../services/collection-utils.service';
 
 export type TenancyFormProps = {
     currentTenancy: TenancyModel;
@@ -65,7 +65,6 @@ export const TenancyForm = ({
     const { handleBasicInputChange, handleAutocompleteChange, handleSubmit, isFormDirty } =
         useForms<TenancyModel>(setCurrentTenancy, currentTenancy, submitFunc);
 
-    // TODO: Reuse Grid (Containers) as custom component
     return (
         <Grid
             component={'form'}
@@ -112,7 +111,6 @@ export const TenancyForm = ({
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    {/* TODO: Resolve console error about change (controlled vs. uncontrolled) */}
                     <Autocomplete
                         className={'MuiFormControl-marginNormal'}
                         id="tenant1Id"
@@ -137,7 +135,6 @@ export const TenancyForm = ({
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    {/* TODO: Resolve console error about change (controlled vs. uncontrolled) */}
                     <Autocomplete
                         className={'MuiFormControl-marginNormal'}
                         id="tenant2Id"
@@ -207,7 +204,7 @@ export const TenancyForm = ({
                         type="date"
                         fullWidth
                         onChange={(e) => handleBasicInputChange(e)}
-                        value={currentTenancy.endOfContract}
+                        value={currentTenancy.endOfContract ?? ''}
                         inputProps={{ min: currentTenancy.beginOfContract }}
                         InputLabelProps={{
                             shrink: true,
@@ -222,7 +219,6 @@ export const TenancyForm = ({
                         id={'cancellationPeriod'}
                         label={'Cancellation Period (Months)'}
                         type="number"
-                        defaultValue={3}
                         onChange={(e) => handleBasicInputChange(e)}
                         value={currentTenancy.cancellationPeriod}
                         inputProps={{ min: 0, max: 12 }}
