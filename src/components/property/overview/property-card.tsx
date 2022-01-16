@@ -54,7 +54,11 @@ const PropertyCard = ({ property, handleDelete, rentalUnits, tenancies }: Proper
                         <EditOutlinedIcon />
                     </IconButton>
                 }
-                title={<Typography variant={'h6'}>{property.name}</Typography>}
+                title={
+                    <Typography variant="h6" component="h3">
+                        {property.name}
+                    </Typography>
+                }
                 subheader={`EGID: ${property.egid}`}
             />
             <CardMedia
@@ -66,13 +70,13 @@ const PropertyCard = ({ property, handleDelete, rentalUnits, tenancies }: Proper
                 title="Property Placeholder Image"
             />
             <CardContent>
-                <Typography variant="subtitle2">
+                <Typography variant="subtitle2" component="p">
                     {property.address.addressLine1}
                     <br />
                     {`${property.address.postCode} ${property.address.city}`}
                 </Typography>
 
-                <Typography variant="body1" component={'div'}>
+                <Typography variant="body1" component="p">
                     <ul>
                         <li>
                             <strong>{numOfRUs}</strong> {`Rental Unit${numOfRUs !== 1 ? 's' : ''}`}
