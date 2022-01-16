@@ -10,7 +10,6 @@ type InfoBoxProps = {
     handleButtonClick: () => void;
 };
 
-// TODO: Make a narrow and wide variant
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: 'auto',

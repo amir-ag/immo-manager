@@ -26,7 +26,6 @@ export const PropertyDetail = ({ isNew }: { isNew: boolean }) => {
     useEffect(() => {
         if (!isNew) {
             dispatch(propertiesSlice.actions.setCurrentProperty(currentProperty));
-            // TODO: Integrate this action into the first one (combine)
             dispatch(rentalUnitsSlice.actions.setCurrentRentalUnit(null));
         }
     }, [currentProperty]);

@@ -5,3 +5,8 @@ export type CreatedByType = {
 export type IsNewType = {
     isNew?: boolean;
 };
+
+export type DeleteActionType = {
+    id: string;
+    performSilently?: boolean;
+};

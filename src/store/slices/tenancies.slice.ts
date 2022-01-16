@@ -4,7 +4,7 @@ import { db } from '../../index';
 import * as storeService from '../service/store.service';
 import { TenancyModel } from '../../components/tenancy/model/tenancy.model';
 import * as tenancyService from '../../components/tenancy/service/tenancy.service';
-import { CreatedByType, IsNewType } from '../model/base-store.model';
+import { CreatedByType, DeleteActionType, IsNewType } from '../model/base-store.model';
 
 const dbName = 'tenancies';
 const sliceName = 'tenancies';
@@ -64,17 +64,22 @@ export const getTenancies = createAsyncThunk(`${sliceName}/getTenancies`, async 
     }
 });
 
-export const deleteTenancy = createAsyncThunk(`${sliceName}/deleteTenancy`, async (id: string, thunkAPI) => {
-    try {
-        await deleteDoc(doc(db, dbName, id));
-        await storeService.triggerNotificatorSuccess(thunkAPI, 'Tenancy was deleted successfully!');
+export const deleteTenancy = createAsyncThunk(
+    `${sliceName}/deleteTenancy`,
+    async ({ id, performSilently }: DeleteActionType, thunkAPI) => {
+        try {
+            await deleteDoc(doc(db, dbName, id));
+            if (!performSilently) {
+                await storeService.triggerNotificatorSuccess(thunkAPI, 'Tenancy was deleted successfully!');
+            }
 
-        return { id };
-    } catch (e) {
-        await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting tenancy', e);
-        return thunkAPI.rejectWithValue(e);
+            return { id };
+        } catch (e) {
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting tenancy', e);
+            return thunkAPI.rejectWithValue(e);
+        }
     }
-});
+);
 
 export const tenanciesSlice = createSlice({
     name: sliceName,

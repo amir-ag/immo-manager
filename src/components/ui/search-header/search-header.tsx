@@ -4,7 +4,6 @@ import AddIcon from '@material-ui/icons/Add';
 import SearchBar from '@snekcode/mui-search-bar';
 import { gridSpacingBig } from '../../../theme/shared-styles';
 
-// TODO: Change to generic Component (even better to use a custom Hook --> integrate useState(searchResult))
 export type SearchHeaderProps = {
     handleCreate: () => void;
     placeholderText?: string;

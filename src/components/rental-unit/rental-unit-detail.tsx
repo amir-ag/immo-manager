@@ -29,7 +29,6 @@ export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
     useEffect(() => {
         if (!isNew) {
             dispatch(rentalUnitsSlice.actions.setCurrentRentalUnit(currentRentalUnit));
-            // TODO: Integrate this action into the first one (combine)
             dispatch(propertiesSlice.actions.setCurrentProperty(property));
         }
     }, [currentRentalUnit]);

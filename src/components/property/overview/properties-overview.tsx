@@ -7,8 +7,6 @@ import { selectAllProperties, selectAllRentalUnits, selectAllTenancies } from '.
 import { deleteProperty } from '../../../store/slices/properties.slice';
 import DeletePrompt from '../../ui/delete-prompt/delete-prompt';
 import { useDeletePrompt } from '../../../hooks/use-delete-prompt.hook';
-import { deleteRentalUnit } from '../../../store/slices/rental-units.slice';
-import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import { useHistory } from 'react-router';
 import SearchHeader from '../../ui/search-header/search-header';
 import { IntroHeader } from '../../ui/intro-header/intro-header';
@@ -40,13 +38,6 @@ const PropertiesOverview = ({ showSearchHeader = true }: PropertiesViewProps) =>
 
     const handleDelete = () => {
         dispatch(deleteProperty(entityToDelete));
-        // TODO: Combine these store actions within the store (transparent)
-        rentalUnitService.getRentalUnitsByPropertyId(entityToDelete, allRentalUnits)?.forEach((ru) => {
-            dispatch(deleteRentalUnit(ru.id));
-            tenancyService
-                .getTenanciesByRentalUnitId(ru.id, allTenancies)
-                ?.forEach((ten) => dispatch(deleteTenancy(ten.id)));
-        });
     };
 
     const handleCreate = () => {
