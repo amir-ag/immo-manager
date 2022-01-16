@@ -34,6 +34,9 @@ function App() {
                     <Route exact path={routes.SIGN_UP}>
                         <HomeRoute />
                     </Route>
+                    <Route exact path={routes.RESET_PW}>
+                        <HomeRoute />
+                    </Route>
                     <PrivateRoute exact={false} component={MainAppRoute} path={routes.AUTHENTICATED_AREA} />
                 </Switch>
             </Router>
