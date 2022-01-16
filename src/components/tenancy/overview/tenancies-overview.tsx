@@ -38,7 +38,7 @@ export const TenanciesOverview = ({ disableCreate, relatedRentalUnit }: Tenancie
     }, [allTenancies]);
 
     const handleDelete = (tenId: string) => {
-        dispatch(deleteTenancy(tenId));
+        dispatch(deleteTenancy({ id: tenId, performSilently: false }));
     };
 
     const handleCreate = () => {

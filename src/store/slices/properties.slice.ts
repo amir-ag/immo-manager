@@ -6,6 +6,9 @@ import * as storeService from '../service/store.service';
 import { emptyThumbnail } from '../../models/thumbnail.model';
 import { CreatedByType, IsNewType } from '../model/base-store.model';
 import * as propertyService from '../../components/property/service/property.service';
+import * as rentalUnitService from '../../components/rental-unit/service/rental-unit.service';
+import { RootState } from '../store';
+import { deleteRentalUnit } from './rental-units.slice';
 
 const dbName = 'properties';
 const sliceName = 'properties';
@@ -91,7 +94,18 @@ export const deleteProperty = createAsyncThunk(
     async (id: string, thunkAPI) => {
         try {
             await deleteDoc(doc(db, dbName, id));
-            await storeService.triggerNotificatorSuccess(thunkAPI, 'Property was deleted successfully!');
+
+            // Also delete linked rental units
+            const state = thunkAPI.getState() as RootState;
+            const allRentalUnits = state?.rentalUnits?.all;
+            for (const ru of rentalUnitService.getRentalUnitsByPropertyId(id, allRentalUnits)) {
+                await thunkAPI.dispatch(deleteRentalUnit({ id: ru.id, performSilently: true }));
+            }
+
+            await storeService.triggerNotificatorSuccess(
+                thunkAPI,
+                'Property (and all linked Rental Units and Tenancies) was deleted successfully!'
+            );
 
             return { id };
         } catch (e) {

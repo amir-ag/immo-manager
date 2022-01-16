@@ -3,8 +3,11 @@ import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from 'firebase/fi
 import { db } from '../../index';
 import * as storeService from '../service/store.service';
 import { RentalUnitModel } from '../../components/rental-unit/model/rental-unit.model';
-import { CreatedByType, IsNewType } from '../model/base-store.model';
+import { CreatedByType, DeleteActionType, IsNewType } from '../model/base-store.model';
 import * as rentalUnitService from '../../components/rental-unit/service/rental-unit.service';
+import { RootState } from '../store';
+import * as tenancyService from '../../components/tenancy/service/tenancy.service';
+import { deleteTenancy } from './tenancies.slice';
 
 const dbName = 'rental-units';
 const sliceName = 'rental-units';
@@ -81,14 +84,27 @@ export const getRentalUnits = createAsyncThunk(`${sliceName}/getRentalUnits`, as
 
 export const deleteRentalUnit = createAsyncThunk(
     `${sliceName}/deleteRentalUnit`,
-    async (id: string, thunkAPI) => {
+    async ({ id, performSilently }: DeleteActionType, thunkAPI) => {
         try {
             await deleteDoc(doc(db, dbName, id));
-            await storeService.triggerNotificatorSuccess(thunkAPI, 'Rental Unit was deleted successfully!');
+
+            // Also delete linked tenancies
+            const state = thunkAPI.getState() as RootState;
+            const allTenancies = state?.tenancies;
+            for (const ten of tenancyService.getTenanciesByRentalUnitId(id, allTenancies)) {
+                await thunkAPI.dispatch(deleteTenancy({ id: ten.id, performSilently: true }));
+            }
+
+            if (!performSilently) {
+                await storeService.triggerNotificatorSuccess(
+                    thunkAPI,
+                    'Rental Unit (and all linked Tenancies) was deleted successfully!'
+                );
+            }
 
             return { id };
         } catch (e) {
-            await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting person', e);
+            await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting rental unit', e);
             return thunkAPI.rejectWithValue(e);
         }
     }

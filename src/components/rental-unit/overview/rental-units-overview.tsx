@@ -4,13 +4,11 @@ import routes from '../../../routes/route-constants';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
 import { selectAllRentalUnits, selectAllTenancies, selectTenants } from '../../../store/selectors';
 import { deleteRentalUnit } from '../../../store/slices/rental-units.slice';
-import { deleteTenancy } from '../../../store/slices/tenancies.slice';
 import SearchHeader from '../../ui/search-header/search-header';
 import { useHistory } from 'react-router';
 import { RentalUnitsTable } from './rental-units-table';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import { PropertyModel } from '../../property/model/property.model';
-import { getTenanciesByRentalUnitId } from '../../tenancy/service/tenancy.service';
 import { gridSpacingBig } from '../../../theme/shared-styles';
 import { getRentalUnitsByPropertyId } from '../service/rental-unit.service';
 import { InfoBox } from '../../ui/info-box/info-box';
@@ -41,11 +39,7 @@ export const RentalUnitsOverview = ({ disableCreate, relatedProperty }: RentalUn
     }, [allRentalUnits]);
 
     const handleDelete = (ruId: string) => {
-        dispatch(deleteRentalUnit(ruId));
-        // TODO: Combine these store actions within the store (transparent)
-        getTenanciesByRentalUnitId(ruId, allTenancies)?.forEach((ten) => {
-            dispatch(deleteTenancy(ten.id));
-        });
+        dispatch(deleteRentalUnit({ id: ruId, performSilently: false }));
     };
 
     const handleCreate = () => {
