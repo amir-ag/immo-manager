@@ -6,7 +6,7 @@ import { selectUser } from '../../store/selectors';
 import ImageUpload from '../forms/image-upload/image-upload';
 import { useForms } from '../../hooks/use-forms.hook';
 import { updateUser } from '../../store/slices/user.slice';
-import { gridSpacingBig } from '../../theme/shared-styles';
+import { gridSpacingBig } from '../../theming/theming-constants';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';

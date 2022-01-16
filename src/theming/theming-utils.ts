@@ -1,8 +1,18 @@
-import { GridSpacing, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
+import normal from './themes/normal';
+import dark from './themes/dark';
+import { Theme } from '@material-ui/core/styles';
 
-export const gridSpacingBig: GridSpacing = 4;
-export const gridSpacingSmall: GridSpacing = 3;
-export const drawerWidth = 280;
+type ThemeType = 'normal' | 'dark';
+
+const themes = {
+    normal,
+    dark,
+};
+
+export default function getTheme(theme: ThemeType): Theme {
+    return themes[theme];
+}
 
 export const useSharedStyles = makeStyles((theme) => ({
     nested6ColGridItemLeft: {

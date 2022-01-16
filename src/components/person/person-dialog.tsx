@@ -27,7 +27,7 @@ import { emptyPerson, PersonModel, personRoles } from './model/person.model';
 import { useForms } from '../../hooks/use-forms.hook';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { createOrUpdatePerson } from '../../store/slices/persons.slice';
-import { gridSpacingBig } from '../../theme/shared-styles';
+import { gridSpacingBig } from '../../theming/theming-constants';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import * as constants from '../../constants';

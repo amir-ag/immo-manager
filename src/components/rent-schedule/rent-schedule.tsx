@@ -10,7 +10,7 @@ import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 import { InfoBox } from '../ui/info-box/info-box';
 import LooksOneIcon from '@material-ui/icons/LooksOne';
 import LooksTwoIcon from '@material-ui/icons/LooksTwo';
-import { gridSpacingSmall } from '../../theme/shared-styles';
+import { gridSpacingSmall } from '../../theming/theming-constants';
 import { getDisplayNameOfProperty } from '../property/service/property.service';
 import { emptyRentScheduleForm, RentScheduleFormModel } from './model/rent-schedule-form.model';
 import { useForms } from '../../hooks/use-forms.hook';

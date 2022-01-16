@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { months } from '../../constants';
-import { gridSpacingBig } from '../../theme/shared-styles';
+import { gridSpacingBig } from '../../theming/theming-constants';
 import { PropertyModel } from '../property/model/property.model';
 import { RentalUnitModel } from '../rental-unit/model/rental-unit.model';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';

@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import routes from '../../../routes/route-constants';
 import { HomeHeader } from '../home-header';
-import { gridSpacingSmall } from '../../../theme/shared-styles';
+import { gridSpacingSmall } from '../../../theming/theming-constants';
 import { emailPattern, minPasswordLength, passwordLengthHint } from '../../../constants';
 import { emptySignUp, SignUpModel } from './model/sign-up.model';
 import { useForms } from '../../../hooks/use-forms.hook';

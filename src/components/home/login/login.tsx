@@ -7,7 +7,7 @@ import { HomeHeader } from '../home-header';
 import { emailPattern } from '../../../constants';
 import { emptyLogin, LoginModel } from './model/login.model';
 import { useForms } from '../../../hooks/use-forms.hook';
-import { gridSpacingSmall } from '../../../theme/shared-styles';
+import { gridSpacingSmall } from '../../../theming/theming-constants';
 
 export type SignInProps = {
     handleSignIn: (state: LoginModel) => void;

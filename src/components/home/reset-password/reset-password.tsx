@@ -7,7 +7,7 @@ import SettingsBackupRestoreOutlinedIcon from '@material-ui/icons/SettingsBackup
 import { emailPattern } from '../../../constants';
 import { emptyResetPw, ResetPwModel } from './model/reset-password.model';
 import { useForms } from '../../../hooks/use-forms.hook';
-import { gridSpacingSmall } from '../../../theme/shared-styles';
+import { gridSpacingSmall } from '../../../theming/theming-constants';
 
 export type ResetPasswordProps = {
     handleReset: (resetPwData: ResetPwModel) => void;

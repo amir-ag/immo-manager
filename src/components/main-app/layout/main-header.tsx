@@ -22,14 +22,14 @@ import routes from '../../../routes/route-constants';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { logout } from '../../../store/slices/user.slice';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { drawerWidth } from '../../../theme/shared-styles';
+import { drawerWidth } from '../../../theming/theming-constants';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import { selectUser } from '../../../store/selectors';
 import { getAuth } from 'firebase/auth';
 import { useHistory } from 'react-router';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
 import { ToggleNavPanelProps } from '../model/toggle-nav-panel.props';
-import { CustomThemeContext } from '../../../theme/CustomThemeProvider';
+import { CustomThemeContext } from '../../../theming/custom-theme-provider';
 import WbSunnyOutlinedIcon from '@material-ui/icons/WbSunnyOutlined';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 

@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import SearchBar from '@snekcode/mui-search-bar';
-import { gridSpacingBig } from '../../../theme/shared-styles';
+import { gridSpacingBig } from '../../../theming/theming-constants';
 
 export type SearchHeaderProps = {
     handleCreate: () => void;

@@ -9,7 +9,7 @@ import { useHistory } from 'react-router';
 import { RentalUnitsTable } from './rental-units-table';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import { PropertyModel } from '../../property/model/property.model';
-import { gridSpacingBig } from '../../../theme/shared-styles';
+import { gridSpacingBig } from '../../../theming/theming-constants';
 import { getRentalUnitsByPropertyId } from '../service/rental-unit.service';
 import { InfoBox } from '../../ui/info-box/info-box';
 
