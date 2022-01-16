@@ -65,7 +65,6 @@ export const TenancyForm = ({
     const { handleBasicInputChange, handleAutocompleteChange, handleSubmit, isFormDirty } =
         useForms<TenancyModel>(setCurrentTenancy, currentTenancy, submitFunc);
 
-    // TODO: Reuse Grid (Containers) as custom component
     return (
         <Grid
             component={'form'}

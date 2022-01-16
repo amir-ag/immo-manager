@@ -46,15 +46,14 @@ export const triggerNotificatorError = async (
     messagePrefix: string,
     error?: any
 ) => {
-    let errorMessage = '';
+    let errorMessage;
 
-    if (error && typeof error === 'string') {
-        errorMessage = error;
+    if (error?.code) {
+        errorMessage = error.code;
     } else if (error instanceof Error) {
-        // TODO: Map error codes to proper messages (use extra service)
         errorMessage = error.message;
     } else {
-        errorMessage = error as string;
+        errorMessage = error;
     }
 
     thunkAPI.dispatch(

@@ -29,11 +29,15 @@ type RentalUnitsTableProps = {
     searchResult: RentalUnitModel[];
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     table: {
         width: '100%',
     },
-});
+    vacancyTableCell: {
+        color: theme.palette.error.main,
+        fontWeight: 'bold',
+    },
+}));
 
 export const RentalUnitsTable = ({
     allTenancies,
@@ -58,6 +62,15 @@ export const RentalUnitsTable = ({
 
         return ts.map((tenant) => `${tenant.firstName} ${tenant.lastName}`).join(', ');
     };
+
+    const getTenantsBodyCell = (desc: string) => (
+        <TableCell
+            align="right"
+            className={desc.toLowerCase().includes('vacancy') ? cssClasses.vacancyTableCell : ''}
+        >
+            {desc}
+        </TableCell>
+    );
 
     return (
         <>
@@ -100,8 +113,7 @@ export const RentalUnitsTable = ({
                                 <TableCell align="right">
                                     {rentalUnitService.getDisplayNameOfRentalUnit(ru)}
                                 </TableCell>
-                                {/* // TODO: Make font bold and red (error) if it is a Vacancy */}
-                                <TableCell align="right">{getTenantsDesc(ru.id)}</TableCell>
+                                {getTenantsBodyCell(getTenantsDesc(ru.id))}
                             </TableRow>
                         ))}
                     </TableBody>

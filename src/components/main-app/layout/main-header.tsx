@@ -91,7 +91,6 @@ const MainHeader = ({ handleToggleNavPanel }: MainHeaderProps) => {
 
     const { firstName, lastName } = useAppSelector(selectUser);
 
-    // TODO: Use user in store instead!
     const auth = getAuth();
     const user = auth.currentUser;
 

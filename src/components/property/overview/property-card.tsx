@@ -76,19 +76,17 @@ const PropertyCard = ({ property, handleDelete, rentalUnits, tenancies }: Proper
                     {`${property.address.postCode} ${property.address.city}`}
                 </Typography>
 
-                <Typography variant="body1" component="p">
-                    <ul>
-                        <li>
-                            <strong>{numOfRUs}</strong> {`Rental Unit${numOfRUs !== 1 ? 's' : ''}`}
-                        </li>
-                        <li>
-                            <strong>{numOfRunningTs - numOfVacancies}</strong>{' '}
-                            {`running Tenanc${numOfRunningTs - numOfVacancies !== 1 ? 'ies' : 'y'}`}
-                        </li>
-                        <li className={numOfVacancies > 0 ? cssClasses.vacanciesInfo : undefined}>
-                            <strong>{numOfVacancies}</strong> {`Vacanc${numOfVacancies !== 1 ? 'ies' : 'y'}`}
-                        </li>
-                    </ul>
+                <Typography variant="body1" component="ul">
+                    <li>
+                        <strong>{numOfRUs}</strong> {`Rental Unit${numOfRUs !== 1 ? 's' : ''}`}
+                    </li>
+                    <li>
+                        <strong>{numOfRunningTs - numOfVacancies}</strong>{' '}
+                        {`running Tenanc${numOfRunningTs - numOfVacancies !== 1 ? 'ies' : 'y'}`}
+                    </li>
+                    <li className={numOfVacancies > 0 ? cssClasses.vacanciesInfo : undefined}>
+                        <strong>{numOfVacancies}</strong> {`Vacanc${numOfVacancies !== 1 ? 'ies' : 'y'}`}
+                    </li>
                 </Typography>
             </CardContent>
             <CardActions>
