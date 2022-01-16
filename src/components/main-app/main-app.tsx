@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Layout from './layout/layout';
 import PersonsOverview from '../person/overview/persons-overview';
 import routes from '../../routes/route-constants';
-import { DashboardContainer } from '../dashboard/dashboard.container';
+import { Dashboard } from '../dashboard/dashboard';
 import { RentSchedule } from '../rent-schedule/rent-schedule';
 import ProfileDetail from '../profile/profile-detail';
 import { RentalUnitDetail } from '../rental-unit/rental-unit-detail';
@@ -24,7 +24,7 @@ const MainApp = () => {
 
                     {/* Dashboard */}
                     <Route path={routes.DASHBOARD}>
-                        <DashboardContainer />
+                        <Dashboard />
                     </Route>
 
                     {/* Persons */}

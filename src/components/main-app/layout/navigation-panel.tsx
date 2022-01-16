@@ -15,7 +15,7 @@ import {
     useTheme,
 } from '@material-ui/core';
 import { logout } from '../../../store/slices/user.slice';
-import { drawerWidth } from '../../../theme/shared-styles';
+import { drawerWidth } from '../../../theming/theming-constants';
 import { mainMenuEntries } from '../main-menu-entries';
 import { useAppDispatch } from '../../../hooks/store/use-app-dispatch.hook';
 import { ToggleNavPanelProps } from '../model/toggle-nav-panel.props';

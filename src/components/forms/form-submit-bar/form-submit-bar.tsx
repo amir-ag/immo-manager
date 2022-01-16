@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
 import SaveIcon from '@material-ui/icons/Save';
-import { useSharedStyles } from '../../../theme/shared-styles';
+import { useSharedStyles } from '../../../theming/theming-utils';
 
 export const useStyles = makeStyles((theme) => ({
     outerContainer: {

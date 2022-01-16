@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { gridSpacingBig } from '../../theme/shared-styles';
+import { gridSpacingBig } from '../../theming/theming-constants';
 import { PropertyForm } from './property-form';
 import { RentalUnitsOverview } from '../rental-unit/overview/rental-units-overview';
 import { useParams } from 'react-router';

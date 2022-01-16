@@ -13,7 +13,7 @@ import { IntroHeader } from '../../ui/intro-header/intro-header';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
 import * as rentalUnitService from '../../rental-unit/service/rental-unit.service';
 import * as tenancyService from '../../tenancy/service/tenancy.service';
-import { gridSpacingBig } from '../../../theme/shared-styles';
+import { gridSpacingBig } from '../../../theming/theming-constants';
 import { InfoBox } from '../../ui/info-box/info-box';
 
 type PropertiesViewProps = {

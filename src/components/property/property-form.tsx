@@ -6,7 +6,7 @@ import { PropertyModel } from './model/property.model';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { selectJanitors, selectOwners } from '../../store/selectors';
 import { emptyPerson, PersonModel } from '../person/model/person.model';
-import { gridSpacingBig } from '../../theme/shared-styles';
+import { gridSpacingBig } from '../../theming/theming-constants';
 import { createOrUpdateProperty } from '../../store/slices/properties.slice';
 import { useHistory } from 'react-router';
 import routes from '../../routes/route-constants';

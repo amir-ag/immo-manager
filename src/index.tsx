@@ -8,7 +8,7 @@ import { firebaseConfig } from './firebase';
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import App from './components/app/app';
-import CustomThemeProvider from './theme/CustomThemeProvider';
+import CustomThemeProvider from './theming/custom-theme-provider';
 import { CssBaseline } from '@material-ui/core';
 
 initializeApp(firebaseConfig);

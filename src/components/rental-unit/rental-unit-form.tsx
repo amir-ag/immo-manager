@@ -1,7 +1,7 @@
 import React, { Dispatch, FormEvent, SetStateAction } from 'react';
 import { Grid, MenuItem, TextField, Typography } from '@material-ui/core';
 import { rentalUnitfloorLevel, RentalUnitModel, rentalUnitType } from './model/rental-unit.model';
-import { gridSpacingBig, useSharedStyles } from '../../theme/shared-styles';
+import { useSharedStyles } from '../../theming/theming-utils';
 import FormSubmitBar from '../forms/form-submit-bar/form-submit-bar';
 import { PropertyModel } from '../property/model/property.model';
 import routes from '../../routes/route-constants';
@@ -10,6 +10,7 @@ import { useHistory } from 'react-router';
 import { createOrUpdateRentalUnit } from '../../store/slices/rental-units.slice';
 import { useForms } from '../../hooks/use-forms.hook';
 import * as propertyService from '../property/service/property.service';
+import { gridSpacingBig } from '../../theming/theming-constants';
 
 export type RentalUnitFormProps = {
     currentRentalUnit: RentalUnitModel;

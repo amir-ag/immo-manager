@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
-import getTheme from './base';
-import normal from './normal';
+import normal from './themes/normal';
+import getTheme from './theming-utils';
 
 type CustomThemeContextType = {
     currentTheme: string;
