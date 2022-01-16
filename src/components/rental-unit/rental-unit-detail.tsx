@@ -19,7 +19,6 @@ export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
     const dispatch = useAppDispatch();
 
     const rentalUnitToEdit = useAppSelector(selectRentalUnitById(id));
-    // TODO: Better error handling!
     const property = useAppSelector(selectCurrentProperty) ?? emptyProperty;
 
     const [currentRentalUnit, setCurrentRentalUnit] = useState(
@@ -31,7 +30,8 @@ export const RentalUnitDetail = ({ isNew }: { isNew: boolean }) => {
             dispatch(rentalUnitsSlice.actions.setCurrentRentalUnit(currentRentalUnit));
             dispatch(propertiesSlice.actions.setCurrentProperty(property));
         }
-    }, [currentRentalUnit]);
+        // eslint-disable-next-line
+    }, [currentRentalUnit, isNew, dispatch]);
 
     return (
         <>

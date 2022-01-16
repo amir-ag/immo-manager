@@ -38,7 +38,7 @@ export const createOrUpdatePerson = createAsyncThunk(
             }
         } catch (e) {
             await storeService.triggerNotificatorError(thunkAPI, 'Error when creating/updating person', e);
-            return thunkAPI.rejectWithValue(e);
+            return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
         }
     }
 );
@@ -60,7 +60,7 @@ export const getPersons = createAsyncThunk(`${sliceName}/getPersons`, async (_, 
         return data;
     } catch (e) {
         await storeService.triggerNotificatorError(thunkAPI, 'Error when getting persons', e);
-        return thunkAPI.rejectWithValue(e);
+        return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
     }
 });
 
@@ -72,7 +72,7 @@ export const deletePerson = createAsyncThunk(`${sliceName}/deletePerson`, async 
         return { id };
     } catch (e) {
         await storeService.triggerNotificatorError(thunkAPI, 'Error when deleting person', e);
-        return thunkAPI.rejectWithValue(e);
+        return thunkAPI.rejectWithValue(storeService.prepareErrorForThunkRejection(e));
     }
 });
 

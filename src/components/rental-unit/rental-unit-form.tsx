@@ -86,6 +86,7 @@ export const RentalUnitForm = ({
                         type="number"
                         value={currentRentalUnit.ewid === 0 ? '' : currentRentalUnit.ewid}
                         onChange={(e) => handleBasicInputChange(e)}
+                        inputProps={{ min: 0 }}
                         required
                     />
                 </Grid>

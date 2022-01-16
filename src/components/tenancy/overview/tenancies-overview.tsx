@@ -35,6 +35,7 @@ export const TenanciesOverview = ({ disableCreate, relatedRentalUnit }: Tenancie
     */
     useEffect(() => {
         setSearchResult(relatedTenancies);
+        // eslint-disable-next-line
     }, [allTenancies]);
 
     const handleDelete = (tenId: string) => {

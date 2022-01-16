@@ -38,7 +38,6 @@ const RentScheduleOverview = () => {
 
     const { id } = useParams<{ id: string }>();
 
-    // TODO: Use better approach for error handling
     const property = useAppSelector(selectPropertyById(id)) || emptyProperty;
     const rentalUnits = useAppSelector(selectRentalUnitsByPropertyId(id));
     const tenancies = useAppSelector(selectAllTenancies);

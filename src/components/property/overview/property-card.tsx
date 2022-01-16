@@ -35,12 +35,9 @@ const PropertyCard = ({ property, handleDelete, rentalUnits, tenancies }: Proper
     const cssClasses = useStyles();
 
     const numOfRUs = rentalUnits?.length ? rentalUnits.length : 0;
-
     const runningTs = tenancyService.getRunningTenancies(tenancies);
     const numOfRunningTs = runningTs?.length ? runningTs.length : 0;
-
-    const vacancies = runningTs?.filter((t) => t.isVacancy);
-    const numOfVacancies = vacancies?.length ? vacancies.length : 0;
+    const numOfVacancies = numOfRUs - numOfRunningTs;
 
     return (
         <Card elevation={3}>
@@ -81,8 +78,8 @@ const PropertyCard = ({ property, handleDelete, rentalUnits, tenancies }: Proper
                         <strong>{numOfRUs}</strong> {`Rental Unit${numOfRUs !== 1 ? 's' : ''}`}
                     </li>
                     <li>
-                        <strong>{numOfRunningTs - numOfVacancies}</strong>{' '}
-                        {`running Tenanc${numOfRunningTs - numOfVacancies !== 1 ? 'ies' : 'y'}`}
+                        <strong>{numOfRunningTs}</strong>{' '}
+                        {`running Tenanc${numOfRunningTs !== 1 ? 'ies' : 'y'}`}
                     </li>
                     <li className={numOfVacancies > 0 ? cssClasses.vacanciesInfo : undefined}>
                         <strong>{numOfVacancies}</strong> {`Vacanc${numOfVacancies !== 1 ? 'ies' : 'y'}`}

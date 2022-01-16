@@ -10,6 +10,7 @@ export const getUidFromStoreState = (thunkAPI: { getState: () => any }) => {
     const uid = state?.user?.uid;
 
     if (!uid) {
+        // eslint-disable-next-line
         throw 'Problem with user id';
     }
 
@@ -39,6 +40,14 @@ export const triggerNotificatorSuccess = async (thunkAPI: { dispatch: Dispatch }
             notificatorMessage: message,
         })
     );
+};
+
+export const prepareErrorForThunkRejection = (error: any) => {
+    if (!error) {
+        return '';
+    }
+
+    return error?.message ?? error;
 };
 
 export const triggerNotificatorError = async (
