@@ -52,7 +52,7 @@ const RentScheduleOverview = () => {
                 </Button>
             </div>
             <Container ref={componentRef}>
-                <Typography className={cssClasses.title} variant={'h5'}>
+                <Typography className={cssClasses.title} variant="h5" component="h3">
                     Rent Schedule Report for {propertyService.getDisplayNameOfProperty(property)}
                 </Typography>
                 <RentSchedulePropertyTable {...property} />

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     AppBar,
     Avatar,
@@ -137,7 +137,12 @@ const MainHeader = ({ handleToggleNavPanel }: MainHeaderProps) => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography color={'secondary'} variant={'h5'} className={cssClasses.notificationArea}>
+                <Typography
+                    color={'secondary'}
+                    variant={'h6'}
+                    component="span"
+                    className={cssClasses.notificationArea}
+                >
                     Today is the {format(new Date(), constants.dateFormatLong)}
                 </Typography>
                 <FormControlLabel
@@ -151,7 +156,7 @@ const MainHeader = ({ handleToggleNavPanel }: MainHeaderProps) => {
                         )
                     }
                 />
-                <Typography variant={'h6'} className={cssClasses.userName}>
+                <Typography variant={'h6'} component="span" className={cssClasses.userName}>
                     {firstName && firstName}
                 </Typography>
                 <div
