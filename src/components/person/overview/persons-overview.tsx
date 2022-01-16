@@ -8,7 +8,7 @@ import { emptyPerson } from '../model/person.model';
 import SearchHeader from '../../ui/search-header/search-header';
 import { IntroHeader } from '../../ui/intro-header/intro-header';
 import { useAppSelector } from '../../../hooks/store/use-app-selector.hook';
-import { getItemFromCollectionById } from '../../../services/collection-utils';
+import { getItemFromCollectionById } from '../../../services/collection-utils.service';
 import { InfoBox } from '../../ui/info-box/info-box';
 
 const PersonsOverview = () => {

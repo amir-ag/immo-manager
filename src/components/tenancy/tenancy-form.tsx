@@ -28,7 +28,7 @@ import { useForms } from '../../hooks/use-forms.hook';
 import * as personService from '../person/service/person.service';
 import * as propertyService from '../property/service/property.service';
 import * as rentalUnitService from '../rental-unit/service/rental-unit.service';
-import { getItemFromCollectionById } from '../../services/collection-utils';
+import { getItemFromCollectionById } from '../../services/collection-utils.service';
 
 export type TenancyFormProps = {
     currentTenancy: TenancyModel;

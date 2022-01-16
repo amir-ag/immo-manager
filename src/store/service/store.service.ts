@@ -5,7 +5,6 @@ import { setNotificator } from '../slices/notificator.slice';
 import { collection, query, where } from 'firebase/firestore';
 import { db } from '../../index';
 
-// TODO: Check if its more stable to get uid directly from firebase methods
 export const getUidFromStoreState = (thunkAPI: { getState: () => any }) => {
     const state = thunkAPI.getState() as RootState;
     const uid = state?.user?.uid;

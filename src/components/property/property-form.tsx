@@ -15,7 +15,7 @@ import ImageUpload from '../forms/image-upload/image-upload';
 import AddressFormFields from '../forms/address-form-fields/address-form-fields';
 import * as personService from '../person/service/person.service';
 import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
-import * as collectionUtils from '../../services/collection-utils';
+import * as collectionUtils from '../../services/collection-utils.service';
 
 export type PropertyFormProps = {
     currentProperty: PropertyModel;

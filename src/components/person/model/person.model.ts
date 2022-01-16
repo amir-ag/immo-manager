@@ -5,11 +5,11 @@ export type PersonModel = {
     company?: string;
     firstName: string;
     lastName: string;
-    birthday?: string | null;
+    birthday?: string;
     address: AddressModel;
     email: string;
-    mobilePhone: number | null;
-    landline?: number | null;
+    mobilePhone: string;
+    landline?: string;
     roles: typeof personRoles[number][];
     createdBy?: string;
 };
@@ -24,8 +24,8 @@ export const emptyPerson: PersonModel = {
     birthday: '',
     address: emptyAddress,
     email: '',
-    mobilePhone: null,
-    landline: null,
+    mobilePhone: '',
+    landline: '',
     roles: [],
     createdBy: '',
 };
