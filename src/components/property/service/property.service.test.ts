@@ -14,7 +14,7 @@ test('Get display name of property', () => {
     const displayName = propertyService.getDisplayNameOfProperty(property);
 
     // Assert
-    expect(displayName).toMatch(expectedDisplayName);
+    expect(displayName).toEqual(expectedDisplayName);
 });
 
 test('Sort collection of properties correctly', () => {
@@ -28,5 +28,5 @@ test('Sort collection of properties correctly', () => {
     propertyService.sortPropertiesByNameAsc(list);
 
     // Assert
-    expect(list[0].name).toMatch('MFH am Bellevue');
+    expect(list[0].name).toEqual('MFH am Bellevue');
 });

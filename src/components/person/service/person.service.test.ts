@@ -36,7 +36,7 @@ test('Get display name (forms fields) of valid person', () => {
     const displayName = personService.getPersonDisplayNameForFormSelectFields(validDummyPerson);
 
     // Assert
-    expect(displayName).toMatch(expectedDisplayName);
+    expect(displayName).toEqual(expectedDisplayName);
 });
 
 test('Get display name (forms fields) of invalid person', () => {
@@ -47,7 +47,7 @@ test('Get display name (forms fields) of invalid person', () => {
     const displayName = personService.getPersonDisplayNameForFormSelectFields(invalidDummyPerson);
 
     // Assert
-    expect(displayName).toMatch(expectedDisplayName);
+    expect(displayName).toEqual(expectedDisplayName);
 });
 
 test('Sort collection of persons correctly', () => {
@@ -61,5 +61,5 @@ test('Sort collection of persons correctly', () => {
     personService.sortPersonsByLastAndFirstNameAsc(list);
 
     // Assert
-    expect(list[0].firstName).toMatch('Armin');
+    expect(list[0].firstName).toEqual('Armin');
 });
