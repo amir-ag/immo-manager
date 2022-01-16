@@ -31,6 +31,7 @@ const Layout = ({ children }: LayoutProps) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
+
         setIsNavPanelOpen(!isNavPanelOpen);
     };
 

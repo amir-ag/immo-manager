@@ -17,7 +17,7 @@ const Login = ({ handleSignIn }: SignInProps) => {
     const theme = useTheme();
     const [loginFormState, setLoginFormState] = useState(emptyLogin);
 
-    const submitFunc = (e: React.FormEvent<any>) => {
+    const submitFunc = (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
         handleSignIn(loginFormState);
     };
