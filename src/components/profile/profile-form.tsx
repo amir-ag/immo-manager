@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { Grid, TextField, Typography } from '@material-ui/core';
+import { Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import { useAppDispatch } from '../../hooks/store/use-app-dispatch.hook';
 import { getAuth } from 'firebase/auth';
 import { selectUser } from '../../store/selectors';
@@ -13,7 +13,15 @@ import { useAppSelector } from '../../hooks/store/use-app-selector.hook';
 import { emptyProfile, ProfileModel } from './model/profile.model';
 import { minPasswordLength, passwordLengthHint } from '../../constants';
 
+const useStyles = makeStyles(() => ({
+    gridContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
+}));
+
 const ProfileForm = () => {
+    const cssClasses = useStyles();
     const dispatch = useAppDispatch();
     const auth = getAuth();
     const user = auth.currentUser;
@@ -48,6 +56,7 @@ const ProfileForm = () => {
             onSubmit={(e: React.FormEvent<any>) => handleSubmit(e)}
             container
             spacing={gridSpacingBig}
+            className={cssClasses.gridContainer}
         >
             <Grid
                 item
